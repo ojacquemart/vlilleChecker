@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res/com.vlille.checker"
+   	android:layout_width="wrap_content"
+   	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:background="@color/white">
+
+   	<com.markupartist.android.widget.ActionBar
+	    android:id="@+id/actionbar"
+	    app:title="@string/app_name_title"
+	    style="@style/ActionBar"
+    />	
+
+	<com.vlille.checker.maps.CustomMapView
+		xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/mapview"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:clickable="true"
+		android:enabled="true"
+		android:apiKey="0TInfQPSHmTUA2hM-CmEkz25QqxH1eAL70TizaA" />
+</LinearLayout>

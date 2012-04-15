@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- App details -->
+    <string name="app_name">Stations Checker</string>
+    <string name="app_name_title">Stations Checker</string>
+    
+    <!-- Home -->
+    <string name="home_new_station">Ajouter une station</string>
+    
+    <string name="home_error_message">Une erreur est survenue.</string>
+    <string name="home_error_retry">Réessayer</string>
+    
+    <string name="quickdialog_maps">Google Maps</string>
+    <string name="quickdialog_list">Liste des stations</string>
+     
+    <!-- Preferences -->
+    <string name="preferences_title">Favoris</string>
+    <string name="starred_title">Sauvegardé</string>
+    
+	<string name="sort">Tri</string>        
+
+	<!-- Common strings -->
+    <string name="loading">Chargement...</string>
+    <string name="refresh">Rafraîchir</string>
+    <string name="no_connection">Pas de connexion réseau disponible</string>
+    <string name="ok">Ok</string>
+    <string name="general">Général</string>
+      
+    <!-- Station details screen --> 
+    <string name="station_details_bikes">Vélo</string>
+    <string name="station_details_attachs">Emplacement</string>
+    <string name="station_out_of_service">La station est en maintenance</string>
+    
+	<!-- Search -->
+    <string name="search_hint">Nom de la station</string>
+    <string name="search_no_result">Aucun résultat</string>
+    <string name="search_suggestion_error">Une erreur est survenue</string>
+    
+    <!-- Settings -->
+    <string name="settings_title">Préférences</string>
+    <string name="home_display_adress_title">Afficher l\'adresse des stations</string>
+    <string name="home_display_adress_summary">Pour gagner de la place à l\'écran, vous pouvez masquer l\'adresse de chaque station.</string>
+    
+    <!-- About -->
+    <string name="about_title">A propos de</string>
+    <string name="about_text">Stations Checker est dédié aux utilisateurs du V\'lille et de son service VLS (Vélos en Libre Service).
+    \n
+    L\'application vous permet de gérer facilement:\n
+    - vos stations favorites afin de contrôler les vélos ou emplacement disponibles;\n
+    - trouver une station proche de votre position grâce à la géolocalisation.\n\n
+    
+    Contactez le développeur:\n
+    <a href="o.jacquemart@gmail.com">o.jacquemart@gmail.com</a>\n
+	<a href="http://www.twitter.com/ojacquemart">twitter.com/ojacquemart</a>
+    </string>
+
+	<!-- ACRA toast notifications texts. -->    
+    <string name="crash_toast_text">Oops, une erreur est survenue...</string>
+	<string name="crash_notif_ticker_text">Unexpected error, please send a report...</string>
+	<string name="crash_notif_title">CrashTest has crashed...</string>
+	<string name="crash_notif_text">Please click here to help fix the issue.</string>
+	    
+	<string name="crash_dialog_title">CrashTest has crashed</string>
+	<string name="crash_dialog_text">An unexpected error occurred forcing the
+	    application to stop. Please help us fix this by sending us error data,
+	    all you have to do is click \'OK\'.</string>
+	<string name="crash_dialog_comment_prompt">You might add your comments about the problem below:</string>
+	<string name="crash_dialog_ok_toast">Thank you !</string>
+</resources>

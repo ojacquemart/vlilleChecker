@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   	android:layout_width="wrap_content"
+   	android:layout_height="wrap_content"
+	android:orientation="horizontal"
+	android:paddingLeft="5sp">
+         
+	<CheckBox
+	    android:id="@+id/preferences_station_checked"
+		android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:button="@android:drawable/btn_star"
+    />
+    
+    <TextView
+	    android:id="@+id/preferences_station_title"
+		android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/preferences_station_checked"
+        android:layout_alignParentLeft="true"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textColor="#000"        
+        android:text="Test."
+    />
+</RelativeLayout>

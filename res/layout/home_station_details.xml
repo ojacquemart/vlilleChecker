@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingBottom="0sp"
+    android:paddingLeft="5sp"
+    android:paddingRight="5sp"
+    android:paddingTop="0sp" >
+
+	<TextView
+	    android:id="@+id/station_name"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:text="Palais Rameau"
+	    android:textColor="@color/black"
+	    android:textSize="16sp"
+	    android:textStyle="bold" />
+
+    <LinearLayout 
+        android:id="@+id/station_adress_box"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/station_adress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LongLongTextLikeLongCatLongLongTextLikeLongCatLongLongTextLikeLongCatLongLongTextLikeLongCat"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/station_out_of_service_box"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/station_out_of_service"
+            android:textColor="@color/red"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3px"
+        android:layout_marginTop="3px"
+        android:orientation="horizontal"
+        android:textSize="12sp" >
+
+        <CheckBox
+            android:id="@+id/detail_starred"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:button="@android:drawable/btn_star"
+            android:checked="true" />
+
+        <!-- Nb bikes -->
+        
+        <TextView
+            android:id="@+id/details_bikes"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dip"
+            android:layout_marginRight="10dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:singleLine="true"
+            android:text="12"
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/station_bike" />
+            
+        <!-- Nb parkings -->
+
+        <TextView
+            android:id="@+id/details_attachs"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:singleLine="true"
+            android:text="23"
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/station_parking" />
+            
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/details_cb"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5px" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

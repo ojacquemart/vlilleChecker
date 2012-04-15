@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="globalBg">#FFF</color>
+	<color name="toolbarBg">#423F40</color>
+	<color name="black">#000</color>
+	<color name="white">#FFF</color>
+	<color name="orange">#FF9100</color>
+	<color name="grey">#DDD</color>
+	<color name="blue">#00f</color>
+	<color name="red">#FF0000</color>
+
+	<!-- actionbar -->
+	<color name="actionbar_separator">#DDDDDD</color>
+	<color name="actionbar_background_start">#423F40</color>
+	<color name="actionbar_background_end">#423F40</color>
+</resources>

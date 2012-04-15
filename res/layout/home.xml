@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res/com.vlille.checker"
+   	android:layout_width="wrap_content"
+   	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:background="@color/white">
+	
+	<com.markupartist.android.widget.ActionBar
+    android:id="@+id/actionbar"
+    app:title="@string/app_name_title"
+    style="@style/ActionBar"
+    />
+	
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:id="@+id/home_station_new_box"
+	   	android:layout_width="fill_parent"
+	   	android:layout_height="wrap_content"
+		android:visibility="gone">
+		<Button
+		    android:id="@+id/home_station_new"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="10dp"
+			android:text="@string/home_new_station"
+	    />
+	</LinearLayout>
+	
+	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:id="@+id/home_error_box"
+	   	android:layout_width="fill_parent"
+	   	android:layout_height="wrap_content"
+		android:visibility="gone">
+		
+	    <TextView
+	        android:id="@+id/home_error_message"
+	        android:text="@string/home_error_message"
+		   	android:layout_width="fill_parent"
+		   	android:layout_height="wrap_content"
+	   	 />
+	    
+		<Button android:id="@+id/home_error_retry_button" 
+           android:layout_width="fill_parent" 
+           android:layout_height="wrap_content" 
+           android:layout_below="@id/home_error_message"
+           android:text="@string/home_error_retry" />
+	</RelativeLayout>	
+		
+	<ListView
+	    android:id="@+id/android:list"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+    />
+
+</LinearLayout>

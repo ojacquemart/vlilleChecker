@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory android:title="@string/general" >
+        <CheckBoxPreference
+            android:key="home_display_adress" 
+            android:summary="@string/home_display_adress_summary"
+            android:title="@string/home_display_adress_title" />
+    </PreferenceCategory>
+</PreferenceScreen>
