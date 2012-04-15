@@ -92,9 +92,7 @@ public class HomeActivity extends VlilleListActivity implements Receiver {
 		} else {
 			Log.d(LOG_TAG_ACTIVITY, "No network, show the retry view");
 			
-			/**
-			 * TODO: box with a retry button.
-			 */
+			showErrorBox(true);
 		}
 	}
 	
