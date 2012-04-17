@@ -51,6 +51,7 @@ public class HomeActivity extends VlilleListActivity implements Receiver {
 		initProgressDialog();
 	}
 
+	@Override
 	public void onPause() {
 		super.onPause();
 		
@@ -96,6 +97,7 @@ public class HomeActivity extends VlilleListActivity implements Receiver {
 		}
 	}
 	
+	@Override
 	public void onReceiveResult(int resultCode, Bundle resultData) {
 		boolean finished = false;
 		boolean error = false;
@@ -104,7 +106,9 @@ public class HomeActivity extends VlilleListActivity implements Receiver {
 		case Receiver.RUNNING:
 			Log.d(LOG_TAG_ACTIVITY, "Retrieve in progress");
 			
-			progressDialog.show();
+			if (!isFinishing()) {
+				progressDialog.show();
+			}
 
 			break;
 		case Receiver.FINISHED:
@@ -125,10 +129,8 @@ public class HomeActivity extends VlilleListActivity implements Receiver {
 			break;
 		}
 		
-		if (finished) {
-			if (progressDialog.isShowing()) {
-				progressDialog.dismiss();
-			}
+		if (finished && !isFinishing() && progressDialog.isShowing()) {
+			progressDialog.dismiss();
 		}
 		
 		showErrorBox(error);
@@ -244,7 +246,7 @@ public class HomeActivity extends VlilleListActivity implements Receiver {
 	}
 	
 	private void initProgressDialog() {
-		progressDialog = new ProgressDialog(HomeActivity.this);
+		progressDialog = new ProgressDialog(this);
 		progressDialog.setMessage(getString(R.string.loading));
 	}	
 
@@ -279,7 +281,7 @@ public class HomeActivity extends VlilleListActivity implements Receiver {
 		MiscUtils.showOrMask((RelativeLayout) findViewById(R.id.home_error_box), show);
 	}	
 	
-	/** AbsrtactActions class for menu ... */
+	/** AbsrtactActions class for action bar ... */
 	
 	private class RefreshAction extends AbstractAction {
 
