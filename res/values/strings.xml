@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<!-- App details -->
-    <string name="app_name">Stations Checker</string>
-    <string name="app_name_title">Stations Checker</string>
+    <string name="app_name">Vlille Checker</string>
+    <string name="app_name_title">Vlille Checker</string>
     
     <!-- Home -->
     <string name="home_new_station">Ajouter une station</string>
@@ -43,7 +43,7 @@
     
     <!-- About -->
     <string name="about_title">A propos de</string>
-    <string name="about_text">Stations Checker est dédié aux utilisateurs du V\'lille et de son service VLS (Vélos en Libre Service).
+    <string name="about_text">Vlille Checker est dédié aux utilisateurs du V\'lille et de son service VLS (Vélos en Libre Service).
     \n
     L\'application vous permet de gérer facilement:\n
     - vos stations favorites afin de contrôler les vélos ou emplacement disponibles;\n
