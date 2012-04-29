@@ -270,7 +270,7 @@ public class HomeActivity extends VlilleListActivity implements InitializeAction
 	 */
 	private void handleAdapter(final List<Station> stations) {
 		final LinearLayout boxAddStation = (LinearLayout) findViewById(R.id.home_station_new_box);
-		final HomeAdapter adapter = new HomeAdapter(this, R.layout.home_station_details, stations, boxAddStation);
+		final HomeAdapter adapter = new HomeAdapter(this, R.layout.home_list_stations, stations, boxAddStation);
 		setListAdapter(adapter);
 	}
 	

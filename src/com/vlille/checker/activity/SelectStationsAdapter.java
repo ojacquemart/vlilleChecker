@@ -33,7 +33,7 @@ public class SelectStationsAdapter extends ArrayAdapter<Station> {
 		final Context context = getContext();
 		if (view == null) {
 			LayoutInflater layout = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			view = layout.inflate(R.layout.preferences_details, null);
+			view = layout.inflate(R.layout.home_search_list_stations, null);
 		}
 		
 		final SharedPreferences sharedPrefs = ApplicationContextHelper.getPrefs(context);

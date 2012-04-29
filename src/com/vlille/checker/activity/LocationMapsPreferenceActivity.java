@@ -36,7 +36,7 @@ public class LocationMapsPreferenceActivity extends PreferenceActivity implement
 						Log.d(LOG_TAG, "Show the dialog with slider radius");
 
 						View view = View.inflate(LocationMapsPreferenceActivity.this,
-								R.layout.preferences_position, null);
+								R.layout.position_prefs, null);
 						AlertDialog alertDialog = new AlertDialog.Builder(LocationMapsPreferenceActivity.this)
 								.setTitle(getString(R.string.prefs_position_distance))
 								.setView(view)

@@ -43,7 +43,7 @@ public class HomeAdapter extends ArrayAdapter<Station> {
 	public View getView(final int position, View view, ViewGroup parent) {
 		if (view == null) {
 			LayoutInflater layout = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			view = layout.inflate(R.layout.home_station_details, null);
+			view = layout.inflate(R.layout.home_list_stations, null);
 			
 			// Hide or display the adress box.
 			final boolean displayStationAdress = ApplicationContextHelper.isDisplayingStationAdress(getContext());

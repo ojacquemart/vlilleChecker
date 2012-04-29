@@ -137,7 +137,7 @@ public class LocationMapsActivity extends MapsActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.layout.prefs_location_menu, menu);
+		inflater.inflate(R.layout.position_prefs_menu, menu);
 
 		return true;
 	}

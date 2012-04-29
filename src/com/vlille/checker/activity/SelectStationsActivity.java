@@ -44,7 +44,7 @@ public class SelectStationsActivity extends VlilleListActivity {
 	}
 
 	private void initContent() {
-		setContentView(R.layout.preferences);
+		setContentView(R.layout.home_search);
 		getListView().setFastScrollEnabled(true);
 	}
 	
@@ -80,9 +80,7 @@ public class SelectStationsActivity extends VlilleListActivity {
 		
 		final List<Station> filteredStations = StationsFilter.doFilter(stations, query);
 		if (filteredStations.isEmpty()) {
-			Toast
-				.makeText(this, R.string.search_no_result, Toast.LENGTH_SHORT)
-				.show();
+			Toast.makeText(this, R.string.search_no_result, Toast.LENGTH_SHORT).show();
 			setFullAdapter();
 		} else {
 			setAdapter(filteredStations);
@@ -93,9 +91,7 @@ public class SelectStationsActivity extends VlilleListActivity {
 		Uri uri = intent.getData();
 		Cursor cursor = managedQuery(uri, null, null, null, null);
 		if (cursor == null) {
-			Toast
-			.makeText(this, R.string.search_suggestion_error, Toast.LENGTH_SHORT)
-			.show();
+			Toast.makeText(this, R.string.search_suggestion_error, Toast.LENGTH_SHORT).show();
 			setFullAdapter();
 			
 			return;
@@ -121,7 +117,7 @@ public class SelectStationsActivity extends VlilleListActivity {
 	}
 	
 	private void setAdapter(List<Station> stations) {
-		setListAdapter(new SelectStationsAdapter(this, R.layout.preferences_details, stations));
+		setListAdapter(new SelectStationsAdapter(this, R.layout.home_search_list_stations, stations));
 	}
 	
 	private class SearchAction extends AbstractAction {
