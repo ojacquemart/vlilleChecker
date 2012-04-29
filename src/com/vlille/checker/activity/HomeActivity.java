@@ -151,7 +151,7 @@ public class HomeActivity extends VlilleListActivity implements InitializeAction
 				getResources().getDrawable(R.drawable.ic_menu_mapmode));
 		ActionItem searchByListItem = new ActionItem(
 				QUICK_DIALOG_SEARCH_BY_LIST,
-				getString(R.string.quickdialog_list),
+				getString(R.string.quickdialog_stations_list),
 				getResources().getDrawable(R.drawable.ic_menu_moreoverflow));
 		
 		searchByListItem.setSticky(true);

@@ -38,7 +38,7 @@ public class LocationMapsPreferenceActivity extends PreferenceActivity implement
 						View view = View.inflate(LocationMapsPreferenceActivity.this,
 								R.layout.preferences_position, null);
 						AlertDialog alertDialog = new AlertDialog.Builder(LocationMapsPreferenceActivity.this)
-								.setTitle(getString(R.string.position_distance_title))
+								.setTitle(getString(R.string.prefs_position_distance))
 								.setView(view)
 								.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
 

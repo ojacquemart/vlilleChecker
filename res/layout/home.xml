@@ -23,7 +23,7 @@
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="10dp"
-			android:text="@string/home_new_station"
+			android:text="@string/home_add_station"
 	    />
 	</LinearLayout>
 	
@@ -35,7 +35,7 @@
 		
 	    <TextView
 	        android:id="@+id/home_error_message"
-	        android:text="@string/home_error_message"
+	        android:text="@string/error_occured"
 		   	android:layout_width="fill_parent"
 		   	android:layout_height="wrap_content"
 	   	 />
@@ -44,7 +44,7 @@
            android:layout_width="fill_parent" 
            android:layout_height="wrap_content" 
            android:layout_below="@id/home_error_message"
-           android:text="@string/home_error_retry" />
+           android:text="@string/error_retry" />
 	</RelativeLayout>	
 		
 	<ListView

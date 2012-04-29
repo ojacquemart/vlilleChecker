@@ -65,7 +65,7 @@ public class LocationManagerWrapper {
 
 	public void createGpsDisabledAlert() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		builder.setMessage(context.getString(R.string.localisation_activate_gps)).setCancelable(false)
+		builder.setMessage(context.getString(R.string.prefs_location_enable_gps_title)).setCancelable(false)
 				.setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						showGpsOptions();

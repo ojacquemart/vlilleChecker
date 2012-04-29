@@ -5,62 +5,51 @@
     <string name="app_name_title">Vlille Checker</string>
     
     <!-- Home -->
-    <string name="home_new_station">Ajouter une station</string>
-    
-    <string name="home_error_message">Une erreur est survenue.</string>
-    <string name="home_error_retry">Réessayer</string>
-    
+    <string name="home_add_station">Ajouter une station</string>
     <string name="quickdialog_maps">Google Maps</string>
-    <string name="quickdialog_list">Liste des stations</string>
-     
-    <!-- Preferences -->
-    <string name="preferences_title">Favoris</string>
+    <string name="quickdialog_stations_list">Liste des stations</string>
     <string name="starred_title">Sauvegardé</string>
-    
-	<string name="sort">Tri</string>        
 
 	<!-- Common strings -->
+    <string name="stations_list">Liste des stations</string>
+    <string name="location">Localisation</string>
+     <string name="bike">Vélo</string>
+    <string name="attach">Emplacement</string>
+    <string name="station_out_of_service">La station est en maintenance</string>
+    
+    <string name="preferences">Préférences</string>
     <string name="loading">Chargement...</string>
     <string name="refresh">Rafraîchir</string>
     <string name="ok">Ok</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
     <string name="cancel">Cancel</string> 
-    <string name="preferences">Préférences</string>
 
     <!-- Errors -->
+    <string name="error_occured">Une erreur est survenue.</string>
+    <string name="error_retry">Réessayer</string>
     <string name="error_no_connection">Pas de connexion réseau disponible</string>
     <string name="error_initialization_stations">Erreur durant l\'initialisation des stations</string>
     <string name="error_no_stations_near_current_location">Aucune station près de votre position actuelle</string>
     <string name="error_no_location_found">Aucune position disponible</string>
     
-    <!-- Preferences -->
-    <string name="preferences_home">Liste des stations</string>
-    <string name="preferences_localisation">Localisation</string>
-      
-    <string name="home_display_adress_title">Détail des stations</string>
-    <string name="home_display_adress_summary">Affiche l\'adresse des stations.</string>
+    <!-- Home Preferences -->
+    <string name="prefs_stations_details_title">Détail des stations</string>
+    <string name="prefs_stations_details_summary">Affiche l\'adresse des stations</string>
     
-    <string name="preferences_localisation_title">Activer la localisation</string>
-    <string name="preferences_localisation_summary">Affiche les stations autour de moi</string>
+    <string name="prefs_location_enable_gps_title">Activer le GPS</string>
+    <string name="prefs_location_enable_gps_summary">Localiser les stations à l\'aide du GPS</string>
     
-    <!-- Localisation -->
-    <string name="localisation_activate_gps">Activer le GPS?</string>
-    
-    <!-- Preferences Maps position -->
+    <!-- Position Preferences -->
     <string name="prefs_position_title">Position</string>
+    <string name="prefs_position_distance">Distance</string>
     <string name="prefs_position_radius_distance_title">Stations autour de moi</string>
     <string name="prefs_position_radius_distance_summary">Dans un rayon de</string>
     <string name="prefs_position_radius_distance_unit">m</string>
     
     <!-- Position -->
-    <string name="position_distance_title">Distance</string>
-    <string name="position_not_knwon">Aucune localisation possible</string>
-    
-    <!-- Station details screen --> 
-    <string name="station_details_bikes">Vélo</string>
-    <string name="station_details_attachs">Emplacement</string>
-    <string name="station_out_of_service">La station est en maintenance</string>
+    <string name="distance">Distance</string>
+    <string name="error_no_location_available">Aucune localisation possible</string>
     
 	<!-- Search -->
     <string name="search_hint">Nom de la station</string>
