@@ -22,6 +22,10 @@ public class Toaster {
 		toast(context.getString(R.string.no_connection));
 	}
 	
+	public void noLastknownPosition() {
+		toast(context.getString(R.string.position_not_knwon));
+	}
+	
 	public void toast(String msg) {
 		Toast.makeText(
 				context,

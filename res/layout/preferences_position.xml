@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res/com.vlille.checker"
+	android:id="@+id/preferences_position_layout"
+   	android:layout_width="wrap_content"
+   	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:padding="5dp">
+	
+	<LinearLayout
+	   	android:layout_width="wrap_content"
+	   	android:layout_height="wrap_content">
+		<TextView
+		    android:layout_width="wrap_content"
+		    android:layout_height="fill_parent"
+		    android:id="@+id/position_distance_text"
+		    android:text="@string/prefs_position_radius_distance_summary"
+		    android:textColor="@color/white"
+		    />
+		<TextView
+		    android:layout_width="wrap_content"
+		    android:layout_height="fill_parent"
+		    android:text=" "
+		    android:textColor="@color/white"
+		    />
+		<TextView
+		    android:layout_width="wrap_content"
+		    android:layout_height="fill_parent"
+		    android:id="@+id/position_distance_value"
+		    android:text="0m."
+		    android:textColor="@color/white"
+		    />
+	</LinearLayout>
+
+	<SeekBar
+	    android:id="@+id/position_seekbar_distance"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:progress="1"
+	    android:max="1000"
+	    />
+   
+</LinearLayout>

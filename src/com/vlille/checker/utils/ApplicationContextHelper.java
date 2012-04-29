@@ -14,18 +14,18 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.vlille.checker.activity.HomeAdapter;
-import com.vlille.checker.activity.PreferencesActivity;
+import com.vlille.checker.activity.PreferenceKeys;
+import com.vlille.checker.activity.SelectStationsActivity;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.model.StationSet;
 import com.vlille.checker.model.StationsMapsInformation;
 import com.vlille.checker.xml.StationsListSAXParser;
+import com.vlille.checker.xml.VlilleXMLConstants;
 
 /**
  * Helper for {@link Context}.
  */
 public class ApplicationContextHelper {
-	
-	private static final String PREFS_HOME_DISPLAY_ADRESS = "home_display_adress";
 	
 	public static StationSet parseAllStations(Context context) {
 		final InputStream inputStream = getInputStream(context);
@@ -54,7 +54,7 @@ public class ApplicationContextHelper {
 	 */
 	public static InputStream getInputStream(Context context) {
 		try {
-			return context.getAssets().open(VlilleConstants.STATIONS_XML_PATH.value());
+			return context.getAssets().open(VlilleXMLConstants.STATIONS_XML_PATH.value());
 		} catch (IOException e) {
 			Log.e("Error while retrieving xml input stream", e.getMessage());
 			throw new IllegalStateException(e);
@@ -69,7 +69,7 @@ public class ApplicationContextHelper {
 	 * Global vlille preferences.
 	 */
 	public static SharedPreferences getPrefs(Context context) {
-		return context.getSharedPreferences(PreferencesActivity.PREFS_FILE, Context.MODE_PRIVATE);
+		return context.getSharedPreferences(SelectStationsActivity.PREFS_FILE, Context.MODE_PRIVATE);
 	}
 	
 	/**
@@ -108,7 +108,7 @@ public class ApplicationContextHelper {
 		for (Entry<String, ?> entry : allPrefs.entrySet()) {
 			String id = entry.getKey();
 			Object value = entry.getValue();
-			if (value instanceof Boolean) {
+			if (value.getClass().equals(Boolean.class)) {
 				starredStations.add(id);
 			}
 		}
@@ -120,6 +120,15 @@ public class ApplicationContextHelper {
 	 * Display or hide the address box for the {@link HomeAdapter}
 	 */
 	public static boolean isDisplayingStationAdress(Context context) {
-		return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(PREFS_HOME_DISPLAY_ADRESS, false);
+		return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(PreferenceKeys.HOME_DISPLAY_ADRESS, false);
+	}
+	
+	/**
+	 * Gets the radius value.
+	 */
+	public static long getRadiusValue(Context context) {
+		return PreferenceManager.getDefaultSharedPreferences(context)
+				.getLong(PreferenceKeys.POSITION_RADIUS,
+							PreferenceKeys.POSITION_RADIUS_DEFAULT_VALUE);
 	}
 }

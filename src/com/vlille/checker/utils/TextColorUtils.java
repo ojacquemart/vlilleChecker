@@ -17,6 +17,10 @@ public class TextColorUtils {
 	private static final String COLOR_HEXA_WHITE = "#FFFFFF";
 	private static final String COLOR_HEXA_RED = "#FF0000";
 	private static final String COLOR_HEXA_ORANGE = "#FF9100";
+	
+	/**
+	 * TODO: refactor this shit.
+	 */
 
 	public static int getColorFromResources(int number) {
 		int color = R.color.black;

@@ -24,8 +24,38 @@
     <string name="refresh">Rafraîchir</string>
     <string name="no_connection">Pas de connexion réseau disponible</string>
     <string name="ok">Ok</string>
-    <string name="general">Général</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+    <string name="cancel">Cancel</string> 
+    
+    <string name="error_initialization_stations">Erreur durant l\'initialisation des stations</string>
+    <string name="error_no_stations_near_current_location">Aucune station près de votre position actuelle</string>
+    <string name="error_no_location_found">Aucune position disponible</string>
+    
+    <!-- Preferences -->
+    <string name="preferences_home">Liste des stations</string>
+    <string name="preferences_localisation">Localisation</string>
       
+    <string name="settings_title">Préférences</string>
+    <string name="home_display_adress_title">Détail des stations</string>
+    <string name="home_display_adress_summary">Affiche l\'adresse des stations.</string>
+    
+    <string name="preferences_localisation_title">Activer la localisation</string>
+    <string name="preferences_localisation_summary">Affiche les stations autour de moi</string>
+    
+    <!-- Localisation -->
+    <string name="localisation_activate_gps">Activer le GPS?</string>
+    
+    <!-- Preferences Maps position -->
+    <string name="prefs_position_title">Position</string>
+    <string name="prefs_position_radius_distance_title">Stations autour de moi</string>
+    <string name="prefs_position_radius_distance_summary">Dans un rayon de</string>
+    <string name="prefs_position_radius_distance_unit">m</string>
+    
+    <!-- Position -->
+    <string name="position_distance_title">Distance</string>
+    <string name="position_not_knwon">Aucune localisation possible</string>
+    
     <!-- Station details screen --> 
     <string name="station_details_bikes">Vélo</string>
     <string name="station_details_attachs">Emplacement</string>
@@ -35,11 +65,6 @@
     <string name="search_hint">Nom de la station</string>
     <string name="search_no_result">Aucun résultat</string>
     <string name="search_suggestion_error">Une erreur est survenue</string>
-    
-    <!-- Settings -->
-    <string name="settings_title">Préférences</string>
-    <string name="home_display_adress_title">Afficher l\'adresse des stations</string>
-    <string name="home_display_adress_summary">Pour gagner de la place à l\'écran, vous pouvez masquer l\'adresse de chaque station.</string>
     
     <!-- About -->
     <string name="about_title">A propos de</string>

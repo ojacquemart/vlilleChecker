@@ -26,10 +26,10 @@ import com.vlille.checker.utils.TextColorUtils;
 
 public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.MyOverlayItem> {
 	
-	private static final String LOG_TAG = "StationsOverlays";
 	private static final long PAINT_TEXT_SIZE = 15L;
 	private static final int ONE_MINUTE_IN_MILLSECONDS = 1000 * 60;
 	
+	private final String LOG_TAG = getClass().getSimpleName();
 	private boolean marker;
 
 	private final StationMarker drawableMarker;
@@ -40,7 +40,7 @@ public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.My
 	private volatile Paint paintBikes;
 	private volatile Paint paintAttachs;
 
-	public StationsOverlays(Drawable defaultMarker, CustomMapView mapView, Context context) {
+	public StationsOverlays(Drawable defaultMarker, VlilleMapView mapView, Context context) {
 		super(defaultMarker, mapView, context, new ArrayList<MyOverlayItem>());
 
 		drawableMarker = new StationMarker(context.getResources(), ((BitmapDrawable) defaultMarker).getBitmap());
@@ -71,17 +71,17 @@ public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.My
 		mStationsOverlay.add(station);
 	}
 	
-	public void populateNow() {
+	public synchronized void populateNow() {
 		populate();
 	}
 	
 	@Override
-	protected MyOverlayItem createItem(int i) {
+	protected synchronized MyOverlayItem createItem(int i) {
 		return mStationsOverlay.get(i);
 	}
 
 	@Override
-	public int size() {
+	public synchronized  int size() {
 		return mStationsOverlay.size();
 	}
 	
@@ -90,12 +90,16 @@ public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.My
 	}
 
 	@Override
-	public void draw(android.graphics.Canvas canvas, MapView mapView, boolean shadow) {
+	public synchronized void draw(android.graphics.Canvas canvas, MapView mapView, boolean shadow) {
+		setLastFocusedIndex(-1);
+		
 		if (!shadow) {
-			marker = CustomMapView.isDetailledZoomLevel(mapView.getZoomLevel());
+			marker = VlilleMapView.isDetailledZoomLevel(mapView.getZoomLevel());
 			setBalloonBottomOffset(marker ? mDrawableMarkerHeight : mDrawableMarkerPinHeight);
 		}
 
+		populate();
+		
 		super.draw(canvas, mapView, false);
 	}
 	
@@ -139,13 +143,13 @@ public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.My
 				if (marker && !displayOnlyPin) {
 					drawableMarker.bikes = bikes;
 					drawableMarker.attachs = attachs;
-				} else if (ApplicationContextHelper.isStarred(mContext, station.getId())) {
+				} else if (station != null && ApplicationContextHelper.isStarred(mContext, station.getId())) {
 						drawable = drawablePinStar;
 				} else {
 					drawable = drawablePin;
 				}
 			} catch (Exception e) {
-				Log.e(LOG_TAG, e.getMessage(), e.getCause());
+				Log.e(LOG_TAG, "#getMarker exception", e);
 			}
 			
 			drawable.setBounds(

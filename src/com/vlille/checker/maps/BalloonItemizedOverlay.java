@@ -26,7 +26,7 @@ public abstract class BalloonItemizedOverlay<Item extends OverlayItem> extends
 
 	private static final String LOG_TAG = "BalloonItemizedOverlay";
 	
-	private CustomMapView mMapView;
+	private VlilleMapView mMapView;
 	private BalloonOverlayView<OverlayItem> balloonView;
 	/*private View clickRegion;*/
 	private int viewOffset;
@@ -47,7 +47,7 @@ public abstract class BalloonItemizedOverlay<Item extends OverlayItem> extends
 	 * @param mapView
 	 *            - The view upon which the overlay items are to be drawn.
 	 */
-	public BalloonItemizedOverlay(Drawable defaultMarker, CustomMapView mapView,
+	public BalloonItemizedOverlay(Drawable defaultMarker, VlilleMapView mapView,
 			Context context, List<MyOverlayItem> stations) {
 		super(defaultMarker);
 		

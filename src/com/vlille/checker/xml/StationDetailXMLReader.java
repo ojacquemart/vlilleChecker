@@ -1,36 +1,43 @@
 package com.vlille.checker.xml;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.net.URLConnection;
 
 import android.util.Log;
 
-import com.vlille.checker.utils.VlilleConstants;
 
 public class StationDetailXMLReader {
 
-	private static final String LOG_TAG_STATION_DETAIL_XML_READER = StationDetailXMLReader.class.getSimpleName();
+	private static final String LOG_TAG = StationDetailXMLReader.class.getSimpleName();
+	
+	private static final int READ_TIMEOUT = 3000;
+	private static final int CONNECTION_TIMEOUT = 3000;
 
 	/**
 	 * Get input stream.
 	 * @return null if an exception occured.
 	 */
 	public static InputStream getInputStream(String stationId) {
+		InputStream inputStream = null;
+		
 		try {
-			final String stationUrl = VlilleConstants.STATION_DETAIL.value() + stationId;
-			Log.d(LOG_TAG_STATION_DETAIL_XML_READER, "Url to load: " + stationUrl);
+			final String stationUrl = VlilleXMLConstants.STATION_DETAIL.value() + stationId;
+			Log.d(LOG_TAG, "Url to load: " + stationUrl);
 			
-			return new URL(stationUrl).openStream();
-		} catch (IOException e) {
-			Log.e(LOG_TAG_STATION_DETAIL_XML_READER, "Error during xml reader: "
-					+ e.getMessage() != null 
-						? e.getMessage()
-						: ""
-			);
+			final URL url = new URL(stationUrl);
+			final URLConnection connection = url.openConnection();
+			connection.setConnectTimeout(CONNECTION_TIMEOUT);
+			connection.setReadTimeout(READ_TIMEOUT);
+			connection.connect();
 			
-			return null;
+			inputStream = connection.getInputStream();
+			
+		} catch (Exception e) {
+			Log.e(LOG_TAG, "Error during xml read", e);
 		}
+		
+		return inputStream; 
 	}
 
 }

@@ -1,15 +1,13 @@
 package com.vlille.checker.utils;
 
 import java.util.HashMap;
-import java.util.List;
-import com.vlille.checker.model.Station;
-
+import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
 
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
+import com.vlille.checker.model.Station;
 
 public class MiscUtils {
 
@@ -51,19 +49,6 @@ public class MiscUtils {
 		}
 		
 		return map;
-	}
-	
-	/**
-	 * Transform string value of xml value in google aps longitude or latitude.
-	 * @param value
-	 * @return
-	 */
-	public static int transformTo1e6(String value) {
-		if (StringUtils.isEmpty(value)) {
-			return 0;
-		}
-			
-		return (int) (Double.valueOf(value) * 1e6);
 	}
 	
 }

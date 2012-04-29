@@ -18,7 +18,7 @@ import com.vlille.checker.utils.Toaster;
  */
 public abstract class VlilleListActivity extends ListActivity {
 	
-	protected final String LOG_TAG_ACTIVITY = this.getClass().getSimpleName();
+	protected final String LOG_TAG = getClass().getSimpleName();
 	
 	/**
 	 * Checks if network is available.
@@ -42,7 +42,7 @@ public abstract class VlilleListActivity extends ListActivity {
 			text = "";
 		}
 		
-		Log.d(LOG_TAG_ACTIVITY, text);
+		Log.d(LOG_TAG, text);
 	}
 	
 	protected InputStream getInputStream() {

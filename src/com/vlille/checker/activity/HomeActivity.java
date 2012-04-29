@@ -31,7 +31,7 @@ import com.vlille.checker.utils.MiscUtils;
 /**
  * Home Vlille checker activity.
  */
-public class HomeActivity extends VlilleListActivity implements Receiver {
+public class HomeActivity extends VlilleListActivity implements InitializeActionBar, Receiver {
 
 	private static final int QUICK_DIALOG_SEARCH_BY_MAPS = 1;
 	private static final int QUICK_DIALOG_SEARCH_BY_LIST = 2;
@@ -45,7 +45,7 @@ public class HomeActivity extends VlilleListActivity implements Receiver {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home);
 		
-		initActionBar();
+		doInitActionBar();
 		initQuickDialog();
 		initButtonsListeners();
 		initProgressDialog();
@@ -72,7 +72,7 @@ public class HomeActivity extends VlilleListActivity implements Receiver {
 		final List<String> starredIdsStations = getStarredIdsStations();
 		
 		boolean isEmptyStarredStations = starredIdsStations.isEmpty();
-		Log.d(LOG_TAG_ACTIVITY, "Starred stations empty? " + isEmptyStarredStations);
+		Log.d(LOG_TAG, "Starred stations empty? " + isEmptyStarredStations);
 		if (isEmptyStarredStations) {
 			showAddNewButtonBox(null);
 		} else {
@@ -82,7 +82,11 @@ public class HomeActivity extends VlilleListActivity implements Receiver {
 	
 	private void handleStarredStations(List<String> starredIdsStations) {
 		if (isNetworkAvailable()) {
-			Log.d(LOG_TAG_ACTIVITY, "Start retriever service.");
+			if (!isFinishing()) {
+				progressDialog.show();
+			}
+			
+			Log.d(LOG_TAG, "Start retriever service.");
 			resultReceiver = new StationResultReceiver(new Handler());
 			resultReceiver.setReceiver(this);
 			
@@ -91,7 +95,7 @@ public class HomeActivity extends VlilleListActivity implements Receiver {
 			intent.putExtra(StationsRetrieverService.STATIONS_ID, (ArrayList<String>) starredIdsStations);
 			startService(intent);
 		} else {
-			Log.d(LOG_TAG_ACTIVITY, "No network, show the retry view");
+			Log.d(LOG_TAG, "No network, show the retry view");
 			
 			showErrorBox(true);
 		}
@@ -104,15 +108,11 @@ public class HomeActivity extends VlilleListActivity implements Receiver {
 		
 		switch (resultCode) {
 		case Receiver.RUNNING:
-			Log.d(LOG_TAG_ACTIVITY, "Retrieve in progress");
-			
-			if (!isFinishing()) {
-				progressDialog.show();
-			}
+			Log.d(LOG_TAG, "Retrieve in progress");
 
 			break;
 		case Receiver.FINISHED:
-			Log.d(LOG_TAG_ACTIVITY, "All starred stations loaded");
+			Log.d(LOG_TAG, "All starred stations loaded");
 			finished = true;
 			
 			List<Station> results = resultData.getParcelableArrayList("results");
@@ -122,7 +122,7 @@ public class HomeActivity extends VlilleListActivity implements Receiver {
 
 			break;
 		case Receiver.ERROR:
-			Log.e(LOG_TAG_ACTIVITY, "Error occured");
+			Log.e(LOG_TAG, "Error occured");
 			finished = true;
 			error = true;
 
@@ -136,8 +136,10 @@ public class HomeActivity extends VlilleListActivity implements Receiver {
 		showErrorBox(error);
 	}
 	
-	private void initActionBar() {
+	@Override
+	public void doInitActionBar() {
 		ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
+		actionBar.addAction(new LocationAction());
 		actionBar.addAction(new QuickDialogAction());
 		actionBar.addAction(new RefreshAction());
 	}
@@ -168,7 +170,7 @@ public class HomeActivity extends VlilleListActivity implements Receiver {
 				
 				switch (actionId) {
 				case QUICK_DIALOG_SEARCH_BY_LIST:
-					clazz = PreferencesActivity.class;
+					clazz = SelectStationsActivity.class;
 					break;
 				case QUICK_DIALOG_SEARCH_BY_MAPS:
 					clazz = MapsActivity.class;
@@ -223,7 +225,7 @@ public class HomeActivity extends VlilleListActivity implements Receiver {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.layout.menu, menu);
+		inflater.inflate(R.layout.home_prefs_menu, menu);
 
 		return true;
 	}
@@ -234,7 +236,7 @@ public class HomeActivity extends VlilleListActivity implements Receiver {
 		
 		switch (item.getItemId()) {
 		case R.id.home_settings:
-			clazz = HomeSettingsActivity.class;
+			clazz = HomePreferenceActivity.class;
 			break;
 		case R.id.home_about:
 			clazz = AboutActivity.class;
@@ -283,6 +285,19 @@ public class HomeActivity extends VlilleListActivity implements Receiver {
 	
 	/** AbsrtactActions class for action bar ... */
 	
+	private class LocationAction extends AbstractAction {
+
+		public LocationAction() {
+			super(android.R.drawable.ic_menu_mylocation);
+		}
+
+		@Override
+		public void performAction(View view) {
+			startActivity(new Intent(getApplicationContext(), LocationMapsActivity.class));
+		}
+		
+	}
+	
 	private class RefreshAction extends AbstractAction {
 
         public RefreshAction() {
@@ -300,7 +315,7 @@ public class HomeActivity extends VlilleListActivity implements Receiver {
 	private class QuickDialogAction extends AbstractAction {
 		
 		public QuickDialogAction() {
-			super(R.drawable.ic_menu_add);
+			super(android.R.drawable.ic_menu_add);
 		}
 		
 		@Override

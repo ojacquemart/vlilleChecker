@@ -25,7 +25,7 @@ import com.vlille.checker.utils.TextColorUtils;
  */
 public class HomeAdapter extends ArrayAdapter<Station> {
 
-	private static final String LOG_TAG = "HomeStationsAdapter";
+	private final String LOG_TAG = getClass().getSimpleName();
 
 	private List<Station> stations; /** The stations loaded. */
 	private Resources resources; /** Resources for the color text according to station informations. */

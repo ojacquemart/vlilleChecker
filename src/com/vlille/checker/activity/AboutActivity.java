@@ -5,6 +5,10 @@ import android.os.Bundle;
 
 import com.vlille.checker.R;
 
+/**
+ * Show informations about vlille checker.
+ * TODO: make links clickable.
+ */
 public class AboutActivity extends Activity {
 
 	@Override

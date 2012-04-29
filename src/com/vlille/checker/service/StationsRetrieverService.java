@@ -24,12 +24,12 @@ public class StationsRetrieverService extends IntentService {
 	public static final String RESULTS = "results";
 	public static final String STATIONS_ID = "stationsId";
 	
-	private static final String SERVICE_LOG_TAG = StationResultReceiver.class.getSimpleName();
+	private static final String LOG_TAG = StationResultReceiver.class.getSimpleName();
 	
 	private StationsLoader loader;
 
 	public StationsRetrieverService() {
-		super(SERVICE_LOG_TAG);
+		super(LOG_TAG);
 	}
 
 	public StationsRetrieverService(String name) {
@@ -44,7 +44,7 @@ public class StationsRetrieverService extends IntentService {
 	 * @param intent Intent running.
 	 */
 	protected void onHandleIntent(Intent intent) {
-		Log.d(SERVICE_LOG_TAG, intent.getAction());
+		Log.d(LOG_TAG, intent.getAction());
 		
 		loader = new StationsLoaderImpl();
 		loader.initAll(getApplicationContext());
@@ -71,7 +71,7 @@ public class StationsRetrieverService extends IntentService {
 
 			watcher.stop();
 
-			Log.d(SERVICE_LOG_TAG, "Retrieved " + stations.size() + " stations  in " + watcher.getTime() + "ms");
+			Log.d(LOG_TAG, "Retrieved " + stations.size() + " stations  in " + watcher.getTime() + "ms");
 
 			bundle.putParcelableArrayList(RESULTS, (ArrayList<Station>) stations);
 			receiver.send(Receiver.FINISHED, bundle);

@@ -3,10 +3,10 @@ package com.vlille.checker.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.vlille.checker.utils.VlilleConstants;
+import com.vlille.checker.xml.VlilleXMLConstants;
 
 /**
- * Class represents the details of a single vlille station.
+ * Represents the details of a single vlille station.
  */
 public class Station implements Comparable<Station>, Parcelable {
 
@@ -18,8 +18,10 @@ public class Station implements Comparable<Station>, Parcelable {
 	 */
 	private String id;
 	private String name;
-	private int latitude1e6;
-	private int longitute1e6;
+	private double latitude;
+	private double longitude;
+	private int latitudeE6;
+	private int longituteE6;
 
 	/**
 	 * From detail stations informations.
@@ -47,20 +49,37 @@ public class Station implements Comparable<Station>, Parcelable {
 		this.name = name;
 	}
 
-	public int getLatitude1e6() {
-		return latitude1e6;
+	public int getLatitudeE6() {
+		return latitudeE6;
 	}
 
-	public void setLatitude1e6(int latitude1e6) {
-		this.latitude1e6 = latitude1e6;
+	public void setLatitudeE6(int latitudeE6) {
+		this.latitudeE6 = latitudeE6;
 	}
 
-	public int getLongitute1e6() {
-		return longitute1e6;
+	public double getLatitude() {
+		return latitude;
 	}
 
-	public void setLongitute1e6(int longitute1e6) {
-		this.longitute1e6 = longitute1e6;
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public int getLongituteE6() {
+		return longituteE6;
+	}
+	
+
+	public void setLongituteE6(int longituteE6) {
+		this.longituteE6 = longituteE6;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
 	}
 
 	public String getAdress() {
@@ -76,7 +95,7 @@ public class Station implements Comparable<Station>, Parcelable {
 	}
 	
 	public boolean isOutOfService() {
-		return !status.equals(VlilleConstants.STATION_OUT_OF_SERVICE.value());
+		return !status.equals(VlilleXMLConstants.STATION_OUT_OF_SERVICE.value());
 	}
 
 	public void setStatus(String status) {
@@ -104,7 +123,7 @@ public class Station implements Comparable<Station>, Parcelable {
 	}
 	
 	public boolean isCb() {
-		return paiement.equals(VlilleConstants.STATION_WITH_CB.value());
+		return paiement.equals(VlilleXMLConstants.STATION_WITH_CB.value());
 	}
 
 	public void setPaiement(String paiement) {

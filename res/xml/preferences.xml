@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-    <PreferenceCategory android:title="@string/general" >
+    <PreferenceCategory android:title="@string/preferences_home" >
         <CheckBoxPreference
-            android:key="home_display_adress" 
+            android:defaultValue="true"
+            android:key="prefs_home_display_adress_value"
             android:summary="@string/home_display_adress_summary"
             android:title="@string/home_display_adress_title" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/preferences_localisation" >
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="prefs_localisation_gps_activated_value"
+            android:summary="@string/preferences_localisation_summary"
+            android:title="@string/preferences_localisation_title" />
     </PreferenceCategory>
 </PreferenceScreen>
