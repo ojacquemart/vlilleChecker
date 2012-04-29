@@ -22,7 +22,7 @@ import com.google.android.maps.OverlayItem;
 import com.vlille.checker.R;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.utils.ApplicationContextHelper;
-import com.vlille.checker.utils.TextColorUtils;
+import com.vlille.checker.utils.StationColorSelector;
 
 public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.MyOverlayItem> {
 	
@@ -30,6 +30,8 @@ public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.My
 	private static final int ONE_MINUTE_IN_MILLSECONDS = 1000 * 60;
 	
 	private final String LOG_TAG = getClass().getSimpleName();
+	
+	private final Resources resources;
 	private boolean marker;
 
 	private final StationMarker drawableMarker;
@@ -37,12 +39,14 @@ public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.My
 	private final Drawable drawablePin;
 	private final Drawable drawablePinStar;
 	private final int mDrawableMarkerPinHeight;
+	
 	private volatile Paint paintBikes;
 	private volatile Paint paintAttachs;
 
 	public StationsOverlays(Drawable defaultMarker, VlilleMapView mapView, Context context) {
 		super(defaultMarker, mapView, context, new ArrayList<MyOverlayItem>());
-
+		this.resources = context.getResources();
+		
 		drawableMarker = new StationMarker(context.getResources(), ((BitmapDrawable) defaultMarker).getBitmap());
 		boundCenter(defaultMarker);
 		
@@ -215,10 +219,10 @@ public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.My
 		public void draw(Canvas canvas) {
 			super.draw(canvas);
 			
-			paintBikes.setColor(TextColorUtils.getColorFromHexa(bikes));
+			paintBikes.setColor(resources.getColor(StationColorSelector.getColor(bikes)));
 			canvas.drawText(bikes.toString(), -25, -45, paintBikes);
 			
-			paintAttachs.setColor(TextColorUtils.getColorFromHexa(attachs));
+			paintAttachs.setColor(resources.getColor(StationColorSelector.getColor(attachs)));
 			canvas.drawText(attachs.toString(), -25, -20, paintAttachs);
 		}
 	}

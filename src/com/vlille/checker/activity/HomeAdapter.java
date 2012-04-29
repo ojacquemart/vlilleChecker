@@ -18,7 +18,7 @@ import com.vlille.checker.R;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.utils.ApplicationContextHelper;
 import com.vlille.checker.utils.MiscUtils;
-import com.vlille.checker.utils.TextColorUtils;
+import com.vlille.checker.utils.StationColorSelector;
 
 /**
  * Adapter for the stations detail.
@@ -105,7 +105,7 @@ public class HomeAdapter extends ArrayAdapter<Station> {
 	}
 	
 	private int getColor(int number) {
-		return resources.getColor(TextColorUtils.getColorFromResources(number));
+		return resources.getColor(StationColorSelector.getColor(number, false));
 	}
 
 	@Override
