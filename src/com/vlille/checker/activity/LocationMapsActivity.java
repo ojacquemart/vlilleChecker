@@ -28,6 +28,8 @@ public class LocationMapsActivity extends MapsActivity {
 	private static final int UPDATE_MIN_DISTANCE = 10;
 	private static final int UPDATE_MIN_TIME = 10;
 	
+	private boolean locationAvailable;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, true);
@@ -68,9 +70,12 @@ public class LocationMapsActivity extends MapsActivity {
 		Log.d(LOG_TAG, "Resume localisation maps");
 		
 		mapView.updateCurrentLocation();
-		if (mapView.getCurrentLocation() == null) {
+		locationAvailable = mapView.getCurrentLocation() != null;
+		if (!locationAvailable) {
 			Log.i(LOG_TAG, "No location found");
-			Toast.makeText(getApplicationContext(), R.string.error_no_location_found, Toast.LENGTH_LONG);
+			Toast
+				.makeText(getApplicationContext(), R.string.error_no_location_found, Toast.LENGTH_LONG)
+				.show();
 		}
 			
 		mapView.resetStationsOverlays();
@@ -81,6 +86,11 @@ public class LocationMapsActivity extends MapsActivity {
 	
 	@Override
 	public List<Station> getStations() {
+		Log.i(LOG_TAG, "Location available ? " + locationAvailable);
+		if (!locationAvailable) {
+			return new ArrayList<Station>();
+		}
+		
 		final List<Station> stationsToDraw = new ArrayList<Station>();
 		
 		final List<Station> stations = setStationsInfos.getStations();
@@ -99,7 +109,9 @@ public class LocationMapsActivity extends MapsActivity {
 		
 		Log.d(LOG_TAG, "Nb stations to draw = " + stationsToDraw.size());
 		if (stationsToDraw.isEmpty()) {
-			Toast.makeText(getApplicationContext(), R.string.error_no_stations_near_current_location, Toast.LENGTH_LONG);
+			Toast
+				.makeText(getApplicationContext(), R.string.error_no_stations_near_current_location, Toast.LENGTH_LONG)
+				.show();
 		}
 		
 		return stationsToDraw;
