@@ -77,31 +77,32 @@ containing a value of this type.
         public static final int balloon_overlay_close=0x7f02000a;
         public static final int balloon_overlay_focused=0x7f02000b;
         public static final int balloon_overlay_unfocused=0x7f02000c;
-        public static final int ic_menu_about=0x7f02000d;
-        public static final int ic_menu_add=0x7f02000e;
-        public static final int ic_menu_list=0x7f02000f;
-        public static final int ic_menu_map=0x7f020010;
-        public static final int ic_menu_refresh=0x7f020011;
-        public static final int ic_menu_search=0x7f020012;
-        public static final int ic_menu_settings=0x7f020013;
-        public static final int ic_menu_sort_alphabetically=0x7f020014;
-        public static final int icon=0x7f020015;
-        public static final int logo=0x7f020016;
-        public static final int menu_cancel=0x7f020017;
-        public static final int menu_down_arrow=0x7f020018;
-        public static final int menu_eraser=0x7f020019;
-        public static final int menu_info=0x7f02001a;
-        public static final int menu_ok=0x7f02001b;
-        public static final int menu_search=0x7f02001c;
-        public static final int menu_up_arrow=0x7f02001d;
-        public static final int popup=0x7f02001e;
-        public static final int station_bike=0x7f02001f;
-        public static final int station_cb=0x7f020020;
-        public static final int station_marker=0x7f020021;
-        public static final int station_nocb=0x7f020022;
-        public static final int station_parking=0x7f020023;
-        public static final int station_pin=0x7f020024;
-        public static final int station_pin_star=0x7f020025;
+        public static final int ic_menu_add=0x7f02000d;
+        public static final int ic_menu_info_details=0x7f02000e;
+        public static final int ic_menu_mapmode=0x7f02000f;
+        public static final int ic_menu_moreoverflow=0x7f020010;
+        public static final int ic_menu_mylocation=0x7f020011;
+        public static final int ic_menu_preferences=0x7f020012;
+        public static final int ic_menu_refresh=0x7f020013;
+        public static final int ic_menu_search=0x7f020014;
+        public static final int ic_menu_sort_alphabetically=0x7f020015;
+        public static final int icon=0x7f020016;
+        public static final int logo=0x7f020017;
+        public static final int menu_cancel=0x7f020018;
+        public static final int menu_down_arrow=0x7f020019;
+        public static final int menu_eraser=0x7f02001a;
+        public static final int menu_info=0x7f02001b;
+        public static final int menu_ok=0x7f02001c;
+        public static final int menu_search=0x7f02001d;
+        public static final int menu_up_arrow=0x7f02001e;
+        public static final int popup=0x7f02001f;
+        public static final int station_bike=0x7f020020;
+        public static final int station_cb=0x7f020021;
+        public static final int station_marker=0x7f020022;
+        public static final int station_nocb=0x7f020023;
+        public static final int station_parking=0x7f020024;
+        public static final int station_pin=0x7f020025;
+        public static final int station_pin_star=0x7f020026;
     }
     public static final class id {
         public static final int about_text=0x7f0b0001;
@@ -185,7 +186,7 @@ containing a value of this type.
          */
         public static final int app_name=0x7f060001;
         public static final int app_name_title=0x7f060003;
-        public static final int cancel=0x7f060012;
+        public static final int cancel=0x7f060011;
         public static final int crash_dialog_comment_prompt=0x7f060032;
         public static final int crash_dialog_ok_toast=0x7f060033;
         public static final int crash_dialog_text=0x7f060031;
@@ -196,9 +197,12 @@ containing a value of this type.
         /**  ACRA toast notifications texts. 
          */
         public static final int crash_toast_text=0x7f06002c;
-        public static final int error_initialization_stations=0x7f060013;
-        public static final int error_no_location_found=0x7f060015;
-        public static final int error_no_stations_near_current_location=0x7f060014;
+        public static final int error_initialization_stations=0x7f060014;
+        /**  Errors 
+         */
+        public static final int error_no_connection=0x7f060013;
+        public static final int error_no_location_found=0x7f060016;
+        public static final int error_no_stations_near_current_location=0x7f060015;
         public static final int hello=0x7f060000;
         public static final int home_display_adress_summary=0x7f06001a;
         public static final int home_display_adress_title=0x7f060019;
@@ -213,17 +217,17 @@ containing a value of this type.
         /**  Localisation 
          */
         public static final int localisation_activate_gps=0x7f06001d;
-        public static final int no=0x7f060011;
-        public static final int no_connection=0x7f06000e;
-        public static final int ok=0x7f06000f;
+        public static final int no=0x7f060010;
+        public static final int ok=0x7f06000e;
         /**  Position 
          */
         public static final int position_distance_title=0x7f060022;
         public static final int position_not_knwon=0x7f060023;
+        public static final int preferences=0x7f060012;
         /**  Preferences 
          */
-        public static final int preferences_home=0x7f060016;
-        public static final int preferences_localisation=0x7f060017;
+        public static final int preferences_home=0x7f060017;
+        public static final int preferences_localisation=0x7f060018;
         public static final int preferences_localisation_summary=0x7f06001c;
         public static final int preferences_localisation_title=0x7f06001b;
         /**  Preferences 
@@ -243,7 +247,6 @@ containing a value of this type.
         public static final int search_hint=0x7f060027;
         public static final int search_no_result=0x7f060028;
         public static final int search_suggestion_error=0x7f060029;
-        public static final int settings_title=0x7f060018;
         public static final int sort=0x7f06000b;
         public static final int starred_title=0x7f06000a;
         public static final int station_details_attachs=0x7f060025;
@@ -251,7 +254,7 @@ containing a value of this type.
          */
         public static final int station_details_bikes=0x7f060024;
         public static final int station_out_of_service=0x7f060026;
-        public static final int yes=0x7f060010;
+        public static final int yes=0x7f06000f;
     }
     public static final class style {
         public static final int ActionBar=0x7f07000b;

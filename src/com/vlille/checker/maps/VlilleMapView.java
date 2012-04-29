@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
@@ -19,7 +20,6 @@ import com.vlille.checker.maps.StationsOverlays.MyOverlayItem;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.model.StationsMapsInformation;
 import com.vlille.checker.utils.PositionTransformer;
-import com.vlille.checker.utils.Toaster;
 import com.vlille.checker.xml.loader.StationsLoader;
 import com.vlille.checker.xml.loader.StationsLoaderImpl;
 
@@ -88,7 +88,9 @@ public class VlilleMapView extends MapView {
 				try {
 					new OverlaysStationsAsyncLoader().execute();
 				} catch (Exception e) {
-					Toaster.withContext(getContext()).toast(getContext().getString(R.string.error_initialization_stations));
+					Toast
+						.makeText(getContext(), R.string.error_initialization_stations, Toast.LENGTH_LONG)
+						.show();
 				}
 			}
 		}

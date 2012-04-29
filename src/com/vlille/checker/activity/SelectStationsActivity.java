@@ -9,7 +9,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.AbstractAction;
@@ -18,7 +20,6 @@ import com.vlille.checker.model.Station;
 import com.vlille.checker.provider.DictionaryDatabase;
 import com.vlille.checker.utils.MiscUtils;
 import com.vlille.checker.utils.StationsFilter;
-import com.vlille.checker.utils.Toaster;
 
 /**
  * Select stations activity.
@@ -75,11 +76,13 @@ public class SelectStationsActivity extends VlilleListActivity {
 
 	private void handleIntentActionSearch(Intent intent) {
 		final String query = intent.getStringExtra(SearchManager.QUERY);
-		debug(query);
+		Log.d(LOG_TAG, query);
 		
 		final List<Station> filteredStations = StationsFilter.doFilter(stations, query);
 		if (filteredStations.isEmpty()) {
-			Toaster.withContext(getApplicationContext()).toast(getString(R.string.search_no_result));
+			Toast
+				.makeText(this, R.string.search_no_result, Toast.LENGTH_SHORT)
+				.show();
 			setFullAdapter();
 		} else {
 			setAdapter(filteredStations);
@@ -90,7 +93,9 @@ public class SelectStationsActivity extends VlilleListActivity {
 		Uri uri = intent.getData();
 		Cursor cursor = managedQuery(uri, null, null, null, null);
 		if (cursor == null) {
-			Toaster.withContext(getApplicationContext()).toast(getString(R.string.search_suggestion_error));
+			Toast
+			.makeText(this, R.string.search_suggestion_error, Toast.LENGTH_SHORT)
+			.show();
 			setFullAdapter();
 			
 			return;
@@ -105,7 +110,7 @@ public class SelectStationsActivity extends VlilleListActivity {
 		if (foundStation != null) {
 			suggestedStations.add(foundStation);
 		} else {
-			debug("Station not found: " + stationId);
+			Log.d(LOG_TAG, "Station not found: " + stationId);
 		}
 
 		setAdapter(suggestedStations);

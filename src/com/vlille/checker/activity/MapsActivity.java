@@ -48,7 +48,7 @@ public class MapsActivity extends MapActivity implements InitializeActionBar {
 			mapView.setMapsInformations(setStationsInfos.getMapsInformations());
 		} catch (RuntimeException e) {
 			Log.e(LOG_TAG, "#onCreate() exception", e);
-			Toast.makeText(this, getString(R.string.no_connection), Toast.LENGTH_LONG);
+			Toast.makeText(this, getString(R.string.error_no_connection), Toast.LENGTH_LONG);
 		}	
 	}
 

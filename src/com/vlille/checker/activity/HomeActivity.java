@@ -148,11 +148,11 @@ public class HomeActivity extends VlilleListActivity implements InitializeAction
 		ActionItem searchByMapsItem = new ActionItem(
 				QUICK_DIALOG_SEARCH_BY_MAPS,
 				getString(R.string.quickdialog_maps),
-				getResources().getDrawable(R.drawable.ic_menu_map));
+				getResources().getDrawable(R.drawable.ic_menu_mapmode));
 		ActionItem searchByListItem = new ActionItem(
 				QUICK_DIALOG_SEARCH_BY_LIST,
 				getString(R.string.quickdialog_list),
-				getResources().getDrawable(R.drawable.ic_menu_list));
+				getResources().getDrawable(R.drawable.ic_menu_moreoverflow));
 		
 		searchByListItem.setSticky(true);
 		searchByMapsItem.setSticky(true);
@@ -288,7 +288,7 @@ public class HomeActivity extends VlilleListActivity implements InitializeAction
 	private class LocationAction extends AbstractAction {
 
 		public LocationAction() {
-			super(android.R.drawable.ic_menu_mylocation);
+			super(R.drawable.ic_menu_mylocation);
 		}
 
 		@Override
@@ -315,7 +315,7 @@ public class HomeActivity extends VlilleListActivity implements InitializeAction
 	private class QuickDialogAction extends AbstractAction {
 		
 		public QuickDialogAction() {
-			super(android.R.drawable.ic_menu_add);
+			super(R.drawable.ic_menu_add);
 		}
 		
 		@Override

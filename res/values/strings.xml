@@ -22,12 +22,14 @@
 	<!-- Common strings -->
     <string name="loading">Chargement...</string>
     <string name="refresh">Rafraîchir</string>
-    <string name="no_connection">Pas de connexion réseau disponible</string>
     <string name="ok">Ok</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
     <string name="cancel">Cancel</string> 
-    
+    <string name="preferences">Préférences</string>
+
+    <!-- Errors -->
+    <string name="error_no_connection">Pas de connexion réseau disponible</string>
     <string name="error_initialization_stations">Erreur durant l\'initialisation des stations</string>
     <string name="error_no_stations_near_current_location">Aucune station près de votre position actuelle</string>
     <string name="error_no_location_found">Aucune position disponible</string>
@@ -36,7 +38,6 @@
     <string name="preferences_home">Liste des stations</string>
     <string name="preferences_localisation">Localisation</string>
       
-    <string name="settings_title">Préférences</string>
     <string name="home_display_adress_title">Détail des stations</string>
     <string name="home_display_adress_summary">Affiche l\'adresse des stations.</string>
     

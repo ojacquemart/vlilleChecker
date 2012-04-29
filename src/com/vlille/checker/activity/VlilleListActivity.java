@@ -8,10 +8,11 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.vlille.checker.R;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.utils.ApplicationContextHelper;
-import com.vlille.checker.utils.Toaster;
 
 /**
  * Base Vlille Activity with helper methods.
@@ -30,20 +31,13 @@ public abstract class VlilleListActivity extends ListActivity {
 		
 		final boolean networkIsAvailable = networkInfo != null && networkInfo.isAvailable();
 		if (!networkIsAvailable) {
-			debug("No network available!");
-			Toaster.withContext(getApplicationContext()).noConnection();
+			Log.d(LOG_TAG, "No network available!");
+			Toast.makeText(this, R.string.error_no_connection, Toast.LENGTH_LONG).show();
 		}
 		
 		return networkIsAvailable;
 	}
 	
-	protected void debug(String text) {
-		if (text == null) {
-			text = "";
-		}
-		
-		Log.d(LOG_TAG, text);
-	}
 	
 	protected InputStream getInputStream() {
 		return ApplicationContextHelper.getInputStream(getApplicationContext());
