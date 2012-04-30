@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.vlille.checker.R;
 import com.vlille.checker.model.Station;
-import com.vlille.checker.utils.ApplicationContextHelper;
+import com.vlille.checker.utils.ContextHelper;
 
 public class SelectStationsAdapter extends ArrayAdapter<Station> {
 
@@ -36,7 +36,7 @@ public class SelectStationsAdapter extends ArrayAdapter<Station> {
 			view = layout.inflate(R.layout.home_search_list_stations, null);
 		}
 		
-		final SharedPreferences sharedPrefs = ApplicationContextHelper.getPrefs(context);
+		final SharedPreferences sharedPrefs = ContextHelper.getPrefs(context);
 		final Station station = stations.get(position);
 		
 		CheckBox checkbox = (CheckBox) view.findViewById(R.id.preferences_station_checked);
@@ -52,7 +52,7 @@ public class SelectStationsAdapter extends ArrayAdapter<Station> {
 					String stationId = station.getId();
 					CheckBox onclickCheckbox = (CheckBox) v.findViewById(R.id.preferences_station_checked);
 					
-					ApplicationContextHelper.registerPrefsStation(context, stationId, onclickCheckbox.isChecked());
+					ContextHelper.registerPrefsStation(context, stationId, onclickCheckbox.isChecked());
 				}
 			});
 				

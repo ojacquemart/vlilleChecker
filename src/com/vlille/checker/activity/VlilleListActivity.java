@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.vlille.checker.R;
 import com.vlille.checker.model.Station;
-import com.vlille.checker.utils.ApplicationContextHelper;
+import com.vlille.checker.utils.ContextHelper;
 
 /**
  * Base Vlille Activity with helper methods.
@@ -40,23 +40,23 @@ public abstract class VlilleListActivity extends ListActivity {
 	
 	
 	protected InputStream getInputStream() {
-		return ApplicationContextHelper.getInputStream(getApplicationContext());
+		return ContextHelper.getInputStream(getApplicationContext());
 	}
 	
 	public List<Station> getAllStations() {
-		return ApplicationContextHelper.getAllStations(getApplicationContext());
+		return ContextHelper.getAllStations(getApplicationContext());
 	}
 	
 	protected SharedPreferences getPrefs() {
-		return ApplicationContextHelper.getPrefs(getApplicationContext());
+		return ContextHelper.getPrefs(getApplicationContext());
 	}
 	
 	protected boolean isStarred(String stationId) {
-		return ApplicationContextHelper.isStarred(getApplicationContext(), stationId);
+		return ContextHelper.isStarred(getApplicationContext(), stationId);
 	}
 
 	protected List<String> getStarredIdsStations() {
-		return ApplicationContextHelper.getStarred(getApplicationContext());
+		return ContextHelper.getStarred(getApplicationContext());
 	}
 	
 }

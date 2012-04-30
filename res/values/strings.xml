@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<!-- App details -->
+
+    <!-- App details -->
     <string name="app_name">Vlille Checker</string>
     <string name="app_name_title">Vlille Checker</string>
-    
+
     <!-- Home -->
     <string name="home_add_station">Ajouter une station</string>
     <string name="quickdialog_maps">Google Maps</string>
     <string name="quickdialog_stations_list">Liste des stations</string>
     <string name="starred_title">Sauvegardé</string>
 
-	<!-- Common strings -->
+    <!-- Common strings -->
     <string name="stations_list">Liste des stations</string>
     <string name="location">Localisation</string>
-     <string name="bike">Vélo</string>
+    <string name="bike">Vélo</string>
     <string name="attach">Emplacement</string>
     <string name="station_out_of_service">La station est en maintenance</string>
-    
     <string name="preferences">Préférences</string>
     <string name="loading">Chargement...</string>
     <string name="refresh">Rafraîchir</string>
     <string name="ok">Ok</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
-    <string name="cancel">Cancel</string> 
+    <string name="cancel">Cancel</string>
 
     <!-- Errors -->
     <string name="error_occured">Une erreur est survenue.</string>
@@ -32,30 +32,36 @@
     <string name="error_initialization_stations">Erreur durant l\'initialisation des stations</string>
     <string name="error_no_stations_near_current_location">Aucune station près de votre position actuelle</string>
     <string name="error_no_location_found">Aucune position disponible</string>
-    
+
     <!-- Home Preferences -->
     <string name="prefs_stations_details_title">Détail des stations</string>
     <string name="prefs_stations_details_summary">Affiche l\'adresse des stations</string>
-    
     <string name="prefs_location_enable_gps_title">Activer le GPS</string>
     <string name="prefs_location_enable_gps_summary">Localiser les stations à l\'aide du GPS</string>
-    
+
     <!-- Position Preferences -->
     <string name="prefs_position_title">Position</string>
     <string name="prefs_position_distance">Distance</string>
     <string name="prefs_position_radius_distance_title">Stations autour de moi</string>
     <string name="prefs_position_radius_distance_summary">Dans un rayon de</string>
     <string name="prefs_position_radius_distance_unit">m</string>
-    
+
     <!-- Position -->
     <string name="distance">Distance</string>
     <string name="error_no_location_available">Aucune localisation possible</string>
-    
-	<!-- Search -->
+
+    <!-- Search -->
     <string name="search_hint">Nom de la station</string>
     <string name="search_no_result">Aucun résultat</string>
     <string name="search_suggestion_error">Une erreur est survenue</string>
-    
+
+    <!-- Filter -->
+    <string name="prefs_filters">Filtres pour la carte Maps</string>
+    <string name="prefs_filter_least_one_bike_title">Vélos libres</string>
+    <string name="prefs_filter_least_one_bike_summary">Afficher les stations avec au moins un vélo disponible</string>
+    <string name="prefs_filter_least_one_attach_title">Emplacements restants</string>
+    <string name="prefs_filter_least_one_attach_summary">Afficher les stations avec au moins un emplacement disponible</string>
+
     <!-- About -->
     <string name="about_title">A propos de</string>
     <string name="about_text">Vlille Checker est dédié aux utilisateurs du V\'lille et de son service VLS (Vélos en Libre Service).
@@ -64,21 +70,18 @@
     - vos stations favorites afin de contrôler les vélos ou emplacement disponibles;\n
     - trouver une station proche de votre position grâce à la géolocalisation.\n\n
     
-    Contactez le développeur:\n
-    <a href="o.jacquemart@gmail.com">o.jacquemart@gmail.com</a>\n
-	<a href="http://www.twitter.com/ojacquemart">twitter.com/ojacquemart</a>
-    </string>
+    Contactez le développeur:\n<a href="o.jacquemart@gmail.com">o.jacquemart@gmail.com</a>\n<a href="http://www.twitter.com/ojacquemart">twitter.com/ojacquemart</a></string>
 
-	<!-- ACRA toast notifications texts. -->    
+    <!-- ACRA toast notifications texts. -->
     <string name="crash_toast_text">Oops, une erreur est survenue...</string>
-	<string name="crash_notif_ticker_text">Unexpected error, please send a report...</string>
-	<string name="crash_notif_title">CrashTest has crashed...</string>
-	<string name="crash_notif_text">Please click here to help fix the issue.</string>
-	    
-	<string name="crash_dialog_title">CrashTest has crashed</string>
-	<string name="crash_dialog_text">An unexpected error occurred forcing the
+    <string name="crash_notif_ticker_text">Unexpected error, please send a report...</string>
+    <string name="crash_notif_title">CrashTest has crashed...</string>
+    <string name="crash_notif_text">Please click here to help fix the issue.</string>
+    <string name="crash_dialog_title">CrashTest has crashed</string>
+    <string name="crash_dialog_text">An unexpected error occurred forcing the
 	    application to stop. Please help us fix this by sending us error data,
 	    all you have to do is click \'OK\'.</string>
-	<string name="crash_dialog_comment_prompt">You might add your comments about the problem below:</string>
-	<string name="crash_dialog_ok_toast">Thank you !</string>
+    <string name="crash_dialog_comment_prompt">You might add your comments about the problem below:</string>
+    <string name="crash_dialog_ok_toast">Thank you !</string>
+
 </resources>

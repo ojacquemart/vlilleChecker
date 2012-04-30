@@ -8,6 +8,11 @@ public class PreferenceKeys {
 	public static final String HOME_DISPLAY_ADRESS = "prefs_home_display_adress_value";
 	
 	/**
+	 * The default display station address value.
+	 */
+	public static final boolean HOME_DISPLAY_DEFAULT_VALUE = true;
+	
+	/**
 	 * To activate the gps localisation.
 	 */
 	public static final String LOCALISATION_GPS_ACTIVATED = "prefs_localisation_gps_activated_value";
@@ -21,4 +26,5 @@ public class PreferenceKeys {
 	 * The default radius value.
 	 */
 	public static final long POSITION_RADIUS_DEFAULT_VALUE = 500L;
+	
 }

@@ -21,7 +21,7 @@ import com.markupartist.android.widget.ActionBar.AbstractAction;
 import com.vlille.checker.R;
 import com.vlille.checker.maps.LocationManagerWrapper;
 import com.vlille.checker.model.Station;
-import com.vlille.checker.utils.ApplicationContextHelper;
+import com.vlille.checker.utils.ContextHelper;
 
 public class LocationMapsActivity extends MapsActivity {
 
@@ -46,11 +46,13 @@ public class LocationMapsActivity extends MapsActivity {
 		@Override
 		public void onStatusChanged(String provider, int status, Bundle extras) {
 			Log.d(LOG_TAG, "onStatusChanged");
+			onResume();
 		}
 		
 		@Override
 		public void onProviderEnabled(String provider) {
 			Log.d(LOG_TAG, "onProviderEnabled");
+			onResume();
 		}
 		
 		@Override
@@ -96,7 +98,7 @@ public class LocationMapsActivity extends MapsActivity {
 		final List<Station> stations = setStationsInfos.getStations();
 		final Location currentLocation = mapView.getCurrentLocation();
 		if (stations != null && currentLocation != null) {
-			long parameterDistanceBetweenStations = ApplicationContextHelper.getRadiusValue(this);
+			long parameterDistanceBetweenStations = ContextHelper.getRadiusValue(this);
 			Log.d(LOG_TAG, "Distance between stations parameter = " + parameterDistanceBetweenStations);
 			
 			for (Station eachStation : stations) {

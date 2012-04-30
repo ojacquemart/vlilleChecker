@@ -8,6 +8,7 @@
             android:summary="@string/prefs_stations_details_summary"
             />
     </PreferenceCategory>
+    
     <PreferenceCategory android:title="@string/location" >
         <CheckBoxPreference
             android:defaultValue="false"
@@ -16,4 +17,19 @@
             android:summary="@string/prefs_location_enable_gps_summary"
             />
     </PreferenceCategory>
+<!-- TODO: Later if really needed -->
+<!--     <PreferenceCategory android:title="@string/prefs_filters" > -->
+<!--         <CheckBoxPreference -->
+<!--             android:defaultValue="false" -->
+<!--             android:key="prefs_filter_one_bike_value" -->
+<!--             android:title="@string/prefs_filter_least_one_bike_title" -->
+<!--             android:summary="@string/prefs_filter_least_one_bike_summary" -->
+<!--             /> -->
+<!--         <CheckBoxPreference -->
+<!--             android:defaultValue="false" -->
+<!--             android:key="prefs_filter_one_attach_value" -->
+<!--             android:title="@string/prefs_filter_least_one_attach_title" -->
+<!--             android:summary="@string/prefs_filter_least_one_attach_summary" -->
+<!--             /> -->
+<!--     </PreferenceCategory> -->
 </PreferenceScreen>

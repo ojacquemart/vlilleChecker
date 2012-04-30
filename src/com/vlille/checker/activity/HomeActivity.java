@@ -23,9 +23,9 @@ import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.AbstractAction;
 import com.vlille.checker.R;
 import com.vlille.checker.model.Station;
-import com.vlille.checker.service.StationResultReceiver;
-import com.vlille.checker.service.StationResultReceiver.Receiver;
-import com.vlille.checker.service.StationsRetrieverService;
+import com.vlille.checker.stations.service.StationsResultReceiver;
+import com.vlille.checker.stations.service.StationsRetrieverService;
+import com.vlille.checker.stations.service.StationsResultReceiver.Receiver;
 import com.vlille.checker.utils.MiscUtils;
 
 /**
@@ -37,7 +37,7 @@ public class HomeActivity extends VlilleListActivity implements InitializeAction
 	private static final int QUICK_DIALOG_SEARCH_BY_LIST = 2;
 
 	private QuickAction quickDialogAction; 
-	private StationResultReceiver resultReceiver;
+	private StationsResultReceiver resultReceiver;
 	private ProgressDialog progressDialog;
 	
 	@Override
@@ -87,7 +87,7 @@ public class HomeActivity extends VlilleListActivity implements InitializeAction
 			}
 			
 			Log.d(LOG_TAG, "Start retriever service.");
-			resultReceiver = new StationResultReceiver(new Handler());
+			resultReceiver = new StationsResultReceiver(new Handler());
 			resultReceiver.setReceiver(this);
 			
 			final Intent intent = new Intent(Intent.ACTION_SYNC, null, getApplicationContext(), StationsRetrieverService.class);

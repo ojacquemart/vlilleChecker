@@ -10,16 +10,17 @@
         android:targetSdkVersion="15"/>
 
     <application
+        android:name=".VlilleChecker"
 		android:label="@string/app_name"
         android:icon="@drawable/logo"
-        android:theme="@style/MainTheme" android:name=".StationsChecker">
+        android:theme="@style/MainTheme">
 
         <!-- ACRA Activity -->
 		<activity android:name="org.acra.CrashReportDialog"
-        android:theme="@android:style/Theme.Dialog"
-        android:launchMode="singleInstance"
-        android:excludeFromRecents="true"
-        android:finishOnTaskLaunch="true" />        
+	        android:theme="@android:style/Theme.Dialog"
+	        android:launchMode="singleInstance"
+	        android:excludeFromRecents="true"
+	        android:finishOnTaskLaunch="true" />        
         
         <!-- Home Activity -->
         <activity
@@ -83,11 +84,11 @@
         
 		<!-- Provides search suggestions for words and their definitions. -->
         <provider
-            android:name=".provider.StationProvider"
-            android:authorities="com.vlille.checker.provider.StationProvider"
+            android:name=".stations.provider.StationsProvider"
+            android:authorities="com.vlille.checker.stations.provider.StationsProvider"
 		/>
         
-        <service android:name=".service.StationsRetrieverService"/>
+        <service android:name=".stations.service.StationsRetrieverService"/>
         
         <!-- Google Maps library -->
         <uses-library android:name="com.google.android.maps" />
@@ -98,5 +99,6 @@
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />    
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>

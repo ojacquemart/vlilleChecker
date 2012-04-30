@@ -3,7 +3,7 @@ package com.vlille.checker.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.vlille.checker.xml.VlilleXMLConstants;
+import com.vlille.checker.stations.Constants;
 
 /**
  * Represents the details of a single vlille station.
@@ -95,7 +95,7 @@ public class Station implements Comparable<Station>, Parcelable {
 	}
 	
 	public boolean isOutOfService() {
-		return !status.equals(VlilleXMLConstants.STATION_OUT_OF_SERVICE.value());
+		return !status.equals(Constants.FLAG_OUT_OF_SERVICE);
 	}
 
 	public void setStatus(String status) {
@@ -123,7 +123,7 @@ public class Station implements Comparable<Station>, Parcelable {
 	}
 	
 	public boolean isCb() {
-		return paiement.equals(VlilleXMLConstants.STATION_WITH_CB.value());
+		return paiement.equals(Constants.FLAG_ALLOWS_CB);
 	}
 
 	public void setPaiement(String paiement) {

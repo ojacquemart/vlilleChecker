@@ -2,6 +2,8 @@ package com.vlille.checker.maps;
 
 import java.util.List;
 
+import org.apache.commons.lang3.time.StopWatch;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -16,12 +18,13 @@ import android.widget.Toast;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
 import com.vlille.checker.R;
-import com.vlille.checker.maps.StationsOverlays.MyOverlayItem;
+import com.vlille.checker.maps.overlay.PositionCircleOverlay;
+import com.vlille.checker.maps.overlay.StationsOverlays;
+import com.vlille.checker.maps.overlay.StationsOverlays.MyOverlayItem;
 import com.vlille.checker.model.Station;
-import com.vlille.checker.model.StationsMapsInformation;
+import com.vlille.checker.model.StationsMapsInfos;
+import com.vlille.checker.stations.xml.Loader;
 import com.vlille.checker.utils.PositionTransformer;
-import com.vlille.checker.xml.loader.StationsLoader;
-import com.vlille.checker.xml.loader.StationsLoaderImpl;
 
 /**
  * @see http://stackoverflow.com/questions/4729255/how-to-implemennt-onzoomlistener-on-mapview
@@ -42,7 +45,7 @@ public class VlilleMapView extends MapView {
     private GeoPoint mOldCenterGeoPoint;
     private OnPanAndZoomListener mListener;
     
-    private StationsMapsInformation mapsInformation;
+    private StationsMapsInfos mapsInformation;
     private List<Station> stations;
     private StationsOverlays mStationsOverlays;
 
@@ -61,7 +64,7 @@ public class VlilleMapView extends MapView {
         init();
     }
     
-    public void setMapsInformations(StationsMapsInformation mapsInformation) {
+    public void setMapsInformations(StationsMapsInfos mapsInformation) {
     	this.mapsInformation = mapsInformation;
     }
     
@@ -113,6 +116,25 @@ public class VlilleMapView extends MapView {
 		}
 	}
 	
+	public void centerControllerAndDrawCircleOverlay() {
+		resetOverlays();
+		
+		if (mCurrentLocation != null) {
+			Log.i(LOG_TAG, "Center map and draw circle overlay");
+			
+			int latitudeE6 = PositionTransformer.toE6(mCurrentLocation.getLatitude());
+			int longitudeE6 = PositionTransformer.toE6(mCurrentLocation.getLongitude());
+			
+			// Center on the current location.
+			final GeoPoint locationGeoPoint = new GeoPoint(latitudeE6, longitudeE6);
+			getController().setCenter(locationGeoPoint);
+			
+			// Draw the circle overlay.
+			PositionCircleOverlay circleOverlay = new PositionCircleOverlay(latitudeE6, longitudeE6);
+			getOverlays().add(circleOverlay);
+		}
+	}
+	
 	public void resetStationsOverlays() {
 		mStationsOverlays = new StationsOverlays(DEFAULT_MARKER, this, getContext());
 	}
@@ -143,6 +165,9 @@ public class VlilleMapView extends MapView {
 			
 			Log.i(LOG_TAG, "Initialize all overlays");
 			
+			StopWatch watch = new StopWatch();
+			watch.start();
+			
 			for (Station eachStation : stations) {
 				GeoPoint point = new GeoPoint(eachStation.getLatitudeE6(), eachStation.getLongituteE6());
 				MyOverlayItem overlay = mStationsOverlays.new MyOverlayItem(point);
@@ -155,10 +180,11 @@ public class VlilleMapView extends MapView {
 			mStationsOverlays.populateNow();
 			getOverlays().add(mStationsOverlays);
 			
+			watch.stop();
+			Log.d(LOG_TAG, "Initialized in " + watch.getTime());
+			
 			return null;
 		}
-
-		
 
 		@Override
 		protected void onPostExecute(Void result) {
@@ -171,25 +197,6 @@ public class VlilleMapView extends MapView {
 		}
 		
 	}
-	
-	public void centerControllerAndDrawCircleOverlay() {
-		resetOverlays();
-		
-		if (mCurrentLocation != null) {
-			Log.i(LOG_TAG, "Center map and draw circle overlay");
-			
-			int latitudeE6 = PositionTransformer.toE6(mCurrentLocation.getLatitude());
-			int longitudeE6 = PositionTransformer.toE6(mCurrentLocation.getLongitude());
-			
-			// Center on the current location.
-			final GeoPoint locationGeoPoint = new GeoPoint(latitudeE6, longitudeE6);
-			getController().setCenter(locationGeoPoint);
-			
-			// Draw the circle overlay.
-			PositionCircleOverlay circleOverlay = new PositionCircleOverlay(latitudeE6, longitudeE6);
-			getOverlays().add(circleOverlay);
-		}
-	}
 
 	private void resetOverlays() {
 		getOverlays().clear();
@@ -201,7 +208,7 @@ public class VlilleMapView extends MapView {
 	
 	private class StationsDetailsAsyncLoader extends AsyncTask<Void, Void, Void> {
 
-		private StationsLoader stationsLoader = new StationsLoaderImpl();
+		private Loader stationsLoader = new Loader();
 		
 		@Override
 		protected Void doInBackground(Void ... params) {
@@ -209,17 +216,18 @@ public class VlilleMapView extends MapView {
 			if (!VlilleMapView.isDetailledZoomLevel(getZoomLevel())) {
 				return null;
 			}
+			
+			Log.d(LOG_TAG, "Update visible overlays");
+			StopWatch watch = new StopWatch();
+			watch.start();
 
 			// Only load stations if station is map bounds and if is not updated more than one minute.
-			Rect mapBounds = getMapBounds();
+			final Rect mapBounds = getMapBounds();
 			for (MyOverlayItem eachOverlay : mStationsOverlays.getStationsOverlay()) {
 				GeoPoint point = eachOverlay.getPoint();
 				boolean bounded = mapBounds.contains(point.getLongitudeE6(), point.getLatitudeE6());
 				eachOverlay.updateMarker(!bounded);
-
 				if (bounded && !eachOverlay.isUpToDate()) {
-					Log.d(LOG_TAG, "update overlay");
-					
 					try {
 						updateDetailStation(eachOverlay);
 					} catch (RuntimeException e) {
@@ -231,6 +239,9 @@ public class VlilleMapView extends MapView {
 			}
 		
 			postInvalidate();
+			
+			watch.stop();
+			Log.d(LOG_TAG, "Initialized in " + watch.getTime());
 			
 			return null;
 		}

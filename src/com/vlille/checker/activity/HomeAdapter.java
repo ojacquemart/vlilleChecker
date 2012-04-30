@@ -16,9 +16,9 @@ import android.widget.TextView;
 
 import com.vlille.checker.R;
 import com.vlille.checker.model.Station;
-import com.vlille.checker.utils.ApplicationContextHelper;
+import com.vlille.checker.stations.ColorSelector;
+import com.vlille.checker.utils.ContextHelper;
 import com.vlille.checker.utils.MiscUtils;
-import com.vlille.checker.utils.StationColorSelector;
 
 /**
  * Adapter for the stations detail.
@@ -46,7 +46,7 @@ public class HomeAdapter extends ArrayAdapter<Station> {
 			view = layout.inflate(R.layout.home_list_stations, null);
 			
 			// Hide or display the adress box.
-			final boolean displayStationAdress = ApplicationContextHelper.isDisplayingStationAdress(getContext());
+			final boolean displayStationAdress = ContextHelper.isDisplayingStationAdress(getContext());
 			final View stationAdressBox = view.findViewById(R.id.station_adress_box);
 			stationAdressBox.setVisibility(displayStationAdress ? LinearLayout.VISIBLE : LinearLayout.GONE);
 		}
@@ -64,7 +64,7 @@ public class HomeAdapter extends ArrayAdapter<Station> {
 			@Override
 			public void onClick(View v) {
 				stations.remove(position);
-				ApplicationContextHelper.doPrefsRemove(getContext(), station.getId());
+				ContextHelper.doPrefsRemove(getContext(), station.getId());
 				arrayAdapter.notifyDataSetChanged();
 			}
 		});
@@ -105,7 +105,7 @@ public class HomeAdapter extends ArrayAdapter<Station> {
 	}
 	
 	private int getColor(int number) {
-		return resources.getColor(StationColorSelector.getColor(number, false));
+		return resources.getColor(ColorSelector.getColor(number, false));
 	}
 
 	@Override

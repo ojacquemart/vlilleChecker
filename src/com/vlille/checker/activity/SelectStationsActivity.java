@@ -17,9 +17,9 @@ import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.AbstractAction;
 import com.vlille.checker.R;
 import com.vlille.checker.model.Station;
-import com.vlille.checker.provider.DictionaryDatabase;
+import com.vlille.checker.stations.Filter;
+import com.vlille.checker.stations.provider.DictionaryDatabase;
 import com.vlille.checker.utils.MiscUtils;
-import com.vlille.checker.utils.StationsFilter;
 
 /**
  * Select stations activity.
@@ -78,7 +78,7 @@ public class SelectStationsActivity extends VlilleListActivity {
 		final String query = intent.getStringExtra(SearchManager.QUERY);
 		Log.d(LOG_TAG, query);
 		
-		final List<Station> filteredStations = StationsFilter.doFilter(stations, query);
+		final List<Station> filteredStations = Filter.doFilter(stations, query);
 		if (filteredStations.isEmpty()) {
 			Toast.makeText(this, R.string.search_no_result, Toast.LENGTH_SHORT).show();
 			setFullAdapter();

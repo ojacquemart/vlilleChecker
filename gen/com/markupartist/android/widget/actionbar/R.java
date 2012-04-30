@@ -174,10 +174,10 @@ containing a value of this type.
         public static final int position_prefs_menu=0x7f030011;
     }
     public static final class string {
-        public static final int about_text=0x7f060029;
+        public static final int about_text=0x7f06002e;
         /**  About 
          */
-        public static final int about_title=0x7f060028;
+        public static final int about_title=0x7f06002d;
         public static final int actionbar_activity_not_found=0x7f060002;
         /**  App details 
          */
@@ -186,16 +186,16 @@ containing a value of this type.
         public static final int attach=0x7f06000b;
         public static final int bike=0x7f06000a;
         public static final int cancel=0x7f060013;
-        public static final int crash_dialog_comment_prompt=0x7f060030;
-        public static final int crash_dialog_ok_toast=0x7f060031;
-        public static final int crash_dialog_text=0x7f06002f;
-        public static final int crash_dialog_title=0x7f06002e;
-        public static final int crash_notif_text=0x7f06002d;
-        public static final int crash_notif_ticker_text=0x7f06002b;
-        public static final int crash_notif_title=0x7f06002c;
+        public static final int crash_dialog_comment_prompt=0x7f060035;
+        public static final int crash_dialog_ok_toast=0x7f060036;
+        public static final int crash_dialog_text=0x7f060034;
+        public static final int crash_dialog_title=0x7f060033;
+        public static final int crash_notif_text=0x7f060032;
+        public static final int crash_notif_ticker_text=0x7f060030;
+        public static final int crash_notif_title=0x7f060031;
         /**  ACRA toast notifications texts. 
          */
-        public static final int crash_toast_text=0x7f06002a;
+        public static final int crash_toast_text=0x7f06002f;
         /**  Position 
          */
         public static final int distance=0x7f060023;
@@ -217,6 +217,13 @@ containing a value of this type.
         public static final int no=0x7f060012;
         public static final int ok=0x7f060010;
         public static final int preferences=0x7f06000d;
+        public static final int prefs_filter_least_one_attach_summary=0x7f06002c;
+        public static final int prefs_filter_least_one_attach_title=0x7f06002b;
+        public static final int prefs_filter_least_one_bike_summary=0x7f06002a;
+        public static final int prefs_filter_least_one_bike_title=0x7f060029;
+        /**  Filter 
+         */
+        public static final int prefs_filters=0x7f060028;
         public static final int prefs_location_enable_gps_summary=0x7f06001d;
         public static final int prefs_location_enable_gps_title=0x7f06001c;
         public static final int prefs_position_distance=0x7f06001f;
