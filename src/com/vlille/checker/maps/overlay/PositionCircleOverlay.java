@@ -8,8 +8,8 @@ import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.Projection;
+import com.vlille.checker.maps.PositionTransformer;
 import com.vlille.checker.utils.ContextHelper;
-import com.vlille.checker.utils.PositionTransformer;
 
 public class PositionCircleOverlay extends Overlay {
 	
