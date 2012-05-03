@@ -8,10 +8,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+import com.vlille.checker.maps.PositionTransformer;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.model.SetStationsInfos;
 import com.vlille.checker.model.StationsMapsInfos;
-import com.vlille.checker.utils.PositionTransformer;
 
 public class StationsListHandler extends BaseStationHandler {
 

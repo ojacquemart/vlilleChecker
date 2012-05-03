@@ -1,4 +1,4 @@
-package com.vlille.checker.utils;
+package com.vlille.checker.maps;
 
 import org.apache.commons.lang3.StringUtils;
 

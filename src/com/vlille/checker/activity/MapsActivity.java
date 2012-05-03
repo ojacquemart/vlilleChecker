@@ -72,13 +72,16 @@ public class MapsActivity extends MapActivity implements InitializeActionBar {
 		super.onResume();
 		
 		try {
-			mapView.setStations(getStations());
-			mapView.initOverlays();
+			doResume();
 		} catch (RuntimeException e) {
 			Log.e(LOG_TAG, "#onResume() exception", e);
 			Toast.makeText(this, getString(R.string.error_initialization_stations), Toast.LENGTH_LONG);
 		}		
-		
+	}
+	
+	public void doResume() {
+		mapView.setStations(getStations());
+		mapView.initOverlays();
 		mapView.checkDelay();
 	}
 	

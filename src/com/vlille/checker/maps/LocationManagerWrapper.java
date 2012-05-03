@@ -1,10 +1,13 @@
 package com.vlille.checker.maps;
 
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 
@@ -24,11 +27,50 @@ public class LocationManagerWrapper {
 	}
 
 	public Location getCurrentLocation() {
-		Location location = isGpsProviderEnabled() 
-				? locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER) 
-				: locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-		
-		return location;
+		return getLastBestLocation(PositionConstants.DISTANCE_UPDATE_IN_METERS, PositionConstants.DURATION_UPDATE_IN_MILLIS);
+//		Location location = isGpsProviderEnabled() 
+//				? locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER) 
+//				: locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+//		
+//		return location;
+	}
+
+	/**
+	   * Returns the most accurate and timely previously detected location.
+	   * Where the last result is beyond the specified maximum distance or 
+	   * latency a one-off location update is returned via the {@link LocationListener}
+	   * specified in {@link setChangedLocationListener}.
+	   * @param minDistance Minimum distance before we require a location update.
+	   * @param minTime Minimum time required between location updates.
+	   * @return The most accurate and / or timely previously detected location.
+	   */
+	public Location getLastBestLocation(int minDistance, long minTime) {
+		Location bestResult = null;
+		float bestAccuracy = Float.MAX_VALUE;
+		long bestTime = Long.MIN_VALUE;
+
+		// Iterate through all the providers on the system, keeping
+		// note of the most accurate result within the acceptable time limit.
+		// If no result is found within maxTime, return the newest Location.
+		List<String> matchingProviders = locationManager.getAllProviders();
+		for (String provider : matchingProviders) {
+			Location location = locationManager.getLastKnownLocation(provider);
+			if (location != null) {
+				float accuracy = location.getAccuracy();
+				long time = location.getTime();
+
+				if ((time > minTime && accuracy < bestAccuracy)) {
+					bestResult = location;
+					bestAccuracy = accuracy;
+					bestTime = time;
+				} else if (time < minTime && bestAccuracy == Float.MAX_VALUE && time > bestTime) {
+					bestResult = location;
+					bestTime = time;
+				}
+			}
+		}
+
+		return bestResult;
 	}
 
 	public void checkAndEnableGpsProvider() {

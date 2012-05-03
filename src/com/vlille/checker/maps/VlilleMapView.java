@@ -24,7 +24,6 @@ import com.vlille.checker.maps.overlay.StationsOverlays.MyOverlayItem;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.model.StationsMapsInfos;
 import com.vlille.checker.stations.xml.Loader;
-import com.vlille.checker.utils.PositionTransformer;
 
 /**
  * @see http://stackoverflow.com/questions/4729255/how-to-implemennt-onzoomlistener-on-mapview
@@ -217,31 +216,33 @@ public class VlilleMapView extends MapView {
 				return null;
 			}
 			
-			Log.d(LOG_TAG, "Update visible overlays");
-			StopWatch watch = new StopWatch();
-			watch.start();
+			if (mStationsOverlays != null) {
+				Log.d(LOG_TAG, "Update visible overlays");
+				StopWatch watch = new StopWatch();
+				watch.start();
 
-			// Only load stations if station is map bounds and if is not updated more than one minute.
-			final Rect mapBounds = getMapBounds();
-			for (MyOverlayItem eachOverlay : mStationsOverlays.getStationsOverlay()) {
-				GeoPoint point = eachOverlay.getPoint();
-				boolean bounded = mapBounds.contains(point.getLongitudeE6(), point.getLatitudeE6());
-				eachOverlay.updateMarker(!bounded);
-				if (bounded && !eachOverlay.isUpToDate()) {
-					try {
-						updateDetailStation(eachOverlay);
-					} catch (RuntimeException e) {
-						Log.e(LOG_TAG, "doInBackground update station detail", e);
-						cancel(true);
-						throw new IllegalStateException("Exception occured");
+				// Only load stations if station is map bounds and if is not updated more than one minute.
+				final Rect mapBounds = getMapBounds();
+				for (MyOverlayItem eachOverlay : mStationsOverlays.getStationsOverlay()) {
+					GeoPoint point = eachOverlay.getPoint();
+					boolean bounded = mapBounds.contains(point.getLongitudeE6(), point.getLatitudeE6());
+					eachOverlay.updateMarker(!bounded);
+					if (bounded && !eachOverlay.isUpToDate()) {
+						try {
+							updateDetailStation(eachOverlay);
+						} catch (RuntimeException e) {
+							Log.e(LOG_TAG, "doInBackground update station detail", e);
+							cancel(true);
+							throw new IllegalStateException("Exception occured");
+						}
 					}
 				}
+				
+				postInvalidate();
+				
+				watch.stop();
+				Log.d(LOG_TAG, "Update visible overlays in " + watch.getTime());
 			}
-		
-			postInvalidate();
-			
-			watch.stop();
-			Log.d(LOG_TAG, "Initialized in " + watch.getTime());
 			
 			return null;
 		}
