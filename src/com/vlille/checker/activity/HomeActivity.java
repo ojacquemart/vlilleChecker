@@ -74,7 +74,7 @@ public class HomeActivity extends VlilleListActivity implements InitializeAction
 		boolean isEmptyStarredStations = starredIdsStations.isEmpty();
 		Log.d(LOG_TAG, "Starred stations empty? " + isEmptyStarredStations);
 		if (isEmptyStarredStations) {
-			showAddNewButtonBox(null);
+			showBoxNewStation(null);
 		} else {
 			handleStarredStations(starredIdsStations);
 		}
@@ -97,7 +97,7 @@ public class HomeActivity extends VlilleListActivity implements InitializeAction
 		} else {
 			Log.d(LOG_TAG, "No network, show the retry view");
 			
-			showErrorBox(true);
+			showBoxError(true);
 		}
 	}
 	
@@ -118,7 +118,7 @@ public class HomeActivity extends VlilleListActivity implements InitializeAction
 			@SuppressWarnings("unchecked")
 			List<Station> results = (List<Station>) resultData.getSerializable("results");
 
-			showAddNewButtonBox(results);
+			showBoxNewStation(results);
 			handleAdapter(results);
 
 			break;
@@ -134,7 +134,7 @@ public class HomeActivity extends VlilleListActivity implements InitializeAction
 			progressDialog.dismiss();
 		}
 		
-		showErrorBox(error);
+		showBoxError(error);
 	}
 	
 	@Override
@@ -258,7 +258,7 @@ public class HomeActivity extends VlilleListActivity implements InitializeAction
 	 * 
 	 * @param stations The starred stations details.
 	 */
-	private void showAddNewButtonBox(List<Station> stations) {
+	private void showBoxNewStation(List<Station> stations) {
 		boolean show = stations == null || stations.isEmpty();
 		
 		MiscUtils.showOrMask((LinearLayout) findViewById(R.id.home_station_new_box), show);
@@ -280,7 +280,7 @@ public class HomeActivity extends VlilleListActivity implements InitializeAction
 	 * 
 	 * @param stations The starred stations details.
 	 */
-	private void showErrorBox(boolean show) {
+	private void showBoxError(boolean show) {
 		MiscUtils.showOrMask((RelativeLayout) findViewById(R.id.home_error_box), show);
 	}	
 	
