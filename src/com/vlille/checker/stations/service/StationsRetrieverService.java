@@ -1,6 +1,7 @@
 package com.vlille.checker.stations.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang3.time.StopWatch;
@@ -68,11 +69,12 @@ public class StationsRetrieverService extends IntentService {
 				stations.add(station);
 			}
 
+			Collections.sort(stations);
+			
 			watcher.stop();
-
 			Log.d(LOG_TAG, "Retrieved " + stations.size() + " stations  in " + watcher.getTime() + "ms");
 
-			bundle.putParcelableArrayList(RESULTS, (ArrayList<Station>) stations);
+			bundle.putSerializable(RESULTS, (ArrayList<Station>) stations);
 			receiver.send(Receiver.FINISHED, bundle);
 		} catch (Exception e) {
 			bundle.putString(Intent.EXTRA_TEXT, e.toString());

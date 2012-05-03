@@ -115,7 +115,8 @@ public class HomeActivity extends VlilleListActivity implements InitializeAction
 			Log.d(LOG_TAG, "All starred stations loaded");
 			finished = true;
 			
-			List<Station> results = resultData.getParcelableArrayList("results");
+			@SuppressWarnings("unchecked")
+			List<Station> results = (List<Station>) resultData.getSerializable("results");
 
 			showAddNewButtonBox(results);
 			handleAdapter(results);

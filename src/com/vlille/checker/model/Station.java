@@ -1,14 +1,11 @@
 package com.vlille.checker.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.vlille.checker.stations.Constants;
 
 /**
  * Represents the details of a single vlille station.
  */
-public class Station implements Comparable<Station>, Parcelable {
+public class Station implements Comparable<Station> {
 
 	private static final int HASHCODE_VALUE = 11;
 	private static final int HASHCODE_MULTIPLIER = 37;
@@ -166,16 +163,6 @@ public class Station implements Comparable<Station>, Parcelable {
 	@Override
 	public int compareTo(Station another) {
 		return name.compareTo(another.getName());
-	}
-
-	@Override
-	public int describeContents() {
-		return 0;
-	}
-
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		
 	}
 
 }
