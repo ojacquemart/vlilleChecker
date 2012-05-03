@@ -19,5 +19,10 @@
 		android:layout_height="fill_parent"
 		android:clickable="true"
 		android:state_enabled="true"
-		android:apiKey="0TInfQPSHmTUA2hM-CmEkz25QqxH1eAL70TizaA" />
+		android:apiKey="0TInfQPSHmTUA2hM-CmEkz25QqxH1eAL70TizaA"
+		 />
+<!-- debug -->
+<!-- 		android:apiKey="0TInfQPSHmTUA2hM-CmEkz25QqxH1eAL70TizaA" -->
+<!-- release -->
+<!-- 		android:apiKey="0TInfQPSHmTXYmp6lQVt5UyIjhpHs1rhSIzfA5A" -->
 </LinearLayout>
