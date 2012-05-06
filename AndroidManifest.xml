@@ -32,7 +32,7 @@
             </intent-filter>
         </activity>
         
-		<!-- Home settings Activity -->
+		<!-- Home Preferences Activity -->
         <activity
             android:name=".activity.HomePreferenceActivity"
             android:label="@string/app_name"
@@ -63,7 +63,7 @@
     		android:theme="@style/MainTheme">
 		</activity>
 		
-		<!-- Localisation Maps Activity -->
+		<!-- Location Maps Activity -->
          <activity
            	android:name=".activity.LocationMapsActivity"
            	android:label="@string/app_name"
