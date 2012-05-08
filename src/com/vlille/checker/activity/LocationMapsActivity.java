@@ -66,8 +66,10 @@ public class LocationMapsActivity extends MapsActivity {
 		
 		@Override
 		public void onLocationChanged(Location location) {
-			Log.d(LOG_TAG, "onLocationChanged from " + location.getProvider());
-			onResume();
+			if (location != null) {
+				Log.d(LOG_TAG, "onLocationChanged from " + location.getProvider());
+				onResume();
+			}
 		}
 	};
 	
