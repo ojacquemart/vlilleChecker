@@ -252,6 +252,7 @@ public class VlilleMapView extends MapView {
 			if (detailledStation == null) {
 				throw new NullPointerException("Station is null");
 			}
+			
 			overlay.copyDetailledStation(detailledStation);
 		}
 		

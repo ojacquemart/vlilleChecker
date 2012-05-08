@@ -27,12 +27,12 @@ import com.vlille.checker.utils.ContextHelper;
 
 public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.MyOverlayItem> {
 	
-	private static final long PAINT_TEXT_SIZE = 15L;
 	private static final int ONE_MINUTE_IN_MILLSECONDS = 1000 * 60;
 	
 	private final String LOG_TAG = getClass().getSimpleName();
 	
 	private final Resources resources;
+	private float scaledDensity;
 	private boolean marker;
 
 	private final StationMarker drawableMarker;
@@ -47,6 +47,7 @@ public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.My
 	public StationsOverlays(Drawable defaultMarker, VlilleMapView mapView, Context context) {
 		super(defaultMarker, mapView, context, new ArrayList<MyOverlayItem>());
 		this.resources = context.getResources();
+		scaledDensity = resources.getDisplayMetrics().scaledDensity;
 		
 		drawableMarker = new StationMarker(context.getResources(), ((BitmapDrawable) defaultMarker).getBitmap());
 		boundCenter(defaultMarker);
@@ -65,9 +66,9 @@ public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.My
 	private Paint initPaint() {
 		Paint paint = new Paint();
 		paint.setTypeface(Typeface.DEFAULT_BOLD);
-		paint.setTextSize(PAINT_TEXT_SIZE);
+		paint.setTextSize(resources.getDimensionPixelSize(R.dimen.overlay_font_size));
 		paint.setAntiAlias(true);
-		paint.setTextAlign(Align.LEFT);
+		paint.setTextAlign(Align.CENTER);
 		
 		return paint;
 	}
@@ -149,7 +150,7 @@ public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.My
 					drawableMarker.bikes = bikes;
 					drawableMarker.attachs = attachs;
 				} else if (station != null && ContextHelper.isStarred(mContext, station.getId())) {
-						drawable = drawablePinStar;
+					drawable = drawablePinStar;
 				} else {
 					drawable = drawablePin;
 				}
@@ -190,14 +191,6 @@ public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.My
 			return upToDate;
 		}
 
-		public void setBikes(Integer bikes) {
-			this.bikes = bikes;
-		}
-
-		public void setAttachs(Integer attachs) {
-			this.attachs = attachs;
-		}
-
 		public Station getStation() {
 			return station;
 		}
@@ -220,11 +213,14 @@ public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.My
 		public void draw(Canvas canvas) {
 			super.draw(canvas);
 			
+//			final float x = -18 * scaledDensity; // Align.LEFT
+			final float x = -11 * scaledDensity; // Align.CENTER
+			
 			paintBikes.setColor(resources.getColor(ColorSelector.getColor(bikes)));
-			canvas.drawText(bikes.toString(), -25, -45, paintBikes);
+			canvas.drawText(bikes.toString(), x, -30 * scaledDensity, paintBikes);
 			
 			paintAttachs.setColor(resources.getColor(ColorSelector.getColor(attachs)));
-			canvas.drawText(attachs.toString(), -25, -20, paintAttachs);
+			canvas.drawText(attachs.toString(), x, -14 * scaledDensity, paintAttachs);
 		}
 	}
 	
