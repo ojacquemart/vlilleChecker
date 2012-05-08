@@ -40,8 +40,8 @@ public class Loader {
 				 */
 				int indexOfParsedStation = allStations.indexOf(parsedStation);
 				if (indexOfParsedStation != -1) {
-					String name = allStations.get(indexOfParsedStation).getName();
-					parsedStation.setName(name);
+					final Station generalStationInfos = allStations.get(indexOfParsedStation);
+					parsedStation.setName(generalStationInfos.getName());
 				}
 			}
 			

@@ -62,6 +62,7 @@ containing a value of this type.
         public static final int actionbar_height=0x7f090000;
         public static final int actionbar_item_height=0x7f090001;
         public static final int actionbar_item_width=0x7f090002;
+        public static final int overlay_font_size=0x7f090003;
     }
     public static final class drawable {
         public static final int action_item_btn=0x7f020000;
