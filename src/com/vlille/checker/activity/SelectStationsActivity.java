@@ -126,7 +126,7 @@ public class SelectStationsActivity extends VlilleListActivity {
 	private class SearchAction extends AbstractAction {
 		
 		public SearchAction() {
-			super(R.drawable.ic_menu_search);
+			super(R.drawable.ic_menu_search_ics);
 		}
 		
 		@Override

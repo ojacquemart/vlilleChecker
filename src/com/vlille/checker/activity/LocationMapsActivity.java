@@ -166,7 +166,7 @@ public class LocationMapsActivity extends MapsActivity {
 	private class RefreshAction extends AbstractAction {
 
         public RefreshAction() {
-            super(R.drawable.ic_menu_refresh);
+            super(R.drawable.ic_menu_refresh_ics);
         }
 
         @Override
