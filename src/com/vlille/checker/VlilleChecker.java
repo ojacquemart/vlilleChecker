@@ -29,7 +29,7 @@ public class VlilleChecker extends Application {
 		super.onCreate();
 		
 		Log.d(LOG_TAG, "DbAdapter initialization");
-		dbAdapter = new DbAdapter(getApplicationContext());
+		dbAdapter = new DbAdapter(this);
 	}
 	
 	@Override

@@ -234,17 +234,13 @@ public class DbAdapter {
 		}
 	
 		@Override
-		public void onCreate(SQLiteDatabase db) {
+		public void onCreate(final SQLiteDatabase db) {
 			Log.d(LOG_TAG, "db #onCreate");
 
-			new Thread(new Runnable() {
-				public void run() {
-					loadStations();
-				}
-			}).start();			
+			loadStations(db);
 		}
 		
-		private void loadStations() {
+		private void loadStations(SQLiteDatabase db) {
 			final DbSchema vlilleCheckerDb = new DbSchema();
 			for (Table eachTable : vlilleCheckerDb.getTables()) {
 				Log.d(LOG_TAG, "Create table " + eachTable.getName());
