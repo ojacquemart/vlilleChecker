@@ -42,7 +42,6 @@ public class TestDbMaker {
 
 	@Test
 	public void testGenerateFields() {
-		System.out.println(TestDbMaker.class.getPackage().getName());
 		final Field idField = Field.newField("id").type(Type.INTEGER).primaryKey().autoIncrement();
 		assertField(idField, "id INTEGER primary key autoincrement not null");
 		
