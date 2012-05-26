@@ -1,4 +1,4 @@
-package com.vlille.checker.stations.provider;
+package com.vlille.checker.provider;
 
 import android.app.SearchManager;
 import android.content.ContentProvider;
@@ -9,11 +9,16 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
-public class StationsProvider extends ContentProvider {
+import com.vlille.checker.VlilleChecker;
+import com.vlille.checker.db.DbAdapter;
+import com.vlille.checker.db.StationTableFields;
 
-	String TAG = "StationProvider";
+public class StationSuggestionsProvider extends ContentProvider {
 
-	public static String AUTHORITY = "com.vlille.checker.stations.provider.StationsProvider";
+	private static final String PROVIDER_PACKAGE_NAME = StationSuggestionsProvider.class.getPackage().getName();
+	private static final String PROVIDER_NAME = StationSuggestionsProvider.class.getSimpleName();
+	
+	public static String AUTHORITY = PROVIDER_PACKAGE_NAME + "." + PROVIDER_NAME;
 	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/stations");
 
 	// MIME types used for searching words or looking up a single definition
@@ -21,8 +26,6 @@ public class StationsProvider extends ContentProvider {
 			+ "/vnd.example.android.searchabledict";
 	public static final String DEFINITION_MIME_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
 			+ "/vnd.example.android.searchabledict";
-
-	private DictionaryDatabase mDictionary;
 
 	// UriMatcher stuff
 	private static final int SEARCH_WORDS = 0;
@@ -49,13 +52,13 @@ public class StationsProvider extends ContentProvider {
 		 */
 		matcher.addURI(AUTHORITY, SearchManager.SUGGEST_URI_PATH_SHORTCUT, REFRESH_SHORTCUT);
 		matcher.addURI(AUTHORITY, SearchManager.SUGGEST_URI_PATH_SHORTCUT + "/*", REFRESH_SHORTCUT);
+		
 		return matcher;
 	}
-
+	
 	@Override
 	public boolean onCreate() {
-		mDictionary = new DictionaryDatabase(getContext());
-		return true;
+		return false;
 	}
 
 	/**
@@ -89,28 +92,32 @@ public class StationsProvider extends ContentProvider {
 
 	private Cursor getSuggestions(String query) {
 		query = query.toLowerCase();
-		String[] columns = new String[] { BaseColumns._ID, DictionaryDatabase.STATION_NAME,
-		/*
-		 * SearchManager.SUGGEST_COLUMN_SHORTCUT_ID, (only if you want to refresh shortcuts)
-		 */
-		SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID };
+		String[] columns = new String[] {
+				BaseColumns._ID,
+				StationTableFields.suggest_text_1.toString(),
+				SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID
+		};
 
-		return mDictionary.getWordMatches(query, columns);
+		return VlilleChecker.getDbAdapter().getWordMatches(query, columns);
 	}
 
 	private Cursor search(String query) {
 		query = query.toLowerCase();
-		String[] columns = new String[] { BaseColumns._ID, DictionaryDatabase.STATION_NAME,
-				DictionaryDatabase.STATION_ID };
+		String[] columns = new String[] {
+				BaseColumns._ID,
+				DbAdapter.STATION_NAME,
+				DbAdapter.STATION_ID };
 
-		return mDictionary.getWordMatches(query, columns);
+		return VlilleChecker.getDbAdapter().getWordMatches(query, columns);
 	}
 
 	private Cursor getWord(Uri uri) {
 		String rowId = uri.getLastPathSegment();
-		String[] columns = new String[] { DictionaryDatabase.STATION_NAME, DictionaryDatabase.STATION_ID };
+		String[] columns = new String[] {
+				DbAdapter.STATION_NAME,
+				DbAdapter.STATION_ID };
 
-		return mDictionary.getWord(rowId, columns);
+		return VlilleChecker.getDbAdapter().getWord(rowId, columns);
 	}
 
 	private Cursor refreshShortcut(Uri uri) {
@@ -122,11 +129,15 @@ public class StationsProvider extends ContentProvider {
 		 * provided with the suggestion query.
 		 */
 		String rowId = uri.getLastPathSegment();
-		String[] columns = new String[] { BaseColumns._ID, DictionaryDatabase.STATION_NAME, DictionaryDatabase.STATION_ID,
+		String[] columns = new String[] {
+				BaseColumns._ID,
+				DbAdapter.STATION_NAME,
+				DbAdapter.STATION_ID,
 				SearchManager.SUGGEST_COLUMN_SHORTCUT_ID,
-				SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID };
+				SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID
+				};
 
-		return mDictionary.getWord(rowId, columns);
+		return VlilleChecker.getDbAdapter().getWord(rowId, columns);
 	}
 
 	/**
@@ -165,4 +176,5 @@ public class StationsProvider extends ContentProvider {
 	public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
 		throw new UnsupportedOperationException();
 	}
+
 }

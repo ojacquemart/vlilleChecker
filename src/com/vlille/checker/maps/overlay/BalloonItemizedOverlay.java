@@ -81,25 +81,7 @@ public abstract class BalloonItemizedOverlay<Item extends OverlayItem> extends
 		return viewOffset;
 	}
 
-	/**
-	 * Override this method to handle a "tap" on a balloon. By default, does
-	 * nothing and returns false.
-	 * 
-	 * @param index
-	 *            - The index of the item whose balloon is tapped.
-	 * @param item
-	 *            - The item whose balloon is tapped.
-	 * @return true if you handled the tap, otherwise false.
-	 */
 	protected boolean onBalloonTap(int index, Item item) {
-//		Intent intent = new Intent(mContext, StationDetails.class)
-//				.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//		intent.setAction(Intent.ACTION_VIEW);
-//		intent.setData(Uri
-//				.withAppendedPath(StationsProvider.CONTENT_URI, String
-//						.valueOf(((StationsOverlay.StationOverlay) item)
-//								.getId())));
-//		mContext.startActivity(intent);
 		return true;
 	}
 
@@ -136,7 +118,8 @@ public abstract class BalloonItemizedOverlay<Item extends OverlayItem> extends
 			balloonView.setLayoutParams(params);
 			// Needed to resize if content is smaller. But why ? May be a bug
 			//TODO : check if it's not because a fill parent instead a wrap content
-			balloonView.measure(View.MeasureSpec.EXACTLY,
+			balloonView.measure(
+					View.MeasureSpec.EXACTLY,
 					View.MeasureSpec.EXACTLY);
 		} else {
 			mMapView.addView(balloonView, params);

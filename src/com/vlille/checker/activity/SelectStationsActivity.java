@@ -16,9 +16,10 @@ import android.widget.Toast;
 import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.AbstractAction;
 import com.vlille.checker.R;
+import com.vlille.checker.VlilleChecker;
+import com.vlille.checker.db.StationTableFields;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.stations.Filter;
-import com.vlille.checker.stations.provider.DictionaryDatabase;
 import com.vlille.checker.utils.MiscUtils;
 
 /**
@@ -37,7 +38,7 @@ public class SelectStationsActivity extends VlilleListActivity {
 		initContent();
 		initActionBar();
 
-		stations = getAllStations();
+		stations = VlilleChecker.getDbAdapter().findAll();
 		setAdapter(stations);
 
 		addOkOnClickListener();
@@ -89,6 +90,7 @@ public class SelectStationsActivity extends VlilleListActivity {
 
 	private void handleIntentActionView(Intent intent) {
 		Uri uri = intent.getData();
+		Log.d(LOG_TAG, "uri " + uri.getQuery());
 		Cursor cursor = managedQuery(uri, null, null, null, null);
 		if (cursor == null) {
 			Toast.makeText(this, R.string.search_suggestion_error, Toast.LENGTH_SHORT).show();
@@ -97,10 +99,11 @@ public class SelectStationsActivity extends VlilleListActivity {
 			return;
 		}
 		
+		
 		final Map<String, Station> mapStations = MiscUtils.toMap(stations);
 		final List<Station> suggestedStations = new ArrayList<Station>();
 
-		int columnIndexStationId = cursor.getColumnIndexOrThrow(DictionaryDatabase.STATION_ID);
+		int columnIndexStationId = cursor.getColumnIndexOrThrow(StationTableFields._id.toString());
 		final String stationId = cursor.getString(columnIndexStationId);
 		final Station foundStation = mapStations.get(stationId);
 		if (foundStation != null) {

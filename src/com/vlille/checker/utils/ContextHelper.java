@@ -2,22 +2,18 @@ package com.vlille.checker.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.vlille.checker.activity.HomeAdapter;
 import com.vlille.checker.activity.PreferenceKeys;
 import com.vlille.checker.activity.SelectStationsActivity;
-import com.vlille.checker.model.Station;
 import com.vlille.checker.model.SetStationsInfos;
+import com.vlille.checker.model.Station;
 import com.vlille.checker.model.StationsMapsInfos;
 import com.vlille.checker.stations.Constants;
 import com.vlille.checker.stations.xml.StationsListSAXParser;
@@ -41,7 +37,7 @@ public class ContextHelper {
 	 * Get stations maps informations.
 	 */
 	public StationsMapsInfos getMapsInformation(Context context) {
-		return parseAllStations(context).getMapsInformations();
+		return parseAllStations(context).getMapsInfos();
 	}
 	
 	/**
@@ -64,59 +60,11 @@ public class ContextHelper {
 		}
 	}
 	
-	public static boolean isStarred(Context context, String stationId) {
-		return getPrefs(context).contains(stationId);
-	}
-	
 	/**
 	 * Global vlille preferences.
 	 */
 	public static SharedPreferences getPrefs(Context context) {
 		return context.getSharedPreferences(SelectStationsActivity.PREFS_FILE, Context.MODE_PRIVATE);
-	}
-	
-	/**
-	 * Register station id into prefs.
-	 * @param context
-	 * @param stationId station id
-	 * @param selected remove or add the station.
-	 */
-	public static void registerPrefsStation(Context context, String stationId, boolean selected) {
-		final Editor editor = getPrefs(context).edit();
-		if (selected) {
-			editor.putBoolean(stationId, Boolean.TRUE);
-		} else {
-			editor.remove(stationId);
-		}
-		
-		editor.commit();
-	}
-	
-	/**
-	 * Remove key from sharred preferences.
-	 * @param key
-	 */
-	public static void doPrefsRemove(Context context, String key) {
-		getPrefs(context).edit().remove(key).commit();
-	}
-
-	/**
-	 * Starred stations.
-	 */
-	public static List<String> getStarred(Context context) {
-		List<String> starredStations = new ArrayList<String>();
-
-		SharedPreferences sharedPrefs = getPrefs(context);
-		Map<String, ?> allPrefs = sharedPrefs.getAll();
-		for (Entry<String, ?> entry : allPrefs.entrySet()) {
-			String id = entry.getKey();
-			Object value = entry.getValue();
-			if (value.getClass().equals(Boolean.class)) {
-				starredStations.add(id);
-			}
-		}
-
-		return starredStations;
 	}
 	
 	/**

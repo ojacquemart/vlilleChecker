@@ -28,6 +28,19 @@ public class Loader {
 		allStations = new StationsListSAXParser(inputStream).parse().getStations();
 	}
 	
+	public Station initDbSingleStation(Station stationId)  {
+		try {
+			Station parsedStation = parse(StationDetailXMLReader.getInputStream(stationId.getId()));
+			if (parsedStation != null) {
+				stationId.copyParsedInfos(parsedStation);
+			}
+			
+			return stationId;
+		} catch (Throwable e) {
+			return null;
+		}
+	}
+	
 	public Station initSingleStation(String stationId)  {
 		try {
 			Station parsedStation = parse(StationDetailXMLReader.getInputStream(stationId));

@@ -12,7 +12,7 @@ public class SetStationsInfos {
 		this.stations = stations;
 	}
 
-	public StationsMapsInfos getMapsInformations() {
+	public StationsMapsInfos getMapsInfos() {
 		return mapsInformations;
 	}
 

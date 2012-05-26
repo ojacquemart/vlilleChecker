@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.vlille.checker.R;
+import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.stations.ColorSelector;
 import com.vlille.checker.utils.ContextHelper;
@@ -64,7 +65,7 @@ public class HomeAdapter extends ArrayAdapter<Station> {
 			@Override
 			public void onClick(View v) {
 				stations.remove(position);
-				ContextHelper.doPrefsRemove(getContext(), station.getId());
+				VlilleChecker.getDbAdapter().star(false, station);
 				arrayAdapter.notifyDataSetChanged();
 			}
 		});
@@ -101,7 +102,7 @@ public class HomeAdapter extends ArrayAdapter<Station> {
 		MiscUtils.showOrMask(boxOutOfService, station.isOutOfService());
 
 		ImageView cbPaiementAllowed = (ImageView) view.findViewById(R.id.details_cb);
-		cbPaiementAllowed.setBackgroundResource(station.isCb() ? R.drawable.station_cb : R.drawable.station_nocb);
+		cbPaiementAllowed.setBackgroundResource(station.isCbPaiement() ? R.drawable.station_cb : R.drawable.station_nocb);
 	}
 	
 	private int getColor(int number) {

@@ -1,7 +1,11 @@
 package com.vlille.checker.model;
 
+import android.content.ContentValues;
 
-public class StationsMapsInfos {
+import com.vlille.checker.db.GetContentValues;
+import com.vlille.checker.db.MapInfosTableFields;
+
+public class StationsMapsInfos implements GetContentValues {
 
 	/**
 	 * Default latitude.
@@ -38,6 +42,20 @@ public class StationsMapsInfos {
 
 	public void setZoom(int zoom) {
 		this.zoom = zoom;
+	}
+
+	@Override
+	public ContentValues getInsertableContentValues() {
+		ContentValues values = new ContentValues();
+		values.put(MapInfosTableFields.LATITUDE, latitude1e6);
+		values.put(MapInfosTableFields.LONGITUTDE, longitude1e6);
+		
+		return values;
+	}
+
+	@Override
+	public ContentValues getUpdatableContentValues() {
+		return null;
 	}
 
 }

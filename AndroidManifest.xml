@@ -83,10 +83,13 @@
     		android:theme="@style/MainTheme">
 		</activity>
         
-		<!-- Provides search suggestions for words and their definitions. -->
+		<!--
+		Provides search suggestions for words and their definitions.
+		@see res/xml/searchable.xml when you change this provider name.
+		-->
         <provider
-            android:name=".stations.provider.StationsProvider"
-            android:authorities="com.vlille.checker.stations.provider.StationsProvider"
+            android:name=".provider.StationSuggestionsProvider"
+            android:authorities="com.vlille.checker.provider.StationSuggestionsProvider"
 		/>
         
         <service android:name=".stations.service.StationsRetrieverService"/>

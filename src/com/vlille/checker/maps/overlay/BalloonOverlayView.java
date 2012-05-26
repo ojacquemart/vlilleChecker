@@ -13,9 +13,9 @@ import android.widget.TextView;
 
 import com.google.android.maps.OverlayItem;
 import com.vlille.checker.R;
+import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.maps.overlay.StationsOverlays.MyOverlayItem;
 import com.vlille.checker.model.Station;
-import com.vlille.checker.utils.ContextHelper;
 
 /**
  * A view representing a MapView marker information balloon.
@@ -65,7 +65,7 @@ public class BalloonOverlayView<Item extends OverlayItem> extends FrameLayout {
 			@Override
 			public void onCheckedChanged(CompoundButton checkBox, boolean checked) {
 				if (mStationId != null) {
-					ContextHelper.registerPrefsStation(context, mStationId.toString(), checked);
+					VlilleChecker.getDbAdapter().star(checked, mStationId.toString());
 				}
 			}
 		});
@@ -87,7 +87,7 @@ public class BalloonOverlayView<Item extends OverlayItem> extends FrameLayout {
 		
 		mStationId = station.getId();
 		mTextViewTitle.setText(station.getName());
-		mFavoriteCheckBox.setChecked(ContextHelper.isStarred(mContext, station.getId()));
+		mFavoriteCheckBox.setChecked(station.isStarred());
 		// mId = String
 		// .valueOf(((StationsOverlay.StationOverlay) item)
 		// .getId());

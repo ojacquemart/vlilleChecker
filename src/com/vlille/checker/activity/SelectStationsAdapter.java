@@ -3,7 +3,6 @@ package com.vlille.checker.activity;
 import java.util.List;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,8 +12,8 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.vlille.checker.R;
+import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.model.Station;
-import com.vlille.checker.utils.ContextHelper;
 
 public class SelectStationsAdapter extends ArrayAdapter<Station> {
 
@@ -36,7 +35,6 @@ public class SelectStationsAdapter extends ArrayAdapter<Station> {
 			view = layout.inflate(R.layout.home_search_list_stations, null);
 		}
 		
-		final SharedPreferences sharedPrefs = ContextHelper.getPrefs(context);
 		final Station station = stations.get(position);
 		
 		CheckBox checkbox = (CheckBox) view.findViewById(R.id.preferences_station_checked);
@@ -44,15 +42,13 @@ public class SelectStationsAdapter extends ArrayAdapter<Station> {
 		if (station != null && checkbox != null && text != null) {
 			text.setText(station.getName());
 			
-			String stationId = station.getId();
-			checkbox.setChecked(sharedPrefs.getBoolean(stationId, false));
+			checkbox.setChecked(station.isStarred());
 			checkbox.setOnClickListener(new OnClickListener() {
 				
 				public void onClick(View v) {
-					String stationId = station.getId();
 					CheckBox onclickCheckbox = (CheckBox) v.findViewById(R.id.preferences_station_checked);
 					
-					ContextHelper.registerPrefsStation(context, stationId, onclickCheckbox.isChecked());
+					VlilleChecker.getDbAdapter().star(onclickCheckbox.isChecked(), station);
 				}
 			});
 				

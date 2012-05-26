@@ -227,7 +227,7 @@ public class VlilleMapView extends MapView {
 					GeoPoint point = eachOverlay.getPoint();
 					boolean bounded = mapBounds.contains(point.getLongitudeE6(), point.getLatitudeE6());
 					eachOverlay.updateMarker(!bounded);
-					if (bounded && !eachOverlay.isUpToDate()) {
+					if (bounded && !eachOverlay.getStation().isUpToDate()) {
 						try {
 							updateDetailStation(eachOverlay);
 						} catch (RuntimeException e) {

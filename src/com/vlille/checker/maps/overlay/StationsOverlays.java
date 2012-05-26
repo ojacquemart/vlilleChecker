@@ -3,8 +3,6 @@ package com.vlille.checker.maps.overlay;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -20,17 +18,16 @@ import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
 import com.google.android.maps.OverlayItem;
 import com.vlille.checker.R;
+import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.maps.VlilleMapView;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.stations.ColorSelector;
-import com.vlille.checker.utils.ContextHelper;
 
 public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.MyOverlayItem> {
 	
-	private static final int ONE_MINUTE_IN_MILLSECONDS = 1000 * 60;
-	
 	private final String LOG_TAG = getClass().getSimpleName();
 	
+	private final List<Station> starredStations;
 	private final Resources resources;
 	private float scaledDensity;
 	private boolean marker;
@@ -46,8 +43,10 @@ public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.My
 
 	public StationsOverlays(Drawable defaultMarker, VlilleMapView mapView, Context context) {
 		super(defaultMarker, mapView, context, new ArrayList<MyOverlayItem>());
-		this.resources = context.getResources();
+
+		resources = context.getResources();
 		scaledDensity = resources.getDisplayMetrics().scaledDensity;
+		starredStations = VlilleChecker.getDbAdapter().getStarredStations();
 		
 		drawableMarker = new StationMarker(context.getResources(), ((BitmapDrawable) defaultMarker).getBitmap());
 		boundCenter(defaultMarker);
@@ -119,7 +118,6 @@ public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.My
 	public class MyOverlayItem extends OverlayItem {
 		
 		private Station station; /** Station id for load station details (bikes and attachs). */
-		private Long lastUpdated = 0L;
 		private Integer bikes = 0;
 		private Integer attachs = 0;
 		private boolean displayOnlyPin = false;
@@ -132,15 +130,6 @@ public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.My
 		public void copyDetailledStation(Station detailledStation) {
 			this.bikes = detailledStation.getBikes();
 			this.attachs = detailledStation.getAttachs();
-			
-			final String stationLastUpdated = detailledStation.getLastUpdated();
-			if (!StringUtils.isEmpty(stationLastUpdated)) {
-				final Long valueOfLastUpdated = Long.valueOf( stationLastUpdated.replaceAll("[^\\d]", "").trim());
-				if (valueOfLastUpdated != null) {
-					Log.d(LOG_TAG, "lastUpdated " + valueOfLastUpdated);
-					this.lastUpdated = System.currentTimeMillis() + valueOfLastUpdated;
-				}
-			}
 		}
 
 		public Drawable getMarker(int stateBitset) {
@@ -149,7 +138,7 @@ public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.My
 				if (marker && !displayOnlyPin) {
 					drawableMarker.bikes = bikes;
 					drawableMarker.attachs = attachs;
-				} else if (station != null && ContextHelper.isStarred(mContext, station.getId())) {
+				} else if (station != null && starredStations.contains(station)) {
 					drawable = drawablePinStar;
 				} else {
 					drawable = drawablePin;
@@ -169,26 +158,6 @@ public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.My
 		public void updateMarker(boolean onylyPin) {
 			this.displayOnlyPin = onylyPin;
 			this.setMarker(getMarker(0));
-		}
-		
-		/**
-		 * Check the last update.
-		 * 
-		 * @return boolean the station is up to date.
-		 */
-		public boolean isUpToDate() {
-			boolean upToDate = false;
-			
-			if (lastUpdated != null) {
-				long now = System.currentTimeMillis();
-				upToDate = lastUpdated - (now - ONE_MINUTE_IN_MILLSECONDS) + ONE_MINUTE_IN_MILLSECONDS > 0;
-				if (!upToDate) {
-					// Update update time.
-					lastUpdated = now;
-				}
-			}
-			
-			return upToDate;
 		}
 
 		public Station getStation() {

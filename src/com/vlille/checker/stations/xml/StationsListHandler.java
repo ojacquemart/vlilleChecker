@@ -36,7 +36,7 @@ public class StationsListHandler extends BaseStationHandler {
 			station.setLatitude(Double.valueOf(valueLatitude));
 			final String valueLongitude = valueOf(attributes, StationsListTags.LONGITUDE);
 			station.setLongitude(Double.valueOf(valueLongitude));
-			station.setLongituteE6(PositionTransformer.to1e6(valueLongitude));
+			station.setLongitudeE6(PositionTransformer.to1e6(valueLongitude));
 
 			stations.add(station);
 		}

@@ -1,17 +1,14 @@
 package com.vlille.checker.activity;
 
 import java.io.InputStream;
-import java.util.List;
 
 import android.app.ListActivity;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.vlille.checker.R;
-import com.vlille.checker.model.Station;
 import com.vlille.checker.utils.ContextHelper;
 
 /**
@@ -41,22 +38,6 @@ public abstract class VlilleListActivity extends ListActivity {
 	
 	protected InputStream getInputStream() {
 		return ContextHelper.getInputStream(getApplicationContext());
-	}
-	
-	public List<Station> getAllStations() {
-		return ContextHelper.getAllStations(getApplicationContext());
-	}
-	
-	protected SharedPreferences getPrefs() {
-		return ContextHelper.getPrefs(getApplicationContext());
-	}
-	
-	protected boolean isStarred(String stationId) {
-		return ContextHelper.isStarred(getApplicationContext(), stationId);
-	}
-
-	protected List<String> getStarredIdsStations() {
-		return ContextHelper.getStarred(getApplicationContext());
 	}
 	
 }

@@ -44,8 +44,11 @@ public class MapsActivity extends MapActivity implements InitializeActionBar {
 		mapView.setOnPanListener(getOnPanListener());
 		
 		try {
+			/**
+			 * TODO: use db adapter.
+			 */
 			setStationsInfos = ContextHelper.parseAllStations(this);
-			mapView.setMapsInformations(setStationsInfos.getMapsInformations());
+			mapView.setMapsInformations(setStationsInfos.getMapsInfos());
 		} catch (RuntimeException e) {
 			Log.e(LOG_TAG, "#onCreate() exception", e);
 			Toast.makeText(this, getString(R.string.error_no_connection), Toast.LENGTH_LONG);

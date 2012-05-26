@@ -31,9 +31,9 @@ public class TestStationParser extends AbstractVlilleTest<HomeActivity> {
 
 		StationsListSAXParser stationParser = new StationsListSAXParser(isVlilleStation);
 		final SetStationsInfos stationSet = stationParser.parse();
-		assertTrue(stationSet.getMapsInformations().getLatitude1e6() > 0);
-		assertTrue(stationSet.getMapsInformations().getLongitude1e6() > 0);
-		assertTrue(stationSet.getMapsInformations().getZoom() > 0);
+		assertTrue(stationSet.getMapsInfos().getLatitude1e6() > 0);
+		assertTrue(stationSet.getMapsInfos().getLongitude1e6() > 0);
+		assertTrue(stationSet.getMapsInfos().getZoom() > 0);
 
 		List<Station> stations = stationSet.getStations();
 		assertNotNull(stations);
@@ -87,8 +87,8 @@ public class TestStationParser extends AbstractVlilleTest<HomeActivity> {
 		assertNotNull(station.getAdress());
 		assertNotNull(station.getBikes());
 		assertNotNull(station.getAttachs());
-		assertNotNull(station.getPaiement());
-		assertNotNull(station.getStatus());
+		assertNotNull(station.isCbPaiement());
+		assertNotNull(station.isOutOfService());
 	}
 
 	private InputStream getInputStream() throws IOException {

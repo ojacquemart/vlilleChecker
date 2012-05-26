@@ -22,10 +22,11 @@ import android.widget.RelativeLayout;
 import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.AbstractAction;
 import com.vlille.checker.R;
+import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.stations.service.StationsResultReceiver;
-import com.vlille.checker.stations.service.StationsRetrieverService;
 import com.vlille.checker.stations.service.StationsResultReceiver.Receiver;
+import com.vlille.checker.stations.service.StationsRetrieverService;
 import com.vlille.checker.utils.MiscUtils;
 
 /**
@@ -56,7 +57,8 @@ public class HomeActivity extends VlilleListActivity implements InitializeAction
 		super.onPause();
 		
 		if (resultReceiver != null) {
-			resultReceiver.setReceiver(null); // Clear receiver so no leaks.
+			// Clear receiver so no leaks.
+			resultReceiver.setReceiver(null);
 		}
 	}
 	
@@ -69,7 +71,7 @@ public class HomeActivity extends VlilleListActivity implements InitializeAction
 	protected void onResume() {
 		super.onResume();
 		
-		final List<String> starredIdsStations = getStarredIdsStations();
+		final List<Station> starredIdsStations = VlilleChecker.getDbAdapter().getStarredStations();
 		
 		boolean isEmptyStarredStations = starredIdsStations.isEmpty();
 		Log.d(LOG_TAG, "Starred stations empty? " + isEmptyStarredStations);
@@ -80,7 +82,7 @@ public class HomeActivity extends VlilleListActivity implements InitializeAction
 		}
 	}	
 	
-	private void handleStarredStations(List<String> starredIdsStations) {
+	private void handleStarredStations(List<Station> starredIdsStations) {
 		if (isNetworkAvailable()) {
 			if (!isFinishing()) {
 				progressDialog.show();
@@ -92,7 +94,7 @@ public class HomeActivity extends VlilleListActivity implements InitializeAction
 			
 			final Intent intent = new Intent(Intent.ACTION_SYNC, null, getApplicationContext(), StationsRetrieverService.class);
 			intent.putExtra(RECEIVER, resultReceiver);
-			intent.putExtra(StationsRetrieverService.STATIONS_ID, (ArrayList<String>) starredIdsStations);
+			intent.putExtra(StationsRetrieverService.STATIONS_ID, (ArrayList<Station>) starredIdsStations);
 			startService(intent);
 		} else {
 			Log.d(LOG_TAG, "No network, show the retry view");
@@ -136,6 +138,38 @@ public class HomeActivity extends VlilleListActivity implements InitializeAction
 		
 		showBoxError(error);
 	}
+	
+	/**
+	 * Handle adapter listview
+	 * 
+	 * @param stations The starred stations details.
+	 */
+	private void handleAdapter(final List<Station> stations) {
+		final LinearLayout boxAddStation = (LinearLayout) findViewById(R.id.home_station_new_box);
+		final HomeAdapter adapter = new HomeAdapter(this, R.layout.home_list_stations, stations, boxAddStation);
+		setListAdapter(adapter);
+	}	
+	
+	/**
+	 * Display the add new button if there are no stations in preferences.
+	 * 
+	 * @param stations The starred stations details.
+	 */
+	private void showBoxNewStation(List<Station> stations) {
+		boolean show = stations == null || stations.isEmpty();
+		
+		MiscUtils.showOrMask((LinearLayout) findViewById(R.id.home_station_new_box), show);
+	}
+	
+	/**
+	 * Display the add new button if there are no stations in preferences.
+	 * 
+	 * @param stations The starred stations details.
+	 */
+	private void showBoxError(boolean show) {
+		MiscUtils.showOrMask((RelativeLayout) findViewById(R.id.home_error_box), show);
+	}
+	
 	
 	@Override
 	public void doInitActionBar() {
@@ -193,7 +227,6 @@ public class HomeActivity extends VlilleListActivity implements InitializeAction
 			}
 		});
 		
-
 	}	
 
 	/**
@@ -251,37 +284,6 @@ public class HomeActivity extends VlilleListActivity implements InitializeAction
 	private void initProgressDialog() {
 		progressDialog = new ProgressDialog(this);
 		progressDialog.setMessage(getString(R.string.loading));
-	}	
-
-	/**
-	 * Display the add new button if there are no stations in preferences.
-	 * 
-	 * @param stations The starred stations details.
-	 */
-	private void showBoxNewStation(List<Station> stations) {
-		boolean show = stations == null || stations.isEmpty();
-		
-		MiscUtils.showOrMask((LinearLayout) findViewById(R.id.home_station_new_box), show);
-	}
-
-	/**
-	 * Handle adapter listview
-	 * 
-	 * @param stations The starred stations details.
-	 */
-	private void handleAdapter(final List<Station> stations) {
-		final LinearLayout boxAddStation = (LinearLayout) findViewById(R.id.home_station_new_box);
-		final HomeAdapter adapter = new HomeAdapter(this, R.layout.home_list_stations, stations, boxAddStation);
-		setListAdapter(adapter);
-	}
-	
-	/**
-	 * Display the add new button if there are no stations in preferences.
-	 * 
-	 * @param stations The starred stations details.
-	 */
-	private void showBoxError(boolean show) {
-		MiscUtils.showOrMask((RelativeLayout) findViewById(R.id.home_error_box), show);
 	}	
 	
 	/** AbsrtactActions class for action bar ... */

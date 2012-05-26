@@ -57,11 +57,12 @@ public class StationsRetrieverService extends IntentService {
 			final StopWatch watcher = new StopWatch();
 			watcher.start();
 
-			final ArrayList<String> stationsIdToLoad = intent.getStringArrayListExtra(STATIONS_ID);
+			@SuppressWarnings("unchecked")
+			final ArrayList<Station> stationsIdToLoad = (ArrayList<Station>) intent.getSerializableExtra(STATIONS_ID);
 			final List<Station> stations = new ArrayList<Station>();
 			
-			for (String eachStationIdToLoad : stationsIdToLoad) {
-				Station station = loader.initSingleStation(eachStationIdToLoad);
+			for (Station eachStationIdToLoad : stationsIdToLoad) {
+				Station station = loader.initDbSingleStation(eachStationIdToLoad);
 				if (station == null) {
 					throw new NullPointerException("Station is null");
 				}
