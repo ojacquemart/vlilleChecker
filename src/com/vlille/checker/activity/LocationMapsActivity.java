@@ -101,7 +101,6 @@ public class LocationMapsActivity extends MapsActivity {
 		
 		final List<Station> stationsToDraw = new ArrayList<Station>();
 		
-		final List<Station> stations = setStationsInfos.getStations();
 		final Location currentLocation = mapView.getCurrentLocation();
 		if (stations != null && currentLocation != null) {
 			long parameterDistanceBetweenStations = ContextHelper.getRadiusValue(this);

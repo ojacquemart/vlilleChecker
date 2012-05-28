@@ -11,11 +11,11 @@ import com.google.android.maps.MapActivity;
 import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.AbstractAction;
 import com.vlille.checker.R;
-import com.vlille.checker.maps.VlilleMapView;
+import com.vlille.checker.VlilleChecker;
+import com.vlille.checker.db.DbAdapter;
 import com.vlille.checker.maps.OnPanAndZoomListener;
+import com.vlille.checker.maps.VlilleMapView;
 import com.vlille.checker.model.Station;
-import com.vlille.checker.model.SetStationsInfos;
-import com.vlille.checker.utils.ContextHelper;
  
 /**
  * Select stations from maps.
@@ -24,8 +24,9 @@ import com.vlille.checker.utils.ContextHelper;
 public class MapsActivity extends MapActivity implements InitializeActionBar {
 
 	protected final String LOG_TAG = getClass().getSimpleName();
-	protected SetStationsInfos setStationsInfos;
 	protected VlilleMapView mapView;
+	
+	protected List<Station> stations;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -44,11 +45,10 @@ public class MapsActivity extends MapActivity implements InitializeActionBar {
 		mapView.setOnPanListener(getOnPanListener());
 		
 		try {
-			/**
-			 * TODO: use db adapter.
-			 */
-			setStationsInfos = ContextHelper.parseAllStations(this);
-			mapView.setMapsInformations(setStationsInfos.getMapsInfos());
+			final DbAdapter dbAdapter = VlilleChecker.getDbAdapter();
+			
+			mapView.setMapsInformations(dbAdapter.findMetadata());
+			stations = dbAdapter.findAll();
 		} catch (RuntimeException e) {
 			Log.e(LOG_TAG, "#onCreate() exception", e);
 			Toast.makeText(this, getString(R.string.error_no_connection), Toast.LENGTH_LONG);
@@ -89,7 +89,7 @@ public class MapsActivity extends MapActivity implements InitializeActionBar {
 	}
 	
 	public List<Station> getStations() {
-		return setStationsInfos.getStations();
+		return stations;
 	}	
 	
 	@Override
