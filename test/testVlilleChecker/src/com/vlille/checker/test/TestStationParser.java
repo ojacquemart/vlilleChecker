@@ -9,9 +9,9 @@ import android.util.Log;
 import com.vlille.checker.activity.HomeActivity;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.model.SetStationsInfos;
-import com.vlille.checker.stations.xml.StationDetailSAXParser;
-import com.vlille.checker.stations.xml.StationDetailXMLReader;
-import com.vlille.checker.stations.xml.StationsListSAXParser;
+import com.vlille.checker.xml.StationDetailSAXParser;
+import com.vlille.checker.xml.StationDetailXMLReader;
+import com.vlille.checker.xml.StationsListSAXParser;
 
 public class TestStationParser extends AbstractVlilleTest<HomeActivity> {
 

@@ -92,7 +92,7 @@
             android:authorities="com.vlille.checker.provider.StationSuggestionsProvider"
 		/>
         
-        <service android:name=".stations.service.StationsRetrieverService"/>
+        <service android:name=".service.StationsRetrieverService"/>
         
         <!-- Google Maps library -->
         <uses-library android:name="com.google.android.maps" />

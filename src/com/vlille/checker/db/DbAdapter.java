@@ -27,7 +27,7 @@ import com.vlille.checker.db.station.StationTableFields;
 import com.vlille.checker.model.Metadata;
 import com.vlille.checker.model.SetStationsInfos;
 import com.vlille.checker.model.Station;
-import com.vlille.checker.stations.Constants;
+import com.vlille.checker.utils.Constants;
 import com.vlille.checker.utils.ContextHelper;
 
 /**

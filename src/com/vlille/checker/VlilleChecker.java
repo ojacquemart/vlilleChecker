@@ -8,7 +8,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.vlille.checker.db.DbAdapter;
-import com.vlille.checker.stations.Constants;
+import com.vlille.checker.utils.Constants;
 
 @ReportsCrashes(
 	formKey = Constants.GOOGLE_DOCS_FORM_KEY,

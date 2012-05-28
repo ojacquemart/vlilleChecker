@@ -23,7 +23,7 @@ import com.vlille.checker.maps.overlay.StationsOverlays;
 import com.vlille.checker.maps.overlay.StationsOverlays.MyOverlayItem;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.model.Metadata;
-import com.vlille.checker.stations.xml.Loader;
+import com.vlille.checker.xml.Loader;
 
 /**
  * @see http://stackoverflow.com/questions/4729255/how-to-implemennt-onzoomlistener-on-mapview

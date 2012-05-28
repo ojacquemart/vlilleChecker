@@ -1,10 +1,10 @@
-package com.vlille.checker.stations.xml;
+package com.vlille.checker.xml;
 
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
-import com.vlille.checker.stations.Constants;
+import com.vlille.checker.utils.Constants;
 
 import android.util.Log;
 

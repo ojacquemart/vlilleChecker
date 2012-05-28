@@ -1,18 +1,18 @@
-package com.vlille.checker.stations.xml;
+package com.vlille.checker.xml;
 
-import static com.vlille.checker.stations.xml.StationDetailTags.ADRESS;
-import static com.vlille.checker.stations.xml.StationDetailTags.ATTACHS;
-import static com.vlille.checker.stations.xml.StationDetailTags.BIKES;
-import static com.vlille.checker.stations.xml.StationDetailTags.LAST_UPDATE;
-import static com.vlille.checker.stations.xml.StationDetailTags.PAIEMENT;
-import static com.vlille.checker.stations.xml.StationDetailTags.STATUS;
+import static com.vlille.checker.xml.StationDetailTags.ADRESS;
+import static com.vlille.checker.xml.StationDetailTags.ATTACHS;
+import static com.vlille.checker.xml.StationDetailTags.BIKES;
+import static com.vlille.checker.xml.StationDetailTags.LAST_UPDATE;
+import static com.vlille.checker.xml.StationDetailTags.PAIEMENT;
+import static com.vlille.checker.xml.StationDetailTags.STATUS;
 
 import org.apache.commons.lang3.StringUtils;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 import com.vlille.checker.model.Station;
-import com.vlille.checker.stations.Constants;
+import com.vlille.checker.utils.Constants;
 
 public class StationDetailHandler extends BaseStationHandler {
 

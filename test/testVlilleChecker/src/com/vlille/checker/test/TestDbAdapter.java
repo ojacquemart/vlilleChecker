@@ -9,8 +9,8 @@ import com.vlille.checker.db.DbAdapter;
 import com.vlille.checker.db.DbSchema;
 import com.vlille.checker.model.Metadata;
 import com.vlille.checker.model.Station;
-import com.vlille.checker.stations.Constants;
-import com.vlille.checker.stations.xml.Loader;
+import com.vlille.checker.utils.Constants;
+import com.vlille.checker.xml.Loader;
 
 public class TestDbAdapter extends AbstractVlilleTest<HomeActivity> {
 

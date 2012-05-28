@@ -15,8 +15,7 @@ import com.vlille.checker.activity.SelectStationsActivity;
 import com.vlille.checker.model.SetStationsInfos;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.model.Metadata;
-import com.vlille.checker.stations.Constants;
-import com.vlille.checker.stations.xml.StationsListSAXParser;
+import com.vlille.checker.xml.StationsListSAXParser;
 
 /**
  * Helper for {@link Context}.

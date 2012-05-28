@@ -11,7 +11,7 @@ import android.content.ContentValues;
 import com.vlille.checker.db.GetContentValues;
 import com.vlille.checker.db.station.StationTableFields;
 import com.vlille.checker.maps.PositionTransformer;
-import com.vlille.checker.stations.Constants;
+import com.vlille.checker.utils.Constants;
 
 /**
  * Represents the details of a single vlille station.

@@ -24,9 +24,9 @@ import com.markupartist.android.widget.ActionBar.AbstractAction;
 import com.vlille.checker.R;
 import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.model.Station;
-import com.vlille.checker.stations.service.StationsResultReceiver;
-import com.vlille.checker.stations.service.StationsResultReceiver.Receiver;
-import com.vlille.checker.stations.service.StationsRetrieverService;
+import com.vlille.checker.service.StationsResultReceiver;
+import com.vlille.checker.service.StationsRetrieverService;
+import com.vlille.checker.service.StationsResultReceiver.Receiver;
 import com.vlille.checker.utils.MiscUtils;
 
 /**

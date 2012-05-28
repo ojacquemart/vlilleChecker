@@ -1,4 +1,4 @@
-package com.vlille.checker.stations.xml;
+package com.vlille.checker.xml;
 
 import com.vlille.checker.model.SetStationsInfos;
 

@@ -1,4 +1,4 @@
-package com.vlille.checker.stations.service;
+package com.vlille.checker.service;
 
 import android.os.Bundle;
 import android.os.Handler;

@@ -21,7 +21,7 @@ import com.vlille.checker.R;
 import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.maps.VlilleMapView;
 import com.vlille.checker.model.Station;
-import com.vlille.checker.stations.ColorSelector;
+import com.vlille.checker.utils.ColorSelector;
 
 public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.MyOverlayItem> {
 	

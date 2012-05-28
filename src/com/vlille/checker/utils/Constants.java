@@ -1,4 +1,4 @@
-package com.vlille.checker.stations;
+package com.vlille.checker.utils;
 
 
 public class Constants {

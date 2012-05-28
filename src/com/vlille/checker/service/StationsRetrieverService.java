@@ -1,4 +1,4 @@
-package com.vlille.checker.stations.service;
+package com.vlille.checker.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,8 +13,8 @@ import android.os.ResultReceiver;
 import android.util.Log;
 
 import com.vlille.checker.model.Station;
-import com.vlille.checker.stations.service.StationsResultReceiver.Receiver;
-import com.vlille.checker.stations.xml.Loader;
+import com.vlille.checker.service.StationsResultReceiver.Receiver;
+import com.vlille.checker.xml.Loader;
 
 /**
  * Stations Retriever service.
