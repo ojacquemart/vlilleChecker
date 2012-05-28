@@ -85,7 +85,7 @@ public class BalloonOverlayView<Item extends OverlayItem> extends FrameLayout {
 		
 		mStationId = station.getId();
 		mTextViewTitle.setText(station.getName());
-		mFavoriteCheckBox.setChecked(station.isStarred());
+		mFavoriteCheckBox.setChecked(VlilleChecker.getDbAdapter().isStarred(station));
 	}
 
 	public void setBalloonBottomOffset(int offset) {

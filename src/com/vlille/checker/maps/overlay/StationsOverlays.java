@@ -27,7 +27,6 @@ public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.My
 	
 	private final String LOG_TAG = getClass().getSimpleName();
 	
-	private final List<Station> starredStations;
 	private final Resources resources;
 	private float scaledDensity;
 	private boolean marker;
@@ -46,7 +45,6 @@ public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.My
 
 		resources = context.getResources();
 		scaledDensity = resources.getDisplayMetrics().scaledDensity;
-		starredStations = VlilleChecker.getDbAdapter().getStarredStations();
 		
 		drawableMarker = new StationMarker(context.getResources(), ((BitmapDrawable) defaultMarker).getBitmap());
 		boundCenter(defaultMarker);
@@ -138,7 +136,7 @@ public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.My
 				if (marker && !displayOnlyPin) {
 					drawableMarker.bikes = bikes;
 					drawableMarker.attachs = attachs;
-				} else if (station != null && starredStations.contains(station)) {
+				} else if (station != null && VlilleChecker.getDbAdapter().isStarred(station)) {
 					drawable = drawablePinStar;
 				} else {
 					drawable = drawablePin;
