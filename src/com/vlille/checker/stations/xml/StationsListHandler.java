@@ -4,28 +4,24 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 import com.vlille.checker.maps.PositionTransformer;
-import com.vlille.checker.model.Station;
+import com.vlille.checker.model.Metadata;
 import com.vlille.checker.model.SetStationsInfos;
-import com.vlille.checker.model.StationsMapsInfos;
+import com.vlille.checker.model.Station;
 
 public class StationsListHandler extends BaseStationHandler {
 
-	private StationsMapsInfos mapsInformation = new StationsMapsInfos();
+	private Metadata metadata = new Metadata();
 	private List<Station> stations = new ArrayList<Station>();
 
 	@Override
 	public void startElement(String uri, String localName, String name, Attributes attributes) throws SAXException {
 		if (localName.equalsIgnoreCase(StationsListTags.MARKERS.tag())) {
-			mapsInformation.setLatitude1e6(PositionTransformer.to1e6(valueOf(attributes, StationsListTags.CENTER_LATITUDE)));
-			mapsInformation.setLongitude1e6(PositionTransformer.to1e6(valueOf(attributes, StationsListTags.CENTER_LONGITUDE)));
-
-			String zoom = valueOf(attributes, StationsListTags.ZOOM_LEVEL);
-			mapsInformation.setZoom(StringUtils.isEmpty(zoom) ? 0 : Integer.valueOf(zoom));
+			metadata.setLatitude1e6(PositionTransformer.to1e6(valueOf(attributes, StationsListTags.CENTER_LATITUDE)));
+			metadata.setLongitude1e6(PositionTransformer.to1e6(valueOf(attributes, StationsListTags.CENTER_LONGITUDE)));
 		}
 		if (localName.equalsIgnoreCase(StationsListTags.MARKER.tag())) {
 			Station station = new Station();
@@ -52,7 +48,7 @@ public class StationsListHandler extends BaseStationHandler {
 	}
 
 	public SetStationsInfos getStationSet() {
-		return new SetStationsInfos(mapsInformation, stations);
+		return new SetStationsInfos(metadata, stations);
 	}
 
 }

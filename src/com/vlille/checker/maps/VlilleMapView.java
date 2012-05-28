@@ -22,7 +22,7 @@ import com.vlille.checker.maps.overlay.PositionCircleOverlay;
 import com.vlille.checker.maps.overlay.StationsOverlays;
 import com.vlille.checker.maps.overlay.StationsOverlays.MyOverlayItem;
 import com.vlille.checker.model.Station;
-import com.vlille.checker.model.StationsMapsInfos;
+import com.vlille.checker.model.Metadata;
 import com.vlille.checker.stations.xml.Loader;
 
 /**
@@ -44,7 +44,7 @@ public class VlilleMapView extends MapView {
     private GeoPoint mOldCenterGeoPoint;
     private OnPanAndZoomListener mListener;
     
-    private StationsMapsInfos mapsInformation;
+    private Metadata metadata;
     private List<Station> stations;
     private StationsOverlays mStationsOverlays;
 
@@ -63,8 +63,8 @@ public class VlilleMapView extends MapView {
         init();
     }
     
-    public void setMapsInformations(StationsMapsInfos mapsInformation) {
-    	this.mapsInformation = mapsInformation;
+    public void setMapsInformations(Metadata mapsInformation) {
+    	this.metadata = mapsInformation;
     }
     
     public void setStations(List<Station> stations) {
@@ -110,7 +110,7 @@ public class VlilleMapView extends MapView {
 		
 		if (!mLocationEnabled) {
 			// Location is disabled, center the map relative to definition in stations.xml
-			GeoPoint centerPoint = new GeoPoint(mapsInformation.getLatitude1e6(), mapsInformation.getLongitude1e6());
+			GeoPoint centerPoint = new GeoPoint(metadata.getLatitude1e6(), metadata.getLongitude1e6());
 			getController().setCenter(centerPoint);
 		}
 	}

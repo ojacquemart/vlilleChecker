@@ -1,4 +1,7 @@
-package com.vlille.checker.db;
+package com.vlille.checker.db.station;
+
+import com.vlille.checker.db.ProjectionUtils;
+
 
 /**
  * _id and suggest_text_1 are necessary for suggestions.
@@ -24,14 +27,7 @@ public enum StationTableFields {
 	;
 	
 	public static String[] getProjection() {
-		final StationTableFields[] values = values();
-		String[] fields = new String[values.length];
-		
-		for (int i = 0; i < values.length; i++) {
-			fields[i] = values[i].toString();
-		}
-		
-		return fields;
+		return ProjectionUtils.generateProjectionFields(values());
 	}
 	
 }

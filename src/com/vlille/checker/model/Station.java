@@ -9,7 +9,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import android.content.ContentValues;
 
 import com.vlille.checker.db.GetContentValues;
-import com.vlille.checker.db.StationTableFields;
+import com.vlille.checker.db.station.StationTableFields;
 import com.vlille.checker.maps.PositionTransformer;
 import com.vlille.checker.stations.Constants;
 
@@ -151,10 +151,9 @@ public class Station implements Serializable, Comparable<Station>, GetContentVal
 	}
 	
 	public boolean isUpToDate() {
-		boolean upToDate = false;
-		
 		long now = System.currentTimeMillis();
-		upToDate = lastUpdate - (now - Constants.ONE_MINUTE_IN_MILLSECONDS) + Constants.ONE_MINUTE_IN_MILLSECONDS > 0;
+		boolean upToDate = lastUpdate -
+					(now - Constants.ONE_MINUTE_IN_MILLSECONDS) + Constants.ONE_MINUTE_IN_MILLSECONDS > 0;
 		if (!upToDate) {
 			// Update update time.
 			lastUpdate = now;

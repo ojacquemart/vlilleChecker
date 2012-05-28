@@ -3,6 +3,9 @@ package com.vlille.checker.db;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.vlille.checker.db.metadata.MetadataTable;
+import com.vlille.checker.db.station.StationTable;
+
 public class DbSchema {
 	
 	public static final int VERSION = 1;
@@ -12,7 +15,7 @@ public class DbSchema {
 	
 	public DbSchema() {
 		tables.add(new StationTable());
-		tables.add(new MapInfosTable());
+		tables.add(new MetadataTable());
 	}
 	
 	public List<Table> getTables() {

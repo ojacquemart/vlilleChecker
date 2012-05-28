@@ -11,7 +11,7 @@ import android.provider.BaseColumns;
 
 import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.db.DbAdapter;
-import com.vlille.checker.db.StationTableFields;
+import com.vlille.checker.db.station.StationTableFields;
 
 public class StationSuggestionsProvider extends ContentProvider {
 

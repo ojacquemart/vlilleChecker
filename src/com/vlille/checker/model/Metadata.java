@@ -3,22 +3,32 @@ package com.vlille.checker.model;
 import android.content.ContentValues;
 
 import com.vlille.checker.db.GetContentValues;
-import com.vlille.checker.db.MapInfosTableFields;
+import com.vlille.checker.db.metadata.MetadataTableFields;
 
-public class StationsMapsInfos implements GetContentValues {
+public class Metadata implements GetContentValues {
 
+	/**
+	 * Last update when was checked the vlille stations.
+	 */
+	private long lastUpdate;
+	
 	/**
 	 * Default latitude.
 	 */
 	private int latitude1e6;
+	
 	/**
 	 * Default longitude.
 	 */
 	private int longitude1e6;
-	/**
-	 * Default zoom level.
-	 */
-	private int zoom;
+
+	public long getLastUpdate() {
+		return lastUpdate;
+	}
+
+	public void setLastUpdate(long lastUpdate) {
+		this.lastUpdate = lastUpdate;
+	}
 
 	public int getLatitude1e6() {
 		return latitude1e6;
@@ -36,19 +46,12 @@ public class StationsMapsInfos implements GetContentValues {
 		this.longitude1e6 = longitude;
 	}
 
-	public int getZoom() {
-		return zoom;
-	}
-
-	public void setZoom(int zoom) {
-		this.zoom = zoom;
-	}
-
 	@Override
 	public ContentValues getInsertableContentValues() {
 		ContentValues values = new ContentValues();
-		values.put(MapInfosTableFields.LATITUDE, latitude1e6);
-		values.put(MapInfosTableFields.LONGITUTDE, longitude1e6);
+		values.put(MetadataTableFields.lastUpdate.toString(), System.currentTimeMillis());
+		values.put(MetadataTableFields.latitudeE6.toString(), latitude1e6);
+		values.put(MetadataTableFields.longitudeE6.toString(), longitude1e6);
 		
 		return values;
 	}

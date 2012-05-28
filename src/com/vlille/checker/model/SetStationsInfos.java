@@ -4,16 +4,16 @@ import java.util.List;
 
 public class SetStationsInfos {
 
-	private final StationsMapsInfos mapsInformations;
+	private final Metadata metadata;
 	private final List<Station> stations;
 
-	public SetStationsInfos(StationsMapsInfos mapsInformations, List<Station> stations) {
-		this.mapsInformations = mapsInformations;
+	public SetStationsInfos(Metadata metadata, List<Station> stations) {
+		this.metadata = metadata;
 		this.stations = stations;
 	}
 
-	public StationsMapsInfos getMapsInfos() {
-		return mapsInformations;
+	public Metadata getMetadata() {
+		return metadata;
 	}
 
 	public List<Station> getStations() {

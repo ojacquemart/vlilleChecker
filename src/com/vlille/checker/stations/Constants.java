@@ -11,7 +11,17 @@ public class Constants {
 	/**
 	 * One minute in milliseconds.
 	 */
-	public static final int ONE_MINUTE_IN_MILLSECONDS = 1000 * 60;
+	public static final int ONE_MINUTE_IN_MILLSECONDS = 60 * 1000;
+	
+	/**
+	 * One day in milliseconds.
+	 */
+	public static final int ONE_DAY_IN_MILLSECONDS = 60 * 60 * 24 * 1000;
+	
+	/**
+	 * One week in milliseconds
+	 */
+	public static final int ONE_WEEK_IN_MILLSECONDS = 7 * ONE_DAY_IN_MILLSECONDS;
 	
 	/**
 	 * Local file stations file name.

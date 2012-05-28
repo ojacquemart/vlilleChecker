@@ -1,37 +1,16 @@
-package com.vlille.checker.db;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.vlille.checker.db.station;
 
 import org.apache.commons.lang3.BooleanUtils;
 
 import android.database.Cursor;
 
+import com.vlille.checker.db.CursorTransformer;
 import com.vlille.checker.model.Station;
 
-public class StationCursorTransformer implements CursorTransformer<Station> {
+public class StationCursorTransformer extends CursorTransformer<Station> {
 	
-	private Cursor cursor;
-	
-	private StationCursorTransformer(Cursor cursor) {
-		this.cursor = cursor;
-	}
-
-	public static StationCursorTransformer transform(Cursor cursor) {
-		return new StationCursorTransformer(cursor);
-	}
-	
-	@Override
-	public List<Station> all() {
-		List<Station> stations = new ArrayList<Station>();
-		
-		while (cursor.moveToNext()) {
-			stations.add(single());
-		}
-		
-		cursor.close();
-		
-		return stations;
+	public StationCursorTransformer(Cursor cursor) {
+		super(cursor);
 	}
 
 	@Override

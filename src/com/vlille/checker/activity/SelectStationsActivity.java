@@ -17,7 +17,7 @@ import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.AbstractAction;
 import com.vlille.checker.R;
 import com.vlille.checker.VlilleChecker;
-import com.vlille.checker.db.StationTableFields;
+import com.vlille.checker.db.station.StationTableFields;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.stations.Filter;
 import com.vlille.checker.utils.MiscUtils;
