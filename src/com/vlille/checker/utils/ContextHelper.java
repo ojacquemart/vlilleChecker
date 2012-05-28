@@ -14,7 +14,7 @@ import com.vlille.checker.activity.PreferenceKeys;
 import com.vlille.checker.activity.SelectStationsActivity;
 import com.vlille.checker.model.SetStationsInfos;
 import com.vlille.checker.model.Station;
-import com.vlille.checker.model.StationsMapsInfos;
+import com.vlille.checker.model.Metadata;
 import com.vlille.checker.stations.Constants;
 import com.vlille.checker.stations.xml.StationsListSAXParser;
 
@@ -36,8 +36,8 @@ public class ContextHelper {
 	/**
 	 * Get stations maps informations.
 	 */
-	public StationsMapsInfos getMapsInformation(Context context) {
-		return parseAllStations(context).getMapsInfos();
+	public Metadata getMapsInformation(Context context) {
+		return parseAllStations(context).getMetadata();
 	}
 	
 	/**

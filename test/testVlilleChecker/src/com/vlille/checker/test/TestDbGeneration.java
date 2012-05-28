@@ -7,23 +7,23 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 import com.vlille.checker.db.Field;
-import com.vlille.checker.db.StationTable;
 import com.vlille.checker.db.Type;
 import com.vlille.checker.db.DbSchema;
+import com.vlille.checker.db.station.StationTable;
 
 /**
  * Run the test in deleting the android library from the classpath.
  * @see http://stackoverflow.com/questions/2543106/fatal-error-by-java-runtime-environment/3223929#3223929
  */
-public class TestDbMaker {
+public class TestDbGeneration {
 
 	private static final String EXCEPTED_SQL_STATION_TABLE = "CREATE TABLE station (" +
 			"_id INTEGER primary key not null," +
 			"suggest_text_1 STRING not null," +
 			"latitude REAL not null," +
 			"longitude REAL not null," +
-			"latitudeE6 REAL not null," +
-			"longitudeE6 REAL not null," +
+			"latitudeE6 INTEGER not null," +
+			"longitudeE6 INTEGER not null," +
 			"adress STRING," +
 			"bikes INTEGER," +
 			"attachs INTEGER," +
@@ -35,9 +35,10 @@ public class TestDbMaker {
 			");";
 	private static final String EXCEPTED_SQL_DATABASE =
 			EXCEPTED_SQL_STATION_TABLE +
-			"CREATE TABLE map_infos (" +
-			"latitude INTEGER not null," +
-			"longitude INTEGER not null" +
+			"CREATE TABLE vlille_metadata (" +
+			"lastUpdate INTEGER," +
+			"latitudeE6 INTEGER not null," +
+			"longitudeE6 INTEGER not null" +
 			");";
 
 	@Test

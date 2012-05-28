@@ -7,14 +7,16 @@ import android.content.Context;
 import com.vlille.checker.activity.HomeActivity;
 import com.vlille.checker.db.DbAdapter;
 import com.vlille.checker.db.DbSchema;
+import com.vlille.checker.model.Metadata;
 import com.vlille.checker.model.Station;
+import com.vlille.checker.stations.Constants;
 import com.vlille.checker.stations.xml.Loader;
 
-public class TestDbQueries extends AbstractVlilleTest<HomeActivity> {
+public class TestDbAdapter extends AbstractVlilleTest<HomeActivity> {
 
 	private DbAdapter dbAdapter;
 	
-	public TestDbQueries() {
+	public TestDbAdapter() {
 		super(HomeActivity.class);
 	}
 	
@@ -36,6 +38,37 @@ public class TestDbQueries extends AbstractVlilleTest<HomeActivity> {
 		dbAdapter.close();
 	}
 	
+	public void testCheckUpdate() {
+		final long lastUpdate = System.currentTimeMillis() - (7 * Constants.ONE_DAY_IN_MILLSECONDS) - 1;
+		dbAdapter.changeLastUpdate(lastUpdate);
+		assertTrue(dbAdapter.wasUpdatedMoreThanOneWeekAgo(lastUpdate));
+
+		int beforeUpdateNbStations = dbAdapter.findAll().size();
+		
+		// Delete first station to simulation disjunction between existing stations and new stations.
+		dbAdapter.deleteStation(1L);
+		
+		final int nbStationsUpdated = dbAdapter.checkIfNeedsUpdate();
+		assertTrue(nbStationsUpdated > 0);
+		
+		final int afterUpdateNbStations = dbAdapter.findAll().size();
+		assertTrue(afterUpdateNbStations >= beforeUpdateNbStations);
+	}
+	
+	public void testFindAll() {
+		final List<Station> stations = dbAdapter.findAll();
+		assertNotNull(stations);
+		assertFalse(stations.isEmpty());
+	}
+	
+	public void testFindMetadata() {
+		final Metadata metada = dbAdapter.findMetadata();
+		assertNotNull(metada);
+		assertNotNull(metada.getLastUpdate());
+		assertNotNull(metada.getLatitude1e6());
+		assertNotNull(metada.getLongitude1e6());
+	}
+	
 	public void testStarAndUnstar() {
 		dbAdapter.star(true, buildStationWithId(4L));
 		dbAdapter.star(true, buildStationWithId(2L));
@@ -44,17 +77,30 @@ public class TestDbQueries extends AbstractVlilleTest<HomeActivity> {
 		assertNotNull(stations);
 		assertEquals(2, stations.size());
 		
-		dbAdapter.star(false, buildStationWithId(4L));
+		dbAdapter.unstar(buildStationWithId(4L));
 		
 		stations = dbAdapter.getStarredStations();
 		assertNotNull(stations);
 		assertEquals(1, stations.size());
 		
-		dbAdapter.star(false, buildStationWithId(2L));
+		dbAdapter.unstar(buildStationWithId(2L));
 		
 		stations = dbAdapter.getStarredStations();
 		assertNotNull(stations);
 		assertTrue(stations.isEmpty());
+	}
+	
+	public void testIsStarred() {
+		dbAdapter.star(buildStationWithId(2L));
+		
+		final List<Station> starredStations = dbAdapter.getStarredStations();
+		final Station station = starredStations.get(0);
+		
+		assertTrue(dbAdapter.isStarred(station));
+		
+		dbAdapter.unstar(station);
+		
+		assertFalse(dbAdapter.isStarred(station));
 	}
 	
 	public void testUpdateStation() {

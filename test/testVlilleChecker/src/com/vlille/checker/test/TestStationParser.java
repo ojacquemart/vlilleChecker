@@ -31,9 +31,8 @@ public class TestStationParser extends AbstractVlilleTest<HomeActivity> {
 
 		StationsListSAXParser stationParser = new StationsListSAXParser(isVlilleStation);
 		final SetStationsInfos stationSet = stationParser.parse();
-		assertTrue(stationSet.getMapsInfos().getLatitude1e6() > 0);
-		assertTrue(stationSet.getMapsInfos().getLongitude1e6() > 0);
-		assertTrue(stationSet.getMapsInfos().getZoom() > 0);
+		assertTrue(stationSet.getMetadata().getLatitude1e6() > 0);
+		assertTrue(stationSet.getMetadata().getLongitude1e6() > 0);
 
 		List<Station> stations = stationSet.getStations();
 		assertNotNull(stations);
