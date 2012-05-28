@@ -5,6 +5,7 @@ import android.content.ContentValues;
 public interface GetContentValues {
 
 	ContentValues getInsertableContentValues();
+
 	ContentValues getUpdatableContentValues();
-	
+
 }
