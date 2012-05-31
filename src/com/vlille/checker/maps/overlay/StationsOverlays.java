@@ -103,6 +103,8 @@ public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.My
 			setBalloonBottomOffset(detailledZoomLevel ? mDrawableMarkerHeight : mDrawableMarkerPinHeight);
 		}
 		
+		populate();
+		
 		super.draw(canvas, mapView, false);
 	}
 	
