@@ -27,9 +27,8 @@ public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.My
 	
 	private final String LOG_TAG = getClass().getSimpleName();
 	
-	private final Resources resources;
 	private float scaledDensity;
-	private boolean marker;
+	private boolean detailledZoomLevel;
 
 	private final StationMarker drawableMarker;
 	private final int mDrawableMarkerHeight;
@@ -37,33 +36,32 @@ public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.My
 	private final Drawable drawablePinStar;
 	private final int mDrawableMarkerPinHeight;
 	
-	private volatile Paint paintBikes;
-	private volatile Paint paintAttachs;
-
+	private final Resources resources;
+	private volatile Paint paint;
+	
 	public StationsOverlays(Drawable defaultMarker, VlilleMapView mapView, Context context) {
-		super(defaultMarker, mapView, context, new ArrayList<MyOverlayItem>());
+		super(defaultMarker, mapView, context, new ArrayList<MyOverlayItem>(), VlilleChecker.getDbAdapter().getStarredStations());
 
 		resources = context.getResources();
 		scaledDensity = resources.getDisplayMetrics().scaledDensity;
 		
-		drawableMarker = new StationMarker(context.getResources(), ((BitmapDrawable) defaultMarker).getBitmap());
+		drawableMarker = new StationMarker(resources, ((BitmapDrawable) defaultMarker).getBitmap());
 		boundCenter(defaultMarker);
 		
 		mDrawableMarkerHeight = drawableMarker.getIntrinsicHeight();
 		Log.d(LOG_TAG, "overlay image height = " + mDrawableMarkerHeight);
 		
-		drawablePin = context.getResources().getDrawable(R.drawable.station_pin);
-		drawablePinStar = context.getResources().getDrawable(R.drawable.station_pin_star);
+		drawablePin = resources.getDrawable(R.drawable.station_pin);
+		drawablePinStar = resources.getDrawable(R.drawable.station_pin_star);
 		mDrawableMarkerPinHeight = drawablePinStar.getIntrinsicHeight();
 
-		paintBikes = initPaint();
-		paintAttachs = initPaint();
+		paint = initPaint(resources.getDimensionPixelSize(R.dimen.overlay_font_size));
 	}
 
-	private Paint initPaint() {
+	private Paint initPaint(int textSize) {
 		Paint paint = new Paint();
 		paint.setTypeface(Typeface.DEFAULT_BOLD);
-		paint.setTextSize(resources.getDimensionPixelSize(R.dimen.overlay_font_size));
+		paint.setTextSize(textSize);
 		paint.setAntiAlias(true);
 		paint.setTextAlign(Align.CENTER);
 		
@@ -74,39 +72,41 @@ public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.My
 		mStationsOverlay.add(station);
 	}
 	
-	public synchronized void populateNow() {
-		populate();
-	}
-	
 	@Override
-	protected synchronized MyOverlayItem createItem(int i) {
+	protected MyOverlayItem createItem(int i) {
 		return mStationsOverlay.get(i);
 	}
 
 	@Override
-	public synchronized  int size() {
+	public int size() {
 		return mStationsOverlay.size();
 	}
 	
 	public int getDrawableMarkerHeight() {
 		return mDrawableMarkerHeight;
 	}
+	
+	public void populateNow() {
+		populate();
+	}
 
+	/**
+	 * First all overlays are drawn with shadow at true, then at false...
+	 */
 	@Override
-	public synchronized void draw(android.graphics.Canvas canvas, MapView mapView, boolean shadow) {
-		setLastFocusedIndex(-1);
+	public void draw(android.graphics.Canvas canvas, MapView mapView, boolean shadow) {
+		detailledZoomLevel = VlilleMapView.isDetailledZoomLevel(mapView.getZoomLevel());
 		
 		if (!shadow) {
-			marker = VlilleMapView.isDetailledZoomLevel(mapView.getZoomLevel());
-			setBalloonBottomOffset(marker ? mDrawableMarkerHeight : mDrawableMarkerPinHeight);
+			setLastFocusedIndex(-1);
+			Log.d(LOG_TAG, "Detailled zoom level? " + detailledZoomLevel);
+			setBalloonBottomOffset(detailledZoomLevel ? mDrawableMarkerHeight : mDrawableMarkerPinHeight);
 		}
-
-		populate();
 		
 		super.draw(canvas, mapView, false);
 	}
 	
-	public List<MyOverlayItem> getStationsOverlay() {
+	public synchronized List<MyOverlayItem> getStationsOverlay() {
 		return mStationsOverlay;
 	}
 
@@ -118,11 +118,11 @@ public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.My
 		private Station station; /** Station id for load station details (bikes and attachs). */
 		private Integer bikes = 0;
 		private Integer attachs = 0;
-		private boolean displayOnlyPin = false;
+		private boolean isMarkerPin = false;
 		
 		public MyOverlayItem(GeoPoint point) {
 			super(point, null, null);
-			this.displayOnlyPin = true;
+			this.isMarkerPin = false;
 		}
 
 		public void copyDetailledStation(Station detailledStation) {
@@ -130,32 +130,36 @@ public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.My
 			this.attachs = detailledStation.getAttachs();
 		}
 
+		/**
+		 * Get marker is called twice. First by #draw with shadow=true, then by shadow=false.
+		 * WARN: add log really slows the maps.
+		 */
 		public Drawable getMarker(int stateBitset) {
-			Drawable drawable = drawableMarker;
+			Drawable drawable = null;
 			try {
-				if (marker && !displayOnlyPin) {
+				if (!isMarkerPin && detailledZoomLevel) {
+					drawable = drawableMarker;
 					drawableMarker.bikes = bikes;
 					drawableMarker.attachs = attachs;
-				} else if (station != null && VlilleChecker.getDbAdapter().isStarred(station)) {
+				} else if (station != null && isStarred(station)) {
 					drawable = drawablePinStar;
 				} else {
 					drawable = drawablePin;
 				}
+				
+				drawable.setBounds(
+						- drawable.getIntrinsicWidth() / 2,
+						- drawable.getIntrinsicHeight(),
+						drawable.getIntrinsicWidth() / 2, 0);
 			} catch (Exception e) {
 				Log.e(LOG_TAG, "#getMarker exception", e);
 			}
 			
-			drawable.setBounds(
-				- drawable.getIntrinsicWidth() / 2,
-				- drawable.getIntrinsicHeight(),
-				drawable.getIntrinsicWidth() / 2, 0);
-
 			return drawable;
 		}
 
-		public void updateMarker(boolean onylyPin) {
-			this.displayOnlyPin = onylyPin;
-			this.setMarker(getMarker(0));
+		public void setMarkerPin(boolean isMarkerPin) {
+			this.isMarkerPin = isMarkerPin;
 		}
 
 		public Station getStation() {
@@ -183,11 +187,11 @@ public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.My
 //			final float x = -18 * scaledDensity; // Align.LEFT
 			final float x = -11 * scaledDensity; // Align.CENTER
 			
-			paintBikes.setColor(resources.getColor(ColorSelector.getColor(bikes)));
-			canvas.drawText(bikes.toString(), x, -30 * scaledDensity, paintBikes);
+			paint.setColor(resources.getColor(ColorSelector.getColor(bikes)));
+			canvas.drawText(bikes.toString(), x, -30 * scaledDensity, paint);
 			
-			paintAttachs.setColor(resources.getColor(ColorSelector.getColor(attachs)));
-			canvas.drawText(attachs.toString(), x, -14 * scaledDensity, paintAttachs);
+			paint.setColor(resources.getColor(ColorSelector.getColor(attachs)));
+			canvas.drawText(attachs.toString(), x, -14 * scaledDensity, paint);
 		}
 	}
 	

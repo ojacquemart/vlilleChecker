@@ -1,5 +1,6 @@
 package com.vlille.checker.maps.overlay;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -7,14 +8,18 @@ import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.CompoundButton;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.OverlayItem;
+import com.vlille.checker.VlilleChecker;
+import com.vlille.checker.db.DbAdapter;
 import com.vlille.checker.maps.VlilleMapView;
 import com.vlille.checker.maps.overlay.StationsOverlays.MyOverlayItem;
+import com.vlille.checker.model.Station;
 
 /**
  * An abstract extension of ItemizedOverlay for displaying an information
@@ -26,18 +31,19 @@ public abstract class BalloonItemizedOverlay<Item extends OverlayItem> extends
 		ItemizedOverlay<Item> {
 
 	private static final String LOG_TAG = "BalloonItemizedOverlay";
+	private static final DbAdapter DB_ADAPTER = VlilleChecker.getDbAdapter();
 	
 	private VlilleMapView mMapView;
 	private BalloonOverlayView<OverlayItem> balloonView;
 	/*private View clickRegion;*/
 	private int viewOffset;
 	final MapController mc;
-	
-	/*private Item currentFocussedItem;
-	private int currentFocussedIndex;*/
-	/*private Location mLocation;*/
+
 	protected Context mContext;
 	protected List<MyOverlayItem> mStationsOverlay;
+	
+	private List<Station> starredStations = new ArrayList<Station>();
+
 
 	/**
 	 * Create a new BalloonItemizedOverlay
@@ -49,7 +55,7 @@ public abstract class BalloonItemizedOverlay<Item extends OverlayItem> extends
 	 *            - The view upon which the overlay items are to be drawn.
 	 */
 	public BalloonItemizedOverlay(Drawable defaultMarker, VlilleMapView mapView,
-			Context context, List<MyOverlayItem> stations) {
+			Context context, List<MyOverlayItem> stations, List<Station> starredStations) {
 		super(defaultMarker);
 		
 		this.mMapView = mapView;
@@ -57,6 +63,7 @@ public abstract class BalloonItemizedOverlay<Item extends OverlayItem> extends
 		this.viewOffset = 0;
 		this.mc = mapView.getController();
 		this.mContext = context;
+		this.starredStations = starredStations;
 	}
 	
 	/**
@@ -84,6 +91,10 @@ public abstract class BalloonItemizedOverlay<Item extends OverlayItem> extends
 	protected boolean onBalloonTap(int index, Item item) {
 		return true;
 	}
+	
+	public boolean isStarred(Station station) {
+		return starredStations.contains(station);
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -94,10 +105,25 @@ public abstract class BalloonItemizedOverlay<Item extends OverlayItem> extends
 	protected boolean onTap(int index) {
 		Log.d(LOG_TAG, "overlay onTap");
 		MyOverlayItem item = mStationsOverlay.get(index);
+		final Station station = item.getStation();
 		
 		boolean isRecycled;
 		if (balloonView == null) {
 			balloonView = new BalloonOverlayView<OverlayItem>(mContext, 0);
+			balloonView.getFavoriteCheckBox().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+				@Override
+				public void onCheckedChanged(CompoundButton checkBox, boolean checked) {
+					DB_ADAPTER.star(checked, station);
+					station.setStarred(checked);
+					
+					if (checked) {
+						starredStations.add(station);
+					} else {
+						starredStations.remove(station);
+					}
+				}
+			});
 			isRecycled = false;
 		}  else {
 			isRecycled = true;
@@ -137,8 +163,10 @@ public abstract class BalloonItemizedOverlay<Item extends OverlayItem> extends
 	@Override
 	public boolean onTap(GeoPoint p, MapView mapView) {
 		boolean tapped = super.onTap(p, mapView);
-		if (!tapped)
+		if (!tapped) {
 			hideBalloon();
+		}
+		
 		return tapped;
 	}
 
@@ -172,57 +200,5 @@ public abstract class BalloonItemizedOverlay<Item extends OverlayItem> extends
 			return false;
 		return balloonView.getVisibility() == View.VISIBLE;
 	}
-
-	public void updateBalloonData(Item item) {
-		if (balloonView == null)
-			return;
-//		balloonView.setData(item, mLocation);
-	}
-
-	/*public void setCurrentLocation(Location location) {
-		mLocation = location;
-	}*/
-
-	/*
-	 * private void hideOtherBalloons(List<Overlay> overlays) {
-	 * 
-	 * for (Overlay overlay : overlays) { if (overlay instanceof
-	 * BalloonItemizedOverlay<?> && overlay != this) {
-	 * ((BalloonItemizedOverlay<?>) overlay).hideBalloon(); } } }
-	 */
-
-	/**
-	 * Sets the onTouchListener for the balloon being displayed, calling the
-	 * overridden {@link #onBalloonTap} method.
-	 */
-	/*private OnTouchListener createBalloonTouchListener() {
-		return new OnTouchListener() {
-			public boolean onTouch(View v, MotionEvent event) {
-
-				View l = ((View) v.getParent())
-						.findViewById(R.id.balloon_main_layout);
-				Drawable d = l.getBackground();
-
-				if (event.getAction() == MotionEvent.ACTION_DOWN) {
-					int[] states = { android.R.attr.state_pressed };
-					if (d.setState(states)) {
-						d.invalidateSelf();
-					}
-					return true;
-				} else if (event.getAction() == MotionEvent.ACTION_UP) {
-					int newStates[] = {};
-					if (d.setState(newStates)) {
-						d.invalidateSelf();
-					}
-					// call overridden method
-					onBalloonTap(currentFocussedIndex, currentFocussedItem);
-					return true;
-				} else {
-					return false;
-				}
-
-			}
-		};
-	}*/
 
 }

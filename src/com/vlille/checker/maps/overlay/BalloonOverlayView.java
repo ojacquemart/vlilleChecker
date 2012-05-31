@@ -6,14 +6,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.maps.OverlayItem;
 import com.vlille.checker.R;
-import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.maps.overlay.StationsOverlays.MyOverlayItem;
 import com.vlille.checker.model.Station;
 
@@ -34,12 +32,12 @@ import com.vlille.checker.model.Station;
  * 
  */
 public class BalloonOverlayView<Item extends OverlayItem> extends FrameLayout {
-
+	
 	private LinearLayout mLinearLayout;
 	private TextView mTextViewTitle;
 	private CheckBox mFavoriteCheckBox;
 	private int mBottomOffset;
-	private String mStationId = null;
+	private Station station;
 
 	/**
 	 * Create a new BalloonOverlayView.
@@ -58,20 +56,15 @@ public class BalloonOverlayView<Item extends OverlayItem> extends FrameLayout {
 		View v = inflater.inflate(R.layout.maps_ballon_overlay, mLinearLayout);
 		mTextViewTitle = (TextView) v.findViewById(R.id.balloon_name);
 		mFavoriteCheckBox = (CheckBox) v.findViewById(R.id.balloon_item_favorite);
-		mFavoriteCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-			@Override
-			public void onCheckedChanged(CompoundButton checkBox, boolean checked) {
-				if (mStationId != null) {
-					VlilleChecker.getDbAdapter().star(checked, mStationId.toString());
-				}
-			}
-		});
 		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT);
 		params.gravity = Gravity.NO_GRAVITY;
 		addView(mLinearLayout, params);
 
+	}
+	
+	public CheckBox getFavoriteCheckBox() {
+		return mFavoriteCheckBox;
 	}
 
 	/**
@@ -81,11 +74,10 @@ public class BalloonOverlayView<Item extends OverlayItem> extends FrameLayout {
 	 *            - The overlay item containing the relevant view data (title and snippet).
 	 */
 	public void setData(MyOverlayItem item, Location location) {
-		final Station station = item.getStation();
+		station = item.getStation();
 		
-		mStationId = station.getId();
 		mTextViewTitle.setText(station.getName());
-		mFavoriteCheckBox.setChecked(VlilleChecker.getDbAdapter().isStarred(station));
+		mFavoriteCheckBox.setChecked(station.isStarred());
 	}
 
 	public void setBalloonBottomOffset(int offset) {

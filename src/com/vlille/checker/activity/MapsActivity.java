@@ -52,7 +52,7 @@ public class MapsActivity extends MapActivity implements InitializeActionBar {
 		} catch (RuntimeException e) {
 			Log.e(LOG_TAG, "#onCreate() exception", e);
 			Toast.makeText(this, getString(R.string.error_no_connection), Toast.LENGTH_LONG);
-		}	
+		}
 	}
 
 	public OnPanAndZoomListener getOnPanListener() {
@@ -60,11 +60,13 @@ public class MapsActivity extends MapActivity implements InitializeActionBar {
 			
 			@Override
 			public void onZoom() {
+				Log.d(LOG_TAG, "#onZoom");
 				mapView.updateOverlays();
 			}
 			
 			@Override
 			public void onPan() {
+				Log.d(LOG_TAG, "#onPan");
 				mapView.updateOverlays();
 			}
 		};
@@ -72,6 +74,7 @@ public class MapsActivity extends MapActivity implements InitializeActionBar {
 
 	@Override
 	public void onResume() {
+		Log.d(LOG_TAG, "#onResume");
 		super.onResume();
 		
 		try {

@@ -106,8 +106,6 @@ public class VlilleMapView extends MapView {
 			throw new NullPointerException();
 		}
 		
-		resetStationsOverlays();
-		
 		if (!mLocationEnabled) {
 			// Location is disabled, center the map relative to definition in stations.xml
 			GeoPoint centerPoint = new GeoPoint(metadata.getLatitude1e6(), metadata.getLongitude1e6());
@@ -170,14 +168,13 @@ public class VlilleMapView extends MapView {
 			for (Station eachStation : stations) {
 				GeoPoint point = new GeoPoint(eachStation.getLatitudeE6(), eachStation.getLongituteE6());
 				MyOverlayItem overlay = mStationsOverlays.new MyOverlayItem(point);
-				overlay.updateMarker(true);
 				overlay.setStation(eachStation);
 				
 				mStationsOverlays.addOverlay(overlay);
 			}
 
-			mStationsOverlays.populateNow();
 			getOverlays().add(mStationsOverlays);
+			mStationsOverlays.populateNow();
 			
 			watch.stop();
 			Log.d(LOG_TAG, "Initialized in " + watch.getTime());
@@ -188,8 +185,6 @@ public class VlilleMapView extends MapView {
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
-			
-			invalidate();
 			
 			Log.i(LOG_TAG, "Initialize visible stations");
 			new StationsDetailsAsyncLoader().execute();
@@ -226,7 +221,7 @@ public class VlilleMapView extends MapView {
 				for (MyOverlayItem eachOverlay : mStationsOverlays.getStationsOverlay()) {
 					GeoPoint point = eachOverlay.getPoint();
 					boolean bounded = mapBounds.contains(point.getLongitudeE6(), point.getLatitudeE6());
-					eachOverlay.updateMarker(!bounded);
+					eachOverlay.setMarkerPin(!bounded);
 					if (bounded && !eachOverlay.getStation().isUpToDate()) {
 						try {
 							updateDetailStation(eachOverlay);
@@ -237,7 +232,7 @@ public class VlilleMapView extends MapView {
 						}
 					}
 				}
-				
+					
 				postInvalidate();
 				
 				watch.stop();
