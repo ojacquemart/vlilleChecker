@@ -149,7 +149,6 @@ public class DbAdapter {
 				StationTableFields.getProjection(),
 				where, null, null, null, order);
 		
-		Log.d(LOG_TAG, "Nb stations: " + cursor.getCount());
 		return new StationCursorTransformer(cursor).all();
 	}
 	
@@ -167,11 +166,8 @@ public class DbAdapter {
 	 * @param stationId The station id.
 	 */
 	public void star(boolean star, Station station) {
+		Log.d(LOG_TAG, "#star|unstar");
 		updateStation(getStarredValues(star), station);
-	}
-	
-	public void star(boolean star, String stationId) {
-		updateStation(getStarredValues(star), new Station(stationId));
 	}
 	
 	/**
@@ -180,6 +176,7 @@ public class DbAdapter {
 	 * @return the values to update.
 	 */
 	private ContentValues getStarredValues(boolean star) {
+		Log.d(LOG_TAG, "#getStarredValues");
 		final ContentValues values = new ContentValues();
 		values.put(StationTableFields.starred.toString(), star ? 1 : 0);
 		
@@ -187,6 +184,7 @@ public class DbAdapter {
 	}
 	
 	public boolean isStarred(Station station) {
+		Log.d(LOG_TAG, "#isStarred");
 		final Cursor cursor = db.query(StationTable.TABLE_NAME,
 					new String[] { StationTableFields.starred.toString() },
 					StationTableFields._id + "=" + station.getId(),
