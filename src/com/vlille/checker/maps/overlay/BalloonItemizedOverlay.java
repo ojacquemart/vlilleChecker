@@ -35,7 +35,6 @@ public abstract class BalloonItemizedOverlay<Item extends OverlayItem> extends
 	
 	private VlilleMapView mMapView;
 	private BalloonOverlayView<OverlayItem> balloonView;
-	/*private View clickRegion;*/
 	private int viewOffset;
 	final MapController mc;
 
