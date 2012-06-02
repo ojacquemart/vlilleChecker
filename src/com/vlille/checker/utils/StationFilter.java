@@ -10,7 +10,7 @@ import com.vlille.checker.model.Station;
 /**
  * Search for a station name among the stations list.
  */
-public class Filter {
+public class StationFilter {
 
 	public static List<Station> doFilter(List<Station> stations, String keyword) {
 		if (keyword == null || keyword.length() == 0) {

@@ -19,7 +19,7 @@ import com.vlille.checker.R;
 import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.db.station.StationTableFields;
 import com.vlille.checker.model.Station;
-import com.vlille.checker.utils.Filter;
+import com.vlille.checker.utils.StationFilter;
 import com.vlille.checker.utils.MiscUtils;
 
 /**
@@ -79,7 +79,7 @@ public class SelectStationsActivity extends VlilleListActivity {
 		final String query = intent.getStringExtra(SearchManager.QUERY);
 		Log.d(LOG_TAG, query);
 		
-		final List<Station> filteredStations = Filter.doFilter(stations, query);
+		final List<Station> filteredStations = StationFilter.doFilter(stations, query);
 		if (filteredStations.isEmpty()) {
 			Toast.makeText(this, R.string.search_no_result, Toast.LENGTH_SHORT).show();
 			setFullAdapter();

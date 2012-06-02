@@ -13,6 +13,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 import com.vlille.checker.R;
+import com.vlille.checker.utils.PreferenceKeys;
 
 public class LocationMapsPreferenceActivity extends PreferenceActivity implements OnSeekBarChangeListener {
 

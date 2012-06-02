@@ -1,4 +1,4 @@
-package com.vlille.checker.activity;
+package com.vlille.checker.utils;
 
 public class PreferenceKeys {
 

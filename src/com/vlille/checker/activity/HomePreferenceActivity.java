@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.vlille.checker.R;
 import com.vlille.checker.maps.LocationManagerWrapper;
+import com.vlille.checker.utils.PreferenceKeys;
 
 public class HomePreferenceActivity extends PreferenceActivity {
 
