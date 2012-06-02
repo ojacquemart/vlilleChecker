@@ -14,7 +14,7 @@ import android.util.Log;
 
 import com.vlille.checker.model.Station;
 import com.vlille.checker.service.StationsResultReceiver.Receiver;
-import com.vlille.checker.xml.Loader;
+import com.vlille.checker.xml.StationXMLLoader;
 
 /**
  * Stations Retriever service.
@@ -26,8 +26,6 @@ public class StationsRetrieverService extends IntentService {
 	
 	private static final String LOG_TAG = StationsResultReceiver.class.getSimpleName();
 	
-	private Loader loader;
-
 	public StationsRetrieverService() {
 		super(LOG_TAG);
 	}
@@ -46,8 +44,6 @@ public class StationsRetrieverService extends IntentService {
 	protected void onHandleIntent(Intent intent) {
 		Log.d(LOG_TAG, intent.getAction());
 		
-		loader = new Loader();
-		loader.initAll(getApplicationContext());
 
 		final ResultReceiver receiver = intent.getParcelableExtra(Receiver.RECEIVER);
 		receiver.send(Receiver.RUNNING, Bundle.EMPTY);
@@ -62,7 +58,7 @@ public class StationsRetrieverService extends IntentService {
 			final List<Station> stations = new ArrayList<Station>();
 			
 			for (Station eachStationIdToLoad : stationsIdToLoad) {
-				Station station = loader.initDbSingleStation(eachStationIdToLoad);
+				Station station = StationXMLLoader.getSingle(eachStationIdToLoad);
 				if (station == null) {
 					throw new NullPointerException("Station is null");
 				}

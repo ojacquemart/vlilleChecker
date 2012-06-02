@@ -1,4 +1,4 @@
-package com.vlille.checker.xml;
+package com.vlille.checker.xml.list;
 
 public enum StationsListTags {
 

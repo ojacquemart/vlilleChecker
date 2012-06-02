@@ -30,7 +30,7 @@ import com.vlille.checker.model.Metadata;
 import com.vlille.checker.model.SetStationsInfos;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.utils.Constants;
-import com.vlille.checker.utils.ContextHelper;
+import com.vlille.checker.xml.StationXMLLoader;
 
 /**
  * Adapter with helper methods to query the database.
@@ -92,7 +92,7 @@ public class DbAdapter {
 	 * @return the number of stations inserted.
 	 */
 	private void parseAndCompareWithExistingStations() {
-		final SetStationsInfos setStationsInfos = ContextHelper.parseAllStations(context);
+		final SetStationsInfos setStationsInfos = StationXMLLoader.getAll();
 		final List<Station> parsedStations = setStationsInfos.getStations();
 		
 		final List<Station> dbStations = findAll();
@@ -362,7 +362,7 @@ public class DbAdapter {
 			StopWatch watcher = new StopWatch();
 			watcher.start();
 			
-			final SetStationsInfos setStationsInfos = ContextHelper.parseAllStations(context);
+			final SetStationsInfos setStationsInfos = StationXMLLoader.getAll();
 			
 			Log.d(LOG_TAG, "Insert maps infos");
 			final Metadata metadata = setStationsInfos.getMetadata();

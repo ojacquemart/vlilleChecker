@@ -10,7 +10,7 @@ import com.vlille.checker.db.DbSchema;
 import com.vlille.checker.model.Metadata;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.utils.Constants;
-import com.vlille.checker.xml.Loader;
+import com.vlille.checker.xml.StationXMLLoader;
 
 public class TestDbAdapter extends AbstractVlilleTest<HomeActivity> {
 
@@ -48,9 +48,7 @@ public class TestDbAdapter extends AbstractVlilleTest<HomeActivity> {
 		// Delete first station to simulation disjunction between existing stations and new stations.
 		dbAdapter.deleteStation(1L);
 		
-		final int nbStationsUpdated = dbAdapter.checkIfNeedsUpdate();
-		assertTrue(nbStationsUpdated > 0);
-		
+		dbAdapter.checkIfNeedsUpdate();
 		final int afterUpdateNbStations = dbAdapter.findAll().size();
 		assertTrue(afterUpdateNbStations >= beforeUpdateNbStations);
 	}
@@ -110,7 +108,7 @@ public class TestDbAdapter extends AbstractVlilleTest<HomeActivity> {
 		// Adress must be null at the db initialization.
 		assertNull(station.getAdress());
 		
-		final Station detailledStation = new Loader().initSingleStation(station.getId());
+		final Station detailledStation = StationXMLLoader.getSingle(station);
 		assertNotNull(detailledStation);
 		assertNotNull(detailledStation.getAdress());
 		dbAdapter.update(detailledStation);

@@ -1,4 +1,4 @@
-package com.vlille.checker.xml;
+package com.vlille.checker.xml.detail;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,6 +8,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import com.vlille.checker.model.Station;
+import com.vlille.checker.xml.BaseSAXParser;
 
 public class StationDetailSAXParser extends BaseSAXParser implements StationDetailParser {
 

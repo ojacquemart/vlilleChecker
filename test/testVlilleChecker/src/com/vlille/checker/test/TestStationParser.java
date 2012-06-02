@@ -9,9 +9,9 @@ import android.util.Log;
 import com.vlille.checker.activity.HomeActivity;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.model.SetStationsInfos;
-import com.vlille.checker.xml.StationDetailSAXParser;
-import com.vlille.checker.xml.StationDetailXMLReader;
-import com.vlille.checker.xml.StationsListSAXParser;
+import com.vlille.checker.xml.StationXMLLoader;
+import com.vlille.checker.xml.detail.StationDetailSAXParser;
+import com.vlille.checker.xml.list.StationsListSAXParser;
 
 public class TestStationParser extends AbstractVlilleTest<HomeActivity> {
 
@@ -61,7 +61,7 @@ public class TestStationParser extends AbstractVlilleTest<HomeActivity> {
 	}
 
 	public void testStationDetailRemote() {
-		InputStream inputStream = StationDetailXMLReader.getInputStream("110");
+		InputStream inputStream = StationXMLLoader.XMLReader.getInputStream("110");
 		assertNotNull(inputStream);
 
 		Station station = parseStation(inputStream);

@@ -1,4 +1,4 @@
-package com.vlille.checker.xml;
+package com.vlille.checker.xml.list;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,6 +11,7 @@ import com.vlille.checker.maps.PositionTransformer;
 import com.vlille.checker.model.Metadata;
 import com.vlille.checker.model.SetStationsInfos;
 import com.vlille.checker.model.Station;
+import com.vlille.checker.xml.BaseStationHandler;
 
 public class StationsListHandler extends BaseStationHandler {
 

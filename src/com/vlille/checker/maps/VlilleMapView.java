@@ -23,7 +23,7 @@ import com.vlille.checker.maps.overlay.StationsOverlays;
 import com.vlille.checker.maps.overlay.StationsOverlays.MyOverlayItem;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.model.Metadata;
-import com.vlille.checker.xml.Loader;
+import com.vlille.checker.xml.StationXMLLoader;
 
 /**
  * @see http://stackoverflow.com/questions/4729255/how-to-implemennt-onzoomlistener-on-mapview
@@ -201,8 +201,6 @@ public class VlilleMapView extends MapView {
 	} 
 	
 	private class StationsDetailsAsyncLoader extends AsyncTask<Void, Void, Void> {
-
-		private Loader stationsLoader = new Loader();
 		
 		@Override
 		protected Void doInBackground(Void ... params) {
@@ -243,7 +241,7 @@ public class VlilleMapView extends MapView {
 		}
 		
 		private void updateDetailStation(MyOverlayItem overlay) {
-			Station detailledStation = stationsLoader.initSingleStation(overlay.getStation().getId());
+			Station detailledStation = StationXMLLoader.getSingle(overlay.getStation());
 			if (detailledStation == null) {
 				throw new NullPointerException("Station is null");
 			}
