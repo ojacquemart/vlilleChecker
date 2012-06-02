@@ -16,7 +16,9 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.vlille.checker.R;
 import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.db.metadata.MetadataCursorTransformer;
 import com.vlille.checker.db.metadata.MetadataTable;
@@ -59,20 +61,13 @@ public class DbAdapter {
 	
 	// Check for update.
 	
-	public void changeLastUpdate(long timeInMillis) {
-		ContentValues values = new ContentValues();
-		values.put(MetadataTableFields.lastUpdate.toString(), timeInMillis);
-		
-		db.update(MetadataTable.TABLE_NAME, values, null, null);
-	}
-	
 	public void deleteStation(Long stationId) {
 		if (db.delete(StationTable.TABLE_NAME, "_id = " + stationId, null) == 0) {
 			throw new IllegalAccessError();
 		}
 	}
 	
-	public int checkIfNeedsUpdate() {
+	public void checkIfNeedsUpdate() {
 		Log.d(LOG_TAG, "Check if update is needed");
 		final Cursor cursor = db.query(MetadataTable.TABLE_NAME,
 				new String[] { MetadataTableFields.lastUpdate.toString() },
@@ -81,17 +76,11 @@ public class DbAdapter {
 		cursor.moveToFirst();
 		
 		final long lastUpdate = cursor.getLong(0);
-		if (!wasUpdatedMoreThanOneWeekAgo(lastUpdate)) {
-			return 0;
-		}
-		
-		final int nbStationsChanged = parseAndCompareWithExistingStations();
-		if (nbStationsChanged > 0) {
+		if (wasUpdatedMoreThanOneWeekAgo(lastUpdate)) {
+			parseAndCompareWithExistingStations();
 			changeLastUpdate(System.currentTimeMillis());
+			Toast.makeText(context, R.string.update_done, Toast.LENGTH_SHORT).show();
 		}
-		Log.d(LOG_TAG, "Nb stations changed: " + nbStationsChanged);
-		
-		return nbStationsChanged;
 	}
 
 	public boolean wasUpdatedMoreThanOneWeekAgo(long lastUpdate) {
@@ -102,7 +91,7 @@ public class DbAdapter {
 	 * Parse vlille stations from web site and compare stations with those from db. 
 	 * @return the number of stations inserted.
 	 */
-	private int parseAndCompareWithExistingStations() {
+	private void parseAndCompareWithExistingStations() {
 		final SetStationsInfos setStationsInfos = ContextHelper.parseAllStations(context);
 		final List<Station> parsedStations = setStationsInfos.getStations();
 		
@@ -114,8 +103,16 @@ public class DbAdapter {
 			db.insert(StationTable.TABLE_NAME, null, eachStation.getInsertableContentValues());
 		}
 		
-		return stationsToAdd.size();
+		Log.d(LOG_TAG, "Nb stations changed: " + stationsToAdd.size());
 	}
+	
+	public void changeLastUpdate(long timeInMillis) {
+		ContentValues values = new ContentValues();
+		values.put(MetadataTableFields.lastUpdate.toString(), timeInMillis);
+		
+		db.update(MetadataTable.TABLE_NAME, values, null, null);
+	}
+	
 	
 	// Stations queries.
 	

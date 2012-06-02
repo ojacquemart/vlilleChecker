@@ -24,6 +24,7 @@
     <string name="yes">Oui</string>
     <string name="no">Non</string>
     <string name="cancel">Cancel</string>
+    <string name="update_done">Mise à jour effectuée.</string>
 
     <!-- Errors -->
     <string name="error_occured">Une erreur est survenue.</string>
@@ -78,7 +79,7 @@
     <string name="about_text_web">- <a href="http://www.twitter.com/ojacquemart">twitter.com/ojacquemart</a></string>
 
     <!-- ACRA toast notifications texts. -->
-    <string name="crash_toast_text">Oops, une erreur est survenue...</string>
+    <string name="crash_toast_text">Une erreur est survenue...</string>
     <string name="crash_notif_ticker_text">Unexpected error, please send a report...</string>
     <string name="crash_notif_title">CrashTest has crashed...</string>
     <string name="crash_notif_text">Please click here to help fix the issue.</string>
