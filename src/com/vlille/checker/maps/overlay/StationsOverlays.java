@@ -99,7 +99,6 @@ public class StationsOverlays extends BalloonItemizedOverlay<StationsOverlays.My
 		
 		if (!shadow) {
 			setLastFocusedIndex(-1);
-			Log.d(LOG_TAG, "Detailled zoom level? " + detailledZoomLevel);
 			setBalloonBottomOffset(detailledZoomLevel ? mDrawableMarkerHeight : mDrawableMarkerPinHeight);
 		}
 		
