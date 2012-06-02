@@ -2,19 +2,13 @@ package com.vlille.checker.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.vlille.checker.activity.HomeAdapter;
-import com.vlille.checker.activity.PreferenceKeys;
-import com.vlille.checker.activity.SelectStationsActivity;
 import com.vlille.checker.model.SetStationsInfos;
-import com.vlille.checker.model.Station;
-import com.vlille.checker.model.Metadata;
 import com.vlille.checker.xml.StationsListSAXParser;
 
 /**
@@ -32,19 +26,6 @@ public class ContextHelper {
 		return stationsListSAXParser.parse();
 	}
 	
-	/**
-	 * Get stations maps informations.
-	 */
-	public Metadata getMapsInformation(Context context) {
-		return parseAllStations(context).getMetadata();
-	}
-	
-	/**
-	 * Get all parsed stations.
-	 */
-	public static List<Station> getAllStations(Context context) {
-		return parseAllStations(context).getStations();
-	}	
 	
 	/**
 	 * Input stream from all stations.
@@ -59,12 +40,6 @@ public class ContextHelper {
 		}
 	}
 	
-	/**
-	 * Global vlille preferences.
-	 */
-	public static SharedPreferences getPrefs(Context context) {
-		return context.getSharedPreferences(SelectStationsActivity.PREFS_FILE, Context.MODE_PRIVATE);
-	}
 	
 	/**
 	 * Display or hide the address box for the {@link HomeAdapter}
