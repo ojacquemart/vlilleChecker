@@ -30,13 +30,15 @@ import com.vlille.checker.model.Metadata;
 import com.vlille.checker.model.SetStationsInfos;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.utils.Constants;
-import com.vlille.checker.xml.StationXMLLoader;
+import com.vlille.checker.xml.XMLReader;
 
 /**
  * Adapter with helper methods to query the database.
  */
 public class DbAdapter {
 
+	private static final XMLReader XML_READER = new XMLReader();
+	
 	private final String LOG_TAG = getClass().getSimpleName();
 
 	private SQLiteDatabase db;
@@ -92,7 +94,7 @@ public class DbAdapter {
 	 * @return the number of stations inserted.
 	 */
 	private void parseAndCompareWithExistingStations() {
-		final SetStationsInfos setStationsInfos = StationXMLLoader.getAll();
+		final SetStationsInfos setStationsInfos = XML_READER.getSetStationsInfos();
 		final List<Station> parsedStations = setStationsInfos.getStations();
 		
 		final List<Station> dbStations = findAll();
@@ -209,7 +211,7 @@ public class DbAdapter {
 	}
 	
 	private void updateStation(ContentValues values, Station station) {
-		db.update(StationTable.TABLE_NAME, values, StationTableFields._id + "=?", new String[] { station.getId().toString() });
+		db.update(StationTable.TABLE_NAME, values, StationTableFields._id + "=?", new String[] { station.getId() });
 	}
 	
 	
@@ -362,7 +364,7 @@ public class DbAdapter {
 			StopWatch watcher = new StopWatch();
 			watcher.start();
 			
-			final SetStationsInfos setStationsInfos = StationXMLLoader.getAll();
+			final SetStationsInfos setStationsInfos = XML_READER.getSetStationsInfos();
 			
 			Log.d(LOG_TAG, "Insert maps infos");
 			final Metadata metadata = setStationsInfos.getMetadata();
@@ -373,6 +375,8 @@ public class DbAdapter {
 			for (Station eachStation : stations) {
 				db.insert(StationTable.TABLE_NAME, null, eachStation.getInsertableContentValues());
 			}
+			
+			Toast.makeText(context, R.string.installation_done, Toast.LENGTH_SHORT).show();
 			
 			watcher.stop();
 			Log.d(LOG_TAG, "Time to initialize db: " + watcher.getTime());

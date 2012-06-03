@@ -25,6 +25,7 @@
     <string name="no">Non</string>
     <string name="cancel">Cancel</string>
     <string name="update_done">Mise à jour effectuée.</string>
+    <string name="installation_done">Récupération des stations terminée.</string>
 
     <!-- Errors -->
     <string name="error_occured">Une erreur est survenue.</string>

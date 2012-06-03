@@ -19,8 +19,8 @@ import com.vlille.checker.R;
 import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.db.station.StationTableFields;
 import com.vlille.checker.model.Station;
-import com.vlille.checker.utils.StationFilter;
 import com.vlille.checker.utils.MiscUtils;
+import com.vlille.checker.utils.StationFilter;
 
 /**
  * Select stations activity.

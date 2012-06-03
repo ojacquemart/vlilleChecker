@@ -7,9 +7,9 @@ import java.util.List;
 import android.util.Log;
 
 import com.vlille.checker.activity.HomeActivity;
-import com.vlille.checker.model.Station;
 import com.vlille.checker.model.SetStationsInfos;
-import com.vlille.checker.xml.StationXMLLoader;
+import com.vlille.checker.model.Station;
+import com.vlille.checker.xml.XMLReader;
 import com.vlille.checker.xml.detail.StationDetailSAXParser;
 import com.vlille.checker.xml.list.StationsListSAXParser;
 
@@ -29,8 +29,7 @@ public class TestStationParser extends AbstractVlilleTest<HomeActivity> {
 
 		assertNotNull(isVlilleStation);
 
-		StationsListSAXParser stationParser = new StationsListSAXParser(isVlilleStation);
-		final SetStationsInfos stationSet = stationParser.parse();
+		final SetStationsInfos stationSet = new StationsListSAXParser().parse(isVlilleStation);
 		assertTrue(stationSet.getMetadata().getLatitude1e6() > 0);
 		assertTrue(stationSet.getMetadata().getLongitude1e6() > 0);
 
@@ -43,6 +42,13 @@ public class TestStationParser extends AbstractVlilleTest<HomeActivity> {
 		assertNotNull(firstStation.getName());
 		assertTrue(firstStation.getLatitudeE6() > 0);
 		assertTrue(firstStation.getLongituteE6() > 0);
+	}
+	
+	public void testLoadAllStations() {
+		final SetStationsInfos setStations = new XMLReader().getSetStationsInfos();
+		assertNotNull(setStations);
+		assertNotNull(setStations.getMetadata());
+		assertNotNull(setStations.getStations());
 	}
 
 	public void testStationDetailLocal() {
@@ -60,20 +66,9 @@ public class TestStationParser extends AbstractVlilleTest<HomeActivity> {
 		assertStationDetail(station);
 	}
 
-	public void testStationDetailRemote() {
-		InputStream inputStream = StationXMLLoader.XMLReader.getInputStream("110");
-		assertNotNull(inputStream);
-
-		Station station = parseStation(inputStream);
-
-		assertStationDetail(station);
-	}
-
 	private Station parseStation(InputStream inputStream) {
-		StationDetailSAXParser stationParser = new StationDetailSAXParser(inputStream);
-
 		try {
-			return stationParser.parse();
+			return new StationDetailSAXParser().parse(inputStream);
 		} catch (Exception e) {
 			Log.e(LOG_TAG, "exception", e);
 		}

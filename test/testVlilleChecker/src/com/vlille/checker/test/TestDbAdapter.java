@@ -10,7 +10,7 @@ import com.vlille.checker.db.DbSchema;
 import com.vlille.checker.model.Metadata;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.utils.Constants;
-import com.vlille.checker.xml.StationXMLLoader;
+import com.vlille.checker.xml.XMLReader;
 
 public class TestDbAdapter extends AbstractVlilleTest<HomeActivity> {
 
@@ -108,7 +108,7 @@ public class TestDbAdapter extends AbstractVlilleTest<HomeActivity> {
 		// Adress must be null at the db initialization.
 		assertNull(station.getAdress());
 		
-		final Station detailledStation = StationXMLLoader.getSingle(station);
+		final Station detailledStation = new XMLReader().getDetails(station.getId());
 		assertNotNull(detailledStation);
 		assertNotNull(detailledStation.getAdress());
 		dbAdapter.update(detailledStation);

@@ -14,7 +14,7 @@ import android.util.Log;
 
 import com.vlille.checker.model.Station;
 import com.vlille.checker.service.StationsResultReceiver.Receiver;
-import com.vlille.checker.xml.StationXMLLoader;
+import com.vlille.checker.xml.XMLReader;
 
 /**
  * Stations Retriever service.
@@ -22,7 +22,9 @@ import com.vlille.checker.xml.StationXMLLoader;
 public class StationsRetrieverService extends IntentService {
 	
 	public static final String RESULTS = "results";
-	public static final String STATIONS_ID = "stationsId";
+	public static final String STATIONS_TO_LOAD = "stationsToLoad";
+	
+	private static final XMLReader XML_READER = new XMLReader();
 	
 	private static final String LOG_TAG = StationsResultReceiver.class.getSimpleName();
 	
@@ -54,16 +56,23 @@ public class StationsRetrieverService extends IntentService {
 			watcher.start();
 
 			@SuppressWarnings("unchecked")
-			final ArrayList<Station> stationsIdToLoad = (ArrayList<Station>) intent.getSerializableExtra(STATIONS_ID);
+			final ArrayList<Station> stationsToLoad = (ArrayList<Station>) intent.getSerializableExtra(STATIONS_TO_LOAD);
 			final List<Station> stations = new ArrayList<Station>();
 			
-			for (Station eachStationIdToLoad : stationsIdToLoad) {
-				Station station = StationXMLLoader.getSingle(eachStationIdToLoad);
-				if (station == null) {
-					throw new NullPointerException("Station is null");
+			for (Station eachStationToLoad : stationsToLoad) {
+				final boolean upToDate = eachStationToLoad.isUpToDate();
+				Log.d(LOG_TAG, "Station is up to date: " + upToDate);
+				
+				if (!upToDate) {
+					Station station = XML_READER.getDetails(eachStationToLoad.getId());
+					if (station == null) {
+						throw new NullPointerException("Station is null");
+					}
+					
+					eachStationToLoad.copyParsedInfos(station);
 				}
 				
-				stations.add(station);
+				stations.add(eachStationToLoad);
 			}
 
 			Collections.sort(stations);
@@ -74,6 +83,7 @@ public class StationsRetrieverService extends IntentService {
 			bundle.putSerializable(RESULTS, (ArrayList<Station>) stations);
 			receiver.send(Receiver.FINISHED, bundle);
 		} catch (Exception e) {
+			Log.e(LOG_TAG, "Exception occured", e);
 			bundle.putString(Intent.EXTRA_TEXT, e.toString());
 			receiver.send(Receiver.ERROR, bundle);
 		}

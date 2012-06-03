@@ -25,8 +25,8 @@ import com.vlille.checker.R;
 import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.service.StationsResultReceiver;
-import com.vlille.checker.service.StationsRetrieverService;
 import com.vlille.checker.service.StationsResultReceiver.Receiver;
+import com.vlille.checker.service.StationsRetrieverService;
 import com.vlille.checker.utils.MiscUtils;
 
 /**
@@ -71,14 +71,14 @@ public class HomeActivity extends VlilleListActivity implements InitializeAction
 	protected void onResume() {
 		super.onResume();
 		
-		final List<Station> starredIdsStations = VlilleChecker.getDbAdapter().getStarredStations();
+		final List<Station> starredStations = VlilleChecker.getDbAdapter().getStarredStations();
 		
-		boolean isEmptyStarredStations = starredIdsStations.isEmpty();
+		boolean isEmptyStarredStations = starredStations.isEmpty();
 		Log.d(LOG_TAG, "Starred stations empty? " + isEmptyStarredStations);
 		if (isEmptyStarredStations) {
 			showBoxNewStation(null);
 		} else {
-			handleStarredStations(starredIdsStations);
+			handleStarredStations(starredStations);
 		}
 	}	
 	
@@ -94,7 +94,7 @@ public class HomeActivity extends VlilleListActivity implements InitializeAction
 			
 			final Intent intent = new Intent(Intent.ACTION_SYNC, null, getApplicationContext(), StationsRetrieverService.class);
 			intent.putExtra(RECEIVER, resultReceiver);
-			intent.putExtra(StationsRetrieverService.STATIONS_ID, (ArrayList<Station>) starredIdsStations);
+			intent.putExtra(StationsRetrieverService.STATIONS_TO_LOAD, (ArrayList<Station>) starredIdsStations);
 			startService(intent);
 		} else {
 			Log.d(LOG_TAG, "No network, show the retry view");
@@ -125,7 +125,6 @@ public class HomeActivity extends VlilleListActivity implements InitializeAction
 
 			break;
 		case Receiver.ERROR:
-			Log.e(LOG_TAG, "Error occured");
 			finished = true;
 			error = true;
 
