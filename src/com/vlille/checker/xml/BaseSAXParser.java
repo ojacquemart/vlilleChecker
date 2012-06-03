@@ -10,23 +10,29 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.SAXException;
 
 
-public class BaseSAXParser {
+public abstract class BaseSAXParser<T> {
+	
+	private BaseStationHandler<T> handler;
+	
+	public BaseSAXParser(BaseStationHandler<T> handler) {
+		this.handler = handler;
+	}
 
-	protected InputStream inputStream;
-
-	public BaseSAXParser(InputStream inputStream) {
+	public T parse(InputStream inputStream) {
 		try {
-			this.inputStream = new UnicodeBOMInputStream(inputStream).skipBOM();
-		} catch (IOException e) {
+			doParse(new UnicodeBOMInputStream(inputStream).skipBOM());
+			
+			return handler.getResult();
+		} catch (Exception e) {
 			throw new IllegalStateException(e);
 		}
 	}
 	
-	protected void doParse(BaseStationHandler handler) throws SAXException, IOException, ParserConfigurationException {
+	private void doParse(InputStream inputStream) throws SAXException, IOException, ParserConfigurationException {
 		getSaxParser().parse(inputStream, handler);
 	}
 	
-	protected SAXParser getSaxParser() throws ParserConfigurationException, SAXException {
+	private SAXParser getSaxParser() throws ParserConfigurationException, SAXException {
 		return SAXParserFactory.newInstance().newSAXParser();
 	}
 

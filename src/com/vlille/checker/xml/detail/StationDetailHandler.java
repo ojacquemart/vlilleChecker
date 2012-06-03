@@ -15,12 +15,13 @@ import com.vlille.checker.model.Station;
 import com.vlille.checker.utils.Constants;
 import com.vlille.checker.xml.BaseStationHandler;
 
-public class StationDetailHandler extends BaseStationHandler {
+public class StationDetailHandler extends BaseStationHandler<Station> {
 
 	private Station station;
 	private StringBuilder builder = new StringBuilder();
 
-	public Station getStation() {
+	@Override
+	public Station getResult() {
 		return station;
 	}
 
@@ -53,6 +54,7 @@ public class StationDetailHandler extends BaseStationHandler {
 						lastUpdate = System.currentTimeMillis() + valueOfLastUpdated;
 					}
 				}
+				
 				station.setLastUpdate(lastUpdate);
 			}
 			

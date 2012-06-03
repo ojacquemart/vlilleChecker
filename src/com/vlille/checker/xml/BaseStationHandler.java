@@ -2,6 +2,8 @@ package com.vlille.checker.xml;
 
 import org.xml.sax.helpers.DefaultHandler;
 
-public class BaseStationHandler extends DefaultHandler {
+public abstract class BaseStationHandler<T> extends DefaultHandler {
 
+	public abstract T getResult();
+	
 }

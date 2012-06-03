@@ -1,8 +1,8 @@
 package com.vlille.checker.xml.list;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -13,11 +13,16 @@ import com.vlille.checker.model.SetStationsInfos;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.xml.BaseStationHandler;
 
-public class StationsListHandler extends BaseStationHandler {
+public class StationsListHandler extends BaseStationHandler<SetStationsInfos> {
 
 	private Metadata metadata = new Metadata();
-	private List<Station> stations = new ArrayList<Station>();
+	private Set<Station> stations = new HashSet<Station>();
 
+	@Override
+	public SetStationsInfos getResult() {
+		return new SetStationsInfos(metadata, new ArrayList<Station>(stations));
+	}
+	
 	@Override
 	public void startElement(String uri, String localName, String name, Attributes attributes) throws SAXException {
 		if (localName.equalsIgnoreCase(StationsListTags.MARKERS.tag())) {
@@ -41,15 +46,6 @@ public class StationsListHandler extends BaseStationHandler {
 
 	private String valueOf(Attributes attributes, StationsListTags key) {
 		return attributes.getValue(key.tag());
-	}
-
-	@Override
-	public void endDocument() throws SAXException {
-		Collections.sort(stations);
-	}
-
-	public SetStationsInfos getStationSet() {
-		return new SetStationsInfos(metadata, stations);
 	}
 
 }
