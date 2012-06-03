@@ -151,11 +151,10 @@ public class Station implements Serializable, Comparable<Station>, GetContentVal
 	}
 	
 	public boolean isUpToDate() {
-		long now = System.currentTimeMillis();
-		boolean upToDate = lastUpdate -
-					(now - Constants.ONE_MINUTE_IN_MILLSECONDS) + Constants.ONE_MINUTE_IN_MILLSECONDS > 0;
+		final long now = System.currentTimeMillis();
+		final long pastUpdate = lastUpdate - (now - Constants.ONE_MINUTE_IN_MILLSECONDS);
+		boolean upToDate = pastUpdate + Constants.ONE_MINUTE_IN_MILLSECONDS > 0;
 		if (!upToDate) {
-			// Update update time.
 			lastUpdate = now;
 		}
 		
@@ -235,12 +234,12 @@ public class Station implements Serializable, Comparable<Station>, GetContentVal
 		}
 		
 		Station other = (Station) o;
-		return new EqualsBuilder().append(this.id, other.getId()).isEquals();
+		return new EqualsBuilder().append(this.name, other.getName()).isEquals();
 	}
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(id).toHashCode();
+		return new HashCodeBuilder().append(name).toHashCode();
 	}
 
 	@Override
@@ -255,7 +254,6 @@ public class Station implements Serializable, Comparable<Station>, GetContentVal
 		this.cbPaiement = parsedStation.isCbPaiement();
 		this.outOfService = parsedStation.isOutOfService();
 		this.lastUpdate = parsedStation.getLastUpdate();
-		
 	}
 
 }
