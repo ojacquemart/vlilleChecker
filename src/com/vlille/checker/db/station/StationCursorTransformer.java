@@ -28,7 +28,7 @@ public class StationCursorTransformer extends CursorTransformer<Station> {
 		station.setCbPaiement(BooleanUtils.toBoolean(cursor.getInt(StationTableFields.cbPaiement.ordinal())));
 		station.setOufOfService(BooleanUtils.toBoolean(cursor.getInt(StationTableFields.outOfService.ordinal())));
 		station.setOrdinal(cursor.getInt(StationTableFields.ordinal.ordinal()));
-		station.setLastUpdate(cursor.getInt(StationTableFields.lastUpdate.ordinal()));
+		station.setLastUpdate(cursor.getLong(StationTableFields.lastUpdate.ordinal()));
 		station.setStarred(BooleanUtils.toBoolean(cursor.getInt(StationTableFields.starred.ordinal())));
 		
 		return station;
