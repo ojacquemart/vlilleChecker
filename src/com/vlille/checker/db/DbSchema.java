@@ -9,7 +9,7 @@ import com.vlille.checker.db.station.StationTable;
 public class DbSchema {
 	
 	public static final int VERSION = 1;
-	public static final String DB_NAME = "db_vlille_checker";
+	public static final String DB_NAME = "vlille_checker.db";
 	
 	private final List<Table> tables = new ArrayList<Table>();
 	
