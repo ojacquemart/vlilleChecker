@@ -116,9 +116,11 @@ public class LocationMapsActivity extends MapsActivity {
 		
 		Log.d(LOG_TAG, "Nb stations to draw = " + stationsToDraw.size());
 		if (stationsToDraw.isEmpty()) {
-			Toast
-				.makeText(getApplicationContext(), R.string.error_no_stations_near_current_location, Toast.LENGTH_LONG)
-				.show();
+			Toast.makeText(
+					getApplicationContext(),
+					R.string.error_no_stations_near_current_location,
+					Toast.LENGTH_LONG)
+						.show();
 		}
 		
 		return stationsToDraw;
