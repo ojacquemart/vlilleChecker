@@ -87,6 +87,7 @@ public class MapsActivity extends MapActivity implements InitializeActionBar {
 	
 	public void doResume() {
 		mapView.setStations(getStations());
+		mapView.resetStationsOverlays();
 		mapView.initOverlays();
 		mapView.checkDelay();
 	}
