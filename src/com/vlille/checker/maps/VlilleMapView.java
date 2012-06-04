@@ -221,13 +221,19 @@ public class VlilleMapView extends MapView {
 					GeoPoint point = eachOverlay.getPoint();
 					boolean bounded = mapBounds.contains(point.getLongitudeE6(), point.getLatitudeE6());
 					eachOverlay.setMarkerPin(!bounded);
-					if (bounded && !eachOverlay.getStation().isUpToDate()) {
-						try {
-							updateDetailStation(eachOverlay);
-						} catch (RuntimeException e) {
-							Log.e(LOG_TAG, "doInBackground update station detail", e);
-							cancel(true);
-							throw new IllegalStateException("Exception occured");
+					
+					final Station station = eachOverlay.getStation();
+					if (bounded) {
+						if (!station.isUpToDate()) {
+							try {
+								updateDetailStation(eachOverlay);
+							} catch (RuntimeException e) {
+								Log.e(LOG_TAG, "doInBackground update station detail", e);
+								cancel(true);
+								throw new IllegalStateException("Exception occured");
+							}
+						} else {
+							copyDetailsToOverlay(eachOverlay, station);
 						}
 					}
 				}
@@ -247,7 +253,11 @@ public class VlilleMapView extends MapView {
 				throw new NullPointerException("Station is null");
 			}
 			
-			overlay.copyDetailledStation(detailledStation);
+			copyDetailsToOverlay(overlay, detailledStation);
+		}
+		
+		private void copyDetailsToOverlay(MyOverlayItem overlay, Station station) {
+			overlay.copyDetailledStation(station);
 		}
 		
 	}
