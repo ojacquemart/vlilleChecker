@@ -5,6 +5,7 @@ import java.io.Serializable;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.math.NumberUtils;
 
 import android.content.ContentValues;
 
@@ -123,7 +124,7 @@ public class Station implements Serializable, Comparable<Station>, GetContentVal
 	}
 
 	public Integer getBikes() {
-		return Integer.valueOf(bikes);
+		return NumberUtils.toInt(bikes, NumberUtils.INTEGER_ZERO);
 	}
 
 	public void setBikes(String bikes) {
@@ -135,7 +136,7 @@ public class Station implements Serializable, Comparable<Station>, GetContentVal
 	}
 
 	public Integer getAttachs() {
-		return Integer.valueOf(attachs);
+		return NumberUtils.toInt(attachs, NumberUtils.INTEGER_ZERO);
 	}
 
 	public void setAttachs(String attachs) {
