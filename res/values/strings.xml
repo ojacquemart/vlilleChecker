@@ -68,10 +68,10 @@
     <string name="about_title">A propos de</string>
     <string name="about_text">Vlille Checker est dédié aux utilisateurs du V\'lille et de son service VLS (Vélos en Libre Service).
     \n\n
-  	L\'application vous permet de gérer facilement:\n
-    - vos stations favorites afin de contrôler le nombre de vélos ou emplacement disponibles;\n
+  	Au quotidien, l\'application vous permet de gérer facilement:\n
+    - vos stations favorites afin de contrôler le nombre de vélos ou emplacements disponibles;\n
     - trouver une station proche de votre position grâce à la localisation.\n\n
-    Vlille Checker se veut efficace et rend visible la disponibilité des stations dès l\'écran d\'accueil, évitant ainsi
+    Dès l\'écran d\'accueil, Vlille Checker affiche l\'état des stations, évitant ainsi
     les menus superflus.
     \n\n
     Pour toute remarque, contactez le développeur:
