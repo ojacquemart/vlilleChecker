@@ -2,7 +2,7 @@ vlilleChecker
 =============
 
 This project is an unofficial application for the Vlille service in Lille, France.
-Available on the Google play store: [https://play.google.com/store/apps/details?id=com.vlille.checker].
+Available on the Google play store: https://play.google.com/store/apps/details?id=com.vlille.checker.
 
 Installation
 ------------
