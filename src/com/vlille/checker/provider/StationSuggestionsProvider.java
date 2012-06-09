@@ -160,8 +160,6 @@ public class StationSuggestionsProvider extends ContentProvider {
 		}
 	}
 
-	// Other required implementations...
-
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
 		throw new UnsupportedOperationException();
