@@ -165,7 +165,7 @@ public class DbAdapter {
 	 * @param stationId The station id.
 	 */
 	public void star(boolean star, Station station) {
-		Log.d(LOG_TAG, "#star|unstar");
+		Log.d(LOG_TAG, "station " + station.getName() + " star? " + star);
 		updateStation(getStarredValues(star), station);
 	}
 	
@@ -175,7 +175,6 @@ public class DbAdapter {
 	 * @return the values to update.
 	 */
 	private ContentValues getStarredValues(boolean star) {
-		Log.d(LOG_TAG, "#getStarredValues");
 		final ContentValues values = new ContentValues();
 		values.put(StationTableFields.starred.toString(), star ? 1 : 0);
 		
