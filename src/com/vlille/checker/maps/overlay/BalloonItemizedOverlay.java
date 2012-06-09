@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.CompoundButton;
@@ -30,7 +29,6 @@ import com.vlille.checker.model.Station;
 public abstract class BalloonItemizedOverlay<Item extends OverlayItem> extends
 		ItemizedOverlay<Item> {
 
-	private static final String LOG_TAG = "BalloonItemizedOverlay";
 	private static final DbAdapter DB_ADAPTER = VlilleChecker.getDbAdapter();
 	
 	private VlilleMapView mMapView;
@@ -102,36 +100,36 @@ public abstract class BalloonItemizedOverlay<Item extends OverlayItem> extends
 	 */
 	@Override
 	protected boolean onTap(int index) {
-		Log.d(LOG_TAG, "overlay onTap");
 		MyOverlayItem item = mStationsOverlay.get(index);
 		final Station station = item.getStation();
 		
 		boolean isRecycled;
 		if (balloonView == null) {
 			balloonView = new BalloonOverlayView<OverlayItem>(mContext, 0);
-			balloonView.getFavoriteCheckBox().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-				@Override
-				public void onCheckedChanged(CompoundButton checkBox, boolean checked) {
-					DB_ADAPTER.star(checked, station);
-					station.setStarred(checked);
-					
-					if (checked) {
-						starredStations.add(station);
-					} else {
-						starredStations.remove(station);
-					}
-				}
-			});
 			isRecycled = false;
 		}  else {
 			isRecycled = true;
 		}
 		
-		GeoPoint point = item.getPoint();
-		
+		// Star/unstar station.
+		balloonView.getFavoriteCheckBox().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton checkBox, boolean checked) {
+				DB_ADAPTER.star(checked, station);
+				station.setStarred(checked);
+				
+				if (checked) {
+					starredStations.add(station);
+				} else {
+					starredStations.remove(station);
+				}
+			}
+		});
 		balloonView.setVisibility(View.GONE);
 		balloonView.setData(item, null);
+		
+		GeoPoint point = item.getPoint();
 		MapView.LayoutParams params = new MapView.LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, point,
 				MapView.LayoutParams.BOTTOM_CENTER);
