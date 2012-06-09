@@ -2,7 +2,6 @@ package com.vlille.checker.model;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -17,8 +16,8 @@ import com.vlille.checker.utils.Constants;
 /**
  * Represents the details of a single vlille station.
  */
-public class Station implements Serializable, Comparable<Station>, GetContentValues {
-
+public class Station implements Serializable, GetContentValues {
+	
 	private static final long serialVersionUID = 1L;
 	
 	/**
@@ -221,6 +220,15 @@ public class Station implements Serializable, Comparable<Station>, GetContentVal
 		
 		return values;
 	}
+
+	public void copyParsedInfos(Station parsedStation) {
+		this.adress = parsedStation.getAdress();
+		this.bikes = parsedStation.getStringBikes();
+		this.attachs = parsedStation.getStringAttachs();
+		this.cbPaiement = parsedStation.isCbPaiement();
+		this.outOfService = parsedStation.isOutOfService();
+		this.lastUpdate = parsedStation.getLastUpdate();
+	}
 	
 	@Override
 	public boolean equals(Object o) {
@@ -235,26 +243,12 @@ public class Station implements Serializable, Comparable<Station>, GetContentVal
 		}
 		
 		Station other = (Station) o;
-		return new EqualsBuilder().append(this.name, other.getName()).isEquals();
+		return new EqualsBuilder().append(name, other.getName()).isEquals();
 	}
 
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder().append(name).toHashCode();
-	}
-
-	@Override
-	public int compareTo(Station another) {
-		return new CompareToBuilder().append(name, another.getName()).toComparison();
-	}
-
-	public void copyParsedInfos(Station parsedStation) {
-		this.adress = parsedStation.getAdress();
-		this.bikes = parsedStation.getStringBikes();
-		this.attachs = parsedStation.getStringAttachs();
-		this.cbPaiement = parsedStation.isCbPaiement();
-		this.outOfService = parsedStation.isOutOfService();
-		this.lastUpdate = parsedStation.getLastUpdate();
 	}
 
 }
