@@ -72,8 +72,6 @@ public class XMLReader {
 		InputStream inputStream = null;
 		
 		try {
-			Log.d(LOG_TAG, "Url to load: " + httpUrl);
-			
 			final URL url = new URL(httpUrl);
 			final URLConnection connection = url.openConnection();
 			connection.setConnectTimeout(CONNECTION_TIMEOUT);
