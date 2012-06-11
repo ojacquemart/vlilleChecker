@@ -40,7 +40,6 @@ public class PositionCircleOverlay extends Overlay {
 
 			super.draw(canvas, mapView, shadow);
 		}
-		
 	}
 	
 	private float metersToRadius(long meters, MapView mapView, GeoPoint mapCenter)  {
