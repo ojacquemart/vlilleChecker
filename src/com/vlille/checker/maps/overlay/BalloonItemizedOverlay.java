@@ -1,5 +1,6 @@
 package com.vlille.checker.maps.overlay;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import com.google.android.maps.OverlayItem;
 import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.db.DbAdapter;
 import com.vlille.checker.maps.VlilleMapView;
-import com.vlille.checker.maps.overlay.StationsOverlays.MyOverlayItem;
+import com.vlille.checker.maps.overlay.BallonStationOverlays.StationDetails;
 import com.vlille.checker.model.Station;
 
 /**
@@ -27,8 +28,9 @@ import com.vlille.checker.model.Station;
  * @author Jeff Gilfelt
  */
 public abstract class BalloonItemizedOverlay<Item extends OverlayItem> extends
-		ItemizedOverlay<Item> {
+		ItemizedOverlay<Item> implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private static final DbAdapter DB_ADAPTER = VlilleChecker.getDbAdapter();
 	
 	private VlilleMapView mMapView;
@@ -37,7 +39,7 @@ public abstract class BalloonItemizedOverlay<Item extends OverlayItem> extends
 	final MapController mc;
 
 	protected Context mContext;
-	protected List<MyOverlayItem> mStationsOverlay;
+	protected List<StationDetails> detailsOverlays;
 	
 	private List<Station> starredStations = new ArrayList<Station>();
 
@@ -52,11 +54,11 @@ public abstract class BalloonItemizedOverlay<Item extends OverlayItem> extends
 	 *            - The view upon which the overlay items are to be drawn.
 	 */
 	public BalloonItemizedOverlay(Drawable defaultMarker, VlilleMapView mapView,
-			Context context, List<MyOverlayItem> stations, List<Station> starredStations) {
+			Context context, List<StationDetails> stations, List<Station> starredStations) {
 		super(defaultMarker);
 		
 		this.mMapView = mapView;
-		this.mStationsOverlay = stations;
+		this.detailsOverlays = stations;
 		this.viewOffset = 0;
 		this.mc = mapView.getController();
 		this.mContext = context;
@@ -100,7 +102,7 @@ public abstract class BalloonItemizedOverlay<Item extends OverlayItem> extends
 	 */
 	@Override
 	protected boolean onTap(int index) {
-		MyOverlayItem item = mStationsOverlay.get(index);
+		StationDetails item = detailsOverlays.get(index);
 		final Station station = item.getStation();
 		
 		boolean isRecycled;
@@ -151,8 +153,7 @@ public abstract class BalloonItemizedOverlay<Item extends OverlayItem> extends
 			Item castedItem = (Item) item;
 			setFocus(castedItem);
 		}
-		
-		mMapView.animateToAndUpdateOverlays(item.getPoint());
+		mMapView.animateTo(item.getPoint());
 
 		return true;
 	}

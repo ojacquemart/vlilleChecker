@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.google.android.maps.OverlayItem;
 import com.vlille.checker.R;
-import com.vlille.checker.maps.overlay.StationsOverlays.MyOverlayItem;
+import com.vlille.checker.maps.overlay.BallonStationOverlays.StationDetails;
 import com.vlille.checker.model.Station;
 
 /**
@@ -73,7 +73,7 @@ public class BalloonOverlayView<Item extends OverlayItem> extends FrameLayout {
 	 * @param item
 	 *            - The overlay item containing the relevant view data (title and snippet).
 	 */
-	public void setData(MyOverlayItem item, Location location) {
+	public void setData(StationDetails item, Location location) {
 		station = item.getStation();
 		
 		mTextViewTitle.setText(station.getName());

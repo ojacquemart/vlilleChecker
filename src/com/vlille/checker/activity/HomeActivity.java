@@ -24,6 +24,7 @@ import com.markupartist.android.widget.ActionBar.AbstractAction;
 import com.vlille.checker.R;
 import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.model.Station;
+import com.vlille.checker.service.AbstractRetrieverService;
 import com.vlille.checker.service.StationsResultReceiver;
 import com.vlille.checker.service.StationsResultReceiver.Receiver;
 import com.vlille.checker.service.StationsRetrieverService;
@@ -94,7 +95,7 @@ public class HomeActivity extends VlilleListActivity implements InitializeAction
 			
 			final Intent intent = new Intent(Intent.ACTION_SYNC, null, getApplicationContext(), StationsRetrieverService.class);
 			intent.putExtra(RECEIVER, resultReceiver);
-			intent.putExtra(StationsRetrieverService.STATIONS_TO_LOAD, (ArrayList<Station>) starredIdsStations);
+			intent.putExtra(StationsRetrieverService.EXTRA_DATA, (ArrayList<Station>) starredIdsStations);
 			startService(intent);
 		} else {
 			Log.d(LOG_TAG, "No network, show the retry view");
@@ -118,7 +119,7 @@ public class HomeActivity extends VlilleListActivity implements InitializeAction
 			finished = true;
 			
 			@SuppressWarnings("unchecked")
-			List<Station> results = (List<Station>) resultData.getSerializable("results");
+			List<Station> results = (List<Station>) resultData.getSerializable(AbstractRetrieverService.RESULTS);
 
 			showBoxNewStation(results);
 			handleAdapter(results);

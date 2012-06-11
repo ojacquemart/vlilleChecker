@@ -24,7 +24,7 @@ import com.vlille.checker.maps.PositionConstants;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.utils.ContextHelper;
 
-public class LocationMapsActivity extends MapsActivity {
+public class LocationMapsActivity extends MapsActivity implements GetStations {
 
 	private boolean locationAvailable;
 	
@@ -75,25 +75,25 @@ public class LocationMapsActivity extends MapsActivity {
 	
 	@Override
 	public void doResume() {
-		Log.d(LOG_TAG, "Resume localisation maps");
-		
-		mapView.updateCurrentLocation();
-		
-		locationAvailable = mapView.getCurrentLocation() != null;
-		if (!locationAvailable) {
-			Toast.makeText(getApplicationContext(), R.string.error_no_location_found, Toast.LENGTH_LONG)
-					.show();
-			throw new IllegalStateException("No location found");
-		}
-		
-		mapView.resetStationsOverlays();
-		mapView.centerControllerAndDrawCircleOverlay();
+		Log.d(LOG_TAG, "Resume location maps");
+		try {
+			mapView.updateCurrentLocation();
 			
-		super.doResume();
+			locationAvailable = mapView.getCurrentLocation() != null;
+			if (!locationAvailable) {
+				
+				Toast.makeText(getApplicationContext(), R.string.error_no_location_found, Toast.LENGTH_SHORT).show();
+				throw new IllegalStateException("No location found");
+			}
+				
+			super.doResume();
+		} catch (NullPointerException e) {
+			throw e;
+		}
 	}
 	
 	@Override
-	public List<Station> getStations() {
+	public List<Station> getOnCreateStations() {
 		Log.i(LOG_TAG, "Location available ? " + locationAvailable);
 		if (!locationAvailable) {
 			return new ArrayList<Station>();
@@ -116,14 +116,21 @@ public class LocationMapsActivity extends MapsActivity {
 		
 		Log.d(LOG_TAG, "Nb stations to draw = " + stationsToDraw.size());
 		if (stationsToDraw.isEmpty()) {
-			Toast.makeText(
-					getApplicationContext(),
-					R.string.error_no_stations_near_current_location,
-					Toast.LENGTH_LONG)
-						.show();
+			new Thread(new Runnable() {
+			    @Override
+			    public void run() {
+					Toast.makeText(getApplicationContext(), R.string.error_no_stations_near_current_location,
+							Toast.LENGTH_SHORT).show();
+			    }
+		    }).start();
 		}
 		
 		return stationsToDraw;
+	}
+	
+	@Override
+	public List<Station> getOnResumeStations() {
+		return getOnCreateStations();
 	}
 	
 	private boolean isDistanceBetweenLocationAndStationOk(Location mCurrentLocation, Station eachStation, long mParameterDistanceBetweenStations) {
@@ -160,7 +167,7 @@ public class LocationMapsActivity extends MapsActivity {
 	
 	@Override
 	public void doInitActionBar() {
-		ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
+		actionBar = (ActionBar) findViewById(R.id.actionbar);
 		actionBar.addAction(new RefreshAction());
 	}
 	
