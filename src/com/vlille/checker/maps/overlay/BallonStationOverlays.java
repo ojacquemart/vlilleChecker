@@ -80,34 +80,36 @@ public class BallonStationOverlays extends BalloonItemizedOverlay<StationDetails
 	}
 	
 	@Override
-	protected StationDetails createItem(int i) {
+	public StationDetails createItem(int i) {
 		return detailsOverlays.get(i);
 	}
 
 	@Override
-	public int size() {
+	public synchronized int size() {
 		return detailsOverlays.size();
 	}
 	
-	public int getDrawableMarkerHeight() {
+	public synchronized int getDrawableMarkerHeight() {
 		return drawableMarkerHeight;
 	}
 	
-	public void populateNow() {
+	public synchronized void populateNow() {
 		populate();
 	}
 
 	/**
-	 * First all overlays are drawn with shadow at true, then at false...
+	 * First, all overlays are drawn with shadow at true, then at false...
 	 */
 	@Override
-	public void draw(android.graphics.Canvas canvas, MapView mapView, boolean shadow) {
+	public synchronized void draw(android.graphics.Canvas canvas, MapView mapView, boolean shadow) {
+		if (shadow) {
+			return;
+		}
+		
 		detailledZoomLevel = VlilleMapView.isDetailledZoomLevel(mapView.getZoomLevel());
 		
-		if (!shadow) {
-			setLastFocusedIndex(-1);
-			setBalloonBottomOffset(detailledZoomLevel ? drawableMarkerHeight : drawableMarkerPinHeight);
-		}
+		setLastFocusedIndex(-1);
+		setBalloonBottomOffset(detailledZoomLevel ? drawableMarkerHeight : drawableMarkerPinHeight);
 		
 		populate();
 		
