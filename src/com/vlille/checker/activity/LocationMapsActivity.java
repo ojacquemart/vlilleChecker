@@ -116,13 +116,15 @@ public class LocationMapsActivity extends MapsActivity implements GetStations {
 		
 		Log.d(LOG_TAG, "Nb stations to draw = " + stationsToDraw.size());
 		if (stationsToDraw.isEmpty()) {
-			new Thread(new Runnable() {
-			    @Override
+			LocationMapsActivity.this.runOnUiThread(new Runnable() {
+				@Override
 			    public void run() {
-					Toast.makeText(getApplicationContext(), R.string.error_no_stations_near_current_location,
+					Toast.makeText(
+							getApplicationContext(),
+							R.string.error_no_stations_near_current_location,
 							Toast.LENGTH_SHORT).show();
 			    }
-		    }).start();
+		    });
 		}
 		
 		return stationsToDraw;
