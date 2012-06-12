@@ -201,15 +201,21 @@ public class MapsActivity extends MapActivity implements InitializeActionBar, Ge
 			finished = true;
 			
 			@SuppressWarnings("unchecked")
-			List<Station> results = (List<Station>) resultData.getSerializable(AbstractRetrieverService.RESULTS);
+			final List<Station> results = (List<Station>) resultData.getSerializable(AbstractRetrieverService.RESULTS);
 			
-			// Copy details infos to overlay to display number bikes and attachs.
-			for (Station eachStation : results) {
-				final StationDetails overlay = mapView.getOverlayByStationId(eachStation);
-				if (overlay != null) {
-					overlay.copyDetailledStation(eachStation);
+			MapsActivity.this.runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					// Copy details infos to overlay to display number bikes and attachs.
+					for (Station eachStation : results) {
+						final StationDetails overlay = mapView.getOverlayByStationId(eachStation);
+						if (overlay != null) {
+							overlay.copyDetailledStation(eachStation);
+						}
+					}
+					
 				}
-			}
+			});
 			
 			break;
 		case Receiver.ERROR:
@@ -220,7 +226,7 @@ public class MapsActivity extends MapActivity implements InitializeActionBar, Ge
 		
 		if (finished) {
 			mapView.postInvalidate();
-			Log.d(LOG_TAG, "hide action bar progress");
+			Log.d(LOG_TAG, "#onReceiveResult finished");
 			actionBar.setProgressBarVisibility(View.GONE);
 		}
 	}
