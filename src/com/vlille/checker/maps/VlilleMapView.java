@@ -19,9 +19,9 @@ import android.view.MotionEvent;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
 import com.vlille.checker.R;
-import com.vlille.checker.maps.overlay.PositionCircleOverlay;
 import com.vlille.checker.maps.overlay.BallonStationOverlays;
 import com.vlille.checker.maps.overlay.BallonStationOverlays.StationDetails;
+import com.vlille.checker.maps.overlay.PositionCircleOverlay;
 import com.vlille.checker.model.Metadata;
 import com.vlille.checker.model.Station;
 
@@ -30,25 +30,33 @@ import com.vlille.checker.model.Station;
  */
 public class VlilleMapView extends MapView {
 
+	private final String LOG_TAG = getClass().getSimpleName();
+	
+	// Margin to pre load some stations.
+	private static final double MAP_VIEW_BOUNDS_MARGIN = 0.60;
+
+	// Detailled zoom level in which details are displayed.
 	private static final int DETAILLED_ZOOM_LEVEL = 17;
 	
-	private final String LOG_TAG = getClass().getSimpleName();
+	// Default station marker.
 	private final Drawable DEFAULT_MARKER = getResources().getDrawable(R.drawable.station_marker);
 	
-	private LocationManagerWrapper locationManagerWrapper = new LocationManagerWrapper(getContext());
-	private boolean mLocationEnabled;
-    private int mOldZoomLevel = -1;
-    private Location mCurrentLocation = null;
+    private int oldZoomLevel = -1;
     
-    private GeoPoint mOldCenterGeoPoint;
-    private OnPanAndZoomListener mListener;
+    private LocationManagerWrapper locationManagerWrapper = new LocationManagerWrapper(getContext());
+    private boolean locationEnabled;
+    private Location currentLocation = null;
     
+    private GeoPoint oldCenterGeoPoint;
+    private OnPanAndZoomListener panAndZoomListener;
+    
+    // Metadata infos.
     private Metadata metadata;
-    private BallonStationOverlays mStationsOverlays;
     
-    /**
-     * Store a map with each station overlay by station id.
-     */
+    // Ballon stations overlays.
+    private BallonStationOverlays ballonStationsOverlays;
+    
+    // Store a map with each station overlay by station id.
 	private Map<String, StationDetails> mapOverlaysByStationId = new HashMap<String, StationDetails>();
 
     public VlilleMapView(Context context, String apiKey) {
@@ -85,13 +93,13 @@ public class VlilleMapView extends MapView {
 		
 		for (Station eachStation : stations) {
 			GeoPoint point = new GeoPoint(eachStation.getLatitudeE6(), eachStation.getLongituteE6());
-			StationDetails overlay = mStationsOverlays.createNewOverlay(point, eachStation);
+			StationDetails overlay = ballonStationsOverlays.createNewOverlay(point, eachStation);
 			
 			mapOverlaysByStationId.put(eachStation.getId(), overlay);
 		}
 
-		getOverlays().add(mStationsOverlays);
-		mStationsOverlays.populateNow();
+		getOverlays().add(ballonStationsOverlays);
+		ballonStationsOverlays.populateNow();
 		
 		watch.stop();
 		Log.d(LOG_TAG, "Initialized in " + watch.getTime());
@@ -100,7 +108,7 @@ public class VlilleMapView extends MapView {
 	public void initCenter() {
 		Log.d(LOG_TAG, "#initCenter");
 		
-		if (!mLocationEnabled) {
+		if (!locationEnabled) {
 			defaultCenter();
 		} else {
 			locationCenter();
@@ -114,12 +122,12 @@ public class VlilleMapView extends MapView {
 	public void locationCenter() {
 		clearOverlays();
 		
-		Log.d(LOG_TAG, "Current location not null : " + (mCurrentLocation != null));
-		if (mCurrentLocation != null) {
+		Log.d(LOG_TAG, "Current location not null : " + (currentLocation != null));
+		if (currentLocation != null) {
 			Log.i(LOG_TAG, "Center map and draw circle overlay");
 			
-			int latitudeE6 = PositionTransformer.toE6(mCurrentLocation.getLatitude());
-			int longitudeE6 = PositionTransformer.toE6(mCurrentLocation.getLongitude());
+			int latitudeE6 = PositionTransformer.toE6(currentLocation.getLatitude());
+			int longitudeE6 = PositionTransformer.toE6(currentLocation.getLongitude());
 			
 			// Center on the current location.
 			center(new GeoPoint(latitudeE6, longitudeE6));
@@ -139,7 +147,7 @@ public class VlilleMapView extends MapView {
 	}
 	
 	public void resetStationsOverlays() {
-		mStationsOverlays = new BallonStationOverlays(DEFAULT_MARKER, this, getContext());
+		ballonStationsOverlays = new BallonStationOverlays(DEFAULT_MARKER, this, getContext());
 	}
 	
 	public StationDetails getOverlayByStationId(Station station) {
@@ -155,11 +163,11 @@ public class VlilleMapView extends MapView {
 	}
 	
 	public void updateCurrentLocation() {
-		mCurrentLocation = locationManagerWrapper.getCurrentLocation();
+		currentLocation = locationManagerWrapper.getCurrentLocation();
 	}
 	
 	public List<StationDetails> getAllOverlays() {
-		return mStationsOverlays.getStationsOverlay();
+		return ballonStationsOverlays.getStationsOverlay();
 	}
 	
 	public List<Station> getBoundedStations() {
@@ -174,8 +182,8 @@ public class VlilleMapView extends MapView {
 		List<Station> overlays = new ArrayList<Station>();
 		
 		// Only load stations if station is map bounds and if is not updated more than one minute.
-		final Rect mapBounds = getMapBounds();
-		for (StationDetails eachOverlay : mStationsOverlays.getStationsOverlay()) {
+		final Rect mapBounds = getMapBoundsRect();
+		for (StationDetails eachOverlay : ballonStationsOverlays.getStationsOverlay()) {
 			GeoPoint point = eachOverlay.getPoint();
 			boolean bounded = mapBounds.contains(point.getLongitudeE6(), point.getLatitudeE6());
 			eachOverlay.setMarkerPin(!bounded);
@@ -190,30 +198,35 @@ public class VlilleMapView extends MapView {
 	
 
 	/**
-	 * Only show overlays details when <code>{@link #mStationsOverlays}</code> is not null and zoom level allows to.
+	 * Only show overlays details when <code>{@link #ballonStationsOverlays}</code> is not null and zoom level allows to.
 	 * @return <code>true </code> if maps can show details, <code>false</code> otherwise.
 	 */
 	private boolean canShowDetails() {
-		return mStationsOverlays != null && VlilleMapView.isDetailledZoomLevel(getZoomLevel());
+		return ballonStationsOverlays != null && VlilleMapView.isDetailledZoomLevel(getZoomLevel());
 	}
 	
 	/**
 	 * Get map bounds according to the screen size.
 	 * @return the map bounds.
 	 */
-	public Rect getMapBounds() {
+	public Rect getMapBoundsRect() {
 		final GeoPoint mapCenter = getMapCenter();
-		final int lngHalfSpan = getLongitudeSpan() / 2;
-		final int latHalfSpan = getLatitudeSpan() / 2;
-		final int drawableMarkerHeight = mStationsOverlays != null
-				? mStationsOverlays.getDrawableMarkerHeight()
-				: 0;
-
+		// .75 to pre load some stations outside the view.
+		final double width =  getLongitudeSpan() * MAP_VIEW_BOUNDS_MARGIN;
+		final double height = getLatitudeSpan() * MAP_VIEW_BOUNDS_MARGIN;
+		
+		int drawableMarkerHeight = 0;
+		if (ballonStationsOverlays != null) {
+			drawableMarkerHeight = ballonStationsOverlays.getDrawableMarkerHeight();
+		}
+		
+		Log.d(LOG_TAG, String.format("Rectangle width %f height %f", width, height));
+	    
 		return new Rect(
-				mapCenter.getLongitudeE6() - lngHalfSpan - drawableMarkerHeight,
-				mapCenter.getLatitudeE6() - latHalfSpan - drawableMarkerHeight,
-				mapCenter.getLongitudeE6() + lngHalfSpan + drawableMarkerHeight,
-				mapCenter.getLatitudeE6() + latHalfSpan + drawableMarkerHeight);
+				mapCenter.getLongitudeE6() - (int) width - drawableMarkerHeight,
+				mapCenter.getLatitudeE6() - (int) height - drawableMarkerHeight,
+				mapCenter.getLongitudeE6() + (int) width + drawableMarkerHeight,
+				mapCenter.getLatitudeE6() + (int) height + drawableMarkerHeight);
 	}
 
 	public static boolean isDetailledZoomLevel(int zoomLevel) {
@@ -224,11 +237,11 @@ public class VlilleMapView extends MapView {
 	public boolean onTouchEvent(MotionEvent ev) {
 		if (ev.getAction() == MotionEvent.ACTION_UP) {
 			GeoPoint centerGeoPoint = this.getMapCenter();
-			if (mOldCenterGeoPoint == null || (mOldCenterGeoPoint.getLatitudeE6() != centerGeoPoint.getLatitudeE6())
-					|| (mOldCenterGeoPoint.getLongitudeE6() != centerGeoPoint.getLongitudeE6())) {
-				mListener.onPan();
+			if (oldCenterGeoPoint == null || (oldCenterGeoPoint.getLatitudeE6() != centerGeoPoint.getLatitudeE6())
+					|| (oldCenterGeoPoint.getLongitudeE6() != centerGeoPoint.getLongitudeE6())) {
+				panAndZoomListener.onPan();
 			}
-			mOldCenterGeoPoint = this.getMapCenter();
+			oldCenterGeoPoint = this.getMapCenter();
 		}
 		
 		return super.onTouchEvent(ev);
@@ -237,31 +250,30 @@ public class VlilleMapView extends MapView {
 	@Override
 	protected void dispatchDraw(Canvas canvas) {
 		super.dispatchDraw(canvas);
-		if (getZoomLevel() != mOldZoomLevel) {
-			mListener.onZoom();
-			mOldZoomLevel = getZoomLevel();
+		if (getZoomLevel() != oldZoomLevel) {
+			panAndZoomListener.onZoom();
+			oldZoomLevel = getZoomLevel();
 		}
 	}
 
 	public void setOnPanListener(OnPanAndZoomListener listener) {
-		mListener = listener;
+		panAndZoomListener = listener;
 	}
 
 	public boolean isLocationActivated() {
-		return mLocationEnabled;
+		return locationEnabled;
 	}
 
 	public void setLocationActivated(boolean locationActivated) {
-		this.mLocationEnabled = locationActivated;
+		this.locationEnabled = locationActivated;
 	}
 
 	public Location getCurrentLocation() {
-		return mCurrentLocation;
+		return currentLocation;
 	}
 	
 	public Map<String, StationDetails> getMapOverlaysByStationId() {
 		return mapOverlaysByStationId;
 	}
-	
 
 }
