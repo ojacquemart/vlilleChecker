@@ -30,6 +30,7 @@
     <!-- Errors -->
     <string name="error_occured">Une erreur est survenue.</string>
     <string name="error_retry">Réessayer</string>
+    <string name="error_connection_expired">Connexion expirée</string>
     <string name="error_no_connection">Pas de connexion réseau disponible</string>
     <string name="error_initialization_stations">Erreur durant l\'initialisation des stations</string>
     <string name="error_no_stations_near_current_location">Aucune station près de votre position actuelle</string>

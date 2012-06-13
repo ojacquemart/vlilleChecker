@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-		xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:app="http://schemas.android.com/apk/res/com.vlille.checker"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res/com.vlille.checker"
    	android:layout_width="wrap_content"
    	android:layout_height="wrap_content"
 	android:orientation="vertical"
 	android:background="@color/white">
 	
 	<com.markupartist.android.widget.ActionBar
-    android:id="@+id/actionbar"
-    app:title="@string/app_name_title"
-    style="@style/ActionBar"
-    />
+	   android:id="@+id/actionbar"
+	   app:title="@string/app_name_title"
+	   style="@style/ActionBar"
+	   />
+	
+	<!-- Box to add new station -->
 	
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	    android:id="@+id/home_station_new_box"
@@ -27,24 +29,30 @@
 	    />
 	</LinearLayout>
 	
+	<!-- Box to display error -->
+	
 	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	    android:id="@+id/home_error_box"
 	   	android:layout_width="fill_parent"
 	   	android:layout_height="wrap_content"
 		android:visibility="gone">
 		
-	    <TextView
+	    <TextView  
 	        android:id="@+id/home_error_message"
-	        android:text="@string/error_occured"
-		   	android:layout_width="fill_parent"
-		   	android:layout_height="wrap_content"
-	   	 />
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content" 
+		    android:padding="5dp"
+		    android:text="@string/error_connection_expired"
+		    android:drawablePadding="0dp"
+		    android:gravity="center"
+    	/>
 	    
 		<Button android:id="@+id/home_error_retry_button" 
            android:layout_width="fill_parent" 
            android:layout_height="wrap_content" 
            android:layout_below="@id/home_error_message"
-           android:text="@string/error_retry" />
+           android:text="@string/error_retry"
+		/>
 	</RelativeLayout>	
 		
 	<ListView
