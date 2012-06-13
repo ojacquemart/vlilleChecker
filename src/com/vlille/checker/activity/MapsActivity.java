@@ -25,6 +25,7 @@ import com.vlille.checker.service.AbstractRetrieverService;
 import com.vlille.checker.service.StationsResultReceiver;
 import com.vlille.checker.service.StationsResultReceiver.Receiver;
 import com.vlille.checker.service.StationsRetrieverService;
+import com.vlille.checker.utils.ContextHelper;
  
 /**
  * Select stations from maps.
@@ -90,7 +91,7 @@ public class MapsActivity extends MapActivity implements InitializeActionBar, Ge
 			stations = dbAdapter.findAll();
 		} catch (RuntimeException e) {
 			Log.e(LOG_TAG, "#onCreate() exception", e);
-			Toast.makeText(this, getString(R.string.error_no_connection), Toast.LENGTH_LONG);
+			Toast.makeText(this, getString(R.string.error_no_connection), Toast.LENGTH_SHORT);
 		}
 	}
 
@@ -160,7 +161,9 @@ public class MapsActivity extends MapActivity implements InitializeActionBar, Ge
 
 		@Override
 		protected Void doInBackground(Void... params) {
-			mapView.createOverlays(getOnCreateStations());
+			if (isNetworkAvailable()) {
+				mapView.createOverlays(getOnCreateStations());
+			}
 			return null;
 		}
 
@@ -168,6 +171,21 @@ public class MapsActivity extends MapActivity implements InitializeActionBar, Ge
 		protected void onPostExecute(Void result) {
 			startRetrieverService();
 		}
+	}
+	
+	private boolean isNetworkAvailable() {
+		final boolean networkAvailable = ContextHelper.isNetworkAvailable(this);
+		if (!networkAvailable) {
+			MapsActivity.this.runOnUiThread(new Runnable() {
+				
+				@Override
+				public void run() {
+					Toast.makeText(getApplicationContext(), R.string.error_no_connection, Toast.LENGTH_SHORT).show();
+				}
+			});
+		}
+		
+		return networkAvailable;
 	}
 	
 	private void startRetrieverService() {

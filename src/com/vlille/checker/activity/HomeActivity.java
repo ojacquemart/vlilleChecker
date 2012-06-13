@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.londatiga.android.ActionItem;
 import net.londatiga.android.QuickAction;
+import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -28,15 +29,18 @@ import com.vlille.checker.service.AbstractRetrieverService;
 import com.vlille.checker.service.StationsResultReceiver;
 import com.vlille.checker.service.StationsResultReceiver.Receiver;
 import com.vlille.checker.service.StationsRetrieverService;
+import com.vlille.checker.utils.ContextHelper;
 import com.vlille.checker.utils.MiscUtils;
 
 /**
  * Home Vlille checker activity.
  */
-public class HomeActivity extends VlilleListActivity implements InitializeActionBar, Receiver {
+public class HomeActivity extends ListActivity implements InitializeActionBar, Receiver {
 
 	private static final int QUICK_DIALOG_SEARCH_BY_MAPS = 1;
 	private static final int QUICK_DIALOG_SEARCH_BY_LIST = 2;
+	
+	private final String LOG_TAG = getClass().getSimpleName();
 
 	private QuickAction quickDialogAction; 
 	private StationsResultReceiver resultReceiver;
@@ -84,7 +88,7 @@ public class HomeActivity extends VlilleListActivity implements InitializeAction
 	}	
 	
 	private void handleStarredStations(List<Station> starredIdsStations) {
-		if (isNetworkAvailable()) {
+		if (ContextHelper.isNetworkAvailable(this)) {
 			if (!isFinishing()) {
 				progressDialog.show();
 			}
@@ -169,7 +173,6 @@ public class HomeActivity extends VlilleListActivity implements InitializeAction
 	private void showBoxError(boolean show) {
 		MiscUtils.showOrMask((RelativeLayout) findViewById(R.id.home_error_box), show);
 	}
-	
 	
 	@Override
 	public void doInitActionBar() {

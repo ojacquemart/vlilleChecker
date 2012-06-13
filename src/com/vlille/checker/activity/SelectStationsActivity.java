@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import android.app.ListActivity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.database.Cursor;
@@ -25,10 +26,12 @@ import com.vlille.checker.utils.StationFilter;
 /**
  * Select stations activity.
  */
-public class SelectStationsActivity extends VlilleListActivity {
+public class SelectStationsActivity extends ListActivity {
 
 	public static final String PREFS_FILE = "VLILLE_PREFS";
-
+	
+	private final String LOG_TAG = getClass().getSimpleName();
+	
 	private List<Station> stations;
 
 	@Override
