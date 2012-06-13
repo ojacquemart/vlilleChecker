@@ -13,8 +13,13 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 import com.vlille.checker.R;
+import com.vlille.checker.utils.ContextHelper;
 import com.vlille.checker.utils.PreferenceKeys;
 
+/**
+ * Location preferences activity.
+ * Allows to change the radius in which locate the stations.
+ */
 public class LocationMapsPreferenceActivity extends PreferenceActivity implements OnSeekBarChangeListener {
 
 	private final String LOG_TAG = getClass().getSimpleName();
@@ -80,29 +85,29 @@ public class LocationMapsPreferenceActivity extends PreferenceActivity implement
 		changePreferencePositionDistanceSummary();
 	}
 	
+	/**
+	 * Build the summary displayed in the menu.
+	 */
 	private void changePreferencePositionDistanceSummary() {
 		StringBuilder builder = new StringBuilder();
 		builder.append(getString(R.string.prefs_position_radius_distance_summary));
 		builder.append(" ");
-		builder.append(getRadiusValue());
+		builder.append(ContextHelper.getRadiusValue(this));
 		builder.append(getString(R.string.prefs_position_radius_distance_unit));
 		
 		preferencePositionDistance.setSummary(builder.toString());
 	}
 	
 	private void updateSeekBarProgress() {
-		final long defaultRadiusValue = getRadiusValue();
-		seekBar.setProgress(Long.valueOf(defaultRadiusValue).intValue());
+		seekBar.setProgress(Long.valueOf(ContextHelper.getRadiusValue(this)).intValue());
 	}
 
-	private long getRadiusValue() {
-		return preferencePositionDistance.getSharedPreferences()
-				.getLong(PreferenceKeys.POSITION_RADIUS, 0L);
-	}
-
+	/**
+	 * On radius change, update the text.
+	 */
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-		textProgress.setText("" + String.valueOf(progress) + getString(R.string.prefs_position_radius_distance_unit));
+		textProgress.setText(String.format("%d %s", progress, getString(R.string.prefs_position_radius_distance_unit)));
 	}
 
 	@Override
