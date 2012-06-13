@@ -166,18 +166,10 @@ public class VlilleMapView extends MapView {
 		currentLocation = locationManagerWrapper.getCurrentLocation();
 	}
 	
-	public List<StationDetails> getAllOverlays() {
-		return ballonStationsOverlays.getStationsOverlay();
-	}
-	
 	public List<Station> getBoundedStations() {
 		if (!canShowDetails()) {
 			return new ArrayList<Station>();
 		}
-		
-		Log.d(LOG_TAG, "Update visible overlays");
-		StopWatch watch = new StopWatch();
-		watch.start();
 		
 		List<Station> overlays = new ArrayList<Station>();
 		
@@ -195,7 +187,6 @@ public class VlilleMapView extends MapView {
 		
 		return overlays;
 	}
-	
 
 	/**
 	 * Only show overlays details when <code>{@link #ballonStationsOverlays}</code> is not null and zoom level allows to.
@@ -211,7 +202,7 @@ public class VlilleMapView extends MapView {
 	 */
 	public Rect getMapBoundsRect() {
 		final GeoPoint mapCenter = getMapCenter();
-		// .75 to pre load some stations outside the view.
+
 		final double width =  getLongitudeSpan() * MAP_VIEW_BOUNDS_MARGIN;
 		final double height = getLatitudeSpan() * MAP_VIEW_BOUNDS_MARGIN;
 		
@@ -219,8 +210,6 @@ public class VlilleMapView extends MapView {
 		if (ballonStationsOverlays != null) {
 			drawableMarkerHeight = ballonStationsOverlays.getDrawableMarkerHeight();
 		}
-		
-		Log.d(LOG_TAG, String.format("Rectangle width %f height %f", width, height));
 	    
 		return new Rect(
 				mapCenter.getLongitudeE6() - (int) width - drawableMarkerHeight,
@@ -233,9 +222,13 @@ public class VlilleMapView extends MapView {
 		return zoomLevel >= DETAILLED_ZOOM_LEVEL;
 	}
 	
+	/**
+	 * Detects move on touch event in order to refresh station, and
+	 * retrieves the new value of the map center.
+	 */
 	@Override
-	public boolean onTouchEvent(MotionEvent ev) {
-		if (ev.getAction() == MotionEvent.ACTION_UP) {
+	public boolean onTouchEvent(MotionEvent event) {
+		if (event.getAction() == MotionEvent.ACTION_UP) {
 			GeoPoint centerGeoPoint = this.getMapCenter();
 			if (oldCenterGeoPoint == null || (oldCenterGeoPoint.getLatitudeE6() != centerGeoPoint.getLatitudeE6())
 					|| (oldCenterGeoPoint.getLongitudeE6() != centerGeoPoint.getLongitudeE6())) {
@@ -244,7 +237,7 @@ public class VlilleMapView extends MapView {
 			oldCenterGeoPoint = this.getMapCenter();
 		}
 		
-		return super.onTouchEvent(ev);
+		return super.onTouchEvent(event);
 	}
 
 	@Override
