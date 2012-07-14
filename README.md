@@ -8,8 +8,8 @@ This repository contains the source code for the Vlille Checker Android app.
 
 This project is an unofficial application for the Vlille service in Lille, France.
 
-![image1](https://lh3.ggpht.com/0GK3MgMhnZstnmlYGUdOtByPoMcfnyOegngBwC5S1jEqkaRhjjKB8gV3o1DplVVyRzE=h230) | ![image2]
-(https://lh3.ggpht.com/XLmhuKWp66vDqcw8MyYMpJ_f5XWzSX-NcGGrspGa06KKApI0TX7_G6V5OOzONRs9Ug=h230) | ![image3](https://lh5.ggpht.com/j5qT7j1nbIC2kqUmgBCSImiZnE5QxTZmjK0xW0UNmaBSJt8TX0quPtyhSWbvwsQ8Mg=h230)
+![image1](https://lh3.ggpht.com/0GK3MgMhnZstnmlYGUdOtByPoMcfnyOegngBwC5S1jEqkaRhjjKB8gV3o1DplVVyRzE=h230) &nbsp; ![image2]
+(https://lh3.ggpht.com/XLmhuKWp66vDqcw8MyYMpJ_f5XWzSX-NcGGrspGa06KKApI0TX7_G6V5OOzONRs9Ug=h230) &nbsp; ![image3](https://lh5.ggpht.com/j5qT7j1nbIC2kqUmgBCSImiZnE5QxTZmjK0xW0UNmaBSJt8TX0quPtyhSWbvwsQ8Mg=h230)
 
 ## Versions
 
@@ -19,7 +19,7 @@ This project is an unofficial application for the Vlille service in Lille, Franc
 
 ## Installation
 
-This project uses the following open source library:
+This project uses the following open source libraries:
 
 * [ACRA - Application Crash Report for Android](http://code.google.com/p/acra/)
 * [ActionBarSherlock](https://github.com/JakeWharton/ActionBarSherlock)
