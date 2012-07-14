@@ -18,6 +18,8 @@ import com.vlille.checker.utils.Constants;
 )
 public class VlilleChecker extends Application {
 	
+	public static int SHERLOCK_ACTIONBAR_THEME = com.actionbarsherlock.R.style.Theme_Sherlock;
+	
 	private final String LOG_TAG = getClass().getSimpleName();
 	
 	private static DbAdapter dbAdapter;

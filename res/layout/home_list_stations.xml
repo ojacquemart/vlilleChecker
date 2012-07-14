@@ -16,7 +16,7 @@
 	    android:text="Palais Rameau"
 	    android:textColor="@color/black"
 	    android:textSize="16sp"
-	    android:textStyle="bold" />
+	    android:textStyle="normal" />
 
     <LinearLayout 
         android:id="@+id/station_adress_box"

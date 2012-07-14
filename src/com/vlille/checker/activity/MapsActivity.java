@@ -8,12 +8,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.View;
+import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.google.android.maps.MapActivity;
-import com.markupartist.android.widget.ActionBar;
-import com.markupartist.android.widget.ActionBar.AbstractAction;
+import com.actionbarsherlock.app.SherlockMapActivity;
+import com.actionbarsherlock.view.Window;
 import com.vlille.checker.R;
 import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.db.DbAdapter;
@@ -31,15 +30,10 @@ import com.vlille.checker.utils.ContextHelper;
  * Select stations from maps.
  * It allows to select your station browsing the stations map.
  */
-public class MapsActivity extends MapActivity implements InitializeActionBar, GetStations, Receiver {
+public class MapsActivity extends SherlockMapActivity implements GetStations, Receiver {
 
 	protected final String LOG_TAG = getClass().getSimpleName();
 	protected VlilleMapView mapView;
-	
-	/**
-	 * The actionBar with icons and progressive loading.
-	 */
-	protected ActionBar actionBar;
 	
 	/**
 	 * The stations list stored in db.
@@ -60,7 +54,31 @@ public class MapsActivity extends MapActivity implements InitializeActionBar, Ge
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		setTheme(VlilleChecker.SHERLOCK_ACTIONBAR_THEME);
+		
+		super.onCreate(savedInstanceState);
+		
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		
 		onCreate(savedInstanceState, false);
+		
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
+		// Refresh overlays.
+		menu.add(getString(R.string.refresh)).setIcon(R.drawable.ic_menu_refresh_ics)
+				.setOnMenuItemClickListener(new com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener() {
+
+					@Override
+					public boolean onMenuItemClick(com.actionbarsherlock.view.MenuItem item) {
+						onRestart();
+
+						return false;
+					}
+				}).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+		
+		return true;
 	}
 	
 	@Override
@@ -77,8 +95,6 @@ public class MapsActivity extends MapActivity implements InitializeActionBar, Ge
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.maps);
-		
-		doInitActionBar();
 		
 		mapView = (VlilleMapView) findViewById(R.id.mapview);
 		mapView.setLocationActivated(locationEnabled);
@@ -127,7 +143,7 @@ public class MapsActivity extends MapActivity implements InitializeActionBar, Ge
 	}
 	
 	public void doResume() {
-		actionBar.setProgressBarVisibility(View.VISIBLE);
+		setSupportProgressBarIndeterminateVisibility(true);
 		mapView.initCenter();
 		startRetrieverService();
 	}
@@ -190,7 +206,7 @@ public class MapsActivity extends MapActivity implements InitializeActionBar, Ge
 	
 	private void startRetrieverService() {
 		try {
-			actionBar.setProgressBarVisibility(View.VISIBLE);
+			setSupportProgressBarIndeterminateVisibility(true);
 			resultReceiver = new StationsResultReceiver(new Handler());
 			resultReceiver.setReceiver(this);
 			
@@ -201,7 +217,7 @@ public class MapsActivity extends MapActivity implements InitializeActionBar, Ge
 			startService(intent);
 		} catch (Exception e) {
 			Log.e(LOG_TAG, "Error during overlays service", e);
-			
+			setSupportProgressBarIndeterminateVisibility(false);
 		}
 	}
 	
@@ -245,7 +261,7 @@ public class MapsActivity extends MapActivity implements InitializeActionBar, Ge
 		if (finished) {
 			mapView.postInvalidate();
 			Log.d(LOG_TAG, "#onReceiveResult finished");
-			actionBar.setProgressBarVisibility(View.GONE);
+			setSupportProgressBarIndeterminateVisibility(false);
 		}
 	}
 	
@@ -261,26 +277,6 @@ public class MapsActivity extends MapActivity implements InitializeActionBar, Ge
 	protected boolean isRouteDisplayed() {
 		return false;
 	}
-
-	@Override
-	public void doInitActionBar() {
-		actionBar = (ActionBar) findViewById(R.id.actionbar);
-		actionBar.addAction(new RefreshAction());
-	}	
-	
-	private class RefreshAction extends AbstractAction {
-
-        public RefreshAction() {
-            super(R.drawable.ic_menu_refresh_ics);
-        }
-
-        @Override
-        public void performAction(View view) {
-        	Log.d(LOG_TAG, "Perform update overlays");
-        	startRetrieverService();
-        }
-
-    }
 
 	
 }

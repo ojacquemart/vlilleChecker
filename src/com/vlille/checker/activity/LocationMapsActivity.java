@@ -11,15 +11,12 @@ import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
-import com.markupartist.android.widget.ActionBar;
-import com.markupartist.android.widget.ActionBar.AbstractAction;
+import com.actionbarsherlock.view.Menu;
 import com.vlille.checker.R;
+import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.maps.PositionConstants;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.utils.ContextHelper;
@@ -30,6 +27,8 @@ public class LocationMapsActivity extends MapsActivity implements GetStations {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		setTheme(VlilleChecker.SHERLOCK_ACTIONBAR_THEME);
+		
 		super.onCreate(savedInstanceState, true);
 		
 		final LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -42,6 +41,25 @@ public class LocationMapsActivity extends MapsActivity implements GetStations {
 					locationListener);
 		}
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		
+		// Preferences.
+		menu.add(getString(R.string.preferences)).setIcon(R.drawable.ic_menu_preferences_ics)
+		.setOnMenuItemClickListener(new com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener() {
+
+			@Override
+			public boolean onMenuItemClick(com.actionbarsherlock.view.MenuItem item) {
+				startActivity(new Intent(getApplicationContext(), LocationMapsPreferenceActivity.class));
+
+				return false;
+			}
+		}).setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+
+		return true;
+	}	
 	
 	private LocationListener locationListener = new LocationListener() {
 		
@@ -130,11 +148,6 @@ public class LocationMapsActivity extends MapsActivity implements GetStations {
 		return stationsToDraw;
 	}
 	
-	@Override
-	public List<Station> getOnResumeStations() {
-		return getOnCreateStations();
-	}
-	
 	private boolean isDistanceBetweenLocationAndStationOk(Location mCurrentLocation, Station eachStation, long mParameterDistanceBetweenStations) {
 		// Check distance between current location and station.
 		float[] results = new float[3];
@@ -153,38 +166,8 @@ public class LocationMapsActivity extends MapsActivity implements GetStations {
 	}
 	
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.layout.position_prefs_menu, menu);
-
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		startActivity(new Intent(this, LocationMapsPreferenceActivity.class));
-
-		return true;
-	}
-	
-	@Override
-	public void doInitActionBar() {
-		actionBar = (ActionBar) findViewById(R.id.actionbar);
-		actionBar.addAction(new RefreshAction());
-	}
-	
-	private class RefreshAction extends AbstractAction {
-
-        public RefreshAction() {
-            super(R.drawable.ic_menu_refresh_ics);
-        }
-
-        @Override
-        public void performAction(View view) {
-        	Log.d(LOG_TAG, "Perform update overlays");
-        	onResume();
-        }
-
-    }
+	public List<Station> getOnResumeStations() {
+		return getOnCreateStations();
+	}	
 
 }

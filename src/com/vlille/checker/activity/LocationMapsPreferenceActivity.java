@@ -5,14 +5,15 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.vlille.checker.R;
+import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.utils.ContextHelper;
 import com.vlille.checker.utils.PreferenceKeys;
 
@@ -20,7 +21,7 @@ import com.vlille.checker.utils.PreferenceKeys;
  * Location preferences activity.
  * Allows to change the radius in which locate the stations.
  */
-public class LocationMapsPreferenceActivity extends PreferenceActivity implements OnSeekBarChangeListener {
+public class LocationMapsPreferenceActivity extends SherlockPreferenceActivity implements OnSeekBarChangeListener {
 
 	private final String LOG_TAG = getClass().getSimpleName();
 
@@ -30,6 +31,8 @@ public class LocationMapsPreferenceActivity extends PreferenceActivity implement
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		setTheme(VlilleChecker.SHERLOCK_ACTIONBAR_THEME);
+		
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.position_preferences);
 

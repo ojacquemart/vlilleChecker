@@ -25,7 +25,7 @@
         
         <!-- Home Activity -->
         <activity
-            android:name=".activity.HomeActivity">
+            android:name=".activity.HomeActivity" android:theme="@style/MainTheme" android:uiOptions="splitActionBarWhenNarrow">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

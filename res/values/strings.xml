@@ -54,6 +54,7 @@
     <string name="error_no_location_available">Aucune localisation possible</string>
 
     <!-- Search -->
+    <string name="search">Recherche</string>
     <string name="search_hint">Nom de la station</string>
     <string name="search_no_result">Aucun résultat</string>
     <string name="search_suggestion_error">Une erreur est survenue</string>

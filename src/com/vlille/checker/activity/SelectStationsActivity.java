@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import android.app.ListActivity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.database.Cursor;
@@ -14,8 +13,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.markupartist.android.widget.ActionBar;
-import com.markupartist.android.widget.ActionBar.AbstractAction;
+import com.actionbarsherlock.app.SherlockListActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.vlille.checker.R;
 import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.db.station.StationTableFields;
@@ -26,7 +25,7 @@ import com.vlille.checker.utils.StationFilter;
 /**
  * Select stations activity.
  */
-public class SelectStationsActivity extends ListActivity {
+public class SelectStationsActivity extends SherlockListActivity {
 
 	public static final String PREFS_FILE = "VLILLE_PREFS";
 	
@@ -36,10 +35,10 @@ public class SelectStationsActivity extends ListActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		setTheme(VlilleChecker.SHERLOCK_ACTIONBAR_THEME);
 		super.onCreate(savedInstanceState);
 
 		initContent();
-		initActionBar();
 
 		stations = VlilleChecker.getDbAdapter().findAll();
 		setAdapter(stations);
@@ -51,11 +50,6 @@ public class SelectStationsActivity extends ListActivity {
 		setContentView(R.layout.home_search);
 		getListView().setFastScrollEnabled(true);
 	}
-	
-	private void initActionBar() {
-		ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
-		actionBar.addAction(new SearchAction());
-	}	
 
 	private void addOkOnClickListener() {
 		findViewById(R.id.prefs_ok).setOnClickListener(new android.view.View.OnClickListener() {
@@ -102,7 +96,6 @@ public class SelectStationsActivity extends ListActivity {
 			return;
 		}
 		
-		
 		final Map<String, Station> mapStations = MiscUtils.toMap(stations);
 		final List<Station> suggestedStations = new ArrayList<Station>();
 
@@ -126,17 +119,24 @@ public class SelectStationsActivity extends ListActivity {
 		setListAdapter(new SelectStationsAdapter(this, R.layout.home_search_list_stations, stations));
 	}
 	
-	private class SearchAction extends AbstractAction {
-		
-		public SearchAction() {
-			super(R.drawable.ic_menu_search_ics);
-		}
-		
-		@Override
-		public void performAction(View view) {
-			onSearchRequested();
-		}
-		
-	}	
+	// UI Menu creation.
+
+	@Override
+	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
+		// Search stations in list.
+		menu.add(getString(R.string.search)).setIcon(R.drawable.ic_menu_search_ics)
+				.setOnMenuItemClickListener(new com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener() {
+
+					@Override
+					public boolean onMenuItemClick(com.actionbarsherlock.view.MenuItem item) {
+						onSearchRequested();
+
+						return false;
+					}
+				}).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+		return true;
+	}
+
 
 }

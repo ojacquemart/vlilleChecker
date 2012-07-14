@@ -4,14 +4,15 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.PreferenceActivity;
 import android.util.Log;
 
+import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.vlille.checker.R;
+import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.maps.LocationManagerWrapper;
 import com.vlille.checker.utils.PreferenceKeys;
 
-public class HomePreferenceActivity extends PreferenceActivity {
+public class HomePreferenceActivity extends SherlockPreferenceActivity {
 
 	private final String LOG_TAG = getClass().getSimpleName();
 
@@ -20,6 +21,8 @@ public class HomePreferenceActivity extends PreferenceActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		setTheme(VlilleChecker.SHERLOCK_ACTIONBAR_THEME);
+		
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);
 		

@@ -7,12 +7,6 @@
 	android:orientation="vertical"
 	android:background="@color/white">
 	
-	<com.markupartist.android.widget.ActionBar
-	   android:id="@+id/actionbar"
-	   app:title="@string/app_name_title"
-	   style="@style/ActionBar"
-	   />
-	
 	<!-- Box to add new station -->
 	
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
