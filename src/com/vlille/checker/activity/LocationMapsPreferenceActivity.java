@@ -31,8 +31,6 @@ public class LocationMapsPreferenceActivity extends SherlockPreferenceActivity i
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		setTheme(VlilleChecker.SHERLOCK_ACTIONBAR_THEME);
-		
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.position_preferences);
 

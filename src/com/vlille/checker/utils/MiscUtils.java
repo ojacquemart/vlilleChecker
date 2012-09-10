@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
@@ -16,7 +17,7 @@ public class MiscUtils {
 			return;
 		}
 		
-		layout.setVisibility(show ? LinearLayout.VISIBLE : LinearLayout.GONE);
+		layout.setVisibility(show ? View.VISIBLE : View.GONE);
 	}
 	
 	/**

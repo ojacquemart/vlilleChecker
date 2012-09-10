@@ -27,8 +27,6 @@ public class LocationMapsActivity extends MapsActivity implements GetStations {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		setTheme(VlilleChecker.SHERLOCK_ACTIONBAR_THEME);
-		
 		super.onCreate(savedInstanceState, true);
 		
 		final LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);

@@ -45,6 +45,7 @@ public class SelectStationsAdapter extends ArrayAdapter<Station> {
 			checkbox.setChecked(station.isStarred());
 			checkbox.setOnClickListener(new OnClickListener() {
 				
+				@Override
 				public void onClick(View v) {
 					CheckBox onclickCheckbox = (CheckBox) v.findViewById(R.id.preferences_station_checked);
 					

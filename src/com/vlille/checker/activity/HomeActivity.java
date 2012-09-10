@@ -35,8 +35,6 @@ public class HomeActivity extends SherlockListActivity implements Receiver {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		setTheme(VlilleChecker.SHERLOCK_ACTIONBAR_THEME);
-
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home);
 
@@ -91,7 +89,7 @@ public class HomeActivity extends SherlockListActivity implements Receiver {
 			final Intent intent = new Intent(Intent.ACTION_SYNC, null, getApplicationContext(),
 					StationsRetrieverService.class);
 			intent.putExtra(RECEIVER, resultReceiver);
-			intent.putExtra(StationsRetrieverService.EXTRA_DATA, (ArrayList<Station>) starredIdsStations);
+			intent.putExtra(AbstractRetrieverService.EXTRA_DATA, (ArrayList<Station>) starredIdsStations);
 			startService(intent);
 		} else {
 			Log.d(LOG_TAG, "No network, show the retry view");

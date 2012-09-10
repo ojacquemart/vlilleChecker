@@ -108,6 +108,7 @@ public class UnicodeBOMInputStream extends InputStream {
 		/**
 		 * Returns a {@link String} representation of this {@link BOM}. value.
 		 */
+		@Override
 		public final String toString() {
 			return description;
 		}
@@ -225,6 +226,7 @@ public class UnicodeBOMInputStream extends InputStream {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public int read() throws IOException {
 		return in.read();
 	}
@@ -232,6 +234,7 @@ public class UnicodeBOMInputStream extends InputStream {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public int read(final byte b[]) throws IOException, NullPointerException {
 		return in.read(b, 0, b.length);
 	}
@@ -239,6 +242,7 @@ public class UnicodeBOMInputStream extends InputStream {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public int read(final byte b[], final int off, final int len)
 			throws IOException, NullPointerException {
 		return in.read(b, off, len);
@@ -247,6 +251,7 @@ public class UnicodeBOMInputStream extends InputStream {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public long skip(final long n) throws IOException {
 		return in.skip(n);
 	}
@@ -254,6 +259,7 @@ public class UnicodeBOMInputStream extends InputStream {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public int available() throws IOException {
 		return in.available();
 	}
@@ -261,6 +267,7 @@ public class UnicodeBOMInputStream extends InputStream {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void close() throws IOException {
 		in.close();
 	}
@@ -268,6 +275,7 @@ public class UnicodeBOMInputStream extends InputStream {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public synchronized void mark(final int readlimit) {
 		in.mark(readlimit);
 	}
@@ -275,6 +283,7 @@ public class UnicodeBOMInputStream extends InputStream {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public synchronized void reset() throws IOException {
 		in.reset();
 	}
@@ -282,6 +291,7 @@ public class UnicodeBOMInputStream extends InputStream {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public boolean markSupported() {
 		return in.markSupported();
 	}

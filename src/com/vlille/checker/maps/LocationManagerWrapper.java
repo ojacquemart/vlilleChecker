@@ -109,11 +109,13 @@ public class LocationManagerWrapper {
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setMessage(context.getString(R.string.prefs_location_enable_gps_title)).setCancelable(false)
 				.setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
+					@Override
 					public void onClick(DialogInterface dialog, int id) {
 						showGpsOptions();
 					}
 				});
 		builder.setNegativeButton(context.getString(R.string.no), new DialogInterface.OnClickListener() {
+			@Override
 			public void onClick(DialogInterface dialog, int id) {
 				dialog.cancel();
 			}

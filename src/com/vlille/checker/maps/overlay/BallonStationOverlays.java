@@ -156,6 +156,7 @@ public class BallonStationOverlays extends BalloonItemizedOverlay<StationDetails
 		 * Get marker is called twice. First by #draw with shadow=true, then by shadow=false. WARN: add log really slows the
 		 * maps.
 		 */
+		@Override
 		public synchronized Drawable getMarker(int stateBitset) {
 			Drawable drawable = null;
 			try {

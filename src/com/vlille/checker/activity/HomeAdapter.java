@@ -49,7 +49,7 @@ public class HomeAdapter extends ArrayAdapter<Station> {
 			// Hide or display the adress box.
 			final boolean displayStationAdress = ContextHelper.isDisplayingStationAdress(getContext());
 			final View stationAdressBox = view.findViewById(R.id.station_adress_box);
-			stationAdressBox.setVisibility(displayStationAdress ? LinearLayout.VISIBLE : LinearLayout.GONE);
+			stationAdressBox.setVisibility(displayStationAdress ? View.VISIBLE : View.GONE);
 		}
 		
 		if (position < 0) {
@@ -57,7 +57,7 @@ public class HomeAdapter extends ArrayAdapter<Station> {
 		}
 
 		final Station station = stations.get(position);
-		final ArrayAdapter<Station> arrayAdapter = (ArrayAdapter<Station>) this;
+		final ArrayAdapter<Station> arrayAdapter = this;
 		CheckBox checkbox = (CheckBox) view.findViewById(R.id.detail_starred);
 		checkbox.setChecked(true);
 		checkbox.setOnClickListener(new android.view.View.OnClickListener() {

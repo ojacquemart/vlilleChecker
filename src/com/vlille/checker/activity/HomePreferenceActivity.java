@@ -21,8 +21,6 @@ public class HomePreferenceActivity extends SherlockPreferenceActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		setTheme(VlilleChecker.SHERLOCK_ACTIONBAR_THEME);
-		
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);
 		

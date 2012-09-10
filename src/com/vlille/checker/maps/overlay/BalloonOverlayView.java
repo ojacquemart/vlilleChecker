@@ -56,8 +56,8 @@ public class BalloonOverlayView<Item extends OverlayItem> extends FrameLayout {
 		View v = inflater.inflate(R.layout.maps_ballon_overlay, mLinearLayout);
 		mTextViewTitle = (TextView) v.findViewById(R.id.balloon_name);
 		mFavoriteCheckBox = (CheckBox) v.findViewById(R.id.balloon_item_favorite);
-		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
-				LayoutParams.WRAP_CONTENT);
+		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+				android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
 		params.gravity = Gravity.NO_GRAVITY;
 		addView(mLinearLayout, params);
 

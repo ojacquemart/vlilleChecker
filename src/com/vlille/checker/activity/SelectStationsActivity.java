@@ -35,7 +35,6 @@ public class SelectStationsActivity extends SherlockListActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		setTheme(VlilleChecker.SHERLOCK_ACTIONBAR_THEME);
 		super.onCreate(savedInstanceState);
 
 		initContent();

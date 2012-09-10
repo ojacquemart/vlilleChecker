@@ -25,6 +25,7 @@ public abstract class Table {
 	/**
 	 * @throws IllegalStateException When no fields renseigned.
 	 */
+	@Override
 	public String toString() {
 		if (fields.isEmpty()) {
 			throw new IllegalStateException("Fields are empty");

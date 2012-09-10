@@ -22,6 +22,7 @@ public class SqlStringBuilder {
 		return this;
 	}
 
+	@Override
 	public String toString() {
 		return builder.toString().trim();
 	}

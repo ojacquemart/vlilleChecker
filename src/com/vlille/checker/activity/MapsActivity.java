@@ -54,8 +54,6 @@ public class MapsActivity extends SherlockMapActivity implements GetStations, Re
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		setTheme(VlilleChecker.SHERLOCK_ACTIONBAR_THEME);
-		
 		super.onCreate(savedInstanceState);
 		
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
@@ -155,6 +153,7 @@ public class MapsActivity extends SherlockMapActivity implements GetStations, Re
 	 * @see http://dev.kafol.net/2011/11/android-google-maps-mapview-hacks.html  
 	 */
 	private Runnable runnableForWaitingMap = new Runnable() {
+		@Override
 		public void run() {
 			if (mapView.getLatitudeSpan() == 0 || mapView.getLongitudeSpan() == 360000000) {
 				mapView.postDelayed(this, TIME_TO_WAIT_IN_MS);
@@ -213,7 +212,7 @@ public class MapsActivity extends SherlockMapActivity implements GetStations, Re
 			final Intent intent = new Intent(Intent.ACTION_SYNC, null, getApplicationContext(), StationsRetrieverService.class);
 			intent.putExtra(RECEIVER, resultReceiver);
 			
-			intent.putExtra(StationsRetrieverService.EXTRA_DATA, (ArrayList<Station>) getOnResumeStations());
+			intent.putExtra(AbstractRetrieverService.EXTRA_DATA, (ArrayList<Station>) getOnResumeStations());
 			startService(intent);
 		} catch (Exception e) {
 			Log.e(LOG_TAG, "Error during overlays service", e);
@@ -265,10 +264,12 @@ public class MapsActivity extends SherlockMapActivity implements GetStations, Re
 		}
 	}
 	
+	@Override
 	public List<Station> getOnCreateStations() {
 		return stations;
 	}
 	
+	@Override
 	public List<Station> getOnResumeStations() {
 		return mapView.getBoundedStations();
 	}	

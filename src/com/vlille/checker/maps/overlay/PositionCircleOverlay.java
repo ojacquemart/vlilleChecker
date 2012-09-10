@@ -36,7 +36,7 @@ public class PositionCircleOverlay extends Overlay {
 			projection.toPixels(mapCenter, centerPoint);
 
 			final float metersRadius = metersToRadius(ContextHelper.getRadiusValue(mapView.getContext()), mapView, mapCenter);
-			canvas.drawCircle((float) centerPoint.x, (float) centerPoint.y, metersRadius, paint);
+			canvas.drawCircle(centerPoint.x, centerPoint.y, metersRadius, paint);
 
 			super.draw(canvas, mapView, shadow);
 		}
