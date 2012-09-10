@@ -9,7 +9,6 @@
 	    android:id="@+id/preferences_station_checked"
 		android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:button="@android:drawable/btn_star"
     />
     
@@ -17,8 +16,8 @@
 	    android:id="@+id/preferences_station_title"
 		android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@id/preferences_station_checked"
-        android:layout_alignParentLeft="true"
+        android:layout_toRightOf="@+id/preferences_station_checked"
+        android:layout_centerInParent="true"
         android:textSize="16sp"
         android:textColor="#000"        
         android:text="Test."
