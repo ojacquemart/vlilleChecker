@@ -22,9 +22,9 @@ import com.vlille.checker.utils.ContextHelper;
 import com.vlille.checker.utils.MiscUtils;
 
 /**
- * Adapter for the stations detail.
+ * Adapter for the stars stations detail.
  */
-public class HomeAdapter extends ArrayAdapter<Station> {
+public class StarsListAdapter extends ArrayAdapter<Station> {
 
 	private final String LOG_TAG = getClass().getSimpleName();
 
@@ -32,7 +32,7 @@ public class HomeAdapter extends ArrayAdapter<Station> {
 	private Resources resources; /** Resources for the color text according to station informations. */
 	private LinearLayout boxAddStation; /** The box containing the add button. */
 
-	public HomeAdapter(Context context, int resource, List<Station> stations, LinearLayout boxAddStation) {
+	public StarsListAdapter(Context context, int resource, List<Station> stations, LinearLayout boxAddStation) {
 		super(context, resource, stations);
 
 		this.stations = stations;
@@ -44,7 +44,7 @@ public class HomeAdapter extends ArrayAdapter<Station> {
 	public View getView(final int position, View view, ViewGroup parent) {
 		if (view == null) {
 			LayoutInflater layout = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			view = layout.inflate(R.layout.home_list_stations, null);
+			view = layout.inflate(R.layout.stars_list_content, null);
 			
 			// Hide or display the adress box.
 			final boolean displayStationAdress = ContextHelper.isDisplayingStationAdress(getContext());

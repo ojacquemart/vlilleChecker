@@ -10,6 +10,11 @@
     <string name="quickdialog_maps">Google Maps</string>
     <string name="quickdialog_stations_list">Liste des stations</string>
     <string name="starred_title">Sauvegardé</string>
+    
+    <!-- Tabs -->
+    <string name="tab_stars">Favoris</string>
+    <string name="tab_list">Liste</string>
+    <string name="tab_map">Carte</string>
 
     <!-- Common strings -->
     <string name="stations_list">Liste des stations</string>
@@ -24,7 +29,6 @@
     <string name="yes">Oui</string>
     <string name="no">Non</string>
     <string name="cancel">Cancel</string>
-    <string name="update_done">Mise à jour effectuée.</string>
     <string name="installation_done">Récupération des stations terminée.</string>
 
     <!-- Errors -->
@@ -48,6 +52,15 @@
     <string name="prefs_position_radius_distance_title">Stations autour de moi</string>
     <string name="prefs_position_radius_distance_summary">Dans un rayon de</string>
     <string name="prefs_position_radius_distance_unit">m</string>
+    
+    <!-- Data status and update -->
+    <string name="data_status_update_done">Mise à jour effectuée!</string>
+    <string name="data_status_uptodate">Les stations sont déjà à jour</string>
+    <string name="data_launch_update">Mettre à jour les stations</string>
+    <string name="data_status_title">Etat des données</string>
+    <string name="data_status_stations_list">Liste des stations</string>
+    <string name="data_status_last_update_summary">Dernière mise à jour: %1s</string>
+    <string name="data_status_date_pattern">dd/MM/yyyy HH:mm</string>
 
     <!-- Position -->
     <string name="distance">Distance</string>

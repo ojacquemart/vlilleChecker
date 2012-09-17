@@ -16,12 +16,11 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.vlille.checker.R;
-import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.maps.PositionConstants;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.utils.ContextHelper;
 
-public class LocationMapsActivity extends MapsActivity implements GetStations {
+public class LocationMapsActivity extends MapsActivity implements StationInitializer {
 
 	private boolean locationAvailable;
 	

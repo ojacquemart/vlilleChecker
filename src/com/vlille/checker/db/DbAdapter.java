@@ -29,7 +29,6 @@ import com.vlille.checker.db.station.StationTableFields;
 import com.vlille.checker.model.Metadata;
 import com.vlille.checker.model.SetStationsInfos;
 import com.vlille.checker.model.Station;
-import com.vlille.checker.utils.Constants;
 import com.vlille.checker.xml.XMLReader;
 
 /**
@@ -39,7 +38,7 @@ public class DbAdapter {
 
 	private static final XMLReader XML_READER = new XMLReader();
 	
-	private final String LOG_TAG = getClass().getSimpleName();
+	private final String TAG = getClass().getSimpleName();
 
 	private SQLiteDatabase db;
 	private VlilleOpenHelper helper;
@@ -49,8 +48,6 @@ public class DbAdapter {
 		this.context = context;
 		this.helper = new VlilleOpenHelper(context);
 		this.db = helper.getWritableDatabase();
-		
-		checkIfNeedsUpdate();
 	}
 
 	public SQLiteDatabase getReadableDatabase() {
@@ -69,31 +66,24 @@ public class DbAdapter {
 		}
 	}
 	
-	public void checkIfNeedsUpdate() {
-		Log.d(LOG_TAG, "Check if update is needed");
-		final Cursor cursor = db.query(MetadataTable.TABLE_NAME,
-				new String[] { MetadataTableFields.lastUpdate.toString() },
-				null, null, null, null, null);
-		
-		cursor.moveToFirst();
-		
-		final long lastUpdate = cursor.getLong(0);
-		if (wasUpdatedMoreThanOneWeekAgo(lastUpdate)) {
-			parseAndCompareWithExistingStations();
-			changeLastUpdate(System.currentTimeMillis());
-			Toast.makeText(context, R.string.update_done, Toast.LENGTH_SHORT).show();
+	public void checkStationsUpdate() {
+		if (hasStationsChanged()) {
+			Toast.makeText(context, R.string.data_status_update_done, Toast.LENGTH_SHORT).show();
+		} else {
+			Toast.makeText(context, R.string.data_status_uptodate, Toast.LENGTH_SHORT).show();
 		}
+		
+		Log.d(TAG, "Change last update millis");
+		changeLastUpdate(System.currentTimeMillis());
 	}
-
-	public boolean wasUpdatedMoreThanOneWeekAgo(long lastUpdate) {
-		return lastUpdate < (System.currentTimeMillis() - Constants.ONE_WEEK_IN_MILLSECONDS); 
-	}	
 	
 	/**
 	 * Parse vlille stations from web site and compare stations with those from db. 
-	 * @return the number of stations inserted.
+	 * 
+	 * @return <code>true</code> if new stations have been inserted.
 	 */
-	private void parseAndCompareWithExistingStations() {
+	private boolean hasStationsChanged() {
+		Log.d(TAG, "Check if some new stations have been added");
 		final SetStationsInfos setStationsInfos = XML_READER.getSetStationsInfos();
 		final List<Station> parsedStations = setStationsInfos.getStations();
 		
@@ -105,7 +95,10 @@ public class DbAdapter {
 			db.insert(StationTable.TABLE_NAME, null, eachStation.getInsertableContentValues());
 		}
 		
-		Log.d(LOG_TAG, "Nb stations changed: " + stationsToAdd.size());
+		int nbStationsAdded = stationsToAdd.size();
+		Log.d(TAG, "Nb stations changed: " + nbStationsAdded);
+		
+		return nbStationsAdded > 0;
 	}
 	
 	public void changeLastUpdate(long timeInMillis) {
@@ -165,7 +158,7 @@ public class DbAdapter {
 	 * @param stationId The station id.
 	 */
 	public void star(boolean star, Station station) {
-		Log.d(LOG_TAG, "station " + station.getName() + " star? " + star);
+		Log.d(TAG, "station " + station.getName() + " star? " + star);
 		updateStation(getStarredValues(star), station);
 	}
 	
@@ -182,7 +175,7 @@ public class DbAdapter {
 	}
 	
 	public boolean isStarred(Station station) {
-		Log.d(LOG_TAG, "#isStarred");
+		Log.d(TAG, "#isStarred");
 		final Cursor cursor = db.query(StationTable.TABLE_NAME,
 					new String[] { StationTableFields.starred.toString() },
 					StationTableFields._id + "=" + station.getId(),
@@ -212,8 +205,6 @@ public class DbAdapter {
 	private void updateStation(ContentValues values, Station station) {
 		db.update(StationTable.TABLE_NAME, values, StationTableFields._id + "=?", new String[] { station.getId() });
 	}
-	
-	
 	
 	/**
 	 * Maps station with metadata query.
@@ -347,7 +338,7 @@ public class DbAdapter {
 	
 		@Override
 		public void onCreate(final SQLiteDatabase database) {
-			Log.d(LOG_TAG, "db #onCreate");
+			Log.d(TAG, "db #onCreate");
 
 			db = database;
 			loadStations();
@@ -356,7 +347,7 @@ public class DbAdapter {
 		public void loadStations() {
 			final DbSchema vlilleCheckerDb = new DbSchema();
 			for (Table eachTable : vlilleCheckerDb.getTables()) {
-				Log.d(LOG_TAG, "Create table " + eachTable.getName());
+				Log.d(TAG, "Create table " + eachTable.getName());
 				db.execSQL(eachTable.toString());
 			}
 			
@@ -365,11 +356,11 @@ public class DbAdapter {
 			
 			final SetStationsInfos setStationsInfos = XML_READER.getSetStationsInfos();
 			
-			Log.d(LOG_TAG, "Insert maps infos");
+			Log.d(TAG, "Insert maps infos");
 			final Metadata metadata = setStationsInfos.getMetadata();
 			db.insert(MetadataTable.TABLE_NAME, null, metadata.getInsertableContentValues());
 			
-			Log.d(LOG_TAG, "Insert all stations infos.");
+			Log.d(TAG, "Insert all stations infos.");
 			final List<Station> stations = setStationsInfos.getStations();
 			for (Station eachStation : stations) {
 				db.insert(StationTable.TABLE_NAME, null, eachStation.getInsertableContentValues());
@@ -378,12 +369,12 @@ public class DbAdapter {
 			Toast.makeText(context, R.string.installation_done, Toast.LENGTH_SHORT).show();
 			
 			watcher.stop();
-			Log.d(LOG_TAG, "Time to initialize db: " + watcher.getTime());
+			Log.d(TAG, "Time to initialize db: " + watcher.getTime());
 		}
 	
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			Log.d(LOG_TAG, "db #onUpgrade " + oldVersion + " to " + newVersion);
+			Log.d(TAG, "db #onUpgrade " + oldVersion + " to " + newVersion);
 			db.execSQL("DROP TABLE IF EXISTS " + StationTable.TABLE_NAME);
 			db.execSQL("DROP TABLE IF EXISTS " + MetadataTable.TABLE_NAME);
 			

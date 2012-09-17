@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.vlille.checker"
-    android:versionCode="2"
-    android:versionName="1.1" >
+    android:versionCode="3"
+    android:versionName="2.0"
+    android:installLocation="auto">
 
     <!-- Supports >= android 2.1 -->
     <uses-sdk
-        android:minSdkVersion="3"
-        android:targetSdkVersion="15"/>
+        android:minSdkVersion="11"
+        android:targetSdkVersion="16"/>
 
     <application
         android:name=".VlilleChecker"
@@ -25,7 +26,7 @@
         
         <!-- Home Activity -->
         <activity
-            android:name=".activity.HomeActivity" android:theme="@style/MainTheme" android:uiOptions="splitActionBarWhenNarrow">
+            android:name=".activity.HomeActivity" android:theme="@style/MainTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -37,24 +38,6 @@
             android:name=".activity.HomePreferenceActivity"
             android:label="@string/app_name"
     		android:theme="@style/MainTheme" />
-        
-        <!-- Select Stations Activity -->
-        <activity
-            android:label="@string/app_name"
-            android:launchMode="singleTop"
-            android:name=".activity.SelectStationsActivity"
-            android:theme="@style/MainTheme">
-            <intent-filter >
-                <action android:name="android.intent.action.SEARCH" />
-                 <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value=".SelectStationsActivity" />
-        </activity>
         
 		<!-- Maps Activity -->
          <activity
@@ -83,16 +66,7 @@
     		android:theme="@style/MainTheme">
 		</activity>
         
-		<!--
-		Provides search suggestions for words and their definitions.
-		@see res/xml/searchable.xml when you change this provider name.
-		-->
-        <provider
-            android:name=".provider.StationSuggestionsProvider"
-            android:authorities="com.vlille.checker.provider.StationSuggestionsProvider"
-		/>
-        
-        <service android:name=".service.StationsRetrieverService"/>
+	        <service android:name=".service.StationsRetrieverService"/>
         
         <!-- Google Maps library -->
         <uses-library android:name="com.google.android.maps" />

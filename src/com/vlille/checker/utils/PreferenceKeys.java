@@ -10,7 +10,7 @@ public class PreferenceKeys {
 	/**
 	 * The default display station address value.
 	 */
-	public static final boolean HOME_DISPLAY_DEFAULT_VALUE = true;
+	public static final boolean HOME_DISPLAY_DEFAULT_VALUE = false;
 	
 	/**
 	 * To activate the gps localisation.
@@ -26,5 +26,10 @@ public class PreferenceKeys {
 	 * The default radius value.
 	 */
 	public static final long POSITION_RADIUS_DEFAULT_VALUE = 500L;
+	
+	/**
+	 * The data status last update.
+	 */
+	public static final String DATA_STATUS_LAST_UPDATE = "data_status_last_update";
 	
 }

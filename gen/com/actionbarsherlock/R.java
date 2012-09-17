@@ -805,23 +805,34 @@ containing a value of this type.
         public static final int balloon_overlay_close=0x7f020056;
         public static final int balloon_overlay_focused=0x7f020057;
         public static final int balloon_overlay_unfocused=0x7f020058;
-        public static final int ic_menu_add_ics=0x7f020059;
-        public static final int ic_menu_info_details_ics=0x7f02005a;
-        public static final int ic_menu_mapmode_ics=0x7f02005b;
-        public static final int ic_menu_moreoverflow_ics=0x7f02005c;
-        public static final int ic_menu_mylocation_ics=0x7f02005d;
-        public static final int ic_menu_preferences_ics=0x7f02005e;
-        public static final int ic_menu_refresh_ics=0x7f02005f;
-        public static final int ic_menu_search_ics=0x7f020060;
-        public static final int ic_menu_sort_alphabetically_ics=0x7f020061;
-        public static final int logo=0x7f020062;
-        public static final int station_bike=0x7f020063;
-        public static final int station_cb=0x7f020064;
-        public static final int station_marker=0x7f020065;
-        public static final int station_nocb=0x7f020066;
-        public static final int station_parking=0x7f020067;
-        public static final int station_pin=0x7f020068;
-        public static final int station_pin_star=0x7f020069;
+        public static final int ic_clear_search_api_disabled_holo_light=0x7f020059;
+        public static final int ic_clear_search_api_holo_light=0x7f02005a;
+        public static final int ic_menu_add_ics=0x7f02005b;
+        public static final int ic_menu_info_details_ics=0x7f02005c;
+        public static final int ic_menu_mapmode_ics=0x7f02005d;
+        public static final int ic_menu_moreoverflow_ics=0x7f02005e;
+        public static final int ic_menu_mylocation_ics=0x7f02005f;
+        public static final int ic_menu_notifications=0x7f020060;
+        public static final int ic_menu_preferences_ics=0x7f020061;
+        public static final int ic_menu_refresh_ics=0x7f020062;
+        public static final int ic_menu_search_ics=0x7f020063;
+        public static final int ic_menu_sort_alphabetically_ics=0x7f020064;
+        public static final int import_export=0x7f020065;
+        public static final int logo=0x7f020066;
+        public static final int map=0x7f020067;
+        public static final int refresh=0x7f020068;
+        public static final int refresh_disabled=0x7f020069;
+        public static final int refresh_selector=0x7f02006a;
+        public static final int search_clear_selector=0x7f02006b;
+        public static final int star=0x7f02006c;
+        public static final int station_bike=0x7f02006d;
+        public static final int station_cb=0x7f02006e;
+        public static final int station_marker=0x7f02006f;
+        public static final int station_nocb=0x7f020070;
+        public static final int station_parking=0x7f020071;
+        public static final int station_pin=0x7f020072;
+        public static final int station_pin_star=0x7f020073;
+        public static final int view_as_list=0x7f020074;
     }
     public static final class id {
         public static final int about_text=0x7f050010;
@@ -856,39 +867,34 @@ containing a value of this type.
         public static final int abs__title=0x7f05001e;
         public static final int abs__titleDivider=0x7f05001f;
         public static final int abs__up=0x7f05000b;
-        public static final int balloon_item_favorite=0x7f05003f;
-        public static final int balloon_main_layout=0x7f05003d;
-        public static final int balloon_name=0x7f05003e;
-        public static final int detail_starred=0x7f050033;
-        public static final int details_attachs=0x7f050035;
-        public static final int details_bikes=0x7f050034;
-        public static final int details_cb=0x7f050036;
+        public static final int balloon_item_favorite=0x7f050031;
+        public static final int balloon_main_layout=0x7f05002f;
+        public static final int balloon_name=0x7f050030;
+        public static final int detail_starred=0x7f05003b;
+        public static final int details_attachs=0x7f05003d;
+        public static final int details_bikes=0x7f05003c;
+        public static final int details_cb=0x7f05003e;
         public static final int disableHome=0x7f050009;
         public static final int homeAsUp=0x7f050006;
-        public static final int home_about=0x7f050038;
-        public static final int home_error_box=0x7f05002c;
-        public static final int home_error_message=0x7f05002d;
-        public static final int home_error_retry_button=0x7f05002e;
-        public static final int home_settings=0x7f050037;
-        public static final int home_station_new=0x7f05002b;
-        public static final int home_station_new_box=0x7f05002a;
+        public static final int home_settings=0x7f050036;
         public static final int listMode=0x7f050002;
-        public static final int mapview=0x7f05003c;
+        public static final int list_search_field=0x7f05002c;
+        public static final int list_search_field_clear=0x7f05002d;
+        public static final int mapview=0x7f05002e;
         public static final int normal=0x7f050001;
-        public static final int position_distance_text=0x7f050041;
-        public static final int position_distance_value=0x7f050042;
-        public static final int position_seekbar_distance=0x7f050043;
-        public static final int preferences_position_layout=0x7f050040;
-        public static final int preferences_station_checked=0x7f05003a;
-        public static final int preferences_station_title=0x7f05003b;
-        public static final int prefs_ok=0x7f050039;
+        public static final int position_distance_text=0x7f050033;
+        public static final int position_distance_value=0x7f050034;
+        public static final int position_seekbar_distance=0x7f050035;
+        public static final int preferences_position_layout=0x7f050032;
+        public static final int preferences_station_checked=0x7f05002a;
+        public static final int preferences_station_title=0x7f05002b;
         public static final int showCustom=0x7f050008;
         public static final int showHome=0x7f050005;
         public static final int showTitle=0x7f050007;
-        public static final int station_adress=0x7f050031;
-        public static final int station_adress_box=0x7f050030;
-        public static final int station_name=0x7f05002f;
-        public static final int station_out_of_service_box=0x7f050032;
+        public static final int station_adress=0x7f050039;
+        public static final int station_adress_box=0x7f050038;
+        public static final int station_name=0x7f050037;
+        public static final int station_out_of_service_box=0x7f05003a;
         public static final int tabMode=0x7f050003;
         public static final int useLogo=0x7f050004;
         public static final int wrap_content=0x7f050000;
@@ -918,25 +924,24 @@ containing a value of this type.
         public static final int abs__screen_action_bar_overlay=0x7f030012;
         public static final int abs__screen_simple=0x7f030013;
         public static final int abs__screen_simple_overlay_action_mode=0x7f030014;
-        public static final int home=0x7f030015;
-        public static final int home_list_stations=0x7f030016;
-        public static final int home_prefs_menu=0x7f030017;
-        public static final int home_search=0x7f030018;
-        public static final int home_search_list_stations=0x7f030019;
-        public static final int maps=0x7f03001a;
-        public static final int maps_ballon_overlay=0x7f03001b;
-        public static final int position_prefs=0x7f03001c;
-        public static final int position_prefs_menu=0x7f03001d;
-        public static final int sherlock_spinner_dropdown_item=0x7f03001e;
-        public static final int sherlock_spinner_item=0x7f03001f;
+        public static final int all_stations_list_content=0x7f030015;
+        public static final int edit_text=0x7f030016;
+        public static final int home=0x7f030017;
+        public static final int maps=0x7f030018;
+        public static final int maps_ballon_overlay=0x7f030019;
+        public static final int position_prefs=0x7f03001a;
+        public static final int position_prefs_menu=0x7f03001b;
+        public static final int sherlock_spinner_dropdown_item=0x7f03001c;
+        public static final int sherlock_spinner_item=0x7f03001d;
+        public static final int stars_list_content=0x7f03001e;
     }
     public static final class string {
-        public static final int about_text=0x7f0a003a;
-        public static final int about_text_email=0x7f0a003b;
-        public static final int about_text_web=0x7f0a003c;
+        public static final int about_text=0x7f0a0043;
+        public static final int about_text_email=0x7f0a0044;
+        public static final int about_text_web=0x7f0a0045;
         /**  About 
          */
-        public static final int about_title=0x7f0a0039;
+        public static final int about_title=0x7f0a0042;
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
          */
         public static final int abs__action_bar_home_description=0x7f0a0000;
@@ -971,77 +976,90 @@ containing a value of this type.
          */
         public static final int app_name=0x7f0a000a;
         public static final int app_name_title=0x7f0a000b;
-        public static final int attach=0x7f0a0013;
-        public static final int bike=0x7f0a0012;
-        public static final int cancel=0x7f0a001b;
-        public static final int crash_dialog_comment_prompt=0x7f0a0043;
-        public static final int crash_dialog_ok_toast=0x7f0a0044;
-        public static final int crash_dialog_text=0x7f0a0042;
-        public static final int crash_dialog_title=0x7f0a0041;
-        public static final int crash_notif_text=0x7f0a0040;
-        public static final int crash_notif_ticker_text=0x7f0a003e;
-        public static final int crash_notif_title=0x7f0a003f;
+        public static final int attach=0x7f0a0016;
+        public static final int bike=0x7f0a0015;
+        public static final int cancel=0x7f0a001e;
+        public static final int crash_dialog_comment_prompt=0x7f0a004c;
+        public static final int crash_dialog_ok_toast=0x7f0a004d;
+        public static final int crash_dialog_text=0x7f0a004b;
+        public static final int crash_dialog_title=0x7f0a004a;
+        public static final int crash_notif_text=0x7f0a0049;
+        public static final int crash_notif_ticker_text=0x7f0a0047;
+        public static final int crash_notif_title=0x7f0a0048;
         /**  ACRA toast notifications texts. 
          */
-        public static final int crash_toast_text=0x7f0a003d;
+        public static final int crash_toast_text=0x7f0a0046;
+        public static final int data_launch_update=0x7f0a0032;
+        public static final int data_status_date_pattern=0x7f0a0036;
+        public static final int data_status_last_update_summary=0x7f0a0035;
+        public static final int data_status_stations_list=0x7f0a0034;
+        public static final int data_status_title=0x7f0a0033;
+        /**  Data status and update 
+         */
+        public static final int data_status_update_done=0x7f0a0030;
+        public static final int data_status_uptodate=0x7f0a0031;
         /**  Position 
          */
-        public static final int distance=0x7f0a002e;
-        public static final int error_connection_expired=0x7f0a0020;
-        public static final int error_initialization_stations=0x7f0a0022;
-        public static final int error_no_connection=0x7f0a0021;
-        public static final int error_no_location_available=0x7f0a002f;
-        public static final int error_no_location_found=0x7f0a0024;
-        public static final int error_no_stations_near_current_location=0x7f0a0023;
+        public static final int distance=0x7f0a0037;
+        public static final int error_connection_expired=0x7f0a0022;
+        public static final int error_initialization_stations=0x7f0a0024;
+        public static final int error_no_connection=0x7f0a0023;
+        public static final int error_no_location_available=0x7f0a0038;
+        public static final int error_no_location_found=0x7f0a0026;
+        public static final int error_no_stations_near_current_location=0x7f0a0025;
         /**  Errors 
          */
-        public static final int error_occured=0x7f0a001e;
-        public static final int error_retry=0x7f0a001f;
+        public static final int error_occured=0x7f0a0020;
+        public static final int error_retry=0x7f0a0021;
         /**  Home 
          */
         public static final int home_add_station=0x7f0a000c;
-        public static final int installation_done=0x7f0a001d;
-        public static final int loading=0x7f0a0016;
-        public static final int location=0x7f0a0011;
-        public static final int no=0x7f0a001a;
-        public static final int ok=0x7f0a0018;
-        public static final int preferences=0x7f0a0015;
-        public static final int prefs_filter_least_one_attach_summary=0x7f0a0038;
-        public static final int prefs_filter_least_one_attach_title=0x7f0a0037;
-        public static final int prefs_filter_least_one_bike_summary=0x7f0a0036;
-        public static final int prefs_filter_least_one_bike_title=0x7f0a0035;
+        public static final int installation_done=0x7f0a001f;
+        public static final int loading=0x7f0a0019;
+        public static final int location=0x7f0a0014;
+        public static final int no=0x7f0a001d;
+        public static final int ok=0x7f0a001b;
+        public static final int preferences=0x7f0a0018;
+        public static final int prefs_filter_least_one_attach_summary=0x7f0a0041;
+        public static final int prefs_filter_least_one_attach_title=0x7f0a0040;
+        public static final int prefs_filter_least_one_bike_summary=0x7f0a003f;
+        public static final int prefs_filter_least_one_bike_title=0x7f0a003e;
         /**  Filter 
          */
-        public static final int prefs_filters=0x7f0a0034;
-        public static final int prefs_location_enable_gps_summary=0x7f0a0028;
-        public static final int prefs_location_enable_gps_title=0x7f0a0027;
-        public static final int prefs_position_distance=0x7f0a002a;
-        public static final int prefs_position_radius_distance_summary=0x7f0a002c;
-        public static final int prefs_position_radius_distance_title=0x7f0a002b;
-        public static final int prefs_position_radius_distance_unit=0x7f0a002d;
+        public static final int prefs_filters=0x7f0a003d;
+        public static final int prefs_location_enable_gps_summary=0x7f0a002a;
+        public static final int prefs_location_enable_gps_title=0x7f0a0029;
+        public static final int prefs_position_distance=0x7f0a002c;
+        public static final int prefs_position_radius_distance_summary=0x7f0a002e;
+        public static final int prefs_position_radius_distance_title=0x7f0a002d;
+        public static final int prefs_position_radius_distance_unit=0x7f0a002f;
         /**  Position Preferences 
          */
-        public static final int prefs_position_title=0x7f0a0029;
-        public static final int prefs_stations_details_summary=0x7f0a0026;
+        public static final int prefs_position_title=0x7f0a002b;
+        public static final int prefs_stations_details_summary=0x7f0a0028;
         /**  Home Preferences 
          */
-        public static final int prefs_stations_details_title=0x7f0a0025;
+        public static final int prefs_stations_details_title=0x7f0a0027;
         public static final int quickdialog_maps=0x7f0a000d;
         public static final int quickdialog_stations_list=0x7f0a000e;
-        public static final int refresh=0x7f0a0017;
+        public static final int refresh=0x7f0a001a;
         /**  Search 
          */
-        public static final int search=0x7f0a0030;
-        public static final int search_hint=0x7f0a0031;
-        public static final int search_no_result=0x7f0a0032;
-        public static final int search_suggestion_error=0x7f0a0033;
+        public static final int search=0x7f0a0039;
+        public static final int search_hint=0x7f0a003a;
+        public static final int search_no_result=0x7f0a003b;
+        public static final int search_suggestion_error=0x7f0a003c;
         public static final int starred_title=0x7f0a000f;
-        public static final int station_out_of_service=0x7f0a0014;
+        public static final int station_out_of_service=0x7f0a0017;
         /**  Common strings 
          */
-        public static final int stations_list=0x7f0a0010;
-        public static final int update_done=0x7f0a001c;
-        public static final int yes=0x7f0a0019;
+        public static final int stations_list=0x7f0a0013;
+        public static final int tab_list=0x7f0a0011;
+        public static final int tab_map=0x7f0a0012;
+        /**  Tabs 
+         */
+        public static final int tab_stars=0x7f0a0010;
+        public static final int yes=0x7f0a001c;
     }
     public static final class style {
         public static final int DialogWindowTitle_Sherlock=0x7f0b0033;

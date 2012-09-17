@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/home_settings"
-          android:icon="@drawable/ic_menu_preferences_ics"
-          android:title="@string/preferences" />
-    <item android:id="@+id/home_about"
-          android:icon="@drawable/ic_menu_info_details_ics"
-          android:title="@string/about_title" />
-</menu>

@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.vlille.checker.R;
-import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.utils.ContextHelper;
 import com.vlille.checker.utils.PreferenceKeys;
 

@@ -1,5 +1,7 @@
 package com.vlille.checker.utils;
 
+import java.util.concurrent.TimeUnit;
+
 
 public class Constants {
 		
@@ -7,6 +9,11 @@ public class Constants {
 	 * ACRA - The google docs form key.
 	 */
 	public static final String GOOGLE_DOCS_FORM_KEY = "dE42S2d6NkhjU2tSNFI0dFZ3NGVjSnc6MQ";
+	
+	/**
+	 * Duration for keeping data in cache.
+	 */
+	public static final long CACHE_DATA_DURATION = TimeUnit.SECONDS.toMillis(10);
 	
 	/**
 	 * One minute in milliseconds.

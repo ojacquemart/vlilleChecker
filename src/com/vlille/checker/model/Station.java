@@ -152,8 +152,8 @@ public class Station implements Serializable, GetContentValues {
 	
 	public boolean isUpToDate() {
 		final long now = System.currentTimeMillis();
-		final long pastUpdate = lastUpdate - (now - Constants.ONE_MINUTE_IN_MILLSECONDS);
-		boolean upToDate = pastUpdate + Constants.ONE_MINUTE_IN_MILLSECONDS > 0;
+		final long pastUpdate = lastUpdate - (now - Constants.CACHE_DATA_DURATION);
+		boolean upToDate = pastUpdate + Constants.CACHE_DATA_DURATION > 0;
 		if (!upToDate) {
 			lastUpdate = now;
 		}

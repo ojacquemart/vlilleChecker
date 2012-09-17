@@ -15,11 +15,11 @@ import com.vlille.checker.R;
 import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.model.Station;
 
-public class SelectStationsAdapter extends ArrayAdapter<Station> {
+public class AllStationsAdapter extends ArrayAdapter<Station> {
 
 	private List<Station> stations;
 	
-	public SelectStationsAdapter(Context context, int resource, List<Station> stations) {
+	public AllStationsAdapter(Context context, int resource, List<Station> stations) {
 		super(context, resource, stations);
 		
 		this.stations = stations;
@@ -32,7 +32,7 @@ public class SelectStationsAdapter extends ArrayAdapter<Station> {
 		final Context context = getContext();
 		if (view == null) {
 			LayoutInflater layout = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			view = layout.inflate(R.layout.home_search_list_stations, null);
+			view = layout.inflate(R.layout.all_stations_list_content, null);
 		}
 		
 		final Station station = stations.get(position);

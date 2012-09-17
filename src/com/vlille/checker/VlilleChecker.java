@@ -1,21 +1,18 @@
 package com.vlille.checker;
 
-import org.acra.ACRA;
-import org.acra.ReportingInteractionMode;
-import org.acra.annotation.ReportsCrashes;
-
 import android.app.Application;
 import android.util.Log;
 
 import com.vlille.checker.db.DbAdapter;
-import com.vlille.checker.utils.Constants;
 
+/*
 @ReportsCrashes(
 	formKey = Constants.GOOGLE_DOCS_FORM_KEY,
     mode = ReportingInteractionMode.TOAST,
     forceCloseDialogAfterToast = false,
     resToastText = R.string.crash_toast_text
 )
+*/
 public class VlilleChecker extends Application {
 	
 	
@@ -25,7 +22,7 @@ public class VlilleChecker extends Application {
 	
 	@Override
 	public void onCreate() {
-		ACRA.init(this);
+//		ACRA.init(this);
 		
 		super.onCreate();
 		

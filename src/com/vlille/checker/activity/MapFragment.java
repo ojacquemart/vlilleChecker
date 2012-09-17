@@ -8,17 +8,14 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockMapActivity;
-import com.actionbarsherlock.view.Window;
 import com.vlille.checker.R;
 import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.db.DbAdapter;
 import com.vlille.checker.maps.OnPanAndZoomListener;
 import com.vlille.checker.maps.VlilleMapView;
-import com.vlille.checker.maps.overlay.BallonStationOverlays.StationDetails;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.service.AbstractRetrieverService;
 import com.vlille.checker.service.StationsResultReceiver;
@@ -30,7 +27,7 @@ import com.vlille.checker.utils.ContextHelper;
  * Select stations from maps.
  * It allows to select your station browsing the stations map.
  */
-public class MapsActivity extends SherlockMapActivity implements StationInitializer, Receiver {
+public class MapFragment extends SherlockMapActivity implements StationInitializer, Receiver {
 
 	protected final String LOG_TAG = getClass().getSimpleName();
 	protected VlilleMapView mapView;
@@ -43,7 +40,6 @@ public class MapsActivity extends SherlockMapActivity implements StationInitiali
 	/**
 	 * The receiver from the service.
 	 */
-	
 	private StationsResultReceiver resultReceiver;
 	
 	/**
@@ -57,28 +53,28 @@ public class MapsActivity extends SherlockMapActivity implements StationInitiali
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+//		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		
 		onCreate(savedInstanceState, false);
 		
 	}
 	
-	@Override
-	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
-		// Refresh overlays.
-		menu.add(getString(R.string.refresh)).setIcon(R.drawable.ic_menu_refresh_ics)
-				.setOnMenuItemClickListener(new com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener() {
-
-					@Override
-					public boolean onMenuItemClick(com.actionbarsherlock.view.MenuItem item) {
-						onRestart();
-
-						return false;
-					}
-				}).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-		
-		return true;
-	}
+//	@Override
+//	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
+//		// Refresh overlays.
+//		menu.add(getString(R.string.refresh)).setIcon(R.drawable.ic_menu_refresh_ics)
+//				.setOnMenuItemClickListener(new com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener() {
+//
+//					@Override
+//					public boolean onMenuItemClick(com.actionbarsherlock.view.MenuItem item) {
+//						onRestart();
+//
+//						return false;
+//					}
+//				}).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+//		
+//		return true;
+//	}
 	
 	@Override
 	public void onPause() {
@@ -106,7 +102,7 @@ public class MapsActivity extends SherlockMapActivity implements StationInitiali
 			stations = dbAdapter.findAll();
 		} catch (RuntimeException e) {
 			Log.e(LOG_TAG, "#onCreate() exception", e);
-			Toast.makeText(this, getString(R.string.error_no_connection), Toast.LENGTH_SHORT);
+			Toast.makeText(this, getString(R.string.error_no_connection), Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -137,12 +133,12 @@ public class MapsActivity extends SherlockMapActivity implements StationInitiali
 			doResume();
 		} catch (Exception e) {
 			Log.e(LOG_TAG, "#onResume() exception", e);
-			Toast.makeText(this, getString(R.string.error_initialization_stations), Toast.LENGTH_SHORT);
+			Toast.makeText(this, getString(R.string.error_initialization_stations), Toast.LENGTH_SHORT).show();
 		}		
 	}
 	
 	public void doResume() {
-		setSupportProgressBarIndeterminateVisibility(true);
+//		setSupportProgressBarIndeterminateVisibility(true);
 		mapView.initCenter();
 		startRetrieverService();
 	}
@@ -159,12 +155,12 @@ public class MapsActivity extends SherlockMapActivity implements StationInitiali
 			if (mapView.getLatitudeSpan() == 0 || mapView.getLongitudeSpan() == 360000000) {
 				mapView.postDelayed(this, TIME_TO_WAIT_IN_MS);
 			} else {
-				try {
-					new AsyncCreateOverlays().execute();
-				
-				} catch (Exception e) {
-					Toast.makeText(getApplicationContext(), R.string.error_initialization_stations, Toast.LENGTH_SHORT).show();
-				}
+//				try {
+//					new AsyncCreateOverlays().execute();
+//				
+//				} catch (Exception e) {
+//					Toast.makeText(this, R.string.error_initialization_stations, Toast.LENGTH_SHORT).show();
+//				}
 			}
 		}
 
@@ -192,32 +188,32 @@ public class MapsActivity extends SherlockMapActivity implements StationInitiali
 	private boolean isNetworkAvailable() {
 		final boolean networkAvailable = ContextHelper.isNetworkAvailable(this);
 		if (!networkAvailable) {
-			MapsActivity.this.runOnUiThread(new Runnable() {
-				
-				@Override
-				public void run() {
-					Toast.makeText(getApplicationContext(), R.string.error_no_connection, Toast.LENGTH_SHORT).show();
-				}
-			});
+//			MapFragment.this.runOnUiThread(new Runnable() {
+//				
+//				@Override
+//				public void run() {
+//					Toast.makeText(getApplicationContext(), R.string.error_no_connection, Toast.LENGTH_SHORT).show();
+//				}
+//			});
 		}
 		
 		return networkAvailable;
 	}
 	
 	private void startRetrieverService() {
-		try {
-			setSupportProgressBarIndeterminateVisibility(true);
+		try { 
+//			setSupportProgressBarIndeterminateVisibility(true);
 			resultReceiver = new StationsResultReceiver(new Handler());
 			resultReceiver.setReceiver(this);
 			
-			final Intent intent = new Intent(Intent.ACTION_SYNC, null, getApplicationContext(), StationsRetrieverService.class);
+			final Intent intent = new Intent(Intent.ACTION_SYNC, null, this, StationsRetrieverService.class);
 			intent.putExtra(RECEIVER, resultReceiver);
 			
 			intent.putExtra(AbstractRetrieverService.EXTRA_DATA, (ArrayList<Station>) getOnResumeStations());
 			startService(intent);
 		} catch (Exception e) {
 			Log.e(LOG_TAG, "Error during overlays service", e);
-			setSupportProgressBarIndeterminateVisibility(false);
+//			setSupportProgressBarIndeterminateVisibility(false);
 		}
 	}
 	
@@ -237,19 +233,19 @@ public class MapsActivity extends SherlockMapActivity implements StationInitiali
 			@SuppressWarnings("unchecked")
 			final List<Station> results = (List<Station>) resultData.getSerializable(AbstractRetrieverService.RESULTS);
 			
-			MapsActivity.this.runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					// Copy details infos to overlay to display number bikes and attachs.
-					for (Station eachStation : results) {
-						final StationDetails overlay = mapView.getOverlayByStationId(eachStation);
-						if (overlay != null) {
-							overlay.copyDetailledStation(eachStation);
-						}
-					}
-					
-				}
-			});
+//			MapFragment.this.runOnUiThread(new Runnable() {
+//				@Override
+//				public void run() {
+//					// Copy details infos to overlay to display number bikes and attachs.
+//					for (Station eachStation : results) {
+//						final StationDetails overlay = mapView.getOverlayByStationId(eachStation);
+//						if (overlay != null) {
+//							overlay.copyDetailledStation(eachStation);
+//						}
+//					}
+//					
+//				}
+//			});
 			
 			break;
 		case Receiver.ERROR:
@@ -261,7 +257,7 @@ public class MapsActivity extends SherlockMapActivity implements StationInitiali
 		if (finished) {
 			mapView.postInvalidate();
 			Log.d(LOG_TAG, "#onReceiveResult finished");
-			setSupportProgressBarIndeterminateVisibility(false);
+//			setSupportProgressBarIndeterminateVisibility(false);
 		}
 	}
 	
@@ -273,12 +269,12 @@ public class MapsActivity extends SherlockMapActivity implements StationInitiali
 	@Override
 	public List<Station> getOnResumeStations() {
 		return mapView.getBoundedStations();
-	}	
-	
+	}
+
 	@Override
 	protected boolean isRouteDisplayed() {
 		return false;
-	}
+	}	
 
 	
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.vlille.checker.model.Station;
 
-public interface GetStations {
+public interface StationInitializer {
 	
 	List<Station> getOnCreateStations();
 
