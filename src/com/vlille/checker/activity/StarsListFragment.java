@@ -3,7 +3,6 @@ package com.vlille.checker.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,7 +28,6 @@ public class StarsListFragment extends SherlockListFragment implements Receiver 
 	private final String TAG = getClass().getSimpleName();
 	
 	private FragmentActivity activity;
-	private ProgressDialog progressDialog;
 	private StationsResultReceiver resultReceiver;
 	
 	@Override
@@ -38,12 +36,6 @@ public class StarsListFragment extends SherlockListFragment implements Receiver 
 		Log.d(TAG, "onCreate");
 		
 		activity = getActivity();
-		initProgressDialog();
-	}
-
-	private void initProgressDialog() {
-		progressDialog = new ProgressDialog(activity);
-		progressDialog.setMessage(getString(R.string.loading));
 	}
 
 	@Override
@@ -76,13 +68,12 @@ public class StarsListFragment extends SherlockListFragment implements Receiver 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		setListShown(true);
 	}
 
 	private void handleStarredStations(List<Station> starredIdsStations) {
 		if (ContextHelper.isNetworkAvailable(activity)) {
 			if (!activity.isFinishing()) {
-				 progressDialog.show();
+				 setListShownNoAnimation(false);
 			}
 
 			Log.d(TAG, "Start retriever service.");
@@ -132,9 +123,8 @@ public class StarsListFragment extends SherlockListFragment implements Receiver 
 			break;
 		}
 
-		if (finished && !activity.isFinishing() && progressDialog.isShowing()) {
-//			TODO: call progress from actionBar.
-			progressDialog.dismiss();
+		if (finished && !activity.isFinishing()) {
+			setListShownNoAnimation(true);
 		}
 
 		showBoxError(error);
@@ -147,8 +137,6 @@ public class StarsListFragment extends SherlockListFragment implements Receiver 
 	 *            The starred stations details.
 	 */
 	private void handleAdapter(final List<Station> stations) {
-//		final LinearLayout boxAddStation = (LinearLayout) activity.findViewById(R.id.home_station_new_box);
-//		final StarsListAdapter adapter = new StarsListAdapter(activity, R.layout.stars_list_content, stations, boxAddStation);
 		final StarsListAdapter adapter = new StarsListAdapter(activity, R.layout.stars_list_content, stations, null);
 		setListAdapter(adapter);
 	}
