@@ -18,6 +18,7 @@
 
     <!-- Common strings -->
     <string name="stations_list">Liste des stations</string>
+    <string name="stations_map">Carte des stations</string>
     <string name="location">Localisation</string>
     <string name="bike">Vélo</string>
     <string name="attach">Emplacement</string>
@@ -29,7 +30,8 @@
     <string name="yes">Oui</string>
     <string name="no">Non</string>
     <string name="cancel">Cancel</string>
-    <string name="installation_done">Récupération des stations terminée.</string>
+    <string name="installation_done">Récupération des stations terminée</string>
+    <string name="no_station">Ajouter des stations via les onglets</string>
 
     <!-- Errors -->
     <string name="error_occured">Une erreur est survenue.</string>

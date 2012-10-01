@@ -9,6 +9,8 @@
 	<color name="blue">#00f</color>
 	<color name="red">#FF0000</color>
 
+	 <color name="pressed_vlille_checker">#CC3f911b</color>
+	
 	<!-- actionbar -->
 	<color name="actionbar_separator">#DDDDDD</color>
 	<color name="actionbar_background_start">#423F40</color>

@@ -6,11 +6,9 @@ import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 
-import com.actionbarsherlock.app.SherlockListFragment;
 import com.vlille.checker.R;
 import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.model.Station;
@@ -19,37 +17,25 @@ import com.vlille.checker.service.StationsResultReceiver;
 import com.vlille.checker.service.StationsResultReceiver.Receiver;
 import com.vlille.checker.service.StationsRetrieverService;
 import com.vlille.checker.utils.ContextHelper;
+import com.vlille.checker.utils.ToastUtils;
 
 /**
  * Fragment activity wich displays starred activities.
  */
-public class StarsListFragment extends SherlockListFragment implements Receiver {
-
-	private final String TAG = getClass().getSimpleName();
+public class StarsListFragment extends VlilleSherlockListFragment implements Receiver {
 	
-	private FragmentActivity activity;
 	private StationsResultReceiver resultReceiver;
-	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		Log.d(TAG, "onCreate");
-		
-		activity = getActivity();
-	}
 
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		setListShown(true);
+	}
+	
 	@Override
 	public void onResume() {
 		super.onResume();
 		Log.d(TAG, "onResume");
-		setStarsAdapter();
-	}
-	
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		Log.d(TAG, "onActivityCreated");
-		super.onActivityCreated(savedInstanceState);
-
 		setStarsAdapter();
 	}
 
@@ -59,15 +45,10 @@ public class StarsListFragment extends SherlockListFragment implements Receiver 
 		boolean isEmptyStarredStations = starredStations.isEmpty();
 		Log.d(TAG, "Starred stations empty? " + isEmptyStarredStations);
 		if (isEmptyStarredStations) {
-			showBoxNewStation(null);
+			showNoStationsNfo();
 		} else {
 			handleStarredStations(starredStations);
 		}
-	}
-
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
 	}
 
 	private void handleStarredStations(List<Station> starredIdsStations) {
@@ -88,7 +69,7 @@ public class StarsListFragment extends SherlockListFragment implements Receiver 
 		} else {
 			Log.d(TAG, "No network, show the retry view");
 
-			showBoxError(true);
+			ToastUtils.show(activity, R.string.error_no_connection);
 		}
 	}
 
@@ -111,8 +92,6 @@ public class StarsListFragment extends SherlockListFragment implements Receiver 
 
 			@SuppressWarnings("unchecked")
 			List<Station> results = (List<Station>) resultData.getSerializable(AbstractRetrieverService.RESULTS);
-
-			showBoxNewStation(results);
 			handleAdapter(results);
 
 			break;
@@ -127,7 +106,9 @@ public class StarsListFragment extends SherlockListFragment implements Receiver 
 			setListShownNoAnimation(true);
 		}
 
-		showBoxError(error);
+		if (error) {
+			ToastUtils.show(activity, R.string.error_connection_expired);
+		}
 	}
 
 	/**
@@ -139,29 +120,6 @@ public class StarsListFragment extends SherlockListFragment implements Receiver 
 	private void handleAdapter(final List<Station> stations) {
 		final StarsListAdapter adapter = new StarsListAdapter(activity, R.layout.stars_list_content, stations, null);
 		setListAdapter(adapter);
-	}
-
-	/**
-	 * Display the add new button if there are no stations in preferences.
-	 * 
-	 * @param stations
-	 *            The starred stations details.
-	 */
-	private void showBoxNewStation(List<Station> stations) {
-		boolean show = stations == null || stations.isEmpty();
-
-//		MiscUtils.showOrMask((LinearLayout) activity.findViewById(R.id.home_station_new_box), show);
-	}
-
-	/**
-	 * Display the add new button if there are no stations in preferences.
-	 * 
-	 * @param stations
-	 *            The starred stations details.
-	 */
-	private void showBoxError(boolean show) {
-		// TODO: see how to handle new station and error message
-//		MiscUtils.showOrMask((RelativeLayout) activity.findViewById(R.id.home_error_box), show);
 	}
 	
 }

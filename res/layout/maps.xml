@@ -1,22 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res/com.vlille.checker"
-   	android:layout_width="wrap_content"
-   	android:layout_height="wrap_content"
-	android:orientation="vertical"
-	android:background="@color/white">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
-	<com.vlille.checker.maps.VlilleMapView
-		xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/mapview"
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:clickable="true"
-		android:state_enabled="true"
-		android:apiKey="0TInfQPSHmTUA2hM-CmEkz25QqxH1eAL70TizaA"
-		 />
-<!-- debug -->
-<!-- 		android:apiKey="0TInfQPSHmTUA2hM-CmEkz25QqxH1eAL70TizaA" -->
-<!-- release -->
-<!-- 		android:apiKey="0TInfQPSHmTXYmp6lQVt5UyIjhpHs1rhSIzfA5A" -->
-</LinearLayout>
+    <com.vlille.checker.maps.VlilleMapView
+        android:id="@+id/mapview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:clickable="true"
+        android:state_enabled="true" />
+
+</FrameLayout>

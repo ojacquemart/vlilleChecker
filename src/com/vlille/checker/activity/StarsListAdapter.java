@@ -2,12 +2,14 @@ package com.vlille.checker.activity;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -28,6 +30,7 @@ public class StarsListAdapter extends ArrayAdapter<Station> {
 
 	private final String LOG_TAG = getClass().getSimpleName();
 
+	private Activity activity;
 	private List<Station> stations; /** The stations loaded. */
 	private Resources resources; /** Resources for the color text according to station informations. */
 	private LinearLayout boxAddStation; /** The box containing the add button. */
@@ -35,13 +38,14 @@ public class StarsListAdapter extends ArrayAdapter<Station> {
 	public StarsListAdapter(Context context, int resource, List<Station> stations, LinearLayout boxAddStation) {
 		super(context, resource, stations);
 
+		this.activity = (Activity) context;
 		this.stations = stations;
 		this.resources = context.getResources();
 		this.boxAddStation = boxAddStation;
 	}
 
 	@Override
-	public View getView(final int position, View view, ViewGroup parent) {
+	public View getView(final int position, View view, final ViewGroup parent) {
 		if (view == null) {
 			LayoutInflater layout = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			view = layout.inflate(R.layout.stars_list_content, null);
@@ -67,6 +71,12 @@ public class StarsListAdapter extends ArrayAdapter<Station> {
 				stations.remove(position);
 				VlilleChecker.getDbAdapter().star(false, station);
 				arrayAdapter.notifyDataSetChanged();
+				
+				// Redisplay the home no stations info box.
+				// TODO: see to use VlilleSherlockListFragment#hide... method which does the same.
+				if (stations.isEmpty()) {
+					activity.findViewById(R.id.home_nostations_nfo).setVisibility(View.VISIBLE);
+				}
 			}
 		});
 

@@ -6,6 +6,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.time.StopWatch;
+import org.osmdroid.api.IGeoPoint;
+import org.osmdroid.events.MapListener;
+import org.osmdroid.events.ScrollEvent;
+import org.osmdroid.events.ZoomEvent;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapController;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -16,19 +23,14 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 
-import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapView;
 import com.vlille.checker.R;
-import com.vlille.checker.maps.overlay.BallonStationOverlays;
-import com.vlille.checker.maps.overlay.BallonStationOverlays.StationDetails;
-import com.vlille.checker.maps.overlay.PositionCircleOverlay;
 import com.vlille.checker.model.Metadata;
 import com.vlille.checker.model.Station;
 
 /**
  * @see http://stackoverflow.com/questions/4729255/how-to-implemennt-onzoomlistener-on-mapview
  */
-public class VlilleMapView extends MapView {
+public class VlilleMapView extends org.osmdroid.views.MapView implements MapListener {
 
 	private final String LOG_TAG = getClass().getSimpleName();
 	
@@ -54,219 +56,239 @@ public class VlilleMapView extends MapView {
     private Metadata metadata;
     
     // Ballon stations overlays.
-    private BallonStationOverlays ballonStationsOverlays;
-    
-    // Store a map with each station overlay by station id.
-	private Map<String, StationDetails> mapOverlaysByStationId = new HashMap<String, StationDetails>();
-
-    public VlilleMapView(Context context, String apiKey) {
-        super(context, apiKey);
-        initDefaultZoom();
-    }
+//    private BallonStationOverlays ballonStationsOverlays;
+//    
+//    // Store a map with each station overlay by station id.
+//	private Map<String, StationDetails> mapOverlaysByStationId = new HashMap<String, StationDetails>();
 
     public VlilleMapView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initDefaultZoom();
-    }
+		super(context, attrs);
 
-    public VlilleMapView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        initDefaultZoom();
-    }
-    
-    public void setMapsInformations(Metadata mapsInformation) {
-    	this.metadata = mapsInformation;
-    }
-    
-    private void initDefaultZoom() {
-    	setBuiltInZoomControls(true);
-		getController().setZoom(DETAILLED_ZOOM_LEVEL);
-    }
-    
-    public void createOverlays(List<Station> stations) {
-		resetStationsOverlays();
+	       MapController mMapController = getController();
+	        mMapController.setZoom(DETAILLED_ZOOM_LEVEL);
+	        GeoPoint gPt = new GeoPoint(PositionTransformer.toE6(50.6419), PositionTransformer.toE6(3.1));
+	        //Centre map near to Hyde Park Corner, London
+	        mMapController.setCenter(gPt);
 		
-		Log.i(LOG_TAG, "Initialize all overlays");
-		
-		StopWatch watch = new StopWatch();
-		watch.start();
-		
-		for (Station eachStation : stations) {
-			GeoPoint point = new GeoPoint(eachStation.getLatitudeE6(), eachStation.getLongituteE6());
-			StationDetails overlay = ballonStationsOverlays.createNewOverlay(point, eachStation);
-			
-			mapOverlaysByStationId.put(eachStation.getId(), overlay);
-		}
-
-		getOverlays().add(ballonStationsOverlays);
-		ballonStationsOverlays.populateNow();
-		
-		watch.stop();
-		Log.d(LOG_TAG, "Initialized in " + watch.getTime());
-	}    
-    
-	public void initCenter() {
-		Log.d(LOG_TAG, "#initCenter");
-		
-		if (!locationEnabled) {
-			defaultCenter();
-		} else {
-			locationCenter();
-		}
+		setTileSource(TileSourceFactory.MAPNIK);
+		setBuiltInZoomControls(true);
+		setMultiTouchControls(true);
+		setMapListener(this);
+//		this.equipementsOverlay = new EquipementsItemizedOverlay(context,
+//				parkingMarker, this);
+//
+//		// On ajoute toujours l'overlay avec les équipements
+//		addOverlay(this.equipementsOverlay);
+//
+//		// création de l'overlay de la circulation
+//		this.segmentsOverlay = new SegmentItemizedOvlerlay();
+//		SegmentsAsyncTask segmentLoader = new SegmentsAsyncTask(context, this);
+//		MainApplication.executor.execute(segmentLoader.future());
 	}
 
-	private void defaultCenter() {
-		center(new GeoPoint(metadata.getLatitude1e6(), metadata.getLongitude1e6()));
-	}
-	
-	public void locationCenter() {
-		clearOverlays();
+    
+//    public void setMapsInformations(Metadata mapsInformation) {
+//    	this.metadata = mapsInformation;
+//    }
+    
+//    public void createOverlays(List<Station> stations) {
+//		resetStationsOverlays();
 		
-		Log.d(LOG_TAG, "Current location not null : " + (currentLocation != null));
-		if (currentLocation != null) {
-			Log.i(LOG_TAG, "Center map and draw circle overlay");
-			
-			int latitudeE6 = PositionTransformer.toE6(currentLocation.getLatitude());
-			int longitudeE6 = PositionTransformer.toE6(currentLocation.getLongitude());
-			
-			// Center on the current location.
-			center(new GeoPoint(latitudeE6, longitudeE6));
-			
-			// Draw the circle overlay.
-			PositionCircleOverlay circleOverlay = new PositionCircleOverlay(latitudeE6, longitudeE6);
-			getOverlays().add(circleOverlay);
-		}
-	}
-	
-	private void center(GeoPoint point) {
-		getController().setCenter(point);
-	}
-	
-	public void animateTo(GeoPoint point) {
-		getController().animateTo(point);
-	}
-	
-	public void resetStationsOverlays() {
-		ballonStationsOverlays = new BallonStationOverlays(DEFAULT_MARKER, this, getContext());
-	}
-	
-	public StationDetails getOverlayByStationId(Station station) {
-		if (station == null) {
-			return null;
-		}
+//		Log.i(LOG_TAG, "Initialize all overlays");
+//		
+//		StopWatch watch = new StopWatch();
+//		watch.start();
 		
-		return mapOverlaysByStationId.get(station.getId());
-	}
-	
-	private void clearOverlays() {
-		getOverlays().clear();
-	}
-	
-	public void updateCurrentLocation() {
-		currentLocation = locationManagerWrapper.getCurrentLocation();
-	}
-	
-	public List<Station> getBoundedStations() {
-		if (!canShowDetails()) {
-			return new ArrayList<Station>();
-		}
+//		for (Station eachStation : stations) {
+//			GeoPoint point = new GeoPoint(eachStation.getLatitudeE6(), eachStation.getLongituteE6());
+//			StationDetails overlay = ballonStationsOverlays.createNewOverlay(point, eachStation);
+//			
+//			mapOverlaysByStationId.put(eachStation.getId(), overlay);
+//		}
+//
+//		getOverlays().add(ballonStationsOverlays);
+//		ballonStationsOverlays.populateNow();
 		
-		List<Station> overlays = new ArrayList<Station>();
-		
-		// Only load stations if station is map bounds and if is not updated more than one minute.
-		final Rect mapBounds = getMapBoundsRect();
-		for (StationDetails eachOverlay : ballonStationsOverlays.getStationsOverlay()) {
-			GeoPoint point = eachOverlay.getPoint();
-			boolean bounded = mapBounds.contains(point.getLongitudeE6(), point.getLatitudeE6());
-			eachOverlay.setMarkerPin(!bounded);
-			
-			if (bounded) {
-				overlays.add(eachOverlay.getStation());
-			}
-		}
-		
-		return overlays;
-	}
+//		watch.stop();
+//		Log.d(LOG_TAG, "Initialized in " + watch.getTime());
+//	}    
+    
+//	public void initCenter() {
+//		Log.d(LOG_TAG, "#initCenter");
+//		
+//		if (!locationEnabled) {
+//			defaultCenter();
+//		} else {
+//			locationCenter();
+//		}
+//	}
+
+//	private void defaultCenter() {
+//		center(new GeoPoint(metadata.getLatitude1e6(), metadata.getLongitude1e6()));
+//	}
+//	
+//	public void locationCenter() {
+//		clearOverlays();
+//		
+//		Log.d(LOG_TAG, "Current location not null : " + (currentLocation != null));
+//		if (currentLocation != null) {
+//			Log.i(LOG_TAG, "Center map and draw circle overlay");
+//			
+//			int latitudeE6 = PositionTransformer.toE6(currentLocation.getLatitude());
+//			int longitudeE6 = PositionTransformer.toE6(currentLocation.getLongitude());
+//			
+//			// Center on the current location.
+//			center(new org.osmdroid.util.GeoPoint(latitudeE6, longitudeE6));
+//			
+//			// Draw the circle overlay.
+////			PositionCircleOverlay circleOverlay = new PositionCircleOverlay(latitudeE6, longitudeE6);
+////			getOverlays().add(circleOverlay);
+//		}
+//	}
+//	
+//	private void center(org.osmdroid.util.GeoPoint point) {
+//		getController().setCenter(point);
+//	}
+//	
+//	public void animateTo(org.osmdroid.util.GeoPoint point) {
+//		getController().animateTo(point);
+//	}
+	
+//	public void resetStationsOverlays() {
+//		ballonStationsOverlays = new BallonStationOverlays(DEFAULT_MARKER, this, getContext());
+//	}
+//	
+//	public StationDetails getOverlayByStationId(Station station) {
+//		if (station == null) {
+//			return null;
+//		}
+//		
+//		return mapOverlaysByStationId.get(station.getId());
+//	}
+	
+//	private void clearOverlays() {
+//		getOverlays().clear();
+//	}
+//	
+//	public void updateCurrentLocation() {
+//		currentLocation = locationManagerWrapper.getCurrentLocation();
+//	}
+	
+//	public List<Station> getBoundedStations() {
+//		if (!canShowDetails()) {
+//			return new ArrayList<Station>();
+//		}
+//		
+//		List<Station> overlays = new ArrayList<Station>();
+//		
+//		// Only load stations if station is map bounds and if is not updated more than one minute.
+//		final Rect mapBounds = getMapBoundsRect();
+//		for (StationDetails eachOverlay : ballonStationsOverlays.getStationsOverlay()) {
+//			GeoPoint point = eachOverlay.getPoint();
+//			boolean bounded = mapBounds.contains(point.getLongitudeE6(), point.getLatitudeE6());
+//			eachOverlay.setMarkerPin(!bounded);
+//			
+//			if (bounded) {
+//				overlays.add(eachOverlay.getStation());
+//			}
+//		}
+//		
+//		return overlays;
+//	}
 
 	/**
 	 * Only show overlays details when <code>{@link #ballonStationsOverlays}</code> is not null and zoom level allows to.
 	 * @return <code>true </code> if maps can show details, <code>false</code> otherwise.
 	 */
-	private boolean canShowDetails() {
-		return ballonStationsOverlays != null && VlilleMapView.isDetailledZoomLevel(getZoomLevel());
-	}
+//	private boolean canShowDetails() {
+//		return ballonStationsOverlays != null && VlilleMapView.isDetailledZoomLevel(getZoomLevel());
+//	}
 	
 	/**
 	 * Get map bounds according to the screen size.
 	 * @return the map bounds.
 	 */
-	public Rect getMapBoundsRect() {
-		final GeoPoint mapCenter = getMapCenter();
-
-		final double width =  getLongitudeSpan() * MAP_VIEW_BOUNDS_MARGIN;
-		final double height = getLatitudeSpan() * MAP_VIEW_BOUNDS_MARGIN;
-		
-		int drawableMarkerHeight = 0;
-		if (ballonStationsOverlays != null) {
-			drawableMarkerHeight = ballonStationsOverlays.getDrawableMarkerHeight();
-		}
-	    
-		return new Rect(
-				mapCenter.getLongitudeE6() - (int) width - drawableMarkerHeight,
-				mapCenter.getLatitudeE6() - (int) height - drawableMarkerHeight,
-				mapCenter.getLongitudeE6() + (int) width + drawableMarkerHeight,
-				mapCenter.getLatitudeE6() + (int) height + drawableMarkerHeight);
-	}
+//	public Rect getMapBoundsRect() {
+//		final GeoPoint mapCenter = (GeoPoint) getMapCenter();
+//
+//		final double width =  getLongitudeSpan() * MAP_VIEW_BOUNDS_MARGIN;
+//		final double height = getLatitudeSpan() * MAP_VIEW_BOUNDS_MARGIN;
+//		
+//		int drawableMarkerHeight = 0;
+//		if (ballonStationsOverlays != null) {
+//			drawableMarkerHeight = ballonStationsOverlays.getDrawableMarkerHeight();
+//		}
+//	    
+//		return new Rect(
+//				mapCenter.getLongitudeE6() - (int) width - drawableMarkerHeight,
+//				mapCenter.getLatitudeE6() - (int) height - drawableMarkerHeight,
+//				mapCenter.getLongitudeE6() + (int) width + drawableMarkerHeight,
+//				mapCenter.getLatitudeE6() + (int) height + drawableMarkerHeight);
+//	}
 
 	public static boolean isDetailledZoomLevel(int zoomLevel) {
 		return zoomLevel >= DETAILLED_ZOOM_LEVEL;
+	}
+
+
+	@Override
+	public boolean onScroll(ScrollEvent arg0) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public boolean onZoom(ZoomEvent arg0) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 	/**
 	 * Detects move on touch event in order to refresh station, and
 	 * retrieves the new value of the map center.
 	 */
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		if (event.getAction() == MotionEvent.ACTION_UP) {
-			GeoPoint centerGeoPoint = this.getMapCenter();
-			if (oldCenterGeoPoint == null || (oldCenterGeoPoint.getLatitudeE6() != centerGeoPoint.getLatitudeE6())
-					|| (oldCenterGeoPoint.getLongitudeE6() != centerGeoPoint.getLongitudeE6())) {
-				panAndZoomListener.onPan();
-			}
-			oldCenterGeoPoint = this.getMapCenter();
-		}
-		
-		return super.onTouchEvent(event);
-	}
+//	@Override
+//	public boolean onTouchEvent(MotionEvent event) {
+//		if (event.getAction() == MotionEvent.ACTION_UP) {
+//			GeoPoint centerGeoPoint = (GeoPoint) this.getMapCenter();
+//			if (oldCenterGeoPoint == null || (oldCenterGeoPoint.getLatitudeE6() != centerGeoPoint.getLatitudeE6())
+//					|| (oldCenterGeoPoint.getLongitudeE6() != centerGeoPoint.getLongitudeE6())) {
+//				panAndZoomListener.onPan();
+//			}
+//			oldCenterGeoPoint = (GeoPoint) this.getMapCenter();
+//		}
+//		
+//		return super.onTouchEvent(event);
+//	}
 
-	@Override
-	protected void dispatchDraw(Canvas canvas) {
-		super.dispatchDraw(canvas);
-		if (getZoomLevel() != oldZoomLevel) {
-			panAndZoomListener.onZoom();
-			oldZoomLevel = getZoomLevel();
-		}
-	}
-
-	public void setOnPanListener(OnPanAndZoomListener listener) {
-		panAndZoomListener = listener;
-	}
-
-	public boolean isLocationActivated() {
-		return locationEnabled;
-	}
-
-	public void setLocationActivated(boolean locationActivated) {
-		this.locationEnabled = locationActivated;
-	}
-
-	public Location getCurrentLocation() {
-		return currentLocation;
-	}
+//	@Override
+//	protected void dispatchDraw(Canvas canvas) {
+//		super.dispatchDraw(canvas);
+//		if (getZoomLevel() != oldZoomLevel) {
+//			panAndZoomListener.onZoom();
+//			oldZoomLevel = getZoomLevel();
+//		}
+//	}
+//
+//	public void setOnPanListener(OnPanAndZoomListener listener) {
+//		panAndZoomListener = listener;
+//	}
+//
+//	public boolean isLocationActivated() {
+//		return locationEnabled;
+//	}
+//
+//	public void setLocationActivated(boolean locationActivated) {
+//		this.locationEnabled = locationActivated;
+//	}
+//
+//	public Location getCurrentLocation() {
+//		return currentLocation;
+//	}
 	
-	public Map<String, StationDetails> getMapOverlaysByStationId() {
-		return mapOverlaysByStationId;
-	}
+//	public Map<String, StationDetails> getMapOverlaysByStationId() {
+//		return mapOverlaysByStationId;
+//	}
 
 }

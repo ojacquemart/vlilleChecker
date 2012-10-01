@@ -41,7 +41,7 @@ public class HomeActivity extends SherlockFragmentActivity {
 		actionBar.addTab(actionBar
 				.newTab()
 				.setIcon(R.drawable.map)
-				.setTabListener(new TabListener<AllStationsFragment>(this, "map", AllStationsFragment.class)));
+				.setTabListener(new TabListener<MapFragment>(this, "map", MapFragment.class)));
 	}
 
 	/**

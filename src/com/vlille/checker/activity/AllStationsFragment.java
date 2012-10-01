@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -22,7 +21,6 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockListFragment;
 import com.vlille.checker.R;
 import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.db.station.StationTableFields;
@@ -33,28 +31,22 @@ import com.vlille.checker.utils.StationFilter;
 /**
  * All stations fragment UI, which displays all the existing stations.
  */
-public class AllStationsFragment extends SherlockListFragment {
+public class AllStationsFragment extends VlilleSherlockListFragment {
 
 	public static final String PREFS_FILE = "VLILLE_PREFS";
 	
-	private final String TAG = getClass().getSimpleName();
-	
-	private FragmentActivity activity;
 	private List<Station> stations;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.d(TAG, "onCreate");
-		activity = getActivity();
-		stations = VlilleChecker.getDbAdapter().findAll();
 	}
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		Log.d(TAG, "onActivityCreated");
 		
+		stations = VlilleChecker.getDbAdapter().findAll();
 		addHeaderEditText();
 		initSearchFieldListeners();
 		initFastScroll();
