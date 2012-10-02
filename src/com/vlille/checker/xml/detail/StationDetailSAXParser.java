@@ -5,8 +5,8 @@ import com.vlille.checker.xml.BaseSAXParser;
 
 public class StationDetailSAXParser extends BaseSAXParser<Station> {
 
-	public StationDetailSAXParser() {
-		super(new StationDetailHandler());
+	public StationDetailSAXParser(Station station) {
+		super(new StationDetailHandler(station));
 	}
 
 }

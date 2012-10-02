@@ -101,11 +101,11 @@ public class StarsListAdapter extends ArrayAdapter<Station> {
 		adress.setText(MiscUtils.toCamelCase(station.getAdress()));
 		
 		TextView nbBikes = (TextView) view.findViewById(R.id.details_bikes);
-		nbBikes.setText(station.getBikes().toString());
+		nbBikes.setText(station.getStringBikes());
 		nbBikes.setTextColor(getColor(station.getBikes()));
 		
 		TextView nbAttachs = (TextView) view.findViewById(R.id.details_attachs);
-		nbAttachs.setText(station.getAttachs().toString());
+		nbAttachs.setText(station.getStringAttachs());
 		nbAttachs.setTextColor(getColor(station.getAttachs()));
 
 		LinearLayout boxOutOfService = (LinearLayout) view.findViewById(R.id.station_out_of_service_box);

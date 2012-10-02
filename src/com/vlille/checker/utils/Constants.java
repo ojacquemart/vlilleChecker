@@ -11,6 +11,11 @@ public class Constants {
 	public static final String GOOGLE_DOCS_FORM_KEY = "dE42S2d6NkhjU2tSNFI0dFZ3NGVjSnc6MQ";
 	
 	/**
+	 * Value when network failed and default value to store stations.
+	 */
+	public static final String DEFAULT_VALUE = "...";
+	
+	/**
 	 * Duration for keeping data in cache.
 	 */
 	public static final long CACHE_DATA_DURATION = TimeUnit.SECONDS.toMillis(10);

@@ -52,25 +52,23 @@ public class StarsListFragment extends VlilleSherlockListFragment implements Rec
 	}
 
 	private void handleStarredStations(List<Station> starredIdsStations) {
-		if (ContextHelper.isNetworkAvailable(activity)) {
-			if (!activity.isFinishing()) {
-				 setListShownNoAnimation(false);
-			}
-
-			Log.d(TAG, "Start retriever service.");
-			resultReceiver = new StationsResultReceiver(new Handler());
-			resultReceiver.setReceiver(this);
-
-			final Intent intent = new Intent(Intent.ACTION_SYNC, null, activity,
-					StationsRetrieverService.class);
-			intent.putExtra(RECEIVER, resultReceiver);
-			intent.putExtra(AbstractRetrieverService.EXTRA_DATA, (ArrayList<Station>) starredIdsStations);
-			activity.startService(intent);
-		} else {
-			Log.d(TAG, "No network, show the retry view");
-
+		if (!ContextHelper.isNetworkAvailable(activity)) {
 			ToastUtils.show(activity, R.string.error_no_connection);
 		}
+		
+		if (!activity.isFinishing()) {
+			 setListShownNoAnimation(false);
+		}
+
+		Log.d(TAG, "Start retriever service.");
+		resultReceiver = new StationsResultReceiver(new Handler());
+		resultReceiver.setReceiver(this);
+
+		final Intent intent = new Intent(Intent.ACTION_SYNC, null, activity,
+				StationsRetrieverService.class);
+		intent.putExtra(RECEIVER, resultReceiver);
+		intent.putExtra(AbstractRetrieverService.EXTRA_DATA, (ArrayList<Station>) starredIdsStations);
+		activity.startService(intent);
 	}
 
 	/**

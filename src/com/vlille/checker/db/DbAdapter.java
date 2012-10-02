@@ -84,7 +84,7 @@ public class DbAdapter {
 	 */
 	private boolean hasStationsChanged() {
 		Log.d(TAG, "Check if some new stations have been added");
-		final SetStationsInfos setStationsInfos = XML_READER.getSetStationsInfos();
+		final SetStationsInfos setStationsInfos = XML_READER.getAsyncSetStationsInfos();
 		final List<Station> parsedStations = setStationsInfos.getStations();
 		
 		final List<Station> dbStations = findAll();
@@ -354,7 +354,7 @@ public class DbAdapter {
 			StopWatch watcher = new StopWatch();
 			watcher.start();
 			
-			final SetStationsInfos setStationsInfos = XML_READER.getSetStationsInfos();
+			final SetStationsInfos setStationsInfos = XML_READER.getAsyncSetStationsInfos();
 			
 			Log.d(TAG, "Insert maps infos");
 			final Metadata metadata = setStationsInfos.getMetadata();

@@ -29,21 +29,19 @@ public class XMLReader {
 	 * @param station The station.
 	 * @return The parsed station.
 	 */
-	public Station getDetails(String stationId)  {
+	public Station getDetails(Station station)  {
 		try {
-			final String httpUrl = Constants.URL_STATION_DETAIL + stationId;
-			final Station parsedStation = new StationDetailSAXParser().parse(getInputStream(httpUrl));
-			if (parsedStation != null) {
-				parsedStation.setId(stationId);
-				VlilleChecker.getDbAdapter().update(parsedStation);
-			}
-			
-			return parsedStation;
+			final String httpUrl = Constants.URL_STATION_DETAIL + station.getId();
+			station = new StationDetailSAXParser(station).parse(getInputStream(httpUrl));
 		} catch (Exception e) {
-			Log.e(LOG_TAG, "Error during getting details", e);
+			Log.e(LOG_TAG, "getDetails throws an exception", e);
 			
-			return null;
+			station.setBikes(null);
+			station.setAttachs(null);
 		}
+		VlilleChecker.getDbAdapter().update(station);
+		
+		return station;
 	}
 	
 	/**
@@ -52,7 +50,7 @@ public class XMLReader {
 	 * 
 	 * @return The set with metadata and stations.
 	 */
-	public SetStationsInfos getSetStationsInfos() {
+	public SetStationsInfos getAsyncSetStationsInfos() {
 		try {
 			return new ASyncFeedReader<SetStationsInfos>(new StationsListSAXParser()).execute(Constants.URL_STATIONS_LIST).get();
 		} catch (InterruptedException e) {

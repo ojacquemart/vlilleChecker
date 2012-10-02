@@ -82,7 +82,7 @@ public abstract class AbstractRetrieverService extends IntentService {
 			return true;
 		}
 	
-		Station updatedStation = XML_READER.getDetails(station.getId());
+		Station updatedStation = XML_READER.getDetails(station);
 		if (updatedStation == null) {
 			throw new NullPointerException("Station is null");
 		}

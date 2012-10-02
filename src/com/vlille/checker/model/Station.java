@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import android.content.ContentValues;
+import android.text.TextUtils;
 
 import com.vlille.checker.db.GetContentValues;
 import com.vlille.checker.db.station.StationTableFields;
@@ -119,7 +120,7 @@ public class Station implements Serializable, GetContentValues {
 	}
 	
 	public String getStringBikes() {
-		return bikes; 
+		return getStringValue(bikes); 
 	}
 
 	public Integer getBikes() {
@@ -131,7 +132,15 @@ public class Station implements Serializable, GetContentValues {
 	}
 	
 	public String getStringAttachs() {
-		return attachs;
+		return getStringValue(attachs);
+	}
+	
+	private String getStringValue(String value) {
+		if (TextUtils.isEmpty(value)) {
+			return Constants.DEFAULT_VALUE;
+		}
+		
+		return value;
 	}
 
 	public Integer getAttachs() {
@@ -153,12 +162,20 @@ public class Station implements Serializable, GetContentValues {
 	public boolean isUpToDate() {
 		final long now = System.currentTimeMillis();
 		final long pastUpdate = lastUpdate - (now - Constants.CACHE_DATA_DURATION);
-		boolean upToDate = pastUpdate + Constants.CACHE_DATA_DURATION > 0;
+		boolean upToDate = isLastUpdateExpired(pastUpdate) && !isFromNetworkFailed();
 		if (!upToDate) {
 			lastUpdate = now;
 		}
 		
 		return upToDate;
+	}
+
+	private boolean isLastUpdateExpired(final long pastUpdate) {
+		return pastUpdate + Constants.CACHE_DATA_DURATION > 0;
+	}
+
+	private boolean isFromNetworkFailed() {
+		return "...".equals(getStringBikes());
 	}
 
 	public Long getLastUpdate() {
