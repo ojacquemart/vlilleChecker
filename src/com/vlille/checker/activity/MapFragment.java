@@ -3,6 +3,7 @@ package com.vlille.checker.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
@@ -25,6 +27,7 @@ import com.vlille.checker.service.StationsResultReceiver;
 import com.vlille.checker.service.StationsResultReceiver.Receiver;
 import com.vlille.checker.service.StationsRetrieverService;
 import com.vlille.checker.utils.ContextHelper;
+import com.vlille.checker.utils.ToastUtils;
  
 /**
  * Select stations from maps.
@@ -33,6 +36,8 @@ import com.vlille.checker.utils.ContextHelper;
 public class MapFragment extends SherlockFragment /*implements StationInitializer, Receiver*/ {
 
 	protected final String LOG_TAG = getClass().getSimpleName();
+	
+	private Activity activity;
 	protected VlilleMapView mapView;
 	
 	/**
@@ -54,15 +59,30 @@ public class MapFragment extends SherlockFragment /*implements StationInitialize
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		Log.d(LOG_TAG, "onCreateView");
-		final View view = inflater.inflate(R.layout.maps, container, false);
 		super.onCreate(savedInstanceState);
+		Log.d(LOG_TAG, "onCreateView");
+		
+		activity = getActivity();
+		final View view = inflater.inflate(R.layout.maps, container, false);
 		
 		VlilleMapView mapView = (VlilleMapView) view.findViewById(R.id.mapview);
 		mapView.invalidate();
 		
+		addLocationEnablerClickListener(view);
+		
 		return view;
 //		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+	}
+
+	private void addLocationEnablerClickListener(final View view) {
+		final ImageButton locationEnabler = (ImageButton) view.findViewById(R.id.maps_location_enable);
+		locationEnabler.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				ToastUtils.show(activity, "Click on location button!");
+			}
+		});
 	}
 	
 //	@Override
