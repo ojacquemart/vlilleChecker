@@ -1,6 +1,7 @@
 package com.vlille.checker.activity;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -43,6 +44,12 @@ public class HomeActivity extends SherlockFragmentActivity {
 				.setIcon(R.drawable.map)
 				.setTabListener(new TabListener<MapFragment>(this, "map", MapFragment.class)));
 	}
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+	    super.onConfigurationChanged(newConfig);
+	    Log.d(TAG, "onConfigurationChanged");
+	  }
 
 	/**
 	 * Create contextual menu.

@@ -39,7 +39,9 @@
         <!-- Home Activity -->
         <activity
             android:name=".activity.HomeActivity"
-            android:theme="@style/Theme.vlille_checker" >
+            android:theme="@style/Theme.vlille_checker"
+            android:configChanges="orientation|screenSize"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
