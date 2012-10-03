@@ -1,4 +1,4 @@
-package com.vlille.checker.activity;
+package com.vlille.checker.ui;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -11,6 +11,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.vlille.checker.R;
 import com.vlille.checker.VlilleChecker;
+import com.vlille.checker.ui.listener.TabListener;
 
 /**
  * Home Vlille Checker activity.

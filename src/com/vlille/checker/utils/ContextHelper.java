@@ -5,7 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 
-import com.vlille.checker.activity.StarsListAdapter;
+import com.vlille.checker.ui.StarsListAdapter;
 
 /**
  * Helper for {@link Context}.

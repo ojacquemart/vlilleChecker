@@ -1,4 +1,4 @@
-package com.vlille.checker.activity;
+package com.vlille.checker.ui;
 
 import android.app.Activity;
 import android.os.Bundle;

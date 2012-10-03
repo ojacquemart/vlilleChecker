@@ -1,4 +1,4 @@
-package com.vlille.checker.activity;
+package com.vlille.checker.ui.listener;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;

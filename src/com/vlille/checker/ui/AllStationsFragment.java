@@ -1,4 +1,4 @@
-package com.vlille.checker.activity;
+package com.vlille.checker.ui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +52,13 @@ public class AllStationsFragment extends VlilleSherlockListFragment {
 		initFastScroll();
 		setFullAdapter();
 	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		Log.d(TAG, "onPause");
+		hideInputMethodManager();
+	}
 
 	/**
 	 * setListAdapter(null) is a a hack to avoid java.lang.IllegalStateException: Cannot add header view to list -- setAdapter has already been called.
@@ -78,9 +85,7 @@ public class AllStationsFragment extends VlilleSherlockListFragment {
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
 				Log.d(TAG, "onKeyListener " + event);
 				if (hasPressedOk(keyCode, event)) {
-					InputMethodManager imm = (InputMethodManager) getActivity()
-							.getSystemService(Context.INPUT_METHOD_SERVICE);
-					imm.hideSoftInputFromWindow(searchField.getWindowToken(), 0);
+					hideInputMethodManager();
 					
 					final String keyword = searchField.getText().toString();
 					filterStationsByKeyword(keyword);
@@ -94,6 +99,12 @@ public class AllStationsFragment extends VlilleSherlockListFragment {
 						&& (keyCode == KeyEvent.KEYCODE_ENTER);
 			}
 		});
+	}
+	
+	private void hideInputMethodManager() {
+		InputMethodManager imm = (InputMethodManager) activity
+				.getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(getSearchField().getWindowToken(), 0);
 	}
 	
 	private void initClearTextListener() {
