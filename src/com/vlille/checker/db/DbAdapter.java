@@ -208,9 +208,10 @@ public class DbAdapter {
 	
 	/**
 	 * Maps station with metadata query.
+	 * 
 	 * @return a set of station infos with metadata and all stations.
 	 */
-	public SetStationsInfos getSetStationInfos() {
+	public SetStationsInfos findSetStationsInfos() {
 		final List<Station> stations = findAll();
 		final Metadata metadata = findMetadata();
 		
