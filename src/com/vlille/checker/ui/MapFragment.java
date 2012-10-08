@@ -1,32 +1,20 @@
 package com.vlille.checker.ui;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.vlille.checker.R;
-import com.vlille.checker.VlilleChecker;
-import com.vlille.checker.db.DbAdapter;
-import com.vlille.checker.maps.OnPanAndZoomListener;
 import com.vlille.checker.maps.VlilleMapView;
 import com.vlille.checker.model.Station;
-import com.vlille.checker.service.AbstractRetrieverService;
 import com.vlille.checker.service.StationsResultReceiver;
-import com.vlille.checker.service.StationsResultReceiver.Receiver;
-import com.vlille.checker.service.StationsRetrieverService;
-import com.vlille.checker.utils.ContextHelper;
 import com.vlille.checker.utils.ToastUtils;
  
 /**
@@ -38,7 +26,6 @@ public class MapFragment extends SherlockFragment /*implements StationInitialize
 	protected final String LOG_TAG = getClass().getSimpleName();
 	
 	private Activity activity;
-	protected VlilleMapView mapView;
 	
 	/**
 	 * The stations list stored in db.
@@ -56,6 +43,8 @@ public class MapFragment extends SherlockFragment /*implements StationInitialize
 	 */
 	private static final int TIME_TO_WAIT_IN_MS = 100;
 	
+	private VlilleMapView map;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -65,8 +54,10 @@ public class MapFragment extends SherlockFragment /*implements StationInitialize
 		activity = getActivity();
 		final View view = inflater.inflate(R.layout.maps, container, false);
 		
-		VlilleMapView mapView = (VlilleMapView) view.findViewById(R.id.mapview);
-		mapView.invalidate();
+		
+		map = (VlilleMapView) view.findViewById(R.id.mapview);
+		map.setActivity(activity);
+		map.invalidate();
 		
 		addLocationEnablerClickListener(view);
 		
@@ -111,6 +102,8 @@ public class MapFragment extends SherlockFragment /*implements StationInitialize
 			resultReceiver.setReceiver(null);
 		}
 	}
+	
+	
 	
 //	public void onCreate(Bundle savedInstanceState, boolean locationEnabled) {
 //		super.onCreate(savedInstanceState);
@@ -302,5 +295,4 @@ public class MapFragment extends SherlockFragment /*implements StationInitialize
 //		return false;
 //	}	
 
-	
 }
