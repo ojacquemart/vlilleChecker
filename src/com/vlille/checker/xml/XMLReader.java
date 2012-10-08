@@ -5,7 +5,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.concurrent.ExecutionException;
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import com.vlille.checker.VlilleChecker;
@@ -52,7 +51,7 @@ public class XMLReader {
 	 */
 	public SetStationsInfos getAsyncSetStationsInfos() {
 		try {
-			return new ASyncFeedReader<SetStationsInfos>(new StationsListSAXParser()).execute(Constants.URL_STATIONS_LIST).get();
+			return new AsyncFeedReader<SetStationsInfos>(new StationsListSAXParser()).execute(Constants.URL_STATIONS_LIST).get();
 		} catch (InterruptedException e) {
 			Log.e(LOG_TAG, "InterruptedException", e);
 		} catch (ExecutionException e) {
@@ -85,25 +84,4 @@ public class XMLReader {
 		return inputStream; 
 	}
 	
-	class ASyncFeedReader<T> extends AsyncTask<String, Void, T> {
-		
-		private BaseSAXParser<T> parser;
-
-		public ASyncFeedReader(BaseSAXParser<T> parser) {
-			this.parser = parser;
-		}
-
-		@Override
-		protected T doInBackground(String... params) {
-			try {
-				return parser.parse(getInputStream(params[0]));
-				
-			} catch (Exception e) {
-				Log.e(LOG_TAG, "Error during parsing", e);
-				
-				throw new IllegalStateException("Error during parsing");
-			}
-		}
-
-	}
 }
