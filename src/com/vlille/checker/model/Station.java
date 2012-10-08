@@ -5,6 +5,7 @@ import java.io.Serializable;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.osmdroid.util.GeoPoint;
 
 import android.content.ContentValues;
 import android.text.TextUtils;
@@ -53,6 +54,12 @@ public class Station implements Serializable, GetContentValues {
 	public Station(String id) {
 		this.id = id;
 	}
+	
+	public GeoPoint getPoint() {
+		return new GeoPoint(latitudeE6, longituteE6);
+	}
+	
+	// Getters & setters.
 	
 	public String getId() {
 		return id;
