@@ -112,7 +112,10 @@ public class StarsListAdapter extends ArrayAdapter<Station> {
 		MiscUtils.showOrMask(boxOutOfService, station.isOutOfService());
 
 		ImageView cbPaiementAllowed = (ImageView) view.findViewById(R.id.details_cb);
-		cbPaiementAllowed.setBackgroundResource(station.isCbPaiement() ? R.drawable.station_cb : R.drawable.station_nocb);
+		cbPaiementAllowed.setBackgroundResource(R.drawable.station_cb);
+		if (!station.isCbPaiement()) {
+			cbPaiementAllowed.setVisibility(View.GONE);
+		}
 	}
 	
 	private int getColor(int number) {
