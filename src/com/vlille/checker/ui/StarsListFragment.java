@@ -65,7 +65,7 @@ public class StarsListFragment extends SherlockListFragment	 {
 		});
 		pullRefreshListView.setOnPullEventListener(
 				new SoundPullEventListener<ListView>(
-						getActivity(), R.raw.pull_event, R.raw.release_event));
+						getActivity(), R.raw.pull_event, R.raw.release_event_bike));
 	}
 
 	@Override

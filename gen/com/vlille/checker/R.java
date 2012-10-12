@@ -1069,7 +1069,7 @@ containing a value of this type.
     }
     public static final class raw {
         public static final int pull_event=0x7f060000;
-        public static final int release_event=0x7f060001;
+        public static final int release_event_bike=0x7f060001;
     }
     public static final class string {
         public static final int about_text=0x7f09004c;

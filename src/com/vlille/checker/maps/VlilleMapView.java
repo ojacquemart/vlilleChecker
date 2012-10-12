@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.osmdroid.ResourceProxy;
+import org.osmdroid.bonuspack.overlays.ExtendedOverlayItem;
 import org.osmdroid.events.MapListener;
 import org.osmdroid.events.ScrollEvent;
 import org.osmdroid.events.ZoomEvent;
@@ -11,15 +12,17 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapController;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
-import org.osmdroid.views.overlay.OverlayItem;
+import org.osmdroid.views.overlay.OverlayItem.HotspotPlace;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -29,13 +32,14 @@ import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.maps.overlay.ItemizedOverlayWithFocus;
 import com.vlille.checker.model.Metadata;
 import com.vlille.checker.model.Station;
+import com.vlille.checker.utils.ToastUtils;
 
 /**
  * @see http://stackoverflow.com/questions/4729255/how-to-implemennt-onzoomlistener-on-mapview
  */
 public class VlilleMapView extends org.osmdroid.views.MapView implements MapListener {
 
-	private final String LOG_TAG = getClass().getSimpleName();
+	private final String TAG = getClass().getSimpleName();
 
 	// Margin to pre load some stations.
 	private static final double MAP_VIEW_BOUNDS_MARGIN = 0.60;
@@ -59,24 +63,26 @@ public class VlilleMapView extends org.osmdroid.views.MapView implements MapList
 	private Metadata metadata;
 
 	private Activity activity;
-
-	public void setActivity(Activity activity) {
-		this.activity = activity;
-	}
-
 	private PopupPanel panel;
-
-	// Ballon stations overlays.
-	// private BallonStationOverlays ballonStationsOverlays;
-	//
-	// // Store a map with each station overlay by station id.
-	// private Map<String, StationDetails> mapOverlaysByStationId =m new HashMap<String, StationDetails>();
-
+	private ItemizedOverlayWithFocus<ExtendedOverlayItem> mMyLocationOverlay;
+	
 	// TODO: http://bricolsoftconsulting.com/2011/10/31/extending-mapview-to-add-a-change-event/
-	public VlilleMapView(Context context, AttributeSet attrs) {
+	public VlilleMapView(final Context context, AttributeSet attrs) {
 		super(context, attrs);
 
 		panel = new PopupPanel(R.layout.popup);
+		setOnPanListener(new OnPanAndZoomListener() {
+
+			@Override
+			public void onZoom() {
+			}
+
+			@Override
+			public void onPan() {
+				panel.hide();
+			}
+		});
+
 		MapController mMapController = getController();
 		mMapController.setZoom(DETAILLED_ZOOM_LEVEL);
 		GeoPoint gPt = new GeoPoint(PositionTransformer.toE6(50.6419), PositionTransformer.toE6(3.1));
@@ -87,62 +93,46 @@ public class VlilleMapView extends org.osmdroid.views.MapView implements MapList
 		setBuiltInZoomControls(true);
 		setMultiTouchControls(true);
 		setMapListener(this);
-		
+
 		// TODO: refactor onDrawnAt to handle new zoomed drawer!
 		// TODO: check api to use balloon shit!
 
-		final ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
+		final List<ExtendedOverlayItem> items = new ArrayList<ExtendedOverlayItem>();
 		final List<Station> stations = VlilleChecker.getDbAdapter().findAll();
 		for (Station eachStation : stations) {
-			items.add(new OverlayItem(eachStation.getName(), "", eachStation.getPoint()));
+			final ExtendedOverlayItem extendedOverlayItem = new ExtendedOverlayItem(eachStation.getName(), eachStation.getName(), eachStation.getPoint(), getContext());
+			items.add(extendedOverlayItem);
 		}
 
 		final ResourceProxy mResourceProxy = new ResourceProxyImpl(getContext());
-
-		ItemizedOverlayWithFocus<OverlayItem> mMyLocationOverlay;
 		final Resources resources = getResources();
-		mMyLocationOverlay = new ItemizedOverlayWithFocus<OverlayItem>(items,
+		mMyLocationOverlay = new ItemizedOverlayWithFocus<ExtendedOverlayItem>(
+				getContext(),
+				items,
+				this,
 				resources.getDrawable(R.drawable.station_pin),
 				resources.getDrawable(R.drawable.station_marker),
+				resources.getDrawable(R.drawable.station_pin_star),
 				resources.getDimensionPixelSize(R.dimen.overlay_font_size),
 				NOT_SET,
-				new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
+				new ItemizedIconOverlay.OnItemGestureListener<ExtendedOverlayItem>() {
 					@Override
-					public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
-						getController().animateTo(item.getPoint(), new Runnable() {
-
-							@Override
-							public void run() {
-							}
-						}, new Runnable() {
-
-							@Override
-							public void run() {
-								panel.show(true);
-							}
-						});
-						return true;
+					public boolean onItemSingleTapUp(final int index, final ExtendedOverlayItem item) {
+						return false;
 					}
 
 					@Override
-					public boolean onItemLongPress(final int index, final OverlayItem item) {
+					public boolean onItemLongPress(final int index, final ExtendedOverlayItem item) {
 						return false;
 					}
 				}, mResourceProxy);
 		mMyLocationOverlay.setFocusItemsOnTap(true);
 
 		getOverlays().add(mMyLocationOverlay);
+	}
 
-		// this.equipementsOverlay = new EquipementsItemizedOverlay(context,
-		// parkingMarker, this);
-		//
-		// // On ajoute toujours l'overlay avec les équipements
-		// addOverlay(this.equipementsOverlay);
-		//
-		// // création de l'overlay de la circulation
-		// this.segmentsOverlay = new SegmentItemizedOvlerlay();
-		// SegmentsAsyncTask segmentLoader = new SegmentsAsyncTask(context, this);
-		// MainApplication.executor.execute(segmentLoader.future());
+	public void setActivity(Activity activity) {
+		this.activity = activity;
 	}
 
 	class PopupPanel {
@@ -155,18 +145,9 @@ public class VlilleMapView extends org.osmdroid.views.MapView implements MapList
 			final LayoutInflater inflater = LayoutInflater.from(getContext());
 			popup = inflater.inflate(layout, parent, false);
 			popup.setVisibility(View.GONE);
-
 			popup.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					hide();
-				}
-			});
-			popup.setOnFocusChangeListener(new OnFocusChangeListener() {
-
-				@Override
-				public void onFocusChange(View v, boolean hasFocus) {
-					System.out.println("focusChange " + hasFocus);
-
 				}
 			});
 		}
@@ -179,16 +160,21 @@ public class VlilleMapView extends org.osmdroid.views.MapView implements MapList
 			RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams( //
 					RelativeLayout.LayoutParams.WRAP_CONTENT, //
 					RelativeLayout.LayoutParams.WRAP_CONTENT);
-			lp.addRule(RelativeLayout.ABOVE);
-			lp.setMargins((getWidth() / 2) - 50, getHeight() / 2 - 200, 0, 0);
-
-			hide();
-
+			lp.addRule(RelativeLayout.CENTER_HORIZONTAL);
+			final int intrinsicHeight = getResources().getDrawable(R.drawable.station_marker).getIntrinsicHeight();
+			final float scaledDensity = getResources().getDisplayMetrics().density;
+			System.out.println(-(getResources().getDrawable(R.drawable.station_marker).getIntrinsicHeight() * 2));
+			lp.setMargins(0,
+					getHeight() / 2 - (int)(intrinsicHeight * scaledDensity) - 25,
+//					(int)((getResources().getDrawable(R.drawable.station_marker).getIntrinsicHeight() * 2) * scaledDensity),
+				0, -10);
+			ToastUtils.show(activity, "" + intrinsicHeight);
+			
 			((ViewGroup) getParent()).addView(popup, lp);
 			isVisible = true;
 			popup.setVisibility(View.VISIBLE);
 		}
-		
+
 		void hide() {
 			popup.setVisibility(View.GONE);
 			if (isVisible) {
@@ -357,44 +343,31 @@ public class VlilleMapView extends org.osmdroid.views.MapView implements MapList
 	/**
 	 * Detects move on touch event in order to refresh station, and retrieves the new value of the map center.
 	 */
-	// @Override
-	// public boolean onTouchEvent(MotionEvent event) {
-	// if (event.getAction() == MotionEvent.ACTION_UP) {
-	// GeoPoint centerGeoPoint = (GeoPoint) this.getMapCenter();
-	// if (oldCenterGeoPoint == null || (oldCenterGeoPoint.getLatitudeE6() != centerGeoPoint.getLatitudeE6())
-	// || (oldCenterGeoPoint.getLongitudeE6() != centerGeoPoint.getLongitudeE6())) {
-	// panAndZoomListener.onPan();
-	// }
-	// oldCenterGeoPoint = (GeoPoint) this.getMapCenter();
-	// }
-	//
-	// return super.onTouchEvent(event);
-	// }
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		if (event.getAction() == MotionEvent.ACTION_UP) {
+			GeoPoint centerGeoPoint = (GeoPoint) this.getMapCenter();
+			if (oldCenterGeoPoint == null || (oldCenterGeoPoint.getLatitudeE6() != centerGeoPoint.getLatitudeE6())
+					|| (oldCenterGeoPoint.getLongitudeE6() != centerGeoPoint.getLongitudeE6())) {
+				panAndZoomListener.onPan();
+			}
+			oldCenterGeoPoint = (GeoPoint) this.getMapCenter();
+		}
+		return super.onTouchEvent(event);
+	}
 
-	// @Override
-	// protected void dispatchDraw(Canvas canvas) {
-	// super.dispatchDraw(canvas);
-	// if (getZoomLevel() != oldZoomLevel) {
-	// panAndZoomListener.onZoom();
-	// oldZoomLevel = getZoomLevel();
-	// }
-	// }
-	//
-	// public void setOnPanListener(OnPanAndZoomListener listener) {
-	// panAndZoomListener = listener;
-	// }
-	//
-	// public boolean isLocationActivated() {
-	// return locationEnabled;
-	// }
-	//
-	// public void setLocationActivated(boolean locationActivated) {
-	// this.locationEnabled = locationActivated;
-	// }
-	//
-	// public Location getCurrentLocation() {
-	// return currentLocation;
-	// }
+	@Override
+	protected void dispatchDraw(Canvas canvas) {
+		super.dispatchDraw(canvas);
+		if (getZoomLevel() != oldZoomLevel) {
+			panAndZoomListener.onZoom();
+			oldZoomLevel = getZoomLevel();
+		}
+	}
+
+	public void setOnPanListener(OnPanAndZoomListener listener) {
+		panAndZoomListener = listener;
+	}
 
 	// public Map<String, StationDetails> getMapOverlaysByStationId() {
 	// return mapOverlaysByStationId;
