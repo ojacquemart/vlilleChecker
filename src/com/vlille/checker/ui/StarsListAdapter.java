@@ -20,7 +20,8 @@ import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.utils.ColorSelector;
 import com.vlille.checker.utils.ContextHelper;
-import com.vlille.checker.utils.MiscUtils;
+import com.vlille.checker.utils.TextUtils;
+import com.vlille.checker.utils.ViewUtils;
 
 /**
  * Adapter for the stars stations detail.
@@ -97,7 +98,7 @@ public class StarsListAdapter extends ArrayAdapter<Station> {
 		name.setText(station.getName());
 		
 		TextView adress = (TextView) view.findViewById(R.id.station_adress);
-		adress.setText(MiscUtils.toCamelCase(station.getAdress()));
+		adress.setText(TextUtils.toCamelCase(station.getAdress()));
 		
 		TextView nbBikes = (TextView) view.findViewById(R.id.details_bikes);
 		nbBikes.setText(station.getStringBikes());
@@ -108,13 +109,11 @@ public class StarsListAdapter extends ArrayAdapter<Station> {
 		nbAttachs.setTextColor(getColor(station.getAttachs()));
 
 		LinearLayout boxOutOfService = (LinearLayout) view.findViewById(R.id.station_out_of_service_box);
-		MiscUtils.showOrMask(boxOutOfService, station.isOutOfService());
+		ViewUtils.switchView(boxOutOfService, station.isOutOfService());
 
 		ImageView cbPaiementAllowed = (ImageView) view.findViewById(R.id.details_cb);
 		cbPaiementAllowed.setBackgroundResource(R.drawable.station_cb);
-		if (!station.isCbPaiement()) {
-			cbPaiementAllowed.setVisibility(View.GONE);
-		}
+		ViewUtils.switchView(cbPaiementAllowed, station.isCbPaiement());
 	}
 	
 	private int getColor(int number) {
@@ -124,7 +123,6 @@ public class StarsListAdapter extends ArrayAdapter<Station> {
 	@Override
 	public void notifyDataSetChanged() {
 		Log.d(LOG_TAG, "Station deleted");
-		MiscUtils.showOrMask(boxAddStation, stations.isEmpty());
 
 		super.notifyDataSetChanged();
 	}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -21,25 +22,30 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.SherlockListFragment;
 import com.vlille.checker.R;
 import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.db.station.StationTableFields;
 import com.vlille.checker.model.Station;
-import com.vlille.checker.utils.MiscUtils;
-import com.vlille.checker.utils.StationFilter;
+import com.vlille.checker.utils.StationUtils;
 
 /**
  * All stations fragment UI, which displays all the existing stations.
  */
-public class AllStationsFragment extends VlilleSherlockListFragment {
+public class AllStationsFragment extends SherlockListFragment {
 
 	public static final String PREFS_FILE = "VLILLE_PREFS";
 	
+	private final String TAG = getClass().getSimpleName();
+	
+	private Activity activity;
 	private List<Station> stations;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		activity = getActivity();
 	}
 	
 	@Override
@@ -131,7 +137,7 @@ public class AllStationsFragment extends VlilleSherlockListFragment {
 
 	private void filterStationsByKeyword(final String keyword) {
 		Log.d(TAG, "Text searched: " + keyword);
-		final List<Station> filteredStations = StationFilter.doFilter(stations, keyword);
+		final List<Station> filteredStations = StationUtils.filter(stations, keyword);
 		if (filteredStations.isEmpty()) {
 			Toast.makeText(activity, R.string.search_no_result, Toast.LENGTH_SHORT).show();
 			setFullAdapter();
@@ -181,7 +187,7 @@ public class AllStationsFragment extends VlilleSherlockListFragment {
 			return;
 		}
 		
-		final Map<String, Station> mapStations = MiscUtils.toMap(stations);
+		final Map<String, Station> mapStations = StationUtils.toMap(stations);
 		final List<Station> suggestedStations = new ArrayList<Station>();
 
 		int columnIndexStationId = cursor.getColumnIndexOrThrow(StationTableFields._id.toString());
