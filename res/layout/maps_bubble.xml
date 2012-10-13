@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/balloon_overlay_bg_selector"
+    android:orientation="horizontal" >
+
+    <CheckBox
+        android:id="@+id/maps_bubble_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         android:button="@android:drawable/btn_star"
+         android:layout_centerHorizontal="true"
+        android:checked="true" />
+
+    <TextView
+        android:id="@+id/maps_bubble_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Eura Technologies" 
+        android:layout_below="@+id/maps_bubble_checkbox"
+        android:layout_centerInParent="true"
+        />
+
+</RelativeLayout>

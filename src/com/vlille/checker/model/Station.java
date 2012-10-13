@@ -12,7 +12,7 @@ import android.text.TextUtils;
 
 import com.vlille.checker.db.GetContentValues;
 import com.vlille.checker.db.station.StationTableFields;
-import com.vlille.checker.maps.PositionTransformer;
+import com.vlille.checker.ui.osm.PositionTransformer;
 import com.vlille.checker.utils.Constants;
 
 /**

@@ -1,4 +1,4 @@
-package com.vlille.checker.maps;
+package com.vlille.checker.ui.osm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,6 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapController;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
-import org.osmdroid.views.overlay.OverlayItem.HotspotPlace;
 
 import android.app.Activity;
 import android.content.Context;
@@ -29,7 +28,6 @@ import android.widget.RelativeLayout;
 
 import com.vlille.checker.R;
 import com.vlille.checker.VlilleChecker;
-import com.vlille.checker.maps.overlay.ItemizedOverlayWithFocus;
 import com.vlille.checker.model.Metadata;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.utils.ToastUtils;
@@ -100,19 +98,23 @@ public class VlilleMapView extends org.osmdroid.views.MapView implements MapList
 		final List<ExtendedOverlayItem> items = new ArrayList<ExtendedOverlayItem>();
 		final List<Station> stations = VlilleChecker.getDbAdapter().findAll();
 		for (Station eachStation : stations) {
-			final ExtendedOverlayItem extendedOverlayItem = new ExtendedOverlayItem(eachStation.getName(), eachStation.getName(), eachStation.getPoint(), getContext());
+			final ExtendedOverlayItem extendedOverlayItem = new ExtendedOverlayItem(
+					eachStation.getName(), eachStation.getName(),
+					eachStation.getPoint(),
+					getContext());
+			extendedOverlayItem.setRelatedObject(eachStation);
+			
 			items.add(extendedOverlayItem);
 		}
 
 		final ResourceProxy mResourceProxy = new ResourceProxyImpl(getContext());
 		final Resources resources = getResources();
 		mMyLocationOverlay = new ItemizedOverlayWithFocus<ExtendedOverlayItem>(
-				getContext(),
 				items,
-				this,
 				resources.getDrawable(R.drawable.station_pin),
 				resources.getDrawable(R.drawable.station_marker),
 				resources.getDrawable(R.drawable.station_pin_star),
+				new StationInfoWindow(R.layout.maps_bubble, this),
 				resources.getDimensionPixelSize(R.dimen.overlay_font_size),
 				NOT_SET,
 				new ItemizedIconOverlay.OnItemGestureListener<ExtendedOverlayItem>() {

@@ -29,7 +29,7 @@ import com.vlille.checker.utils.ToastUtils;
 import com.vlille.checker.utils.ViewUtils;
 
 /**
- * Fragment activity wich displays starred activities.
+ * Fragment activity wich displays starred stations.
  * 
  * @see https://github.com/chrisbanes/Android-PullToRefresh/blob/master/library/src/com/handmark/pulltorefresh/library/IPullToRefresh.java
  */

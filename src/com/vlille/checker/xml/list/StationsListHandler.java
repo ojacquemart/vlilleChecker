@@ -7,10 +7,10 @@ import java.util.Set;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-import com.vlille.checker.maps.PositionTransformer;
 import com.vlille.checker.model.Metadata;
 import com.vlille.checker.model.SetStationsInfos;
 import com.vlille.checker.model.Station;
+import com.vlille.checker.ui.osm.PositionTransformer;
 import com.vlille.checker.xml.BaseStationHandler;
 
 public class StationsListHandler extends BaseStationHandler<SetStationsInfos> {

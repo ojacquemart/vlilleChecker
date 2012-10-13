@@ -12,9 +12,9 @@ import android.widget.ImageButton;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.vlille.checker.R;
-import com.vlille.checker.maps.VlilleMapView;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.service.StationsResultReceiver;
+import com.vlille.checker.ui.osm.VlilleMapView;
 import com.vlille.checker.utils.ToastUtils;
  
 /**
@@ -32,17 +32,6 @@ public class MapFragment extends SherlockFragment /*implements StationInitialize
 	 */
 	protected List<Station> stations;
 	
-	/**
-	 * The receiver from the service.
-	 */
-	private StationsResultReceiver resultReceiver;
-	
-	/**
-	 * Time to wait to initialize the maps. Small hack.
-	 * @see #runnableForWaitingMap
-	 */
-	private static final int TIME_TO_WAIT_IN_MS = 100;
-	
 	private VlilleMapView map;
 	
 	@Override
@@ -52,9 +41,8 @@ public class MapFragment extends SherlockFragment /*implements StationInitialize
 		Log.d(LOG_TAG, "onCreateView");
 		
 		activity = getActivity();
+		
 		final View view = inflater.inflate(R.layout.maps, container, false);
-		
-		
 		map = (VlilleMapView) view.findViewById(R.id.mapview);
 		map.setActivity(activity);
 		map.invalidate();
@@ -62,7 +50,6 @@ public class MapFragment extends SherlockFragment /*implements StationInitialize
 		addLocationEnablerClickListener(view);
 		
 		return view;
-//		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 	}
 
 	private void addLocationEnablerClickListener(final View view) {
@@ -76,34 +63,10 @@ public class MapFragment extends SherlockFragment /*implements StationInitialize
 		});
 	}
 	
-//	@Override
-//	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
-//		// Refresh overlays.
-//		menu.add(getString(R.string.refresh)).setIcon(R.drawable.ic_menu_refresh_ics)
-//				.setOnMenuItemClickListener(new com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener() {
-//
-//					@Override
-//					public boolean onMenuItemClick(com.actionbarsherlock.view.MenuItem item) {
-//						onRestart();
-//
-//						return false;
-//					}
-//				}).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-//		
-//		return true;
-//	}
-	
 	@Override
 	public void onPause() {
 		super.onPause();
-		
-		if (resultReceiver != null) {
-			// Clear receiver so no leaks.
-			resultReceiver.setReceiver(null);
-		}
 	}
-	
-	
 	
 //	public void onCreate(Bundle savedInstanceState, boolean locationEnabled) {
 //		super.onCreate(savedInstanceState);

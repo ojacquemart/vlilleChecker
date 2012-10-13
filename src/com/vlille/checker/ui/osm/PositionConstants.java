@@ -1,4 +1,4 @@
-package com.vlille.checker.maps;
+package com.vlille.checker.ui.osm;
 
 public class PositionConstants {
 

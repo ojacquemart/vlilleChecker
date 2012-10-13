@@ -12,8 +12,8 @@ import android.util.Log;
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.vlille.checker.R;
 import com.vlille.checker.VlilleChecker;
-import com.vlille.checker.maps.LocationManagerWrapper;
 import com.vlille.checker.model.Metadata;
+import com.vlille.checker.ui.osm.LocationManagerWrapper;
 import com.vlille.checker.utils.PreferenceKeys;
 
 public class HomePreferenceActivity extends SherlockPreferenceActivity {
