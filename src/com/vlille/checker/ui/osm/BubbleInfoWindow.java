@@ -16,11 +16,11 @@ import com.vlille.checker.model.Station;
 /**
  * A customized InfoWindow handling star or unstar displayed station.
  */
-public class StationInfoWindow extends DefaultInfoWindow {
+public class BubbleInfoWindow extends DefaultInfoWindow {
 
 	private ExtendedOverlayItem selectedItem;
 
-	public StationInfoWindow(int layoutResId, final MapView mapView) {
+	public BubbleInfoWindow(int layoutResId, final MapView mapView) {
 		super(layoutResId, mapView);
 		Button bubbleCheckbox = (Button) (mView.findViewById(R.id.maps_bubble_checkbox));
 		bubbleCheckbox.setOnClickListener(new View.OnClickListener() {

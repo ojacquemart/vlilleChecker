@@ -12,6 +12,7 @@ import org.osmdroid.views.overlay.Overlay;
 import org.osmdroid.views.overlay.OverlayItem;
 import org.osmdroid.views.overlay.OverlayItem.HotspotPlace;
 
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -20,20 +21,19 @@ import android.graphics.Point;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 
+import com.vlille.checker.R;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.utils.ColorSelector;
 
-public class ItemizedOverlayWithFocus<Item extends OverlayItem
-> extends ItemizedIconOverlay<Item> {
-
+public class ItemizedOverlayWithFocus<Item extends OverlayItem> extends ItemizedIconOverlay<Item> {
+	
 	// ===========================================================
 	// Constants
 	// ===========================================================
 
-	public static final int MIN_ZOOM_LEVEL_TO_DETAILS = 15;
 	public static final int DESCRIPTION_BOX_PADDING = 3;
 	public static final int DESCRIPTION_BOX_CORNERWIDTH = 3;
-
+	
 	public static final int DESCRIPTION_LINE_HEIGHT = 12;
 	/** Additional to <code>DESCRIPTION_LINE_HEIGHT</code>. */
 	public static final int DESCRIPTION_TITLE_EXTRA_LINE_HEIGHT = 2;
@@ -47,16 +47,16 @@ public class ItemizedOverlayWithFocus<Item extends OverlayItem
 	// osmdroid bonus bubble
 	// ===========================================================
 	
-	protected InfoWindow mBubble;
-	protected OverlayItem mItemWithBubble;
+	protected InfoWindow mBubble = null;
+	protected OverlayItem mItemWithBubble = null;
 
 	// ===========================================================
 	// Fields
 	// ===========================================================
 
-	protected final int mMarkerFocusedBackgroundColor;
-	protected final Paint mMarkerBackgroundPaint, mDescriptionPaint, mTitlePaint;
-	protected final int mTextSize;	
+	protected int mMarkerFocusedBackgroundColor;
+	private Paint mDescriptionPaint, mTitlePaint;
+	protected int mTextSize;	
 
 	protected Drawable mMarkerFocused;
 	protected Drawable mMarkerStarred;
@@ -69,35 +69,28 @@ public class ItemizedOverlayWithFocus<Item extends OverlayItem
 
 	public ItemizedOverlayWithFocus(
 			final List<Item> aList,
-			final Drawable pMarker,
-			final Drawable pMarkerFocused,
-			final Drawable pMarkerStarred,
+			final Resources resources,
 			final InfoWindow pInfoWindow,
-			final int pTextSize,
-			int pFocusedBackgroundColor,
-			final OnItemGestureListener<Item> aOnItemTapListener, final ResourceProxy pResourceProxy) {
-		super(aList, pMarker, aOnItemTapListener, pResourceProxy);
-
-		this.mTextSize = pTextSize;
-		this.mMarkerFocused = pMarkerFocused;
-		this.mMarkerStarred = pMarkerStarred;
-		this.mMarkerFocusedBackgroundColor = (pFocusedBackgroundColor != NOT_SET) ? pFocusedBackgroundColor
-				: DEFAULTMARKER_BACKGROUNDCOLOR;
+			final OnItemGestureListener<Item> aOnItemTapListener,
+			final ResourceProxy pResourceProxy) {
+		super(aList, resources.getDrawable(R.drawable.station_pin), aOnItemTapListener, pResourceProxy);
+		
+		this.mMarkerFocused = resources.getDrawable(R.drawable.station_marker);
+		this.mMarkerStarred = resources.getDrawable(R.drawable.station_pin_star);
 		this.mBubble = pInfoWindow;
-
-		this.mMarkerBackgroundPaint = new Paint(); // Color is set in onDraw(...)
-
+		this.mTextSize = resources.getDimensionPixelSize(R.dimen.overlay_font_size);
+		this.mMarkerFocusedBackgroundColor = DEFAULTMARKER_BACKGROUNDCOLOR;
+		
 		this.mDescriptionPaint = new Paint();
 		this.mDescriptionPaint.setAntiAlias(true);
-		
-		this.mTitlePaint = new Paint();
-		this.initPaint(pResourceProxy);
+		this.initPaint();
 			
 		mItemWithBubble = null;
 		this.unSetFocusedItem();
 	}
 
-	private void initPaint(final ResourceProxy pResourceProxy) {
+	private void initPaint() {
+		this.mTitlePaint = new Paint();
 		this.mTitlePaint.setTypeface(Typeface.DEFAULT_BOLD);
 		this.mTitlePaint.setAntiAlias(true);
 		this.mTitlePaint.setTextAlign(Align.CENTER);
@@ -257,17 +250,14 @@ public class ItemizedOverlayWithFocus<Item extends OverlayItem
 	}
 	
 	protected void onDrawItem(final Canvas canvas, final int zoomLevel, final Item item, final Point curScreenCoords) {
-		Drawable marker = getDefaultMarker(0);
-		final boolean zoomLevelDetailled = isDetailledZoomLevel(zoomLevel);
-		if (zoomLevelDetailled) {
-			marker = mMarkerFocused;
-		}
+		final Station station = (Station) (((ExtendedOverlayItem) item).getRelatedObject());
+		final boolean zoomLevelDetailled = OverlayZoomUtils.isDetailledZoomLevel(zoomLevel);
+		final Drawable marker = getDefaultMarker(zoomLevelDetailled, station.isStarred());
+		
 		boundToHotspot(marker, item.getMarkerHotspot());
 
 		Overlay.drawAt(canvas, marker, curScreenCoords.x, curScreenCoords.y, false);
 		if (zoomLevelDetailled) {
-			Station station = (Station) (((ExtendedOverlayItem) item).getRelatedObject());
-			// TODO: get bikes & attachs from station.
 			mTitlePaint.setColor(mResourceProxy.getColor(ColorSelector.getColor(station.getBikes())));
 			canvas.drawText(station.getStringBikes(), mCurScreenCoords.x	-16 * mScale, mCurScreenCoords.y - 45 * mScale, mTitlePaint); 
 			mTitlePaint.setColor(mResourceProxy.getColor(ColorSelector.getColor(station.getAttachs())));
@@ -275,7 +265,6 @@ public class ItemizedOverlayWithFocus<Item extends OverlayItem
 		}
 	}
 	
-	//draw focused item last:
 	private void onDrawFocusBubble(Canvas canvas, int zoomLevel, Projection projection) {
 		if (mItemWithBubble != null){
 			projection.toMapPixels(mItemWithBubble.mGeoPoint, mCurScreenCoords);
@@ -283,31 +272,50 @@ public class ItemizedOverlayWithFocus<Item extends OverlayItem
 		}
 	}
 	
-	private Drawable getDefaultMarker(final int state) {
-		OverlayItem.setState(mDefaultMarker, state);
-		return mDefaultMarker;
+	private Drawable getDefaultMarker(final boolean detailledZoomLevel, final boolean starred) {
+		Drawable marker = mDefaultMarker;
+		if (detailledZoomLevel) {
+			marker = mMarkerFocused;
+		} else if (starred) {
+			marker = mMarkerStarred;
+		}
+		
+		OverlayItem.setState(marker, 0);
+		
+		return marker;
 	}
 	
 	@Override
 	protected boolean hitTest(final int zoomLevel, Item item, android.graphics.drawable.Drawable marker, final int hitX,
 			final int hitY) {
-		System.out.println("hit x " + hitX + " hit y " + hitY );
-		if (isDetailledZoomLevel(zoomLevel) && mMarkerFocused != null) {
+		if (OverlayZoomUtils.isDetailledZoomLevel(zoomLevel) && mMarkerFocused != null) {
 			marker = mMarkerFocused;
 		}
 		return marker.getBounds().contains(hitX, hitY);
 	}
 	
-	public boolean isDetailledZoomLevel(int zoomLevel) {
-		return zoomLevel > MIN_ZOOM_LEVEL_TO_DETAILS;
-	}
 	
 	public Drawable getMarker(int zoomLevel) {
-		if (isDetailledZoomLevel(zoomLevel)) {
+		if (OverlayZoomUtils.isDetailledZoomLevel(zoomLevel)) {
 			return mMarkerFocused;
 		}
 		
 		return mDefaultMarker;
+	}
+	
+	public List<Item> getItems() {
+		return super.mItemList;
+	}
+	
+	public static final class OverlayZoomUtils {
+		
+		public static final int MIN_ZOOM_LEVEL_TO_DETAILS = 15;
+		
+		private OverlayZoomUtils() {}
+		
+		public static boolean isDetailledZoomLevel(int zoomLevel) {
+			return zoomLevel > MIN_ZOOM_LEVEL_TO_DETAILS;
+		}
 	}
 	
 }
