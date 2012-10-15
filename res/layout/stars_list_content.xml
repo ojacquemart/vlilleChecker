@@ -57,7 +57,6 @@
             android:id="@+id/detail_starred"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:button="@android:drawable/btn_star"
             android:checked="true" />
 
