@@ -9,6 +9,7 @@ import android.view.MenuItem;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Window;
 import com.vlille.checker.R;
 import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.ui.listener.TabListener;
@@ -23,10 +24,12 @@ public class HomeActivity extends SherlockFragmentActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		Log.d(TAG, "onCreate");
 		
 		setContentView(R.layout.home);
 		buildTabs();
+		initSherlockProgressBar();
 	}
 	
 	private void buildTabs() {
@@ -44,6 +47,11 @@ public class HomeActivity extends SherlockFragmentActivity {
 				.newTab()
 				.setIcon(R.drawable.map)
 				.setTabListener(new TabListener<MapFragment>(this, "map", MapFragment.class)));
+	}
+	
+	private void initSherlockProgressBar() {
+		getSherlock().setProgressBarIndeterminate(false);
+		getSherlock().setProgressBarIndeterminateVisibility(false);
 	}
 	
 	@Override
