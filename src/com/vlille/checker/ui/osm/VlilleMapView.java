@@ -16,6 +16,9 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -26,30 +29,30 @@ import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.model.Metadata;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.ui.async.AbstractAsyncStationTask;
-import com.vlille.checker.ui.osm.ItemizedOverlayWithFocus.OverlayZoomUtils;
+import com.vlille.checker.ui.osm.location.LocationManagerWrapper;
+import com.vlille.checker.ui.osm.overlay.BubbleInfoWindow;
+import com.vlille.checker.ui.osm.overlay.CircleOverlay;
+import com.vlille.checker.ui.osm.overlay.ItemizedOverlayWithFocus;
+import com.vlille.checker.ui.osm.overlay.ItemizedOverlayWithFocus.OverlayZoomUtils;
+import com.vlille.checker.ui.osm.overlay.ResourceProxyImpl;
+import com.vlille.checker.utils.ContextHelper;
+import com.vlille.checker.utils.StationUtils;
 
 /**
  * @see http://stackoverflow.com/questions/4729255/how-to-implemennt-onzoomlistener-on-mapview
  */
-public class VlilleMapView extends MapView {
-
-	private final String TAG = getClass().getSimpleName();
+public class VlilleMapView extends MapView implements LocationListener {
 
 	private static final int DEFAULT_ZOOM_LEVEL = 13;
-
-	private int oldZoomLevel = -1;
-
-	private LocationManagerWrapper locationManagerWrapper = new LocationManagerWrapper(getContext());
-	private boolean locationEnabled;
-	private Location currentLocation = null;
-
-	private GeoPoint oldCenterGeoPoint;
-	private OnPanAndZoomListener panAndZoomListener;
+	
+	private final String TAG = getClass().getSimpleName();
 
 	// Metadata infos.
 	private Metadata metadata;
 
 	private SherlockFragmentActivity sherlockActivity;
+	private boolean locationOn;
+	private CircleOverlay circleOverlay;
 	private ItemizedOverlayWithFocus<ExtendedOverlayItem> itemizedOverlay;
 	
 	public VlilleMapView(final Context context, AttributeSet attrs) {
@@ -57,6 +60,7 @@ public class VlilleMapView extends MapView {
 
 		initConfiguration();
 		initCenter();
+		initCircleOverlay();
 		initIconizedOverlay();
 		
 		setOnPanZoomListener();
@@ -76,6 +80,85 @@ public class VlilleMapView extends MapView {
 		mMapController.setZoom(DEFAULT_ZOOM_LEVEL);
 		mMapController.setCenter(center);
 	}
+	
+	//=========
+	// Location
+	//=========
+	
+	/**
+	 * Switch location flag and draw the circle with stations around if location is on.
+	 * TODO: hide stations not around the current geoPoint.
+	 */
+	public void updateLocationCircle() {
+		this.locationOn = !locationOn;
+		Log.d(TAG, "Location on: " + locationOn);
+		if (locationOn) {
+			requestLocationUpdates();
+		} else {
+			final LocationManager locationManager = getLocationManager();
+			locationManager.removeUpdates(this);
+			circleOverlay.setGeoPosition(null);
+			invalidate();
+		}
+	}
+		
+	private void requestLocationUpdates() {
+		final LocationManager locationManager = getLocationManager();
+		final List<String> providers = locationManager.getProviders(false);
+		for (String eachProviderName : providers) {
+			Log.d(TAG, "Provider enabled " + eachProviderName);
+			locationManager.requestLocationUpdates(eachProviderName,
+					LocationManagerWrapper.DISTANCE_UPDATE_IN_METERS,
+					LocationManagerWrapper.DURATION_UPDATE_IN_MILLIS,
+					this);
+		}
+	}
+
+	private LocationManager getLocationManager() {
+		return (LocationManager) sherlockActivity.getSystemService(Context.LOCATION_SERVICE);
+	}
+	
+	private void drawLocationCircle() {
+		GeoPoint geoPoint = null;
+		if (locationOn) {
+			geoPoint = LocationManagerWrapper.with(getContext()).getCurrentGeoPoint();
+		}
+		
+		circleOverlay.setGeoPosition(geoPoint);
+		
+		invalidate();
+		
+	}
+	
+	private void initCircleOverlay() {
+		circleOverlay = new CircleOverlay(getContext());
+		getOverlays().add(0, circleOverlay);
+	}
+	
+	@Override
+	public void onLocationChanged(Location location) {
+		Log.d(TAG, "onLocationChanged");
+		drawLocationCircle();
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {
+		Log.d(TAG, "onProviderDisabled");
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+		Log.d(TAG, "onProviderEnabled");
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		Log.d(TAG, "onStatusChanged");
+	}
+	
+	//=========
+	// Overlays
+	//=========
 
 	private void initIconizedOverlay() {
 		final List<ExtendedOverlayItem> items = initOverlays();
@@ -104,6 +187,7 @@ public class VlilleMapView extends MapView {
 
 	private List<ExtendedOverlayItem> initOverlays() {
 		final List<ExtendedOverlayItem> items = new ArrayList<ExtendedOverlayItem>();
+		
 		final List<Station> stations = VlilleChecker.getDbAdapter().findAll();
 		for (Station eachStation : stations) {
 			final ExtendedOverlayItem extendedOverlayItem = new ExtendedOverlayItem(
@@ -114,6 +198,7 @@ public class VlilleMapView extends MapView {
 			
 			items.add(extendedOverlayItem);
 		}
+		
 		return items;
 	}
 
@@ -123,34 +208,81 @@ public class VlilleMapView extends MapView {
 			@Override
 			public void onZoom() {
 				Log.d(TAG, "onZoom");
-				updateVisibleStations();
+				updateStations();
 			}
 
 			@Override
 			public void onPan() {
 				Log.d(TAG, "onPan");
-				updateVisibleStations();
+				updateStations();
 			}
 
 		});
 	}
 	
-	public void updateVisibleStations() {
+	public void updateStations() {
 		final List<Station> stations = new ArrayList<Station>();
-		final int zoomLevel = getZoomLevel();
-		final BoundingBoxE6 boundingBox = getBoundingBox();
-		for (ExtendedOverlayItem eachItem : itemizedOverlay.getItems()) {
-			if (isVisibleAndEnoughZoomLevel(boundingBox, eachItem.getPoint(), zoomLevel)) {
-				stations.add((Station) eachItem.getRelatedObject());
+		
+		final ItemUpdater itemUpdater = getItemUpdater();
+		if (itemUpdater.isValid()) {
+			for (ExtendedOverlayItem eachItem : itemizedOverlay.getItems()) {
+				final Station relatedStation = (Station) eachItem.getRelatedObject();
+				if (itemUpdater.canUpdate(relatedStation)) {
+					stations.add(relatedStation);
+				}
 			}
 		}
 		
-		Log.d(TAG, "" + stations.size() + " to update!");
-		new AsyncMapStationRetriever().execute(stations);
+		if (!stations.isEmpty()) {
+			Log.d(TAG, "" + stations.size() + "stations to update!");
+			new AsyncMapStationRetriever().execute(stations);
+		}
+	}
+
+	private ItemUpdater getItemUpdater() {
+		if (locationOn) {
+			return getLocationItemUpdater();
+		}
+		
+		return getClassicItemUpdater();
 	}
 	
-	private boolean isVisibleAndEnoughZoomLevel(BoundingBoxE6 boundingBox, GeoPoint geoPoint, int zoomLevel) {
-		return boundingBox.contains(geoPoint) && OverlayZoomUtils.isDetailledZoomLevel(zoomLevel);
+	private ItemUpdater getClassicItemUpdater() {
+		final BoundingBoxE6 boundingBox = getBoundingBox();
+		final int zoomLevel = getZoomLevel();
+		
+		return new ItemUpdater() {
+
+			@Override
+			public boolean isValid() {
+				return true;
+			}
+			
+			public boolean canUpdate(Station station) {
+				return OverlayZoomUtils.isDetailledZoomLevel(zoomLevel) &&
+						boundingBox.contains(station.getPoint());
+						
+			}
+
+		};
+	}
+	
+	private ItemUpdater getLocationItemUpdater() {
+		final long radiusValue = ContextHelper.getRadiusValue(getContext());
+		final Location currentLocation = LocationManagerWrapper.with(getContext()).getCurrentLocation();
+		
+		return new ItemUpdater() {
+			
+			@Override
+			public boolean isValid() {
+				return currentLocation != null;
+			}
+			
+			@Override
+			public boolean canUpdate(Station station) {
+				return StationUtils.isNearCurrentLocation(station, currentLocation, radiusValue);
+			}
+		};
 	}
 	
 	class AsyncMapStationRetriever extends AbstractAsyncStationTask {
@@ -167,6 +299,7 @@ public class VlilleMapView extends MapView {
 			super.onPostExecute(result);
 			Log.d(TAG, "onPostExecute");
 			sherlockActivity.setProgressBarIndeterminateVisibility(false);
+			invalidate();
 		}
 	}
 
@@ -203,9 +336,15 @@ public class VlilleMapView extends MapView {
 	// }
 	// }
 	//
-	
-	// onZoomAndPanListener
 
+	//=====================
+	// onZoomAndPanListener
+	//=====================
+	
+	private int oldZoomLevel = -1;
+	private GeoPoint oldCenterGeoPoint;
+	private OnPanAndZoomListener panAndZoomListener;
+	
 	/**
 	 * Detects move on touch event in order to refresh station, and retrieves the new value of the map center.
 	 */

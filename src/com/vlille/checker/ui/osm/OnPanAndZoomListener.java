@@ -1,7 +1,9 @@
 package com.vlille.checker.ui.osm;
 
-public interface OnPanAndZoomListener {
-	
+interface OnPanAndZoomListener {
+
 	void onPan();
+
 	void onZoom();
+
 }

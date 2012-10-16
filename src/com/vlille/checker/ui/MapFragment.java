@@ -52,7 +52,8 @@ public class MapFragment extends SherlockFragment {
 			
 			@Override
 			public void onClick(View v) {
-				ToastUtils.show(getActivity(), "Click on location button!");
+				ToastUtils.show(getActivity(), "Location on!");
+				mapView.updateLocationCircle();
 			}
 		});
 	}
@@ -61,7 +62,7 @@ public class MapFragment extends SherlockFragment {
 	public void onResume() {
 		super.onResume();
 		
-		mapView.updateVisibleStations();
+		mapView.updateStations();
 	}
 
 }

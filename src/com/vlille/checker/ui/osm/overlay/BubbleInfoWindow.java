@@ -1,4 +1,4 @@
-package com.vlille.checker.ui.osm;
+package com.vlille.checker.ui.osm.overlay;
 
 import org.osmdroid.bonuspack.overlays.DefaultInfoWindow;
 import org.osmdroid.bonuspack.overlays.ExtendedOverlayItem;

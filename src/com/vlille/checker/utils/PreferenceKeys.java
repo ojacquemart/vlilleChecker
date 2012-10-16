@@ -1,6 +1,8 @@
 package com.vlille.checker.utils;
 
-public class PreferenceKeys {
+public final class PreferenceKeys {
+	
+	private PreferenceKeys() {}
 
 	/**
 	 * To display the detailled adress in home screen.

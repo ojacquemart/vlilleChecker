@@ -2,7 +2,9 @@ package com.vlille.checker.utils;
 
 import com.vlille.checker.R;
 
-public class ColorSelector {
+public final class ColorSelector {
+	
+	private ColorSelector() {}
 	
 	private static final int NB_RED = 0;
 	private static final int NB_MIN_ORANGE = 1;

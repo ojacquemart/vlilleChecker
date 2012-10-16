@@ -1,6 +1,8 @@
-package com.vlille.checker.ui.osm;
+package com.vlille.checker.ui.osm.location;
 
 import java.util.List;
+
+import org.osmdroid.util.GeoPoint;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -10,29 +12,48 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
+import android.util.Log;
 
 import com.vlille.checker.R;
+import com.vlille.checker.utils.ToastUtils;
 
 /**
  * Wrapper for LocationManager.
  */
 public class LocationManagerWrapper {
-
+	
+	public static int DURATION_UPDATE_IN_MILLIS = 10000;
+	public static int DISTANCE_UPDATE_IN_METERS = 10000;
+	
+	private final String TAG = getClass().getSimpleName();
+	
 	private Context context;
 	private LocationManager locationManager;
 
-	public LocationManagerWrapper(Context context) {
+	private LocationManagerWrapper(Context context) {
 		this.context = context;
 		this.locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 	}
-
+	
+	public static LocationManagerWrapper with(Context context) {
+		return new LocationManagerWrapper(context);
+	}
+	
+	public GeoPoint getCurrentGeoPoint() {
+		final Location currentLocation = getCurrentLocation();
+		if (currentLocation == null) {
+			ToastUtils.show(context, R.string.error_no_location_found);
+			
+			return null;
+		}
+		
+		Log.d(TAG, "Current location [lat=" + currentLocation.getLatitude() + ",long=" + currentLocation.getLongitude() + "]");
+		
+		return new GeoPoint(currentLocation);
+	}
+	
 	public Location getCurrentLocation() {
-		return getLastBestLocation(PositionConstants.DISTANCE_UPDATE_IN_METERS, PositionConstants.DURATION_UPDATE_IN_MILLIS);
-//		Location location = isGpsProviderEnabled() 
-//				? locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER) 
-//				: locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-//		
-//		return location;
+		return getLastBestLocation(DISTANCE_UPDATE_IN_METERS, DURATION_UPDATE_IN_MILLIS);
 	}
 
 	/**

@@ -10,7 +10,9 @@ import com.vlille.checker.ui.StarsListAdapter;
 /**
  * Helper for {@link Context}.
  */
-public class ContextHelper {
+public final class ContextHelper {
+	
+	private ContextHelper() {}
 	
 	protected final String LOG_TAG = getClass().getSimpleName();
 	

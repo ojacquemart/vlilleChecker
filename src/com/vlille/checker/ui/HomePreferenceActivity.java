@@ -13,7 +13,7 @@ import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.vlille.checker.R;
 import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.model.Metadata;
-import com.vlille.checker.ui.osm.LocationManagerWrapper;
+import com.vlille.checker.ui.osm.location.LocationManagerWrapper;
 import com.vlille.checker.utils.PreferenceKeys;
 
 public class HomePreferenceActivity extends SherlockPreferenceActivity {
@@ -28,10 +28,9 @@ public class HomePreferenceActivity extends SherlockPreferenceActivity {
 		super.onCreate(savedInstanceState);
 		Log.d(TAG, "onCreate");
 		
-		
 		addPreferencesFromResource(R.xml.preferences);
 		
-		locationManagerWrapper = new LocationManagerWrapper(this);
+		locationManagerWrapper = LocationManagerWrapper.with(this);
 		
 		final Preference lastUpdatePreference = findPreference(PreferenceKeys.DATA_STATUS_LAST_UPDATE);
 		lastUpdatePreference.setSummary(getDataStatusLastUpdateMessage());

@@ -7,18 +7,17 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
+import android.location.Location;
+import android.util.Log;
+
 import com.vlille.checker.model.Station;
 
-/**
- * Search for a station name among the stations list.
- */
-public class StationUtils {
-
-	/**
-	 * Convert a list of stations to map indexed by id station.
-	 * @param stations full list of stations.
-	 * @return map for easier search into list.
-	 */
+public final class StationUtils {
+	
+	private static final String TAG = "StationUtils";
+	
+	private StationUtils() {}
+	
 	public static Map<String, Station> toMap(List<Station> stations) {
 		Map<String, Station> map = new HashMap<String, Station>();
 		
@@ -46,4 +45,24 @@ public class StationUtils {
 		return result;
 	}
 	
+	
+	public static boolean isNearCurrentLocation(Station station, Location currentLocation,
+			long distanceAroundLocation) {
+		// Check distance between current location and station.
+		float[] results = new float[3];
+		Location.distanceBetween(
+				currentLocation.getLatitude(), currentLocation.getLongitude(),
+				station.getLatitude(), station.getLongitude(), results);
+
+		float distanceBetweenLocationAndStation = results[0];
+		final boolean nearStation = distanceBetweenLocationAndStation <= distanceAroundLocation;
+
+		if (nearStation) {
+			Log.d(TAG, "Distance between current location and " + station.getName() + 
+					" is [" + distanceBetweenLocationAndStation + "]");
+		}
+
+		return nearStation;
+	}
+
 }

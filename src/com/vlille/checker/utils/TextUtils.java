@@ -1,11 +1,14 @@
 package com.vlille.checker.utils;
 
-public final class TextUtils {
+import org.apache.commons.lang3.text.WordUtils;
+
+public  final class TextUtils {
 	
 	private TextUtils() {}
 	
 	public static String toCamelCase(String text) {
-		if (text == null || text.length() == 0) {
+		return WordUtils.capitalize(text);
+		/*if (text == null || text.length() == 0) {
 			return "";
 		}
 		
@@ -14,6 +17,7 @@ public final class TextUtils {
 		}
 		
 		return text.substring(0, 1).toUpperCase() + text.substring(1).toLowerCase();
+		*/
 	}
 	
 	
