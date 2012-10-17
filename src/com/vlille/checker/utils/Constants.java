@@ -8,7 +8,7 @@ public class Constants {
 	/**
 	 * ACRA - The google docs form key.
 	 */
-	public static final String GOOGLE_DOCS_FORM_KEY = "dE42S2d6NkhjU2tSNFI0dFZ3NGVjSnc6MQ";
+	public static final String GOOGLE_DOCS_FORM_KEY = "dFFlS2h4TWUxeHdmSGNVYmk1WTJTa2c6MA";
 	
 	/**
 	 * Value when network failed and default value to store stations.
