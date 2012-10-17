@@ -17,9 +17,10 @@
         android:id="@+id/maps_bubble_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Eura Technologies" 
         android:layout_below="@+id/maps_bubble_checkbox"
         android:layout_centerInParent="true"
+        android:text="Eura Technologies"
+        android:textColor="@color/white" 
         />
 
 </RelativeLayout>
