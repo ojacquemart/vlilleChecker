@@ -1310,9 +1310,8 @@ containing a value of this type.
         public static final int vlille_checker_transparent_ActionBar=0x7f0d005a;
     }
     public static final class xml {
-        public static final int position_preferences=0x7f050000;
-        public static final int preferences=0x7f050001;
-        public static final int searchable=0x7f050002;
+        public static final int preferences=0x7f050000;
+        public static final int searchable=0x7f050001;
     }
     public static final class styleable {
         /** Attributes that can be used with a PullToRefresh.
