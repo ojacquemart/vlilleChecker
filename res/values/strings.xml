@@ -3,13 +3,6 @@
 
     <!-- App details -->
     <string name="app_name">Vlille Checker</string>
-    <string name="app_name_title">Vlille Checker</string>
-
-    <!-- Home -->
-    <string name="home_add_station">Ajouter une station</string>
-    <string name="quickdialog_maps">Google Maps</string>
-    <string name="quickdialog_stations_list">Liste des stations</string>
-    <string name="starred_title">Sauvegardé</string>
     
     <!-- Tabs -->
     <string name="tab_stars">Favoris</string>

@@ -135,7 +135,7 @@ public class HomePreferenceActivity extends SherlockPreferenceActivity implement
 										}
 										
 										final Editor editor = prefLocationRadiusValue.getEditor();
-										editor.putLong(PreferenceKeys.POSITION_RADIUS, new Long(progress));
+										editor.putLong(PreferenceKeys.POSITION_RADIUS, Long.valueOf(progress));
 										editor.commit();
 										
 										changePrefLocationRadiusValue();

@@ -83,7 +83,7 @@ public class HomeActivity extends SherlockFragmentActivity {
 		// Contextuel menus
 		
 		// Preferences
-		menu.add(getString(R.string.preferences)).setIcon(R.drawable.ic_menu_preferences_ics)
+		menu.add(getString(R.string.preferences)).setIcon(R.drawable.settings)
 			.setOnMenuItemClickListener(new com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener() {
 
 				@Override
@@ -108,7 +108,7 @@ public class HomeActivity extends SherlockFragmentActivity {
 		
 		
 		// About
-		menu.add(getString(R.string.about_title)).setIcon(R.drawable.ic_menu_info_details_ics)
+		menu.add(getString(R.string.about_title)).setIcon(R.drawable.about)
 			.setOnMenuItemClickListener(new com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener() {
 
 				@Override
