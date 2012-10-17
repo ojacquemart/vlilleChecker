@@ -66,6 +66,11 @@ public class MapFragment extends SherlockFragment {
 			@Override
 			public void onClick(View v) {
 				mapView.updateLocationCircle();
+				if (mapView.isLocationOn()) {
+					locationEnabler.setImageResource(R.drawable.location_on);
+				} else {
+					locationEnabler.setImageResource(R.drawable.location_off);
+				}
 			}
 		});
 	}

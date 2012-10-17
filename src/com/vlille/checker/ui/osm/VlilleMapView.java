@@ -422,6 +422,10 @@ public class VlilleMapView extends MapView implements LocationListener {
 		panAndZoomListener = listener;
 	}
 
+	public boolean isLocationOn() {
+		return locationOn;
+	}
+	
 	public void setSherlockActivity(SherlockFragmentActivity sherlockActivity) {
 		this.sherlockActivity = sherlockActivity;
 	}
