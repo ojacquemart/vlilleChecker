@@ -1,42 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
     <PreferenceCategory android:title="@string/preferences" >
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="prefs_home_display_adress_value"
-            android:title="@string/prefs_stations_details_title"
             android:summary="@string/prefs_stations_details_summary"
-            />
+            android:title="@string/prefs_stations_details_title" />
     </PreferenceCategory>
-    
     <PreferenceCategory android:title="@string/location" >
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="prefs_localisation_gps_activated_value"
-            android:title="@string/prefs_location_enable_gps_title"
             android:summary="@string/prefs_location_enable_gps_summary"
-            />
+            android:title="@string/prefs_location_enable_gps_title" />
     </PreferenceCategory>
-    
-    <PreferenceCategory android:title="@string/data_status_title">
-        <Preference 
+        <Preference
+            android:defaultValue="100"
+            android:key="prefs_position_radius_value"
+            android:summary="@string/prefs_position_radius_distance_summary"
+            android:title="@string/prefs_position_radius_distance_title" />
+    <PreferenceCategory android:title="@string/data_status_title" >
+        <Preference
             android:key="data_status_last_update"
-            android:title="@string/data_status_stations_list"
-            android:summary="data_status_last_update_summary" />
-    </PreferenceCategory>/
-<!-- TODO: Later if really/ needed -->
-<!--     <PreferenceCategory android:title="@string/prefs_filters" > -->
-<!--         <CheckBoxPreference -->
-<!--             android:defaultValue="false" -->
-<!--             android:key="prefs_filter_one_bike_value" -->
-<!--             android:title="@string/prefs_filter_least_one_bike_title" -->
-<!--             android:summary="@string/prefs_filter_least_one_bike_summary" -->
-<!--             /> -->
-<!--         <CheckBoxPreference -->
-<!--             android:defaultValue="false" -->
-<!--             android:key="prefs_filter_one_attach_value" -->
-<!--             android:title="@string/prefs_filter_least_one_attach_title" -->
-<!--             android:summary="@string/prefs_filter_least_one_attach_summary" -->
-<!--             /> -->
-<!--     </PreferenceCategory> -->
+            android:summary="data_status_last_update_summary"
+            android:title="@string/data_status_stations_list" />
+    </PreferenceCategory>
+
+    <!-- TODO: Later if really/ needed -->
+    <!-- <PreferenceCategory android:title="@string/prefs_filters" > -->
+    <!-- <CheckBoxPreference -->
+    <!-- android:defaultValue="false" -->
+    <!-- android:key="prefs_filter_one_bike_value" -->
+    <!-- android:title="@string/prefs_filter_least_one_bike_title" -->
+    <!-- android:summary="@string/prefs_filter_least_one_bike_summary" -->
+    <!-- /> -->
+    <!-- <CheckBoxPreference -->
+    <!-- android:defaultValue="false" -->
+    <!-- android:key="prefs_filter_one_attach_value" -->
+    <!-- android:title="@string/prefs_filter_least_one_attach_title" -->
+    <!-- android:summary="@string/prefs_filter_least_one_attach_summary" -->
+    <!-- /> -->
+    <!-- </PreferenceCategory> -->
+
 </PreferenceScreen>

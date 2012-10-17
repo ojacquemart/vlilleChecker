@@ -55,7 +55,7 @@ public class Station implements Serializable, GetContentValues {
 		this.id = id;
 	}
 	
-	public GeoPoint getPoint() {
+	public GeoPoint getGeoPoint() {
 		return new GeoPoint(latitudeE6, longituteE6);
 	}
 	

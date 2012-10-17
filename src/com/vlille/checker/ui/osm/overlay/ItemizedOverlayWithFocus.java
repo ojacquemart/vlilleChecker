@@ -25,7 +25,7 @@ import com.vlille.checker.R;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.utils.ColorSelector;
 
-public class ItemizedOverlayWithFocus<Item extends OverlayItem> extends ItemizedIconOverlay<Item> {
+public class ItemizedOverlayWithFocus<Item extends MaskableOverlayItem> extends ItemizedIconOverlay<Item> {
 	
 	// ===========================================================
 	// Constants
@@ -250,6 +250,11 @@ public class ItemizedOverlayWithFocus<Item extends OverlayItem> extends Itemized
 	}
 	
 	protected void onDrawItem(final Canvas canvas, final int zoomLevel, final Item item, final Point curScreenCoords) {
+		MaskableOverlayItem maskableItem = (MaskableOverlayItem) item;
+		if (maskableItem.isHidden()) {
+			return;
+		}
+		
 		final Station station = (Station) (((ExtendedOverlayItem) item).getRelatedObject());
 		final boolean zoomLevelDetailled = OverlayZoomUtils.isDetailledZoomLevel(zoomLevel);
 		final Drawable marker = getDefaultMarker(zoomLevelDetailled, station.isStarred());

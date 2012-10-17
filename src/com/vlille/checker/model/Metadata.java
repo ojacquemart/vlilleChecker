@@ -1,5 +1,7 @@
 package com.vlille.checker.model;
 
+import org.osmdroid.util.GeoPoint;
+
 import android.content.ContentValues;
 
 import com.vlille.checker.db.GetContentValues;
@@ -21,6 +23,10 @@ public class Metadata implements GetContentValues {
 	 * Default longitude.
 	 */
 	private int longitude1e6;
+	
+	public GeoPoint getGeoPoint() {
+		return new GeoPoint(latitude1e6, longitude1e6);
+	}
 
 	public long getLastUpdate() {
 		return lastUpdate;

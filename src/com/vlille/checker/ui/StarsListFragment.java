@@ -131,10 +131,10 @@ public class StarsListFragment extends SherlockListFragment	 {
 
 	private void loadDetails(List<Station> stations) {
 		Log.d(TAG, "loadDetails");
-		if (!ContextHelper.isNetworkAvailable(getActivity())) {
-			ToastUtils.show(getActivity(), R.string.error_no_connection);
-		}
+		// Just to display some toast if network is not up.
+		ContextHelper.isNetworkAvailable(getActivity());
 		
+		// TODO: more test with this error flag.
 		boolean error = false;
 		
 		try {

@@ -1,6 +1,9 @@
 package com.vlille.checker.ui;
 
-import android.app.Activity;
+import java.util.List;
+
+import org.osmdroid.util.GeoPoint;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,10 +12,12 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Window;
 import com.vlille.checker.R;
+import com.vlille.checker.VlilleChecker;
+import com.vlille.checker.model.SetStationsInfos;
+import com.vlille.checker.model.Station;
+import com.vlille.checker.ui.osm.MapState;
 import com.vlille.checker.ui.osm.VlilleMapView;
-import com.vlille.checker.utils.ToastUtils;
  
 /**
  * Select stations from maps.
@@ -22,12 +27,19 @@ public class MapFragment extends SherlockFragment {
 
 	private final String TAG = getClass().getSimpleName();
 	
+	private MapState state = new MapState();
 	private VlilleMapView mapView;
+	
+	private List<Station> stations;
 	
 	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		Log.d(TAG, "onCreate");
+		
+		SetStationsInfos setStationsInfos = VlilleChecker.getDbAdapter().findSetStationsInfos();
+		this.state.set(setStationsInfos.getMetadata().getGeoPoint(), VlilleMapView.DEFAULT_ZOOM_LEVEL);
+		this.stations = setStationsInfos.getStations();
 	}
 	
 	@Override
@@ -38,8 +50,9 @@ public class MapFragment extends SherlockFragment {
 		
 		final View view = inflater.inflate(R.layout.maps, container, false);
 		mapView = (VlilleMapView) view.findViewById(R.id.mapview);
+		mapView.setMapInfos(state, stations);
 		mapView.setSherlockActivity(getSherlockActivity());
-		mapView.invalidate();
+		mapView.init();
 		
 		addLocationEnablerClickListener(view);
 		
@@ -52,7 +65,6 @@ public class MapFragment extends SherlockFragment {
 			
 			@Override
 			public void onClick(View v) {
-				ToastUtils.show(getActivity(), "Location on!");
 				mapView.updateLocationCircle();
 			}
 		});
@@ -63,6 +75,14 @@ public class MapFragment extends SherlockFragment {
 		super.onResume();
 		
 		mapView.updateStations();
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		Log.d(TAG, "onPause");
+		
+		state.set((GeoPoint) mapView.getMapCenter(), mapView.getZoomLevel());
 	}
 
 }

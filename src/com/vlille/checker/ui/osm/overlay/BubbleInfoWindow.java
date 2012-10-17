@@ -31,6 +31,21 @@ public class BubbleInfoWindow extends DefaultInfoWindow {
 			}
 		});
 	}
+	
+	/**
+	 * open the window at the specified position. 
+	 * @param item the item on which is hooked the view
+	 * @param offsetX (&offsetY) the offset of the view to the position, in pixels. 
+	 * This allows to offset the view from the marker position. 
+	 */
+	@Override
+	public void open(ExtendedOverlayItem item, int offsetX, int offsetY) {
+		MaskableOverlayItem maskableItem = (MaskableOverlayItem) item;
+		if (maskableItem.isVisible()) {
+			super.open(item, offsetX, offsetY);
+		}
+	}
+
 
 	@Override
 	public void onOpen(ExtendedOverlayItem item) {
