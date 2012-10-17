@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 
+import com.vlille.checker.R;
 import com.vlille.checker.ui.StarsListAdapter;
 
 /**
@@ -23,7 +24,12 @@ public final class ContextHelper {
 		ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 		
-		return networkInfo != null && networkInfo.isAvailable();
+		final boolean networkAvailable = networkInfo != null && networkInfo.isAvailable();
+		if (!networkAvailable) {
+			ToastUtils.show(context, R.string.error_no_connection);
+		}
+		
+		return networkAvailable;
 	}
 	
 	/**
