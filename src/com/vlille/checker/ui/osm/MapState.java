@@ -14,8 +14,16 @@ public class MapState {
 	public GeoPoint currentCenter;
 	public int zoomLevel;
 	
-	public void set(IGeoPoint currentCenter, int zoomLevel) {
-		this.currentCenter = (GeoPoint) currentCenter;
+	/**
+	 * Save current map state.
+	 * 
+	 * @param currentCenter if value is not null, set the value. Can be null when map location is on.
+	 * @param zoomLevel the current zoomLevel.
+	 */
+	public void save(IGeoPoint currentCenter, int zoomLevel) {
+		if (currentCenter != null) {
+			this.currentCenter = (GeoPoint) currentCenter;
+		}
 		this.zoomLevel = zoomLevel;
 	}
 }

@@ -75,12 +75,14 @@ public class VlilleMapView extends MapView implements LocationListener {
 	}
 
 	private void initConfiguration() {
+		Log.d(TAG, "initConfiguration");
 		setTileSource(TileSourceFactory.MAPNIK);
 		setBuiltInZoomControls(true);
 		setMultiTouchControls(true);
 	}
 
 	private void initCenter() {
+		Log.d(TAG, "initCenter");
 		GeoPoint center = new GeoPoint(state.currentCenter);
 		
 		MapController mMapController = getController();
@@ -92,10 +94,6 @@ public class VlilleMapView extends MapView implements LocationListener {
 	// Location
 	//=========
 	
-	/**
-	 * Switch location flag and draw the circle with stations around if location is on.
-	 * TODO: hide stations not around the current geoPoint.
-	 */
 	public void updateLocationCircle() {
 		this.locationOn = !locationOn;
 		Log.d(TAG, "Location on: " + locationOn);
@@ -103,8 +101,7 @@ public class VlilleMapView extends MapView implements LocationListener {
 			requestLocationUpdates();
 			drawLocationCircle();
 		} else {
-			getLocationManager().removeUpdates(this);
-			circleOverlay.setGeoPosition(null);
+			reinitDefaultCenter();
 			updateStations();
 		}
 		
@@ -122,13 +119,25 @@ public class VlilleMapView extends MapView implements LocationListener {
 		}
 	}
 
+	private void reinitDefaultCenter() {
+		getController().setCenter(state.currentCenter);
+		getLocationManager().removeUpdates(this);
+		circleOverlay.setGeoPosition(null);
+	}
+	
 	private LocationManager getLocationManager() {
 		return (LocationManager) sherlockActivity.getSystemService(Context.LOCATION_SERVICE);
 	}
 	
 	private void drawLocationCircle() {
+		Log.d(TAG, "drawLocationCircle");
 		if (locationOn) {
 			if (LocationManagerWrapper.with(getContext()).hasCurrentLocation()) {
+				Location currentLocation = LocationManagerWrapper.with(getContext()).getCurrentLocation();
+				Log.d(TAG, "Current location [lat=" + currentLocation.getLatitude() + ",long=" + currentLocation.getLongitude() + "]");
+				final GeoPoint geoPoint = new GeoPoint(currentLocation);
+				getController().setCenter(geoPoint);
+				circleOverlay.setGeoPosition(geoPoint);
 				updateStations();
 			} else {
 				ToastUtils.show(getContext(), R.string.error_no_location_found);
@@ -245,9 +254,8 @@ public class VlilleMapView extends MapView implements LocationListener {
 		if (!stations.isEmpty()) {
 			Log.d(TAG, "" + stations.size() + "stations to update!");
 			new AsyncMapStationRetriever().execute(stations);
-			itemUpdater.whenDraw();
 		} else {
-			itemUpdater.whenNotDraw();
+			itemUpdater.whenNoneStationToDraw();
 			// Some stations may have seen their visibility attribute changed.
 			invalidate();
 		}
@@ -289,9 +297,7 @@ public class VlilleMapView extends MapView implements LocationListener {
 						
 			}
 			
-			public void whenDraw() {}
-			
-			public void whenNotDraw() {}
+			public void whenNoneStationToDraw() {}
 
 		};
 	}
@@ -322,14 +328,7 @@ public class VlilleMapView extends MapView implements LocationListener {
 				return nearCurrentLocation;
 			}
 			
-			public void whenDraw() {
-				Log.d(TAG, "Current location [lat=" + currentLocation.getLatitude() + ",long=" + currentLocation.getLongitude() + "]");
-				final GeoPoint geoPoint = new GeoPoint(currentLocation);
-				getController().setCenter(geoPoint);
-				circleOverlay.setGeoPosition(geoPoint);
-			}
-			
-			public void whenNotDraw() {
+			public void whenNoneStationToDraw() {
 				ToastUtils.show(getContext(), R.string.error_no_stations_near_current_location);
 			}
 		};

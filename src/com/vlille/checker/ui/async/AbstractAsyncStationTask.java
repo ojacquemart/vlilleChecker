@@ -22,7 +22,7 @@ public abstract class AbstractAsyncStationTask extends AsyncTask<List<Station>, 
 		for (Station eachStation : stations) {
 			final boolean upToDate = eachStation.isUpToDate();
 			if (!upToDate) {
-				XML_READER.getDetails(eachStation);
+				XML_READER.updateDetails(eachStation);
 			}
 		}
 		

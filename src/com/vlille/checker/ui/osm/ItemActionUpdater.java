@@ -9,8 +9,6 @@ interface ItemActionUpdater {
 
 	boolean canUpdate(MaskableOverlayItem item, Station station);
 
-	void whenDraw();
-
-	void whenNotDraw();
+	void whenNoneStationToDraw();
 
 }

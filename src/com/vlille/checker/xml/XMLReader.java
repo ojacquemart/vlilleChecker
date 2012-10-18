@@ -21,14 +21,14 @@ public class XMLReader {
 	private static final int CONNECTION_TIMEOUT = 3000;
 
 	/**
-	 * Get station details. 
+	 * Update station details. 
 	 * If the station retrieved is not null, the station id is updated
 	 * and the station is merged in db, in order to optimize the retrieve.
 	 * 
 	 * @param station The station.
 	 * @return The parsed station.
 	 */
-	public Station getDetails(Station station)  {
+	public void updateDetails(Station station)  {
 		try {
 			final String httpUrl = Constants.URL_STATION_DETAIL + station.getId();
 			station = new StationDetailSAXParser(station).parse(getInputStream(httpUrl));
@@ -38,9 +38,8 @@ public class XMLReader {
 			station.setBikes(null);
 			station.setAttachs(null);
 		}
-		VlilleChecker.getDbAdapter().update(station);
 		
-		return station;
+		VlilleChecker.getDbAdapter().update(station);
 	}
 	
 	/**

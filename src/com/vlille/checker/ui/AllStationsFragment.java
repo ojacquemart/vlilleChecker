@@ -11,8 +11,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -94,6 +92,9 @@ public class AllStationsFragment extends SherlockListFragment {
 				Log.d(TAG, "onKeyListener " + event);
 				if (hasPressedOk(keyCode, event)) {
 					hideInputMethodManager();
+					
+					final String keyword = searchField.getText().toString();
+					filterStationsByKeyword(keyword);
 				}
 				
 				return false;
@@ -102,23 +103,6 @@ public class AllStationsFragment extends SherlockListFragment {
 			private boolean hasPressedOk(int keyCode, KeyEvent event) {
 				return (event.getAction() == KeyEvent.ACTION_DOWN)
 						&& (keyCode == KeyEvent.KEYCODE_ENTER);
-			}
-		});
-		searchField.addTextChangedListener(new TextWatcher() {
-			
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-			}
-
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-			}
-
-			@Override
-			public void afterTextChanged(Editable editable) {
-				if (editable != null) {
-					filterStationsByKeyword(editable.toString());
-				}
 			}
 		});
 	}
