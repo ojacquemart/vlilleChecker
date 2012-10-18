@@ -46,7 +46,8 @@ public class XMLReader {
 	 * Retrieve all stations informations.
 	 * The retrieve is made asynchronous in ordre to be compatible with the ICS version.
 	 * 
-	 * @return The set with metadata and stations.
+	 * @return The set with metadata and stations. <code>null</code> if vlille website is down. 
+	 * @see #getInputStream(String)
 	 */
 	public SetStationsInfos getAsyncSetStationsInfos() {
 		try {
@@ -62,7 +63,8 @@ public class XMLReader {
 	 
 	/**
 	 * Get input stream from a given http url.
-	 * @return The inpustream. <code>null</code> if an exception occured.
+	 * 
+	 * @return The inpustream. <code>null</code> if any exception occured.
 	 */
 	public InputStream getInputStream(String httpUrl) {
 		InputStream inputStream = null;

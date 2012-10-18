@@ -65,43 +65,16 @@ public class DbAdapter {
 			throw new IllegalAccessError();
 		}
 	}
+
+	public void insertStation(Station station) {
+		db.insert(StationTable.TABLE_NAME, null, station.getInsertableContentValues());
+	}
 	
-	public void checkStationsUpdate() {
-		if (hasStationsChanged()) {
-			Toast.makeText(context, R.string.data_status_update_done, Toast.LENGTH_SHORT).show();
-		} else {
-			Toast.makeText(context, R.string.data_status_uptodate, Toast.LENGTH_SHORT).show();
-		}
-		
-		Log.d(TAG, "Change last update millis");
+	public void setLastUpdateTimeToNow() {
 		changeLastUpdate(System.currentTimeMillis());
 	}
 	
-	/**
-	 * Parse vlille stations from web site and compare stations with those from db. 
-	 * 
-	 * @return <code>true</code> if new stations have been inserted.
-	 */
-	private boolean hasStationsChanged() {
-		Log.d(TAG, "Check if some new stations have been added");
-		final SetStationsInfos setStationsInfos = XML_READER.getAsyncSetStationsInfos();
-		final List<Station> parsedStations = setStationsInfos.getStations();
-		
-		final List<Station> dbStations = findAll();
-		
-		@SuppressWarnings("unchecked")
-		final List<Station> stationsToAdd = (List<Station>) CollectionUtils.disjunction(parsedStations, dbStations);
-		for (Station eachStation : stationsToAdd) {
-			db.insert(StationTable.TABLE_NAME, null, eachStation.getInsertableContentValues());
-		}
-		
-		int nbStationsAdded = stationsToAdd.size();
-		Log.d(TAG, "Nb stations changed: " + nbStationsAdded);
-		
-		return nbStationsAdded > 0;
-	}
-	
-	public void changeLastUpdate(long timeInMillis) {
+	private void changeLastUpdate(long timeInMillis) {
 		ContentValues values = new ContentValues();
 		values.put(MetadataTableFields.lastUpdate.toString(), timeInMillis);
 		
@@ -346,6 +319,11 @@ public class DbAdapter {
 		}
 		
 		public void loadStations() {
+			final SetStationsInfos setStationsInfos = XML_READER.getAsyncSetStationsInfos();
+			if (setStationsInfos == null) {
+				return;
+			}
+			
 			final DbSchema vlilleCheckerDb = new DbSchema();
 			for (Table eachTable : vlilleCheckerDb.getTables()) {
 				Log.d(TAG, "Create table " + eachTable.getName());
@@ -355,8 +333,6 @@ public class DbAdapter {
 			StopWatch watcher = new StopWatch();
 			watcher.start();
 			
-			final SetStationsInfos setStationsInfos = XML_READER.getAsyncSetStationsInfos();
-			
 			Log.d(TAG, "Insert maps infos");
 			final Metadata metadata = setStationsInfos.getMetadata();
 			db.insert(MetadataTable.TABLE_NAME, null, metadata.getInsertableContentValues());
@@ -364,7 +340,7 @@ public class DbAdapter {
 			Log.d(TAG, "Insert all stations infos.");
 			final List<Station> stations = setStationsInfos.getStations();
 			for (Station eachStation : stations) {
-				db.insert(StationTable.TABLE_NAME, null, eachStation.getInsertableContentValues());
+				insertStation(eachStation);
 			}
 			
 			Toast.makeText(context, R.string.installation_done, Toast.LENGTH_SHORT).show();
