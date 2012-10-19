@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="Theme.vlille_checker" parent="@android:style/Theme.Holo.Light">
+    <style name="Theme.vlille_checker" parent="@style/Theme.Sherlock.Light">
+        <item name="actionBarItemBackground">@drawable/selectable_background_vlille_checker</item>
+        <item name="popupMenuStyle">@style/vlille_checker_PopupMenu</item>
+        <item name="dropDownListViewStyle">@style/vlille_checker_DropDownListView</item>
+        <item name="actionBarTabStyle">@style/vlille_checker_ActionBarTabStyle</item>
+        <item name="actionDropDownStyle">@style/vlille_checker_DropDownNav</item>
+        <item name="actionBarStyle">@style/vlille_checker_solid_ActionBar</item>
+
         <item name="android:actionBarItemBackground">@drawable/selectable_background_vlille_checker</item>
         <item name="android:popupMenuStyle">@style/vlille_checker_PopupMenu</item>
         <item name="android:dropDownListViewStyle">@style/vlille_checker_DropDownListView</item>
@@ -9,53 +16,70 @@
         <item name="android:actionDropDownStyle">@style/vlille_checker_DropDownNav</item>
         <item name="android:actionBarStyle">@style/vlille_checker_solid_ActionBar</item>
         <item name="android:panelBackground">@drawable/menu_hardkey_panel_vlille_checker</item>
+        
+        
     </style>
 
-    <style name="vlille_checker_solid_ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">
+    <style name="vlille_checker_solid_ActionBar" parent="@style/Widget.Sherlock.Light.ActionBar.Solid">
+        <item name="background">@drawable/ab_solid_vlille_checker</item>
+        <item name="backgroundStacked">@drawable/ab_stacked_solid_vlille_checker</item>
+        <item name="backgroundSplit">@drawable/ab_bottom_solid_vlille_checker</item>
+        <item name="progressBarStyle">@style/vlille_checker_ProgressBar</item>
+
         <item name="android:background">@drawable/ab_solid_vlille_checker</item>
         <item name="android:backgroundStacked">@drawable/ab_stacked_solid_vlille_checker</item>
         <item name="android:backgroundSplit">@drawable/ab_bottom_solid_vlille_checker</item>
         <item name="android:progressBarStyle">@style/vlille_checker_ProgressBar</item>
     </style>
 
-    <style name="vlille_checker_transparent_ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+    <style name="vlille_checker_transparent_ActionBar" parent="@style/Widget.Sherlock.Light.ActionBar">
+        <item name="background">@drawable/ab_transparent_vlille_checker</item>
+        <item name="progressBarStyle">@style/vlille_checker_ProgressBar</item>
+        
         <item name="android:background">@drawable/ab_transparent_vlille_checker</item>
         <item name="android:progressBarStyle">@style/vlille_checker_ProgressBar</item>
     </style>
-
-    <style name="vlille_checker_PopupMenu" parent="@android:style/Widget.Holo.Light.ListPopupWindow">
+	
+    <style name="vlille_checker_PopupMenu" parent="@style/Widget.Sherlock.Light.ListPopupWindow">	
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_vlille_checker</item>	
     </style>
-
-    <style name="vlille_checker_DropDownListView" parent="@android:style/Widget.Holo.Light.ListView.DropDown">
+	
+    <style name="vlille_checker_DropDownListView" parent="@style/Widget.Sherlock.Light.ListView.DropDown">
         <item name="android:listSelector">@drawable/selectable_background_vlille_checker</item>
     </style>
 
-    <style name="vlille_checker_ActionBarTabStyle" parent="@android:style/Widget.Holo.Light.ActionBar.TabView">
+    <style name="vlille_checker_ActionBarTabStyle" parent="@style/Widget.Sherlock.Light.ActionBar.TabView">
+        <item name="background">@drawable/tab_indicator_ab_vlille_checker</item>
+
         <item name="android:background">@drawable/tab_indicator_ab_vlille_checker</item>
     </style>
+	
+    <style name="vlille_checker_DropDownNav" parent="@style/Widget.Sherlock.Light.Spinner.DropDown.ActionBar">
+        <item name="background">@drawable/spinner_background_ab_vlille_checker</item>
 
-    <style name="vlille_checker_DropDownNav" parent="@android:style/Widget.Holo.Light.Spinner">
         <item name="android:background">@drawable/spinner_background_ab_vlille_checker</item>
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_vlille_checker</item>
         <item name="android:dropDownSelector">@drawable/selectable_background_vlille_checker</item>
     </style>
     
-    <style name="vlille_checker_ProgressBar" parent="@android:style/Widget.Holo.Light.ProgressBar.Horizontal">
+    <style name="vlille_checker_ProgressBar" parent="@style/Widget.Sherlock.Light.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_horizontal_vlille_checker</item>
     </style>
-
+    
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->
-    <style name="Theme.vlille_checker.widget" parent="@android:style/Theme.Holo">
+    <style name="Theme.vlille_checker.widget" parent="@style/Theme.Sherlock">
+        <item name="popupMenuStyle">@style/vlille_checker_PopupMenu</item>
+        <item name="dropDownListViewStyle">@style/vlille_checker_DropDownListView</item>
+        
         <item name="android:popupMenuStyle">@style/vlille_checker_PopupMenu</item>
         <item name="android:dropDownListViewStyle">@style/vlille_checker_DropDownListView</item>
     </style>    
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->
-    <style name="vlille_checker_DropDownItem" parent="@android:style/Widget.Holo.Light.DropDownItem.Spinner">
+    <style name="vlille_checker_DropDownItem" parent="@style/Widget.Sherlock.Light.DropDownItem.Spinner">
         <item name="android:textAppearance">?android:attr/textAppearanceInverse</item>
     </style>
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->
-    <style name="vlille_checker_SpinnerItem" parent="@android:style/Widget.Holo.TextView.SpinnerItem">
+    <style name="vlille_checker_SpinnerItem" parent="@style/Widget.Sherlock.TextView.SpinnerItem">
         <item name="android:textAppearance">?android:attr/textAppearanceInverse</item>
     </style>
 
