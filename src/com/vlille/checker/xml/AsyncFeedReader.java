@@ -1,5 +1,7 @@
 package com.vlille.checker.xml;
 
+import java.io.InputStream;
+
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -21,7 +23,8 @@ public class AsyncFeedReader<T> extends AsyncTask<String, Void, T> {
 	@Override
 	protected T doInBackground(String... params) {
 		try {
-			return parser.parse(new XMLReader().getInputStream(params[0]));
+			final InputStream inputStream = new XMLReader().getInputStream(params[0]);
+			return parser.parse(inputStream);
 			
 		} catch (Exception e) {
 			Log.e(TAG, "Error during parsing", e);

@@ -52,10 +52,8 @@ public class XMLReader {
 	public SetStationsInfos getAsyncSetStationsInfos() {
 		try {
 			return new AsyncFeedReader<SetStationsInfos>(new StationsListSAXParser()).execute(Constants.URL_STATIONS_LIST).get();
-		} catch (InterruptedException e) {
-			Log.e(LOG_TAG, "InterruptedException", e);
-		} catch (ExecutionException e) {
-			Log.e(LOG_TAG, "ExecutionException", e);
+		} catch (Exception e) {
+			Log.e(LOG_TAG, "Exception", e);
 		}
 		
 		return null;
