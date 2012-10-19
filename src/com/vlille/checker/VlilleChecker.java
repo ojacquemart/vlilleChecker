@@ -18,7 +18,6 @@ import com.vlille.checker.utils.Constants;
 )
 public class VlilleChecker extends Application {
 	
-	
 	private final String LOG_TAG = getClass().getSimpleName();
 	
 	private static DbAdapter dbAdapter;
