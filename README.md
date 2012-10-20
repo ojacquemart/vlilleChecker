@@ -13,9 +13,10 @@ This project is an unofficial application for the Vlille service in Lille, Franc
 
 
 ## Versions
-20 october 2012: v2.0
-04 june 2012: v1.0
-13 june 2012: v1.1
+
+* 20 october 2012: v2.0
+* 04 june 2012: v1.0
+* 13 june 2012: v1.1
 
 ## Installation
 
@@ -29,3 +30,6 @@ This project uses the following open source libraries:
 * [Apache - Commons Lang](http://commons.apache.org/lang/)
 * [Apache - Commons Collections](http://commons.apache.org/collections/)
 * [GPSEmulator to simulate GPS location](http://code.google.com/p/android-gps-emulator/)
+
+## Note
+To edit markdown: (http://dillinger.io/)
