@@ -8,13 +8,13 @@ This repository contains the source code for the Vlille Checker Android app.
 
 This project is an unofficial application for the Vlille service in Lille, France.
 
-![image1](https://lh3.ggpht.com/0GK3MgMhnZstnmlYGUdOtByPoMcfnyOegngBwC5S1jEqkaRhjjKB8gV3o1DplVVyRzE=h230) &nbsp; ![image2]
-(https://lh3.ggpht.com/XLmhuKWp66vDqcw8MyYMpJ_f5XWzSX-NcGGrspGa06KKApI0TX7_G6V5OOzONRs9Ug=h230) &nbsp; ![image3](https://lh5.ggpht.com/j5qT7j1nbIC2kqUmgBCSImiZnE5QxTZmjK0xW0UNmaBSJt8TX0quPtyhSWbvwsQ8Mg=h230)
+![image1](https://lh4.ggpht.com/1L90ewgpWg8bmlgvaakrPn9BHlWm92ksXWxgoGlcAeVSCgWaEkdOWUybIvRt5Puq7g=h230)&nbsp;![image2]
+(https://lh3.ggpht.com/bI12FdIk17-sr8yyF6ZgYnccfCTjii7Ap-bgMDjIF9gJfIfS0rEgosA_xLXURjFZ_yoO=h230)&nbsp;![image3](https://lh4.ggpht.com/VfyOGdfC8TG8AvhFeeF8EMaAX3c7ctKi8Mb025Y8Lb0Zj7n9AMrkFLXCwOBwSrPyrXM=h230)&nbsp;![image4](https://lh5.ggpht.com/qoHa8hENdPBdNlunKBa7SvycxSQF_E3mMXNcZbmdJIuBgftIfE193i0Wh7KgzQTBnSs=h230)
+
 
 ## Versions
-
+20 october 2012: v2.0
 04 june 2012: v1.0
- 	
 13 june 2012: v1.1
 
 ## Installation
@@ -23,5 +23,9 @@ This project uses the following open source libraries:
 
 * [ACRA - Application Crash Report for Android](http://code.google.com/p/acra/)
 * [ActionBarSherlock](https://github.com/JakeWharton/ActionBarSherlock)
+* [PullToRefresh](https://github.com/chrisbanes/Android-PullToRefresh)
+* [OpenStreetMapDroid](http://code.google.com/p/osmdroid/)
+* [OpenStreetMapDroidBonusPack](http://code.google.com/p/osmbonuspack/)
 * [Apache - Commons Lang](http://commons.apache.org/lang/)
 * [Apache - Commons Collections](http://commons.apache.org/collections/)
+* [GPSEmulator to simulate GPS location](http://code.google.com/p/android-gps-emulator/)
