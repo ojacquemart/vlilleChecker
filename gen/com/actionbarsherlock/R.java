@@ -1206,6 +1206,7 @@ containing a value of this type.
         public static final int Theme_Sherlock_NoActionBar=0x7f0d0051;
         public static final int Theme_vlille_checker=0x7f0d0058;
         /**  this style is only referenced in a Light.DarkActionBar based theme 
+ this style is only referenced in a Light.DarkActionBar based theme 
          */
         public static final int Theme_vlille_checker_widget=0x7f0d0060;
         public static final int Widget=0x7f0d0000;
@@ -1255,6 +1256,7 @@ containing a value of this type.
         public static final int Widget_Sherlock_TextView_SpinnerItem=0x7f0d0032;
         public static final int vlille_checker_ActionBarTabStyle=0x7f0d005d;
         /**  this style is only referenced in a Light.DarkActionBar based theme 
+ this style is only referenced in a Light.DarkActionBar based theme 
          */
         public static final int vlille_checker_DropDownItem=0x7f0d0061;
         public static final int vlille_checker_DropDownListView=0x7f0d005c;
@@ -1262,6 +1264,7 @@ containing a value of this type.
         public static final int vlille_checker_PopupMenu=0x7f0d005b;
         public static final int vlille_checker_ProgressBar=0x7f0d005f;
         /**  this style is only referenced in a Light.DarkActionBar based theme 
+ this style is only referenced in a Light.DarkActionBar based theme 
          */
         public static final int vlille_checker_SpinnerItem=0x7f0d0062;
         public static final int vlille_checker_solid_ActionBar=0x7f0d0059;

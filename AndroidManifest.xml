@@ -7,7 +7,7 @@
 
     <!-- Supports >= android 2.1 -->
     <uses-sdk
-        android:minSdkVersion="10"
+        android:minSdkVersion="3"
         android:targetSdkVersion="16" />
 
     <!-- Permissions -->
