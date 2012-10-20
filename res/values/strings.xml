@@ -5,93 +5,80 @@
     <string name="app_name">Vlille Checker</string>
     
     <!-- Tabs -->
-    <string name="tab_stars">Favoris</string>
-    <string name="tab_list">Liste</string>
-    <string name="tab_map">Carte</string>
+    <string name="tab_stars">Starred</string>
+    <string name="tab_list">List</string>
+    <string name="tab_map">Map</string>
 
     <!-- Common strings -->
-    <string name="stations_list">Liste des stations</string>
-    <string name="stations_map">Carte des stations</string>
-    <string name="location">Localisation</string>
-    <string name="bike">Vélo</string>
-    <string name="attach">Emplacement</string>
-    <string name="station_out_of_service">La station est en maintenance</string>
-    <string name="preferences">Préférences</string>
-    <string name="loading">Chargement...</string>
-    <string name="refresh">Rafraîchir</string>
+    <string name="stations_list">Stations list</string>
+    <string name="stations_map">Stations map</string>
+    <string name="location">Location</string>
+    <string name="station_out_of_service">The station is out of service</string>
+    <string name="preferences">Settings</string>
+    <string name="refresh">Refresh</string>
     <string name="ok">Ok</string>
-    <string name="yes">Oui</string>
-    <string name="no">Non</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     <string name="cancel">Cancel</string>
-    <string name="installation_done">Récupération des stations terminée</string>
-    <string name="no_station">Ajouter des stations via les onglets</string>
+    <string name="installation_done">Initialization finished</string>
+    <string name="no_station">Add stations in using tabs</string>
 
     <!-- Errors -->
-    <string name="error_occured">Une erreur est survenue.</string>
-    <string name="error_retry">Réessayer</string>
-    <string name="error_connection_expired">Connexion expirée</string>
-    <string name="error_no_connection">Pas de connexion réseau disponible</string>
-    <string name="error_initialization_stations">Erreur durant l\'initialisation des stations</string>
-    <string name="error_no_stations_near_current_location">Aucune station près de votre position actuelle</string>
-    <string name="error_no_location_found">Aucune position disponible</string>
+    <string name="error_occured">An error occured</string>
+    <string name="error_retry">Retry</string>
+    <string name="error_connection_expired">Connectionn expired</string>
+    <string name="error_no_connection">No network available</string>
+    <string name="error_initialization_stations">Error during the stations initialization</string>
+    <string name="error_no_stations_near_current_location">None station near your current location</string>
+    <string name="error_no_location_found">No location available</string>
 
     <!-- Home Preferences -->
-    <string name="prefs_stations_details_title">Détail des stations</string>
-    <string name="prefs_stations_details_summary">Afficher l\'adresse des stations</string>
-    <string name="prefs_location_enable_gps_title">Activer le GPS</string>
-    <string name="prefs_location_enable_gps_summary">Localiser les stations à l\'aide du GPS</string>
+    <string name="prefs_stations_details_title">Stations detail</string>
+    <string name="prefs_stations_details_summary">Show the station address</string>
+    <string name="prefs_location_enable_gps_title">Enable GPS provider</string>
+    <string name="prefs_location_enable_gps_summary">Locate stations in using the GPS provider</string>
 
     <!-- Position Preferences -->
-    <string name="prefs_position_title">Position</string>
+    <string name="prefs_position_title">Location</string>
     <string name="prefs_position_distance">Distance</string>
-    <string name="prefs_position_radius_distance_title">Stations autour de moi</string>
-    <string name="prefs_position_radius_distance_summary">Dans un rayon de</string>
+    <string name="prefs_position_radius_distance_title">Stations around me</string>
+    <string name="prefs_position_radius_distance_summary">Within</string>
     <string name="prefs_position_radius_distance_unit">m</string>
     
     <!-- Data status and update -->
-    <string name="data_status_update_done">Mise à jour effectuée!</string>
-    <string name="data_status_uptodate">Les stations sont déjà à jour</string>
-    <string name="data_launch_update">Mettre à jour les stations</string>
-    <string name="data_status_title">Etat des données</string>
-    <string name="data_status_stations_list">Liste des stations</string>
-    <string name="data_status_last_update_summary">Dernière mise à jour: %1s</string>
+    <string name="data_status_update_done">Update done!</string>
+    <string name="data_status_uptodate">Stations are already up to date</string>
+    <string name="data_launch_update">Update stations list</string>
+    <string name="data_status_title">Data status</string>
+    <string name="data_status_stations_list">Stations list</string>
+    <string name="data_status_last_update_summary">Last update: %1s</string>
     <string name="data_status_date_pattern">dd/MM/yyyy HH:mm</string>
 
     <!-- Position -->
-    <string name="distance">Distance</string>
-    <string name="error_no_location_available">Aucune position possible</string>
-    <string name="location_enable">Activer la localisation</string>
+    <string name="location_none_available">No location available</string>
+    <string name="location_enable">Enable location</string>
 
     <!-- Search -->
-    <string name="search">Recherche</string>
-    <string name="search_hint">Nom de la station</string>
-    <string name="search_no_result">Aucun résultat</string>
-    <string name="search_suggestion_error">Une erreur est survenue</string>
-
-    <!-- Filter -->
-    <string name="prefs_filters">Filtres pour la carte Maps</string>
-    <string name="prefs_filter_least_one_bike_title">Vélos libres</string>
-    <string name="prefs_filter_least_one_bike_summary">Afficher les stations avec au moins un vélo disponible</string>
-    <string name="prefs_filter_least_one_attach_title">Emplacements restants</string>
-    <string name="prefs_filter_least_one_attach_summary">Afficher les stations avec au moins un emplacement disponible</string>
+    <string name="search">Search</string>
+    <string name="search_hint">Station name</string>
+    <string name="search_no_result">No result</string>
 
     <!-- About -->
-    <string name="about_title">A propos de</string>
-    <string name="about_text">Vlille Checker est dédié aux utilisateurs du V\'lille et de son service VLS (Vélos en Libre Service).
+    <string name="about_title">About</string>
+    <string name="about_text">Vlille Checker is dedicated to the V\'lille users and its Self Service Bikes service.
     \n\n
-  	Au quotidien, l\'application vous permet de gérer facilement:\n
-    - vos stations favorites afin de contrôler le nombre de vélos ou emplacements disponibles;\n
-    - trouver une station proche de votre position grâce à la localisation.\n\n
-    Dès l\'écran d\'accueil, Vlille Checker affiche l\'état des stations, évitant ainsi
-    les menus superflus.
+  	Daily, the application allows you to easily manage:\n
+    - your favorite stations to control bikes or slots available;\n
+    - find a station near your position.\n\n
+    From the home screen, Vlille Checker displays the stations state avoiding unnecessary menus.
     \n\n
-    Pour toute remarque, contactez le développeur:
+    For any comments, please contact the developer:
     </string>
     <string name="about_text_email">- <a href="o.jacquemart@gmail.com">o.jacquemart@gmail.com</a>\n</string>
     <string name="about_text_web">- <a href="http://www.twitter.com/ojacquemart">twitter.com/ojacquemart</a></string>
 
     <!-- ACRA toast notifications texts. -->
-    <string name="crash_toast_text">Une erreur est survenue...</string>
+    <string name="crash_toast_text">An error occured...</string>
     <string name="crash_notif_ticker_text">Unexpected error, please send a report...</string>
     <string name="crash_notif_title">CrashTest has crashed...</string>
     <string name="crash_notif_text">Please click here to help fix the issue.</string>

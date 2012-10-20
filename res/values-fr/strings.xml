@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- App details -->
+    <string name="app_name">Vlille Checker</string>
+    
+    <!-- Tabs -->
+    <string name="tab_stars">Favoris</string>
+    <string name="tab_list">Liste</string>
+    <string name="tab_map">Carte</string>
+
+    <!-- Common strings -->
+    <string name="stations_list">Liste des stations</string>
+    <string name="stations_map">Carte des stations</string>
+    <string name="location">Localisation</string>
+    <string name="station_out_of_service">La station est en maintenance</string>
+    <string name="preferences">Préférences</string>
+    <string name="refresh">Rafraîchir</string>
+    <string name="ok">Ok</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+    <string name="cancel">Annuler</string>
+    <string name="installation_done">Récupération des stations terminée</string>
+    <string name="no_station">Ajouter des stations via les onglets</string>
+
+    <!-- Errors -->
+    <string name="error_occured">Une erreur est survenue</string>
+    <string name="error_retry">Réessayer</string>
+    <string name="error_connection_expired">Connexion expirée</string>
+    <string name="error_no_connection">Pas de connexion réseau disponible</string>
+    <string name="error_initialization_stations">Erreur durant l\'initialisation des stations</string>
+    <string name="error_no_stations_near_current_location">Aucune station près de votre position actuelle</string>
+    <string name="error_no_location_found">Aucune position disponible</string>
+
+    <!-- Home Preferences -->
+    <string name="prefs_stations_details_title">Détail des stations</string>
+    <string name="prefs_stations_details_summary">Afficher l\'adresse des stations</string>
+    <string name="prefs_location_enable_gps_title">Activer le GPS</string>
+    <string name="prefs_location_enable_gps_summary">Localiser les stations à l\'aide du GPS</string>
+
+    <!-- Position Preferences -->
+    <string name="prefs_position_title">Position</string>
+    <string name="prefs_position_distance">Distance</string>
+    <string name="prefs_position_radius_distance_title">Stations autour de moi</string>
+    <string name="prefs_position_radius_distance_summary">Dans un rayon de</string>
+    <string name="prefs_position_radius_distance_unit">m</string>
+    
+    <!-- Data status and update -->
+    <string name="data_status_update_done">Mise à jour effectuée!</string>
+    <string name="data_status_uptodate">Les stations sont déjà à jour</string>
+    <string name="data_launch_update">Mettre à jour les stations</string>
+    <string name="data_status_title">Etat des données</string>
+    <string name="data_status_stations_list">Liste des stations</string>
+    <string name="data_status_last_update_summary">Dernière mise à jour: %1s</string>
+    <string name="data_status_date_pattern">dd/MM/yyyy HH:mm</string>
+
+    <!-- Position -->
+    <string name="location_none_available">Aucune position possible</string>
+    <string name="location_enable">Activer la localisation</string>
+
+    <!-- Search -->
+    <string name="search">Recherche</string>
+    <string name="search_hint">Nom de la station</string>
+    <string name="search_no_result">Aucun résultat</string>
+
+    <!-- About -->
+    <string name="about_title">A propos de</string>
+    <string name="about_text">Vlille Checker est dédié aux utilisateurs du V\'lille et de son service VLS (Vélos en Libre Service).
+    \n\n
+  	Au quotidien, l\'application vous permet de gérer facilement:\n
+    - vos stations favorites afin de contrôler le nombre de vélos ou emplacements disponibles;\n
+    - trouver une station proche de votre position grâce à la localisation.\n\n
+    Dès l\'écran d\'accueil, Vlille Checker affiche l\'état des stations, évitant ainsi
+    les menus superflus.
+    \n\n
+    Pour toute remarque, contactez le développeur:
+    </string>
+    <string name="about_text_email">- <a href="o.jacquemart@gmail.com">o.jacquemart@gmail.com</a>\n</string>
+    <string name="about_text_web">- <a href="http://www.twitter.com/ojacquemart">twitter.com/ojacquemart</a></string>
+
+    <!-- ACRA toast notifications texts. -->
+    <string name="crash_toast_text">Une erreur est survenue...</string>
+    <string name="crash_notif_ticker_text">Unexpected error, please send a report...</string>
+    <string name="crash_notif_title">CrashTest has crashed...</string>
+    <string name="crash_notif_text">Please click here to help fix the issue.</string>
+    <string name="crash_dialog_title">CrashTest has crashed</string>
+    <string name="crash_dialog_text">An unexpected error occurred forcing the
+	    application to stop. Please help us fix this by sending us error data,
+	    all you have to do is click \'OK\'.</string>
+    <string name="crash_dialog_comment_prompt">You might add your comments about the problem below:</string>
+    <string name="crash_dialog_ok_toast">Thank you !</string>
+
+</resources>

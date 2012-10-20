@@ -1031,12 +1031,13 @@ containing a value of this type.
         public static final int release_event_bike=0x7f060001;
     }
     public static final class string {
-        public static final int about_text=0x7f090047;
-        public static final int about_text_email=0x7f090048;
-        public static final int about_text_web=0x7f090049;
+        public static final int about_text=0x7f09003d;
+        public static final int about_text_email=0x7f09003e;
+        public static final int about_text_web=0x7f09003f;
         /**  About 
+ About 
          */
-        public static final int about_title=0x7f090046;
+        public static final int about_title=0x7f09003c;
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
          */
         public static final int abs__action_bar_home_description=0x7f090006;
@@ -1068,71 +1069,67 @@ containing a value of this type.
          */
         public static final int abs__shareactionprovider_share_with_application=0x7f09000f;
         /**  App details 
+ App details 
          */
         public static final int app_name=0x7f090010;
-        public static final int attach=0x7f090018;
-        public static final int bike=0x7f090017;
-        public static final int cancel=0x7f090020;
-        public static final int crash_dialog_comment_prompt=0x7f090050;
-        public static final int crash_dialog_ok_toast=0x7f090051;
-        public static final int crash_dialog_text=0x7f09004f;
-        public static final int crash_dialog_title=0x7f09004e;
-        public static final int crash_notif_text=0x7f09004d;
-        public static final int crash_notif_ticker_text=0x7f09004b;
-        public static final int crash_notif_title=0x7f09004c;
+        public static final int cancel=0x7f09001d;
+        public static final int crash_dialog_comment_prompt=0x7f090046;
+        public static final int crash_dialog_ok_toast=0x7f090047;
+        public static final int crash_dialog_text=0x7f090045;
+        public static final int crash_dialog_title=0x7f090044;
+        public static final int crash_notif_text=0x7f090043;
+        public static final int crash_notif_ticker_text=0x7f090041;
+        public static final int crash_notif_title=0x7f090042;
         /**  ACRA toast notifications texts. 
+ ACRA toast notifications texts. 
          */
-        public static final int crash_toast_text=0x7f09004a;
-        public static final int data_launch_update=0x7f090035;
-        public static final int data_status_date_pattern=0x7f090039;
-        public static final int data_status_last_update_summary=0x7f090038;
-        public static final int data_status_stations_list=0x7f090037;
-        public static final int data_status_title=0x7f090036;
+        public static final int crash_toast_text=0x7f090040;
+        public static final int data_launch_update=0x7f090032;
+        public static final int data_status_date_pattern=0x7f090036;
+        public static final int data_status_last_update_summary=0x7f090035;
+        public static final int data_status_stations_list=0x7f090034;
+        public static final int data_status_title=0x7f090033;
         /**  Data status and update 
+ Data status and update 
          */
-        public static final int data_status_update_done=0x7f090033;
-        public static final int data_status_uptodate=0x7f090034;
-        /**  Position 
-         */
-        public static final int distance=0x7f09003a;
-        public static final int error_connection_expired=0x7f090025;
-        public static final int error_initialization_stations=0x7f090027;
-        public static final int error_no_connection=0x7f090026;
-        public static final int error_no_location_available=0x7f09003b;
-        public static final int error_no_location_found=0x7f090029;
-        public static final int error_no_stations_near_current_location=0x7f090028;
+        public static final int data_status_update_done=0x7f090030;
+        public static final int data_status_uptodate=0x7f090031;
+        public static final int error_connection_expired=0x7f090022;
+        public static final int error_initialization_stations=0x7f090024;
+        public static final int error_no_connection=0x7f090023;
+        public static final int error_no_location_found=0x7f090026;
+        public static final int error_no_stations_near_current_location=0x7f090025;
         /**  Errors 
+ Errors 
          */
-        public static final int error_occured=0x7f090023;
-        public static final int error_retry=0x7f090024;
-        public static final int installation_done=0x7f090021;
-        public static final int loading=0x7f09001b;
+        public static final int error_occured=0x7f090020;
+        public static final int error_retry=0x7f090021;
+        public static final int installation_done=0x7f09001e;
         public static final int location=0x7f090016;
-        public static final int location_enable=0x7f09003c;
-        public static final int no=0x7f09001f;
-        public static final int no_station=0x7f090022;
-        public static final int ok=0x7f09001d;
-        public static final int preferences=0x7f09001a;
-        public static final int prefs_filter_least_one_attach_summary=0x7f090045;
-        public static final int prefs_filter_least_one_attach_title=0x7f090044;
-        public static final int prefs_filter_least_one_bike_summary=0x7f090043;
-        public static final int prefs_filter_least_one_bike_title=0x7f090042;
-        /**  Filter 
+        public static final int location_enable=0x7f090038;
+        /**  Position 
+ Position 
          */
-        public static final int prefs_filters=0x7f090041;
-        public static final int prefs_location_enable_gps_summary=0x7f09002d;
-        public static final int prefs_location_enable_gps_title=0x7f09002c;
-        public static final int prefs_position_distance=0x7f09002f;
-        public static final int prefs_position_radius_distance_summary=0x7f090031;
-        public static final int prefs_position_radius_distance_title=0x7f090030;
-        public static final int prefs_position_radius_distance_unit=0x7f090032;
+        public static final int location_none_available=0x7f090037;
+        public static final int no=0x7f09001c;
+        public static final int no_station=0x7f09001f;
+        public static final int ok=0x7f09001a;
+        public static final int preferences=0x7f090018;
+        public static final int prefs_location_enable_gps_summary=0x7f09002a;
+        public static final int prefs_location_enable_gps_title=0x7f090029;
+        public static final int prefs_position_distance=0x7f09002c;
+        public static final int prefs_position_radius_distance_summary=0x7f09002e;
+        public static final int prefs_position_radius_distance_title=0x7f09002d;
+        public static final int prefs_position_radius_distance_unit=0x7f09002f;
         /**  Position Preferences 
+ Position Preferences 
          */
-        public static final int prefs_position_title=0x7f09002e;
-        public static final int prefs_stations_details_summary=0x7f09002b;
+        public static final int prefs_position_title=0x7f09002b;
+        public static final int prefs_stations_details_summary=0x7f090028;
         /**  Home Preferences 
+ Home Preferences 
          */
-        public static final int prefs_stations_details_title=0x7f09002a;
+        public static final int prefs_stations_details_title=0x7f090027;
         /**  Just use standard Pull Down String when pulling up. These can be set for languages which require it 
          */
         public static final int pull_to_refresh_from_bottom_pull_label=0x7f090003;
@@ -1141,24 +1138,26 @@ containing a value of this type.
         public static final int pull_to_refresh_pull_label=0x7f090000;
         public static final int pull_to_refresh_refreshing_label=0x7f090002;
         public static final int pull_to_refresh_release_label=0x7f090001;
-        public static final int refresh=0x7f09001c;
+        public static final int refresh=0x7f090019;
         /**  Search 
+ Search 
          */
-        public static final int search=0x7f09003d;
-        public static final int search_hint=0x7f09003e;
-        public static final int search_no_result=0x7f09003f;
-        public static final int search_suggestion_error=0x7f090040;
-        public static final int station_out_of_service=0x7f090019;
+        public static final int search=0x7f090039;
+        public static final int search_hint=0x7f09003a;
+        public static final int search_no_result=0x7f09003b;
+        public static final int station_out_of_service=0x7f090017;
         /**  Common strings 
+ Common strings 
          */
         public static final int stations_list=0x7f090014;
         public static final int stations_map=0x7f090015;
         public static final int tab_list=0x7f090012;
         public static final int tab_map=0x7f090013;
         /**  Tabs 
+ Tabs 
          */
         public static final int tab_stars=0x7f090011;
-        public static final int yes=0x7f09001e;
+        public static final int yes=0x7f09001b;
     }
     public static final class style {
         public static final int DialogWindowTitle_Sherlock=0x7f0d0033;
@@ -1206,7 +1205,6 @@ containing a value of this type.
         public static final int Theme_Sherlock_NoActionBar=0x7f0d0051;
         public static final int Theme_vlille_checker=0x7f0d0058;
         /**  this style is only referenced in a Light.DarkActionBar based theme 
- this style is only referenced in a Light.DarkActionBar based theme 
          */
         public static final int Theme_vlille_checker_widget=0x7f0d0060;
         public static final int Widget=0x7f0d0000;
@@ -1256,7 +1254,6 @@ containing a value of this type.
         public static final int Widget_Sherlock_TextView_SpinnerItem=0x7f0d0032;
         public static final int vlille_checker_ActionBarTabStyle=0x7f0d005d;
         /**  this style is only referenced in a Light.DarkActionBar based theme 
- this style is only referenced in a Light.DarkActionBar based theme 
          */
         public static final int vlille_checker_DropDownItem=0x7f0d0061;
         public static final int vlille_checker_DropDownListView=0x7f0d005c;
@@ -1264,7 +1261,6 @@ containing a value of this type.
         public static final int vlille_checker_PopupMenu=0x7f0d005b;
         public static final int vlille_checker_ProgressBar=0x7f0d005f;
         /**  this style is only referenced in a Light.DarkActionBar based theme 
- this style is only referenced in a Light.DarkActionBar based theme 
          */
         public static final int vlille_checker_SpinnerItem=0x7f0d0062;
         public static final int vlille_checker_solid_ActionBar=0x7f0d0059;
