@@ -39,17 +39,21 @@ public class AllStationsFragment extends SherlockListFragment {
 		super.onCreate(savedInstanceState);
 		
 		activity = getActivity();
-		stations = VlilleChecker.getDbAdapter().findAll();
 	}
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		refreshStations();
 		
 		addHeaderEditText();
 		initSearchFieldListeners();
 		initFastScroll();
 		setFullAdapter();
+	}
+
+	private void refreshStations() {
+		stations = VlilleChecker.getDbAdapter().findAll();
 	}
 	
 	@Override
