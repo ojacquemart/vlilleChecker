@@ -5,6 +5,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.concurrent.ExecutionException;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.vlille.checker.VlilleChecker;
@@ -48,15 +49,35 @@ public class XMLReader {
 	 * 
 	 * @return The set with metadata and stations. <code>null</code> if vlille website is down. 
 	 * @see #getInputStream(String)
+	 * @deprecated use {@link #getLocalSetStationsInfos(Context)}
 	 */
 	public SetStationsInfos getAsyncSetStationsInfos() {
 		try {
-			return new AsyncFeedReader<SetStationsInfos>(new StationsListSAXParser()).execute(Constants.URL_STATIONS_LIST).get();
+			final StationsListSAXParser parser = new StationsListSAXParser();
+			
+			return new AsyncFeedReader<SetStationsInfos>(parser).execute(Constants.URL_STATIONS_LIST).get();
 		} catch (Exception e) {
 			Log.e(LOG_TAG, "Exception", e);
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * Retrieve all stations informations from local xml.
+	 * 
+	 * @param context the current context.
+	 * @return The set with metadata and stations. <code>null</code> if exception was thrown.
+	 */
+	public SetStationsInfos getLocalSetStationsInfos(final Context context) {
+		try {
+			final InputStream inputStream = context.getAssets().open("vlille_stations.xml");
+			
+			return new StationsListSAXParser().parse(inputStream);
+		} catch (Exception e) {
+			Log.e(LOG_TAG, "Error during reading vlille_stations.xml", e);
+			return null;
+		}
 	}
 	 
 	/**
