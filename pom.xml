@@ -57,7 +57,12 @@
 			<artifactId>library</artifactId>
 			<version>${actionBarSherlock.version}</version>
 			<type>apklib</type>
-			<scope>provided</scope>
+			<exclusions>
+			    <exclusion>
+					<groupId>com.google.android</groupId>
+					<artifactId>android</artifactId>
+			    </exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.actionbarsherlock</groupId>
@@ -76,7 +81,12 @@
 			<artifactId>library</artifactId>
 			<type>apklib</type>
 			<version>${pullToRefresh.version}</version>
-			<scope>provided</scope>
+			<exclusions>
+			    <exclusion>
+					<groupId>com.google.android</groupId>
+					<artifactId>android</artifactId>
+			    </exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.osmdroid</groupId>
@@ -90,6 +100,18 @@
 			<version>${osmdroidBonusPack.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-api</artifactId>
+		    <version>1.6.1</version>
+		    <scope>provided</scope>
+		</dependency>
+		<dependency>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-android</artifactId>
+		    <version>1.6.1-RC1</version>
+		</dependency>
+		
 		
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -123,11 +145,23 @@
 					</sdk>
 				</configuration>
 			</plugin>
- 			<plugin>
+	 		<plugin>
 	          <groupId>org.apache.maven.plugins</groupId>
 	          <artifactId>maven-surefire-plugin</artifactId>
 	          <version>2.12.4</version>
 	        </plugin>	
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>com.google.android:android</exclude>
+						<exclude>commons-logging:commons-logging</exclude>
+						<exclude>xerces:xmlParserAPIs</exclude>
+						<exclude>xpp3:xpp3</exclude>
+					</excludes>
+				</configuration>
+			</plugin>		
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${maven-compiler-plugin.version}</version>
