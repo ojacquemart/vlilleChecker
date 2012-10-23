@@ -1,7 +1,5 @@
-package com.vlille.checker.ui.osm.overlay;
+package com.vlille.checker.ui.osm.overlay.window;
 
-import org.osmdroid.bonuspack.overlays.DefaultInfoWindow;
-import org.osmdroid.bonuspack.overlays.ExtendedOverlayItem;
 import org.osmdroid.views.MapView;
 
 import android.view.View;
@@ -12,6 +10,8 @@ import android.widget.TextView;
 import com.vlille.checker.R;
 import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.model.Station;
+import com.vlille.checker.ui.osm.overlay.ExtendedOverlayItem;
+import com.vlille.checker.ui.osm.overlay.MaskableOverlayItem;
 
 /**
  * A customized InfoWindow handling star or unstar displayed station.

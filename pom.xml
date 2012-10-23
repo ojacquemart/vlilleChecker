@@ -92,13 +92,6 @@
 			<groupId>org.osmdroid</groupId>
 			<artifactId>osmdroid-android</artifactId>
 			<version>${osmdroid.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.osmdroid</groupId>
-			<artifactId>osmdroid-bonuspack</artifactId>
-			<version>${osmdroidBonusPack.version}</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 		    <groupId>org.slf4j</groupId>
@@ -111,7 +104,6 @@
 		    <artifactId>slf4j-android</artifactId>
 		    <version>1.6.1-RC1</version>
 		</dependency>
-		
 		
 		<dependency>
 			<groupId>org.apache.commons</groupId>

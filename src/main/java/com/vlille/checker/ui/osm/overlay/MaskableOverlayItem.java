@@ -1,6 +1,5 @@
 package com.vlille.checker.ui.osm.overlay;
 
-import org.osmdroid.bonuspack.overlays.ExtendedOverlayItem;
 import org.osmdroid.util.GeoPoint;
 
 import android.content.Context;

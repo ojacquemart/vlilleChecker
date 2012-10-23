@@ -3,8 +3,6 @@ package com.vlille.checker.ui.osm.overlay;
 import java.util.List;
 
 import org.osmdroid.ResourceProxy;
-import org.osmdroid.bonuspack.overlays.ExtendedOverlayItem;
-import org.osmdroid.bonuspack.overlays.InfoWindow;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.MapView.Projection;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
@@ -23,6 +21,7 @@ import android.graphics.drawable.Drawable;
 
 import com.vlille.checker.R;
 import com.vlille.checker.model.Station;
+import com.vlille.checker.ui.osm.overlay.window.InfoWindow;
 import com.vlille.checker.utils.ColorSelector;
 
 public class ItemizedOverlayWithFocus<Item extends MaskableOverlayItem> extends ItemizedIconOverlay<Item> {
@@ -54,6 +53,7 @@ public class ItemizedOverlayWithFocus<Item extends MaskableOverlayItem> extends 
 	// Fields
 	// ===========================================================
 
+	private final Point mCurScreenCoords = new Point();
 	protected int mMarkerFocusedBackgroundColor;
 	private Paint mDescriptionPaint, mTitlePaint;
 	protected int mTextSize;	
@@ -234,7 +234,7 @@ public class ItemizedOverlayWithFocus<Item extends MaskableOverlayItem> extends 
 
 		final int zoomLevel = mapView.getZoomLevel();
 		final Projection projection = mapView.getProjection();
-		final int size = this.mInternalItemList.size() - 1;
+		final int size = this.mItemList.size() - 1;
 
 		/* Draw in backward cycle, so the items with the least index are on the front. */
 		for (int i = size; i >= 0; i--) {
@@ -263,11 +263,15 @@ public class ItemizedOverlayWithFocus<Item extends MaskableOverlayItem> extends 
 
 		Overlay.drawAt(canvas, marker, curScreenCoords.x, curScreenCoords.y, false);
 		if (zoomLevelDetailled) {
-			mTitlePaint.setColor(mResourceProxy.getColor(ColorSelector.getColor(station.getBikes())));
+			mTitlePaint.setColor(getResourceProxy().getColor(ColorSelector.getColor(station.getBikes())));
 			canvas.drawText(station.getStringBikes(), mCurScreenCoords.x	-16 * mScale, mCurScreenCoords.y - 45 * mScale, mTitlePaint); 
-			mTitlePaint.setColor(mResourceProxy.getColor(ColorSelector.getColor(station.getAttachs())));
+			mTitlePaint.setColor(getResourceProxy().getColor(ColorSelector.getColor(station.getAttachs())));
 			canvas.drawText(station.getStringAttachs(), mCurScreenCoords.x	-16 * mScale, mCurScreenCoords.y - 22 * mScale, mTitlePaint); 
 		}
+	}
+	
+	private ResourceProxyImpl getResourceProxy() {
+		return (ResourceProxyImpl) mResourceProxy;
 	}
 	
 	private void onDrawFocusBubble(Canvas canvas, int zoomLevel, Projection projection) {
@@ -290,8 +294,7 @@ public class ItemizedOverlayWithFocus<Item extends MaskableOverlayItem> extends 
 		return marker;
 	}
 	
-	@Override
-	protected boolean hitTest(final int zoomLevel, Item item, android.graphics.drawable.Drawable marker, final int hitX,
+	protected boolean hitTest(final int zoomLevel, Item item, Drawable marker, final int hitX,
 			final int hitY) {
 		if (OverlayZoomUtils.isDetailledZoomLevel(zoomLevel) && mMarkerFocused != null) {
 			marker = mMarkerFocused;

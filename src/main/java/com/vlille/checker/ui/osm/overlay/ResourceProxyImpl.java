@@ -18,7 +18,6 @@ public class ResourceProxyImpl extends DefaultResourceProxyImpl {
 		mContext = pContext;
 	}
 
-	@Override
 	public int getColor(final int colorId) {
 		return mContext.getResources().getColor(colorId);
 	}
