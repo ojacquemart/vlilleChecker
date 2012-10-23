@@ -9,11 +9,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -37,12 +39,14 @@ public class StarsListFragment extends SherlockListFragment	 {
 
 	private final String TAG = getClass().getSimpleName();
 	
+	private FragmentActivity activity;
 	private PullToRefreshListView pullRefreshListView;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.d(TAG, "onCreate");
+		activity = getActivity();
 
 		BroadcastReceiver receiver = new BroadcastReceiver() {
 			@Override
@@ -52,7 +56,7 @@ public class StarsListFragment extends SherlockListFragment	 {
 			}
 		};
 		IntentFilter filter = new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION);
-		getActivity().registerReceiver(receiver, filter);
+		activity.registerReceiver(receiver, filter);
 	}
 	
 	@Override
@@ -73,11 +77,11 @@ public class StarsListFragment extends SherlockListFragment	 {
 	}
 
 	private void initPullToRefreshListView() {
-		pullRefreshListView = (PullToRefreshListView) getActivity().findViewById(R.id.stars_pull_refresh_list);
+		pullRefreshListView = (PullToRefreshListView) activity.findViewById(R.id.stars_pull_refresh_list);
 		pullRefreshListView.setOnRefreshListener(new OnRefreshListener<ListView>() {
 			@Override
 			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-//				pullRefreshListView.setLastUpdatedLabel(DateUtils.formatDateTime(getActivity(),
+//				pullRefreshListView.setLastUpdatedLabel(DateUtils.formatDateTime(activity,
 //						System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME
 //								| DateUtils.FORMAT_SHOW_DATE
 //								| DateUtils.FORMAT_ABBREV_ALL));
@@ -92,14 +96,14 @@ public class StarsListFragment extends SherlockListFragment	 {
 		Log.d(TAG, "getPullEventListener");
 		if (isRingerModeNormal()) {
 			return new SoundPullEventListener<ListView>(
-					getActivity(), R.raw.pull_event, R.raw.release_event_bike);
+					activity, R.raw.pull_event, R.raw.release_event_bike);
 		}
 		
 		return null;
 	}
 	
 	private boolean isRingerModeNormal() {
-		final AudioManager audioManager = (AudioManager) getActivity().getSystemService(Service.AUDIO_SERVICE);
+		final AudioManager audioManager = (AudioManager) activity.getSystemService(Service.AUDIO_SERVICE);
 		if (audioManager == null) {
 			return false;
 		}
@@ -123,7 +127,7 @@ public class StarsListFragment extends SherlockListFragment	 {
 		boolean isEmptyStarredStations = starredStations.isEmpty();
 		Log.d(TAG, "Starred stations empty? " + isEmptyStarredStations);
 		
-		ViewUtils.switchView(getActivity().findViewById(R.id.home_nostations_nfo), isEmptyStarredStations);
+		ViewUtils.switchView(activity.findViewById(R.id.home_nostations_nfo), isEmptyStarredStations);
 		if (!isEmptyStarredStations) {
 			loadDetails(starredStations);
 		}
@@ -132,29 +136,36 @@ public class StarsListFragment extends SherlockListFragment	 {
 	private void loadDetails(List<Station> stations) {
 		Log.d(TAG, "loadDetails");
 		// Just to display some toast if network is not up.
-		ContextHelper.isNetworkAvailable(getActivity());
-		
-		// TODO: more test with this error flag.
-		boolean error = false;
+		ContextHelper.isNetworkAvailable(activity);
 		
 		try {
 			new AsyncListStationReader().execute(stations);
 		} catch (Exception e) {
 			Log.e(TAG, "handleStarredStations", e);
-			error = true;
-		}
-		
-		if (error) {
-			ToastUtils.show(getActivity(), R.string.error_connection_expired);
 		}
 	}
 	
-	private void handleAdapter(final List<Station> stations) {
-		final StarsListAdapter adapter = new StarsListAdapter(getActivity(),
-				R.layout.stars_list_content, stations, null);
-		 pullRefreshListView.setAdapter(adapter);
-		 adapter.notifyDataSetChanged();
-		 pullRefreshListView.onRefreshComplete();
+	/**
+	 * Handle adapter.
+	 * 
+	 * @param stations the stations to put into the adapter.
+	 * @return <code>false</code> if the activity is null for some reason, <code>false</code> otherwise.
+	 */
+	private boolean handleAdapter(final List<Station> stations) {
+		if (activity == null) {
+			pullRefreshListView.onRefreshComplete();
+			
+			return false;
+		}
+		
+		final StarsListAdapter adapter = new StarsListAdapter(
+				activity,
+				R.layout.stars_list_content, stations);
+		pullRefreshListView.setAdapter(adapter);
+		adapter.notifyDataSetChanged();
+		pullRefreshListView.onRefreshComplete();
+		
+		return true;
 	}
 	
 	class AsyncListStationReader extends AbstractAsyncStationTask {
@@ -164,7 +175,9 @@ public class StarsListFragment extends SherlockListFragment	 {
 			super.onPostExecute(result);
 			Log.d(TAG, "onPostExecute");
 			
-			handleAdapter(result);
+			if (!handleAdapter(result)) {
+				Toast.makeText(activity, R.string.error_connection_expired, Toast.LENGTH_SHORT).show();
+			}
 		}
 
 		@Override

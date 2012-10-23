@@ -33,15 +33,13 @@ public class StarsListAdapter extends ArrayAdapter<Station> {
 	private Activity activity;
 	private List<Station> stations; /** The stations loaded. */
 	private Resources resources; /** Resources for the color text according to station informations. */
-	private LinearLayout boxAddStation; /** The box containing the add button. */
 
-	public StarsListAdapter(Context context, int resource, List<Station> stations, LinearLayout boxAddStation) {
+	public StarsListAdapter(Context context, int resource, List<Station> stations) {
 		super(context, resource, stations);
 
 		this.activity = (Activity) context;
 		this.stations = stations;
 		this.resources = context.getResources();
-		this.boxAddStation = boxAddStation;
 	}
 
 	@Override
