@@ -12,4 +12,4 @@ before_install:
   - android update sdk --filter 1,9,"addon-google_apis-google-10" --no-ui --force
 
 script:
-  - mvn install -DskipTests=true
+  - mvn install -DskipTests=true -e
