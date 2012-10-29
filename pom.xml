@@ -15,7 +15,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<!-- Plugins -->
-		<android-maven-plugin.version>3.3.0</android-maven-plugin.version>
+		<android-maven-plugin.version>3.1.1</android-maven-plugin.version>
 		<maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
 		<api.platform>16</api.platform>
 
@@ -132,28 +132,14 @@
 				<version>${android-maven-plugin.version}</version>
 				<extensions>true</extensions>
 				<configuration>
+				    <androidManifestFile>${project.basedir}/AndroidManifest.xml</androidManifestFile>
+          			<assetsDirectory>${project.basedir}/assets</assetsDirectory>
 					<sdk>
 						<platform>${api.platform}</platform>
 					</sdk>
+					<undeployBeforeDeploy>true</undeployBeforeDeploy>
 				</configuration>
 			</plugin>
-	 		<plugin>
-	          <groupId>org.apache.maven.plugins</groupId>
-	          <artifactId>maven-surefire-plugin</artifactId>
-	          <version>2.12.4</version>
-	        </plugin>	
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-eclipse-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>com.google.android:android</exclude>
-						<exclude>commons-logging:commons-logging</exclude>
-						<exclude>xerces:xmlParserAPIs</exclude>
-						<exclude>xpp3:xpp3</exclude>
-					</excludes>
-				</configuration>
-			</plugin>		
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${maven-compiler-plugin.version}</version>
