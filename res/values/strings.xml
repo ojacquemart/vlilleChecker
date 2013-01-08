@@ -37,8 +37,8 @@
     <!-- Home Preferences -->
     <string name="prefs_stations_details_title">Stations detail</string>
     <string name="prefs_stations_details_summary">Show the station address</string>
-    <string name="prefs_location_enable_gps_title">Enable GPS provider</string>
-    <string name="prefs_location_enable_gps_summary">Locate stations in using the GPS provider</string>
+    <string name="prefs_location_enable_gps_title">GPS provider</string>
+    <string name="prefs_location_enable_gps_summary">Use GPS to locate your position</string>
 
     <!-- Position Preferences -->
     <string name="prefs_position_title">Location</string>
