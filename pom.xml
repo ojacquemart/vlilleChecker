@@ -26,7 +26,6 @@
 		<acra.version>4.3.0</acra.version>
 		<pullToRefresh.version>1.4.1.1</pullToRefresh.version>
 		<osmdroid.version>3.0.8</osmdroid.version>
-		<osmdroidBonusPack.version>1.0</osmdroidBonusPack.version>
 		
 		<commons-lang3.version>3.1</commons-lang3.version>
 		<commons-collections.version>3.2.1</commons-collections.version>
