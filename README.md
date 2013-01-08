@@ -14,6 +14,7 @@ This project is an unofficial android app for the Vlille service in Lille, Franc
 
 ## Versions
 
+* 01/08/2013: v2.2
 * 10/21/2012: v2.1
 * 10/20/2012: v2.0
 * 06/13/2012: v1.1
@@ -27,14 +28,9 @@ This project uses the following open source libraries:
 * [ActionBarSherlock](https://github.com/JakeWharton/ActionBarSherlock)
 * [PullToRefresh](https://github.com/chrisbanes/Android-PullToRefresh)
 * [OpenStreetMapDroid](http://code.google.com/p/osmdroid/)
-* [OpenStreetMapDroidBonusPack](http://code.google.com/p/osmbonuspack/)
 * [Apache - Commons Lang](http://commons.apache.org/lang/)
 * [Apache - Commons Collections](http://commons.apache.org/collections/)
 * [GPSEmulator to simulate GPS location](http://code.google.com/p/android-gps-emulator/)
-
-osmdroid-bonuspack is not mavenized, so use the following command to install the osmbonuspack.jar in your local repository, and keep the jar in libs directory:
-
-    mvn install:install-file -Dfile=%VLILLE_CHECKER_DIR%/libs/osmbonuspack.jar -DgroupId=org.osmdroid -DartifactId=osmdroid-bonuspack -Dversion=1.0 -Dpackaging=apklib
 
 ## Note
 To edit markdown: (http://dillinger.io/)
