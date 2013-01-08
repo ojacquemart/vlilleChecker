@@ -94,6 +94,10 @@ public class StarsListAdapter extends ArrayAdapter<Station> {
 	private void handleStationDetails(View view, final Station station) {
 		TextView name = (TextView) view.findViewById(R.id.station_name);
 		name.setText(station.getName());
+		TextView lastUpdate = (TextView) view.findViewById(R.id.station_lastupdate);
+		
+		String timeUnitSecond = TextUtils.formatPlural(station.getLastUpdate(), resources.getString(R.string.timeunit_second));
+		lastUpdate.setText(resources.getString(R.string.update_ago, station.getLastUpdate(), timeUnitSecond));
 		
 		TextView adress = (TextView) view.findViewById(R.id.station_adress);
 		adress.setText(TextUtils.toCamelCase(station.getAdress()));

@@ -22,6 +22,8 @@
     <string name="cancel">Annuler</string>
     <string name="installation_done">Récupération des stations terminée</string>
     <string name="no_station">Ajouter des stations via les onglets</string>
+	<string name="update_ago">(il y a %1$d %2$s)</string>
+    <string name="timeunit_second">seconde</string>
 
     <!-- Errors -->
     <string name="error_occured">Une erreur est survenue</string>

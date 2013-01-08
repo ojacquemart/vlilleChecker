@@ -9,14 +9,36 @@
     android:paddingRight="5sp"
     android:paddingTop="0sp" >
 
-	<TextView
-	    android:id="@+id/station_name"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:text="Palais Rameau"
-	    android:textColor="@color/black"
-	    android:textSize="16sp"
-	    android:textStyle="normal" />
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="bottom" >
+
+        <TextView
+            android:id="@+id/station_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="Palais Rameau"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/station_lastupdate"
+            android:layout_marginLeft="5dp"
+            android:layout_alignBaseline="@+id/station_name"
+            android:layout_toRightOf="@+id/station_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:text="(il y a 10 secondes)"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:textStyle="normal" />
+
+    </RelativeLayout>
 
     <LinearLayout 
         android:id="@+id/station_adress_box"

@@ -48,7 +48,7 @@ public class StationDetailHandler extends BaseStationHandler<Station> {
 			if (!StringUtils.isEmpty(data)) {
 				final Long valueOfLastUpdated = Long.valueOf(data.replaceAll("[^\\d]", "").trim());
 				if (valueOfLastUpdated != null) {
-					lastUpdate = System.currentTimeMillis() + valueOfLastUpdated;
+					lastUpdate = valueOfLastUpdated;
 				}
 			}
 

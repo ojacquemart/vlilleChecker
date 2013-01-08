@@ -17,13 +17,11 @@ public abstract class AbstractAsyncStationTask extends AsyncTask<List<Station>, 
 	@Override
 	protected List<Station> doInBackground(List<Station>... params) {
 		Log.d(TAG, "doInBackground");
+		
 		final List<Station> stations = params[0];
 		
 		for (Station eachStation : stations) {
-			final boolean upToDate = eachStation.isUpToDate();
-			if (!upToDate) {
-				XML_READER.updateDetails(eachStation);
-			}
+			XML_READER.updateDetails(eachStation);
 		}
 		
 		return stations;
