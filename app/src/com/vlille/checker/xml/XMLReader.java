@@ -74,8 +74,9 @@ public class XMLReader {
 			
 			return new StationsListSAXParser().parse(inputStream);
 		} catch (Exception e) {
-			Log.e(LOG_TAG, "Error during reading vlille_stations.xml", e);
-			return null;
+            Log.e(LOG_TAG, "Error during reading vlille_stations.xml", e);
+
+            throw new IllegalStateException("Error during reading vlille_stations.xml", e);
 		}
 	}
 	 
