@@ -54,6 +54,8 @@ public class StarsListFragment extends SherlockListFragment
     public void onActivityCreated(Bundle savedInstanceState) {
         Log.d(TAG, "onActivityCreated");
         super.onActivityCreated(savedInstanceState);
+
+        pullToRefreshAttacher.addRefreshableView(getListView(), this);
     }
 
     @Override
@@ -63,7 +65,6 @@ public class StarsListFragment extends SherlockListFragment
         pullToRefreshAttacher.setRefreshing(true);
         setStarsAdapter();
     }
-
 
     private void setStarsAdapter() {
         final List<Station> starredStations = VlilleChecker.getDbAdapter().getStarredStations();
@@ -109,7 +110,6 @@ public class StarsListFragment extends SherlockListFragment
                 activity,
                 R.layout.stars_list_content, stations);
 
-        pullToRefreshAttacher.addRefreshableView(getListView(), this);
         setListAdapter(adapter);
         adapter.notifyDataSetChanged();
 
