@@ -1,0 +1,44 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.5.+'
+    }
+}
+apply plugin: 'android'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.android.support:support-v4:18.0.+'
+    compile 'ch.acra:acra:4.3.0'
+    compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
+    compile 'org.apache.commons:commons-lang3:3.1'
+    compile 'commons-collections:commons-collections:3.2.1'
+    // omsdroid with sl4j dependencies
+    compile 'org.osmdroid:osmdroid-android:3.0.8'
+    compile 'org.slf4j:slf4j-android:1.6.1-RC1'
+    instrumentTestCompile 'junit:junit:4.8.1'
+}
+
+android {
+    compileSdkVersion 18
+    buildToolsVersion '18.0.1'
+	
+	sourceSets {
+    main {
+      manifest.srcFile 'AndroidManifest.xml'
+      java.srcDirs = ['src']
+      res.srcDirs = ['res']
+    }
+  }
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 18
+    }
+}

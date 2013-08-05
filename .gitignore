@@ -1,3 +1,5 @@
-/.settings
-/bin
-/target
+.settings/*
+.gradle/*
+.idea/*
+*.iml
+local.properties
