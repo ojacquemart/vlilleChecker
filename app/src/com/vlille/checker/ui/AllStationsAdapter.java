@@ -15,6 +15,12 @@ import com.vlille.checker.R;
 import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.model.Station;
 
+/**
+ * An adapter to handle all bookmarkable stations.
+ *
+ * This adapter is not used anymore.
+ */
+@Deprecated
 public class AllStationsAdapter extends ArrayAdapter<Station> {
 
 	private List<Station> stations;

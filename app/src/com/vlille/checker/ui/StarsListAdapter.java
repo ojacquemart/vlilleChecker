@@ -30,9 +30,16 @@ public class StarsListAdapter extends ArrayAdapter<Station> {
 
 	private final String LOG_TAG = getClass().getSimpleName();
 
+    public boolean readOnly = false;
+
+    /**
+     * The currenct activity.
+     */
 	private Activity activity;
-	private List<Station> stations; /** The stations loaded. */
-	private Resources resources; /** Resources for the color text according to station informations. */
+    /** The stations loaded. */
+	private List<Station> stations;
+    /** Resources for the color text according to station informations. */
+	private Resources resources;
 
 	public StarsListAdapter(Context context, int resource, List<Station> stations) {
 		super(context, resource, stations);
@@ -53,34 +60,34 @@ public class StarsListAdapter extends ArrayAdapter<Station> {
 			final View stationAdressBox = view.findViewById(R.id.station_adress_box);
 			stationAdressBox.setVisibility(displayStationAdress ? View.VISIBLE : View.GONE);
 		}
-		
-		if (position < 0) {
-			return view;
-		}
 
 		final Station station = stations.get(position);
-		final ArrayAdapter<Station> arrayAdapter = this;
-		CheckBox checkbox = (CheckBox) view.findViewById(R.id.detail_starred);
-		checkbox.setChecked(true);
-		checkbox.setOnClickListener(new android.view.View.OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				stations.remove(position);
-				VlilleChecker.getDbAdapter().star(false, station);
-				arrayAdapter.notifyDataSetChanged();
-				
-				// Redisplay the home no stations info box.
-				// TODO: see to use VlilleSherlockListFragment#hide... method which does the same.
-				if (stations.isEmpty()) {
-					activity.findViewById(R.id.home_nostations_nfo).setVisibility(View.VISIBLE);
-				}
-			}
-		});
+		final CheckBox checkbox = (CheckBox) view.findViewById(R.id.detail_starred);
+        checkbox.setChecked(station.isStarred());
 
-		if (station != null) {
-			handleStationDetails(view, station);
-		}
+        final ArrayAdapter<Station> arrayAdapter = this;
+        checkbox.setOnClickListener(new android.view.View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                VlilleChecker.getDbAdapter().star(checkbox.isChecked(), station);
+                station.setStarred(checkbox.isChecked());
+
+                if (!readOnly) {
+                    stations.remove(position);
+                    arrayAdapter.notifyDataSetChanged();
+
+                    // Redisplay the home no stations info box.
+                    // TODO: see to use VlilleSherlockListFragment#hide... method which does the same.
+                    if (stations.isEmpty()) {
+                        activity.findViewById(R.id.home_nostations_nfo).setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        });
+
+        handleStationDetails(view, station);
 
 		return view;
 	}
@@ -124,9 +131,12 @@ public class StarsListAdapter extends ArrayAdapter<Station> {
 
 	@Override
 	public void notifyDataSetChanged() {
-		Log.d(LOG_TAG, "Station deleted");
+		Log.d(LOG_TAG, "Dataset changed!");
 
 		super.notifyDataSetChanged();
 	}
 
+    public void setReadOnly(boolean readOnly) {
+        this.readOnly = readOnly;
+    }
 }
