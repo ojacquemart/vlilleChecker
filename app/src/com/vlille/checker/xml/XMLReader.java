@@ -3,6 +3,7 @@ package com.vlille.checker.xml;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.concurrent.TimeUnit;
 
 import android.content.Context;
 import android.util.Log;
@@ -30,10 +31,15 @@ public class XMLReader {
 	 */
 	public void updateDetails(Station station)  {
 		try {
+            long start = System.currentTimeMillis();
+
 			final String httpUrl = Constants.URL_STATION_DETAIL + station.getId();
 			station = new StationDetailSAXParser(station).parse(getInputStream(httpUrl));
+
+            long duration = System.currentTimeMillis() - start;
+            Log.d(LOG_TAG, "Update in " + duration + " ms");
 		} catch (Exception e) {
-			Log.e(LOG_TAG, "getDetails throws an exception", e);
+			Log.e(LOG_TAG, "Error during the xml parsing.", e);
 			
 			station.setBikes(null);
 			station.setAttachs(null);
@@ -89,6 +95,8 @@ public class XMLReader {
 		InputStream inputStream = null;
 		
 		try {
+            Log.d(LOG_TAG, "Load url " + httpUrl);
+
 			final URL url = new URL(httpUrl);
 			final URLConnection connection = url.openConnection();
 			connection.setConnectTimeout(CONNECTION_TIMEOUT);
