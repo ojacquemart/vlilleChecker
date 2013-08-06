@@ -136,7 +136,7 @@ public class HomeActivity extends SherlockFragmentActivity {
 	}
 	
 	/**
-	 * {@link AsyncTask} to refresh stations from vlile.fr.
+	 * {@link AsyncTask} to refresh stations from vlille.fr.
 	 */
 	class AsyncRefreshStationsList extends AsyncTask<Void, Void, Void> {
 
