@@ -36,10 +36,10 @@ public class HomeActivity extends SherlockFragmentActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-		Log.d(TAG, "onCreate");
-		
+        Log.d(TAG, "onCreate");
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
+        super.onCreate(savedInstanceState);
 		setContentView(R.layout.home);
 		initTabs();
 		initSherlockProgressBar();
