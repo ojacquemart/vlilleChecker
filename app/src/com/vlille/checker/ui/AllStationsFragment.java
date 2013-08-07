@@ -1,8 +1,5 @@
 package com.vlille.checker.ui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -25,13 +22,24 @@ import com.vlille.checker.ui.async.AbstractAsyncStationTask;
 import com.vlille.checker.utils.StationUtils;
 import com.vlille.checker.utils.ToastUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
+
 /**
  * A fragment to bookmark stations.
  * TODO: create a base fragment for the users stations and the selectable stations.
  */
-public class AllStationsFragment extends SherlockListFragment implements AbsListView.OnScrollListener {
+public class AllStationsFragment extends SherlockListFragment
+        implements AbsListView.OnScrollListener, PullToRefreshAttacher.OnRefreshListener {
 
 	private static final String TAG = AllStationsFragment.class.getName();
+
+    /**
+     * The pullToRefreshAttach.
+     */
+    private PullToRefreshAttacher pullToRefreshAttacher;
 
     /**
      * The current activity.
@@ -53,25 +61,33 @@ public class AllStationsFragment extends SherlockListFragment implements AbsList
      */
     private StarsListAdapter adapter;
 
+    /**
+     * The current AsyncTask.
+     */
+    private StationsAsyncTask asyncTask;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
 
         activity = getActivity();
+        pullToRefreshAttacher = PullToRefreshAttacher.get(activity);
     }
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
         Log.d(TAG, "onActivityCreated");
+        super.onActivityCreated(savedInstanceState);
 
-		refreshStations();
-		
+        pullToRefreshAttacher.addRefreshableView(getListView(), this);
+
+		setStations();
+
 		addHeaderEditText();
 		initSearchFieldListeners();
 		initFastScroll();
-		setFullAdapter();
+		setListAdapter();
 	}
 
     @Override
@@ -82,20 +98,21 @@ public class AllStationsFragment extends SherlockListFragment implements AbsList
         updateAsRunnableVisibleItems(stations);
     }
 
-    private void refreshStations() {
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause");
+        hideInputMethodManager();
+        cancelAsyncTask();
+    }
+
+    private void setStations() {
         originalStations = VlilleChecker.getDbAdapter().findAll();
 		stations = new ArrayList<Station>(originalStations);
 	}
-	
-	@Override
-	public void onPause() {
-		super.onPause();
-		Log.d(TAG, "onPause");
-		hideInputMethodManager();
-	}
 
 	/**
-	 * setListAdapter(null) is a a hack to avoid java.lang.IllegalStateException: Cannot add header view to list -- setAdapter has already been called.
+	 * setListAdapter(null) is a a hack to avoid java.lang.IllegalStateException: Cannot add header view to list -- setListAdapter has already been called.
 	 * @see <a href="http://stackoverflow.com/questions/5704478/best-place-to-addheaderview-in-listfragment">Add heaver view in list fragment</a>
 	 */
 	private void addHeaderEditText() {
@@ -117,52 +134,55 @@ public class AllStationsFragment extends SherlockListFragment implements AbsList
 	private void initSearchTextListener() {
 		final EditText searchField = getSearchField();
 		searchField.setOnKeyListener(new View.OnKeyListener() {
-			
-			@Override
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				Log.d(TAG, "onKeyListener " + event);
-				if (hasPressedOk(keyCode, event)) {
-					hideInputMethodManager();
-					
-					final String keyword = searchField.getText().toString();
-					filterStationsByKeyword(keyword);
-				}
-				
-				return false;
-			}
 
-			private boolean hasPressedOk(int keyCode, KeyEvent event) {
-				return event.getAction() == KeyEvent.ACTION_DOWN
-						    && keyCode == KeyEvent.KEYCODE_ENTER;
-			}
-		});
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                Log.d(TAG, "onKeyListener " + event);
+                if (hasPressedOk(keyCode, event)) {
+                    hideInputMethodManager();
+
+                    final String keyword = searchField.getText().toString();
+                    filterStationsByKeyword(keyword);
+                }
+
+                return false;
+            }
+
+            private boolean hasPressedOk(int keyCode, KeyEvent event) {
+                return event.getAction() == KeyEvent.ACTION_DOWN
+                        && keyCode == KeyEvent.KEYCODE_ENTER;
+            }
+        });
 	}
-	
+
+    /**
+     * Hides the input text field when searched for some station.
+     */
 	private void hideInputMethodManager() {
 		InputMethodManager imm = (InputMethodManager) activity
 				.getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(getSearchField().getWindowToken(), 0);
 	}
-	
+
 	private void initClearTextListener() {
 		final ImageButton clearButton = (ImageButton) activity.findViewById(R.id.list_search_field_clear);
 		clearButton.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Log.d(TAG, "clear search editText");
-				getSearchField().setText(null);
-				filterStationsByKeyword(null);
-			}
-		});
+
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Clear search editText");
+                getSearchField().setText(null);
+                filterStationsByKeyword(null);
+            }
+        });
 	}
-	
+
 	private EditText getSearchField() {
 		final EditText searchField = (EditText) activity.findViewById(R.id.list_search_field);
 
 		return searchField;
 	}
-	
+
 	private void initFastScroll() {
 		getListView().setFastScrollEnabled(true);
 	}
@@ -177,15 +197,11 @@ public class AllStationsFragment extends SherlockListFragment implements AbsList
             stations = filteredStations;
 		}
 
-        setAdapter();
+        setListAdapter();
         updateAsRunnableVisibleItems(filteredStations);
     }
-	
-	private void setFullAdapter() {
-		setAdapter();
-	}
-	
-	private void setAdapter() {
+
+	private void setListAdapter() {
         adapter = new StarsListAdapter(activity, R.layout.stars_list_content, stations);
         adapter.setReadOnly(true);
         setListAdapter(adapter);
@@ -193,10 +209,11 @@ public class AllStationsFragment extends SherlockListFragment implements AbsList
 
     @Override
     public void onScrollStateChanged(AbsListView absListView, int scrollState) {
+        Log.d(TAG, "onScrollStateChanged with state " + scrollState);
+
         if (scrollState == SCROLL_STATE_IDLE) {
             updateVisibleItems();
         }
-        Log.d(TAG, "onScrollStateChanged with state " + scrollState);
     }
 
     /**
@@ -217,28 +234,54 @@ public class AllStationsFragment extends SherlockListFragment implements AbsList
      */
     private void updateVisibleItems() {
         int lastVisibileRow = getListView().getLastVisiblePosition();
-        Log.d(TAG, "Last visible row = " + lastVisibileRow);
+        Log.d(TAG, "Index of last visible row = " + lastVisibileRow);
 
         if (lastVisibileRow != -1) {
+            Log.d(TAG, "Update only visible stations");
+
             int firstVisibleRow = getListView().getFirstVisiblePosition();
             List<Station> subStations = stations.subList(firstVisibleRow, lastVisibileRow);
 
-            new AsyncStationsRetriever().execute(subStations);
-
+            asyncTask = getNewAsyncTask();
+            asyncTask.execute(subStations);
         }
     }
+
+    /**
+     * Cancels the maybe running task and gets a new one.
+     */
+    private StationsAsyncTask getNewAsyncTask() {
+        cancelAsyncTask();
+        asyncTask = new StationsAsyncTask();
+
+        return asyncTask;
+    }
+
+    /**
+     * Cancels the maybe running async task.
+     */
+    private void cancelAsyncTask() {
+        if (asyncTask != null) {
+            asyncTask.cancel();
+        }
+    }
+
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem,int visibleItemCount, int totalItemCount) {
     }
 
-    class AsyncStationsRetriever extends AbstractAsyncStationTask {
+    @Override
+    public void onRefreshStarted(View view) {
+    }
+
+    class StationsAsyncTask extends AbstractAsyncStationTask {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             Log.d(TAG, "onPreExecute");
-            getSherlockActivity().setProgressBarIndeterminateVisibility(true);
+            setProgressBarIndeterminateVisibility(true);
         }
 
         @Override
@@ -252,7 +295,20 @@ public class AllStationsFragment extends SherlockListFragment implements AbsList
         protected void onPostExecute(List<Station> result) {
             super.onPostExecute(result);
             Log.d(TAG, "onPostExecute");
-            getSherlockActivity().setProgressBarIndeterminateVisibility(false);
+
+            setProgressBarIndeterminateVisibility(false);
+        }
+
+        public void cancel() {
+            if (getStatus() == Status.RUNNING) {
+                Log.d(TAG, "Cancel the async task");
+                cancel(false);
+                setProgressBarIndeterminateVisibility(false);
+            }
+        }
+
+        private void setProgressBarIndeterminateVisibility(boolean visible) {
+            pullToRefreshAttacher.setRefreshing(visible);
         }
     }
 }
