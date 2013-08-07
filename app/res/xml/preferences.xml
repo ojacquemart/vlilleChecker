@@ -24,7 +24,7 @@
         <Preference
             android:key="data_status_last_update"
             android:summary="data_status_last_update_summary"
-            android:title="@string/data_status_stations_list" />
+            android:title="Stations list" />
     </PreferenceCategory>
 
     <!-- TODO: Later if really/ needed -->

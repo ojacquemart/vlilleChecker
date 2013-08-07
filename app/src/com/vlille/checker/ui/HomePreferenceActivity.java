@@ -25,7 +25,7 @@ import com.vlille.checker.utils.PreferenceKeys;
 
 public class HomePreferenceActivity extends SherlockPreferenceActivity implements OnSeekBarChangeListener {
 
-	private final String TAG = getClass().getSimpleName();
+	private static final String TAG = HomePreferenceActivity.class.getSimpleName();
 	
 	private LocationManagerWrapper locationManagerWrapper;
 	private boolean hasClickedOnLocalisationActivationAndNeedsGpsCheck;
@@ -45,9 +45,23 @@ public class HomePreferenceActivity extends SherlockPreferenceActivity implement
 	}
 
 	private void setLastDataStatusUpdate() {
-		final Preference lastUpdatePreference = findPreference(PreferenceKeys.DATA_STATUS_LAST_UPDATE);
-		lastUpdatePreference.setSummary(getDataStatusLastUpdateMessage());
+        final Preference lastUpdatePreference = findPreference(PreferenceKeys.DATA_STATUS_LAST_UPDATE);
+        lastUpdatePreference.setTitle(getDataStatusStationsNumber());
+        lastUpdatePreference.setSummary(getDataStatusLastUpdateMessage());
 	}
+
+    private String getDataStatusStationsNumber() {
+        return getString(R.string.data_status_stations_number, VlilleChecker.getDbAdapter().count());
+    }
+
+    private String getDataStatusLastUpdateMessage() {
+        final Metadata metadata = VlilleChecker.getDbAdapter().findMetadata();
+        final Date lastUpdate = new Date(metadata.getLastUpdate());
+        final String formatPattern = getString(R.string.data_status_date_pattern);
+        final String lastUpdateFormatted = new SimpleDateFormat(formatPattern).format(lastUpdate);
+
+        return getString(R.string.data_status_last_update_summary, lastUpdateFormatted);
+    }
 
 	private void onChangeGpsActivated() {
 		final Preference prefGpsProviderOn = findPreference(PreferenceKeys.LOCALISATION_GPS_ACTIVATED);
@@ -70,15 +84,6 @@ public class HomePreferenceActivity extends SherlockPreferenceActivity implement
 				return true;
 			}
 		});
-	}
-
-	private String getDataStatusLastUpdateMessage() {
-		final Metadata metadata = VlilleChecker.getDbAdapter().findMetadata();
-		final Date lastUpdate = new Date(metadata.getLastUpdate());
-		final String formatPattern = getString(R.string.data_status_date_pattern);
-		final String lastUpdateFormatted = new SimpleDateFormat(formatPattern).format(lastUpdate);
-		
-		return getString(R.string.data_status_last_update_summary, lastUpdateFormatted);
 	}
 
 	@Override

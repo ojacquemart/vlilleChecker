@@ -52,7 +52,7 @@
     <string name="data_status_uptodate">Stations are already up to date</string>
     <string name="data_launch_update">Update stations list</string>
     <string name="data_status_title">Data status</string>
-    <string name="data_status_stations_list">Stations list</string>
+    <string name="data_status_stations_number">%1d stations</string>
     <string name="data_status_last_update_summary">Last update: %1s</string>
     <string name="data_status_date_pattern">dd/MM/yyyy HH:mm</string>
 

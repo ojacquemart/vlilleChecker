@@ -31,7 +31,7 @@ import com.vlille.checker.xml.XMLReader;
  */
 public class DbAdapter {
 	
-	private final String TAG = getClass().getSimpleName();
+	private static final String TAG = DbAdapter.class.getSimpleName();
 
 	private SQLiteDatabase db;
 	private VlilleOpenHelper helper;
@@ -108,14 +108,34 @@ public class DbAdapter {
 	public List<Station> getStarredStations() {
 		return search(StationTableFields.starred + "=1", StationTableFields.suggest_text_1.toString());
 	}
-	
+
 	private List<Station> search(String where, String order) {
-		final Cursor cursor = db.query(StationTable.TABLE_NAME,
-				StationTableFields.getProjection(),
-				where, null, null, null, order);
-		
+	    Cursor cursor = getCursor(
+                StationTable.TABLE_NAME,
+                StationTableFields.getProjection(),
+                where, order);
+
 		return new StationCursorTransformer(cursor).all();
 	}
+
+    /**
+     * Returns the stations number.
+     */
+    public int count() {
+        long start = System.currentTimeMillis();
+        int count = getCursor(
+                StationTable.TABLE_NAME,
+                StationTableFields.getProjectionId(),
+                null, null).getCount();
+        long duration = System.currentTimeMillis() - start;
+        Log.d(TAG, String.format("Retrieved %d stations in %d ms", count, duration));
+
+        return count;
+    }
+
+    private Cursor getCursor(String tableName, String[] projectionFields, String where, String order) {
+        return db.query(tableName, projectionFields, where, null, null, null, order);
+    }
 	
 	public void star(Station station) {
 		star(true, station);
@@ -129,7 +149,7 @@ public class DbAdapter {
 	 * Star or unstar one single station.
 	 * 
 	 * @param star The starred value.
-	 * @param stationId The station id.
+	 * @param station The station.
 	 */
 	public void star(boolean star, Station station) {
 		Log.d(TAG, "station " + station.getName() + " star? " + star);
