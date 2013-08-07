@@ -1,7 +1,5 @@
 package com.vlille.checker.ui;
 
-import java.util.List;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -19,10 +17,12 @@ import com.vlille.checker.ui.async.AbstractAsyncStationTask;
 import com.vlille.checker.utils.ContextHelper;
 import com.vlille.checker.utils.ViewUtils;
 
+import java.util.List;
+
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 /**
- * Fragment activity wich displays starred stations.
+ * A Fragment activity to display stations in bookmarks.
  */
 public class StarsListFragment extends SherlockListFragment
         implements PullToRefreshAttacher.OnRefreshListener {
@@ -36,8 +36,8 @@ public class StarsListFragment extends SherlockListFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
-        activity = getActivity();
 
+        activity = getActivity();
         pullToRefreshAttacher = PullToRefreshAttacher.get(activity);
     }
 
@@ -62,7 +62,7 @@ public class StarsListFragment extends SherlockListFragment
     public void onResume() {
         super.onResume();
         Log.d(TAG, "onResume");
-        pullToRefreshAttacher.setRefreshing(true);
+
         setStarsAdapter();
     }
 
@@ -128,6 +128,7 @@ public class StarsListFragment extends SherlockListFragment
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            pullToRefreshAttacher.setRefreshing(true);
 
             Log.d(TAG, "onPreExecute");
         }
