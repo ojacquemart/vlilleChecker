@@ -26,7 +26,7 @@ import com.vlille.checker.utils.ViewUtils;
 /**
  * Adapter for the stars stations detail.
  */
-public class StarsListAdapter extends ArrayAdapter<Station> {
+public class DefaultStationsAdapter extends ArrayAdapter<Station> {
 
 	private final String LOG_TAG = getClass().getSimpleName();
 
@@ -41,7 +41,7 @@ public class StarsListAdapter extends ArrayAdapter<Station> {
     /** Resources for the color text according to station informations. */
 	private Resources resources;
 
-	public StarsListAdapter(Context context, int resource, List<Station> stations) {
+	public DefaultStationsAdapter(Context context, int resource, List<Station> stations) {
 		super(context, resource, stations);
 
 		this.activity = (Activity) context;

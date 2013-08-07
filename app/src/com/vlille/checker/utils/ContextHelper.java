@@ -6,7 +6,6 @@ import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 
 import com.vlille.checker.R;
-import com.vlille.checker.ui.StarsListAdapter;
 
 /**
  * Helper for {@link Context}.
@@ -33,7 +32,7 @@ public final class ContextHelper {
 	}
 	
 	/**
-	 * Display or hide the address box for the {@link StarsListAdapter}
+	 * Display or hide the address box for the {@link com.vlille.checker.ui.DefaultStationsAdapter}
 	 */
 	public static boolean isDisplayingStationAdress(Context context) {
 		return PreferenceManager.getDefaultSharedPreferences(context)
