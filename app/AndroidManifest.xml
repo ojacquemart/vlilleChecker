@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.vlille.checker"
-    android:versionCode="5"
-    android:versionName="2.2"
+    android:versionCode="6"
+    android:versionName="3.0-SNAPSHOT"
     android:installLocation="auto">
 
-    <!-- Supports >= android 2.1 -->
+    <!-- Supports >= android 4.0 -->
     <uses-sdk
-        android:minSdkVersion="3"
-        android:targetSdkVersion="16" />
+        android:minSdkVersion="14"
+        android:targetSdkVersion="18" />
 
     <!-- Permissions -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
