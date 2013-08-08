@@ -116,7 +116,8 @@ abstract class StationsListFragment extends SherlockListFragment
     public void onScrollStateChanged(AbsListView absListView, int scrollState) {
         Log.d(TAG, "onScrollStateChanged with state " + scrollState);
 
-        if (scrollState == SCROLL_STATE_IDLE) {
+        int firstVisiblePosition = absListView.getFirstVisiblePosition();
+        if (scrollState == SCROLL_STATE_IDLE && firstVisiblePosition > 0) {
             updateVisibleItems();
         }
     }
@@ -127,15 +128,8 @@ abstract class StationsListFragment extends SherlockListFragment
 
     @Override
     public void onRefreshStarted(View view) {
-        if (updateOnRefreshStarted()) {
-            updateVisibleItems();
-        }
+        updateVisibleItems();
     }
-
-    /**
-     * Returns whetever if visible elements need to be refresh on pull.
-     */
-    abstract boolean updateOnRefreshStarted();
 
     /**
      * Update visible stations using the ListView#post method to get the correct last visible item position.
@@ -157,15 +151,15 @@ abstract class StationsListFragment extends SherlockListFragment
         Log.d(TAG, "Index of last visible row = " + lastVisibleRowPosition);
 
         if (lastVisibleRowPosition > 0) {
-            int firstVisibleRow = getListView().getFirstVisiblePosition();
+            int firstVisiblePosition = getFirstVisiblePosition();
             Log.d(TAG, String.format(
                 "Update only visible stations from %d to %d for a list of %d elements",
-                firstVisibleRow,
+                    firstVisiblePosition,
                 lastVisibleRowPosition,
                 stations.size())
             );
 
-            List<Station> subStations = stations.subList(firstVisibleRow, lastVisibleRowPosition);
+            List<Station> subStations = stations.subList(firstVisiblePosition, lastVisibleRowPosition);
 
             asyncTask = getNewAsyncTask();
             asyncTask.execute(subStations);
@@ -184,6 +178,16 @@ abstract class StationsListFragment extends SherlockListFragment
         }
 
         return lastVisibleRowPosition;
+    }
+
+    private int getFirstVisiblePosition() {
+        int firstVisibleRow = getListView().getFirstVisiblePosition();
+        if (firstVisibleRow > 1 && stations.size() > 1) {
+            // -1 to load the almost visible row above the first visible.
+            return firstVisibleRow - 1;
+        }
+
+        return firstVisibleRow;
     }
 
     /**

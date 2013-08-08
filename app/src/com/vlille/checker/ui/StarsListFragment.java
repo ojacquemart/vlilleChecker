@@ -18,7 +18,6 @@ public class StarsListFragment extends StationsListFragment {
 
     private static final String TAG = StarsListFragment.class.getName();
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView");
@@ -32,11 +31,6 @@ public class StarsListFragment extends StationsListFragment {
     void loadStations() {
         setStations(VlilleChecker.getDbAdapter().getStarredStations());
         ViewUtils.switchView(getActivity().findViewById(R.id.home_nostations_nfo), getStations().isEmpty());
-    }
-
-    @Override
-    boolean updateOnRefreshStarted() {
-        return true;
     }
 
     @Override

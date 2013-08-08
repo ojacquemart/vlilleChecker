@@ -53,11 +53,6 @@ public class AllStationsFragment extends StationsListFragment {
         setStations(new ArrayList<Station>(originalStations));
     }
 
-    @Override
-    boolean updateOnRefreshStarted() {
-        return false;
-    }
-
     /**
 	 * setListAdapter(null) is a a hack to avoid java.lang.IllegalStateException: Cannot add header view to list -- setListAdapter has already been called.
 	 * @see <a href="http://stackoverflow.com/questions/5704478/best-place-to-addheaderview-in-listfragment">Add heaver view in list fragment</a>
