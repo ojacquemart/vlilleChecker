@@ -10,6 +10,7 @@ import com.actionbarsherlock.app.SherlockListFragment;
 import com.vlille.checker.R;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.ui.async.AbstractAsyncStationTask;
+import com.vlille.checker.utils.ContextHelper;
 
 import java.util.List;
 
@@ -147,6 +148,14 @@ abstract class StationsListFragment extends SherlockListFragment
      * Update visible stations.
      */
     public void updateVisibleItems() {
+        if (!ContextHelper.isNetworkAvailable(activity)) {
+            setProgressIndeterminateVisibility(false);
+        } else {
+            doUpdateVisibleItems();
+        }
+    }
+
+    private void doUpdateVisibleItems() {
         int lastVisibleRowPosition = getLastVisiblePosition();
         Log.d(TAG, "Index of last visible row = " + lastVisibleRowPosition);
 
@@ -209,6 +218,10 @@ abstract class StationsListFragment extends SherlockListFragment
         }
     }
 
+    private void setProgressIndeterminateVisibility(boolean visible) {
+        pullToRefreshAttacher.setRefreshing(visible);
+    }
+
     public void setStations(List<Station> stations) {
         Log.d(TAG, String.format("Set %d stations", stations.size()));
 
@@ -254,9 +267,6 @@ abstract class StationsListFragment extends SherlockListFragment
             }
         }
 
-        private void setProgressIndeterminateVisibility(boolean visible) {
-            pullToRefreshAttacher.setRefreshing(visible);
-        }
     }
 
 }

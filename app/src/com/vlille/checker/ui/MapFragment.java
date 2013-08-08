@@ -1,9 +1,5 @@
 package com.vlille.checker.ui;
 
-import java.util.List;
-
-import org.osmdroid.util.GeoPoint;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,18 +14,20 @@ import com.vlille.checker.model.SetStationsInfos;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.ui.osm.MapState;
 import com.vlille.checker.ui.osm.VlilleMapView;
+
+import org.osmdroid.util.GeoPoint;
+
+import java.util.List;
  
 /**
- * Select stations from maps.
- * It allows to select your station browsing the stations map.
+ * A fragment to localize and bookmark stations from a map, using OpenStreetMap.
  */
 public class MapFragment extends SherlockFragment {
 
-	private final String TAG = getClass().getSimpleName();
-	
+	private static final String TAG = MapFragment.class.getSimpleName();
+
 	private MapState state = new MapState();
 	private VlilleMapView mapView;
-	
 	private List<Station> stations;
 	
 	@Override

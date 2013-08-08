@@ -1,10 +1,5 @@
 package com.vlille.checker.xml;
 
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.concurrent.TimeUnit;
-
 import android.content.Context;
 import android.util.Log;
 
@@ -14,6 +9,10 @@ import com.vlille.checker.model.Station;
 import com.vlille.checker.utils.Constants;
 import com.vlille.checker.xml.detail.StationDetailSAXParser;
 import com.vlille.checker.xml.list.StationsListSAXParser;
+
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 public class XMLReader {
 	

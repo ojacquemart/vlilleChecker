@@ -1,7 +1,5 @@
 package com.vlille.checker.ui;
 
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
@@ -23,23 +21,19 @@ import com.vlille.checker.utils.ContextHelper;
 import com.vlille.checker.utils.TextUtils;
 import com.vlille.checker.utils.ViewUtils;
 
+import java.util.List;
+
 /**
  * Adapter for the stars stations detail.
  */
 public class DefaultStationsAdapter extends ArrayAdapter<Station> {
 
-	private final String LOG_TAG = getClass().getSimpleName();
+	private  static final String TAG = DefaultStationsAdapter.class.getSimpleName();
 
-    public boolean readOnly = false;
-
-    /**
-     * The currenct activity.
-     */
 	private Activity activity;
-    /** The stations loaded. */
-	private List<Station> stations;
-    /** Resources for the color text according to station informations. */
-	private Resources resources;
+    private List<Station> stations;
+    private Resources resources;
+    private boolean readOnly = false;
 
 	public DefaultStationsAdapter(Context context, int resource, List<Station> stations) {
 		super(context, resource, stations);
@@ -56,9 +50,9 @@ public class DefaultStationsAdapter extends ArrayAdapter<Station> {
 			view = layout.inflate(R.layout.stars_list_content, null);
 			
 			// Hide or display the adress box.
-			final boolean displayStationAdress = ContextHelper.isDisplayingStationAdress(getContext());
 			final View stationAdressBox = view.findViewById(R.id.station_adress_box);
-			stationAdressBox.setVisibility(displayStationAdress ? View.VISIBLE : View.GONE);
+            final boolean displayStationAdress = ContextHelper.isDisplayingStationAdress(getContext());
+            ViewUtils.switchView(stationAdressBox, displayStationAdress);
 		}
 
 		final Station station = stations.get(position);
@@ -78,8 +72,6 @@ public class DefaultStationsAdapter extends ArrayAdapter<Station> {
                     stations.remove(position);
                     arrayAdapter.notifyDataSetChanged();
 
-                    // Redisplay the home no stations info box.
-                    // TODO: see to use VlilleSherlockListFragment#hide... method which does the same.
                     if (stations.isEmpty()) {
                         activity.findViewById(R.id.home_nostations_nfo).setVisibility(View.VISIBLE);
                     }
@@ -101,10 +93,12 @@ public class DefaultStationsAdapter extends ArrayAdapter<Station> {
 	private void handleStationDetails(View view, final Station station) {
 		TextView name = (TextView) view.findViewById(R.id.station_name);
 		name.setText(station.getName());
-		TextView lastUpdate = (TextView) view.findViewById(R.id.station_lastupdate);
-		
-		String timeUnitSecond = TextUtils.formatPlural(station.getLastUpdate(), resources.getString(R.string.timeunit_second));
-		lastUpdate.setText(resources.getString(R.string.update_ago, station.getLastUpdate(), timeUnitSecond));
+
+        String timeUnitSecond = TextUtils.formatPlural(
+                station.getLastUpdate(),
+                resources.getString(R.string.timeunit_second));
+        TextView lastUpdate = (TextView) view.findViewById(R.id.station_lastupdate);
+        lastUpdate.setText(resources.getString(R.string.update_ago, station.getLastUpdate(), timeUnitSecond));
 		
 		TextView adress = (TextView) view.findViewById(R.id.station_adress);
 		adress.setText(TextUtils.toCamelCase(station.getAdress()));
@@ -131,7 +125,7 @@ public class DefaultStationsAdapter extends ArrayAdapter<Station> {
 
 	@Override
 	public void notifyDataSetChanged() {
-		Log.d(LOG_TAG, "Dataset changed!");
+		Log.d(TAG, "Dataset has changed!");
 
 		super.notifyDataSetChanged();
 	}
@@ -139,4 +133,5 @@ public class DefaultStationsAdapter extends ArrayAdapter<Station> {
     public void setReadOnly(boolean readOnly) {
         this.readOnly = readOnly;
     }
+
 }

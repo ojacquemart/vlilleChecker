@@ -1,10 +1,5 @@
 package com.vlille.checker.ui;
 
-import java.io.InputStream;
-import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
-
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
@@ -23,9 +18,13 @@ import com.vlille.checker.db.DbAdapter;
 import com.vlille.checker.model.SetStationsInfos;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.ui.listener.TabListener;
+import com.vlille.checker.utils.CollectionUtils;
 import com.vlille.checker.utils.Constants;
 import com.vlille.checker.xml.XMLReader;
 import com.vlille.checker.xml.list.StationsListSAXParser;
+
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * Home Vlille Checker activity.
@@ -182,7 +181,6 @@ public class HomeActivity extends SherlockFragmentActivity {
 				return false;
 			}
 			
-			@SuppressWarnings("unchecked")
 			final List<Station> newStations = (List<Station>) CollectionUtils.disjunction(existingStations, dbAdapter.findAll());
 			for (Station eachNewStation : newStations) {
 				dbAdapter.insertStation(eachNewStation);

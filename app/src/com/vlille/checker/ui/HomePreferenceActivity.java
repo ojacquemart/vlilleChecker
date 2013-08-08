@@ -1,8 +1,5 @@
 package com.vlille.checker.ui;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences.Editor;
@@ -23,7 +20,16 @@ import com.vlille.checker.ui.osm.location.LocationManagerWrapper;
 import com.vlille.checker.utils.ContextHelper;
 import com.vlille.checker.utils.PreferenceKeys;
 
-public class HomePreferenceActivity extends SherlockPreferenceActivity implements OnSeekBarChangeListener {
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+/**
+ * A Preference activity to handle users settings.
+ *
+ * TODO: remove deprecated code.
+ */
+public class HomePreferenceActivity extends SherlockPreferenceActivity
+        implements OnSeekBarChangeListener {
 
 	private static final String TAG = HomePreferenceActivity.class.getSimpleName();
 	
