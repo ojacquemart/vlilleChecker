@@ -93,11 +93,14 @@ public class VlilleMapView extends MapView implements LocationListener {
 	private void initCenter() {
 		Log.d(TAG, "initCenter");
 		GeoPoint center = new GeoPoint(state.currentCenter);
-		
-		MapController mMapController = getController();
-		mMapController.setZoom(state.zoomLevel);
-		mMapController.setCenter(center);
+		setCenter(center);
 	}
+
+    public void setCenter(GeoPoint center) {
+        MapController mMapController = getController();
+        mMapController.setZoom(state.zoomLevel);
+        mMapController.setCenter(center);
+    }
 	
 	//=========
 	// Location
@@ -358,40 +361,6 @@ public class VlilleMapView extends MapView implements LocationListener {
 			invalidate();
 		}
 	}
-
-	// public void initCenter() {
-	// Log.d(LOG_TAG, "#initCenter");
-	//
-	// if (!locationEnabled) {
-	// defaultCenter();
-	// } else {
-	// locationCenter();
-	// }
-	// }
-
-	// private void defaultCenter() {
-	// center(new GeoPoint(metadata.getLatitude1e6(), metadata.getLongitude1e6()));
-	// }
-	//
-	// public void locationCenter() {
-	// clearOverlays();
-	//
-	// Log.d(LOG_TAG, "Current location not null : " + (currentLocation != null));
-	// if (currentLocation != null) {
-	// Log.i(LOG_TAG, "Center map and draw circle overlay");
-	//
-	// int latitudeE6 = PositionTransformer.toE6(currentLocation.getLatitude());
-	// int longitudeE6 = PositionTransformer.toE6(currentLocation.getLongitude());
-	//
-	// // Center on the current location.
-	// center(new org.osmdroid.util.GeoPoint(latitudeE6, longitudeE6));
-	//
-	// // Draw the circle overlay.
-	// // PositionCircleOverlay circleOverlay = new PositionCircleOverlay(latitudeE6, longitudeE6);
-	// // getOverlays().add(circleOverlay);
-	// }
-	// }
-	//
 
 	//=====================
 	// onZoomAndPanListener

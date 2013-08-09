@@ -13,6 +13,13 @@ public class MapState {
 
 	public GeoPoint currentCenter;
 	public int zoomLevel;
+
+    /**
+     * Checks if state has been initialized.
+     */
+    public boolean isInitialized() {
+        return currentCenter != null && zoomLevel > 0;
+    }
 	
 	/**
 	 * Save current map state.

@@ -149,12 +149,14 @@
     <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="0.1dp"
             android:id="@+id/station_actions"
             android:orientation="horizontal"
             android:gravity="center"
             android:background="@color/grey">
 
         <ImageButton
+                android:id="@+id/station_action_tomap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/location_place"
@@ -163,7 +165,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/location_directions"
-                android:text="lol"
                 />
     </LinearLayout>
 </LinearLayout>

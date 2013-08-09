@@ -36,8 +36,11 @@ public class MapFragment extends SherlockFragment {
 		Log.d(TAG, "onCreate");
 		
 		SetStationsInfos setStationsInfos = VlilleChecker.getDbAdapter().findSetStationsInfos();
-		this.state.save(VlilleMapView.DEFAULT_CENTER_GEO_POINT, VlilleMapView.DEFAULT_ZOOM_LEVEL);
+        if (!this.state.isInitialized()) {
+            this.state.save(VlilleMapView.DEFAULT_CENTER_GEO_POINT, VlilleMapView.DEFAULT_ZOOM_LEVEL);
+        }
 		this.stations = setStationsInfos.getStations();
+
 	}
 	
 	@Override
@@ -45,7 +48,7 @@ public class MapFragment extends SherlockFragment {
 			Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.d(TAG, "onCreateView");
-		
+
 		final View view = inflater.inflate(R.layout.maps, container, false);
 		mapView = (VlilleMapView) view.findViewById(R.id.mapview);
 		mapView.setMapInfos(state, stations);
@@ -56,6 +59,12 @@ public class MapFragment extends SherlockFragment {
 		
 		return view;
 	}
+
+    public void setCenter(GeoPoint center) {
+        Log.d(TAG, "setCenter " + center);
+        this.state.currentCenter = center;
+        this.state.zoomLevel = VlilleMapView.DEFAULT_ZOOM_LEVEL;
+    }
 
 	private void addLocationEnablerClickListener(final View view) {
 		final ImageButton locationEnabler = (ImageButton) view.findViewById(R.id.maps_location_enable);

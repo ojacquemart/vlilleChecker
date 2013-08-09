@@ -42,25 +42,27 @@ public class Station implements Serializable, GetContentValues {
 	private boolean outOfService;
 	private long lastUpdate;
 	private boolean starred;
-	
+
+    private boolean selected;
+
 	/**
 	 * To sort. TODO: implement the solution.
 	 */
 	private Integer ordinal;
-	
+
 	public Station() {
 	}
-	
+
 	public Station(String id) {
 		this.id = id;
 	}
-	
+
 	public GeoPoint getGeoPoint() {
 		return new GeoPoint(latitudeE6, longituteE6);
 	}
-	
+
 	// Getters & setters.
-	
+
 	public String getId() {
 		return id;
 	}
@@ -96,7 +98,6 @@ public class Station implements Serializable, GetContentValues {
 	public int getLongituteE6() {
 		return longituteE6;
 	}
-	
 
 	public void setLongitudeE6(int longituteE6) {
 		this.longituteE6 = longituteE6;
@@ -125,9 +126,9 @@ public class Station implements Serializable, GetContentValues {
 	public void setOufOfService(boolean outOfService) {
 		this.outOfService = outOfService;
 	}
-	
+
 	public String getStringBikes() {
-		return getStringValue(bikes); 
+		return getStringValue(bikes);
 	}
 
 	public Integer getBikes() {
@@ -137,16 +138,16 @@ public class Station implements Serializable, GetContentValues {
 	public void setBikes(String bikes) {
 		this.bikes = bikes;
 	}
-	
+
 	public String getStringAttachs() {
 		return getStringValue(attachs);
 	}
-	
+
 	private String getStringValue(String value) {
 		if (TextUtils.isEmpty(value)) {
 			return Constants.DEFAULT_VALUE;
 		}
-		
+
 		return value;
 	}
 
@@ -165,7 +166,7 @@ public class Station implements Serializable, GetContentValues {
 	public void setCbPaiement(boolean cbPaiement) {
 		this.cbPaiement = cbPaiement;
 	}
-	
+
 	public boolean isUpToDate() {
 		final long now = System.currentTimeMillis();
 		final long pastUpdate = lastUpdate - (now - Constants.CACHE_DATA_DURATION);
@@ -173,7 +174,7 @@ public class Station implements Serializable, GetContentValues {
 		if (!upToDate) {
 			lastUpdate = now;
 		}
-		
+
 		return upToDate;
 	}
 
@@ -192,15 +193,23 @@ public class Station implements Serializable, GetContentValues {
 	public void setLastUpdate(long lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
-	
+
 	public boolean isStarred() {
 		return starred;
 	}
 
-
 	public void setStarred(boolean starred) {
 		this.starred = starred;
 	}
+
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
 
 
 	public Integer getOrdinal() {
