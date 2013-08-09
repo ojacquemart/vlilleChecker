@@ -36,7 +36,7 @@ public class MapFragment extends SherlockFragment {
 		Log.d(TAG, "onCreate");
 		
 		SetStationsInfos setStationsInfos = VlilleChecker.getDbAdapter().findSetStationsInfos();
-		this.state.save(setStationsInfos.getMetadata().getGeoPoint(), VlilleMapView.DEFAULT_ZOOM_LEVEL);
+		this.state.save(VlilleMapView.DEFAULT_CENTER_GEO_POINT, VlilleMapView.DEFAULT_ZOOM_LEVEL);
 		this.stations = setStationsInfos.getStations();
 	}
 	

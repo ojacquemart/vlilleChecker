@@ -38,14 +38,22 @@ import com.vlille.checker.utils.StationUtils;
 import com.vlille.checker.utils.ToastUtils;
 
 /**
- * @see http://stackoverflow.com/questions/4729255/how-to-implemennt-onzoomlistener-on-mapview
+ * @see <a href="http://stackoverflow.com/questions/4729255/how-to-implemennt-onzoomlistener-on-mapview">Implement onZoomListener on MapView</a>
  */
 public class VlilleMapView extends MapView implements LocationListener {
 
-	public static final int DEFAULT_ZOOM_LEVEL = 12;
-	
-	private final String TAG = getClass().getSimpleName();
-	
+    /**
+     * The default zoom level.
+     */
+    public static final int DEFAULT_ZOOM_LEVEL = 16;
+
+    /**
+     * The "Gare Lille Flandres" station.
+     */
+    public static final GeoPoint DEFAULT_CENTER_GEO_POINT = new GeoPoint(50636000, 3069680);
+
+    private static final String TAG = VlilleMapView.class.getSimpleName();
+
 	private MapState state;
 	private List<Station> stations;
 
@@ -71,6 +79,7 @@ public class VlilleMapView extends MapView implements LocationListener {
 		initIconizedOverlay();
 		
 		setOnPanZoomListener();
+        updateStations();
 		invalidate();
 	}
 
