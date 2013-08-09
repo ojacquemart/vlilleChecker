@@ -43,7 +43,7 @@ abstract class StationsListFragment extends SherlockListFragment
     /**
      * The ListView adapter.
      */
-    private DefaultStationsAdapter adapter;
+    private StationsAdapter adapter;
 
     /**
      * The current AsyncTask.
@@ -68,25 +68,7 @@ abstract class StationsListFragment extends SherlockListFragment
 
         loadStations();
         initListAdapter();
-        setOnScrollListener();
-        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
-                Log.d(TAG, "Item clicked = " + position + " " + id);
-                if (id < stations.size()) {
-
-                    for (Station station : stations) {
-                        station.setSelected(false);
-                    }
-
-                    Station clickedStation = stations.get((int) id);
-                    clickedStation.setSelected(true);
-                    Log.d(TAG, "Station clicked = " + clickedStation.getName());
-
-                    StationsListFragment.this.adapter.notifyDataSetChanged();
-                }
-            }
-        });
-
+        initListViewListeners();
     }
 
     abstract void loadStations();
@@ -99,8 +81,8 @@ abstract class StationsListFragment extends SherlockListFragment
         setListAdapter(getAdapter());
     }
 
-    private DefaultStationsAdapter getAdapter() {
-        adapter = new DefaultStationsAdapter(activity, R.layout.stars_list_content, stations);
+    private StationsAdapter getAdapter() {
+        adapter = new StationsAdapter(activity, R.layout.stars_list_content, stations);
         adapter.setReadOnly(isReadOnly());
 
         return adapter;
@@ -113,8 +95,26 @@ abstract class StationsListFragment extends SherlockListFragment
      */
     abstract boolean isReadOnly();
 
-    private void setOnScrollListener() {
+    private void initListViewListeners() {
         getListView().setOnScrollListener(this);
+        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
+                Log.d(TAG, "Item clicked = " + position + " " + id);
+                if (id < stations.size()) {
+                    // Unselect all stations.
+                    for (Station station : stations) {
+                        station.setSelected(false);
+                    }
+
+                    // Select the station and notify the adapter.
+                    Station clickedStation = stations.get((int) id);
+                    clickedStation.setSelected(true);
+                    Log.d(TAG, "Station clicked = " + clickedStation.getName());
+
+                    StationsListFragment.this.adapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
     @Override

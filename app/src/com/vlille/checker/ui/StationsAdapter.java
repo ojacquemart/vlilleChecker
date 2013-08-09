@@ -2,7 +2,11 @@ package com.vlille.checker.ui;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +17,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.vlille.checker.R;
@@ -31,18 +35,18 @@ import org.osmdroid.util.GeoPoint;
 import java.util.List;
 
 /**
- * Adapter for the stars stations detail.
+ * A generic adapter for a stations ListView.
  */
-public class DefaultStationsAdapter extends ArrayAdapter<Station> {
+public class StationsAdapter extends ArrayAdapter<Station> {
 
-	private  static final String TAG = DefaultStationsAdapter.class.getSimpleName();
+	private  static final String TAG = StationsAdapter.class.getSimpleName();
 
 	private Activity activity;
     private List<Station> stations;
     private Resources resources;
     private boolean readOnly = false;
 
-	public DefaultStationsAdapter(Context context, int resource, List<Station> stations) {
+	public StationsAdapter(Context context, int resource, List<Station> stations) {
 		super(context, resource, stations);
 
 		this.activity = (Activity) context;
@@ -75,7 +79,49 @@ public class DefaultStationsAdapter extends ArrayAdapter<Station> {
         handleStarCheckbox(view, position, station);
         handleStationsTextInfos(view, station);
         handleToMapButton(view, station);
+        handleToNavigationpButton(view, station);
 	}
+
+    private void handleToNavigationpButton(View view, final Station station) {
+        view.findViewById(R.id.station_action_tonavigation).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Uri location = getLocationUri();
+
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, location);
+
+                    PackageManager pkManager = activity.getPackageManager();
+                    List<ResolveInfo> activities = pkManager.queryIntentActivities(mapIntent, 0);
+                    if (activities.size() > 1) {
+                        Intent chooser = Intent.createChooser(mapIntent, activity.getString(R.string.open_with));
+                        activity.startActivity(chooser);
+                    } else if (activities.size() == 1) {
+                        activity.startActivity(mapIntent);
+                    } else {
+                       showErrorMessage();
+                    }
+                } catch (Exception e) {
+                    Log.d(TAG, "Error during looking for gmaps activities", e);
+                    showErrorMessage();
+                }
+            }
+
+            private Uri getLocationUri() {
+                final String latitudeAndLongitude = String.format("%f,%f",
+                        station.getLatitude(), station.getLongitude());
+                Uri location = Uri.parse(String.format("http://maps.google.com/maps?saddr=&daddr=%s",
+                        latitudeAndLongitude));
+                Log.d(TAG, "Uri geo " + location);
+                return location;
+            }
+
+            private void showErrorMessage() {
+                Toast.makeText(activity, R.string.error_no_gmaps_app_found, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
 
     private void handleStarCheckbox(View view, final int position, final Station station) {
         final CheckBox checkbox = (CheckBox) view.findViewById(R.id.detail_starred);
@@ -135,7 +181,7 @@ public class DefaultStationsAdapter extends ArrayAdapter<Station> {
         buttonToMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GeoPoint geoPoint = station.getGeoPoint();
+                final GeoPoint geoPoint = station.getGeoPoint();
 
                 // Select the map tab and resets the tabListener to focus on selected station geoPoint.
                 SherlockFragmentActivity sherlockFragmentActivity = (SherlockFragmentActivity) activity;

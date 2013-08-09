@@ -32,7 +32,7 @@ public final class ContextHelper {
 	}
 	
 	/**
-	 * Display or hide the address box for the {@link com.vlille.checker.ui.DefaultStationsAdapter}
+	 * Display or hide the address box for the {@link com.vlille.checker.ui.StationsAdapter}
 	 */
 	public static boolean isDisplayingStationAdress(Context context) {
 		return PreferenceManager.getDefaultSharedPreferences(context)
