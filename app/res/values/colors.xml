@@ -4,6 +4,7 @@
 	<color name="white">#FFF</color>
 	<color name="orange">#FF9100</color>
 	<color name="red">#FF0000</color>
+	<color name="grey">#DDD</color>
 
 	 <color name="pressed_vlille_checker">#CC3f911b</color>
 </resources>
