@@ -8,8 +8,14 @@ public final class ViewUtils {
 	private ViewUtils() {}
 	
 	public static void switchView(View view, boolean show) {
-		if (show) show(view);
-		else hide(view);
+        if (view != null) {
+            if (show) {
+                show(view);
+            }
+            else {
+                hide(view);
+            }
+        }
 	}
 	
 	public static void hide(View view) {
