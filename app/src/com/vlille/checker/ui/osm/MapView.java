@@ -227,13 +227,15 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
         }
 
         maskableOverlayItems = new ArrayList<MaskableOverlayItem>();
-        for (Station eachStation : stations) {
-            final MaskableOverlayItem extendedOverlayItem = new MaskableOverlayItem(
-                    eachStation.getName(), eachStation.getName(),
-                    eachStation.getGeoPoint());
-            extendedOverlayItem.setRelatedObject(eachStation);
+        if (stations != null) {
+            for (Station eachStation : stations) {
+                final MaskableOverlayItem extendedOverlayItem = new MaskableOverlayItem(
+                        eachStation.getName(), eachStation.getName(),
+                        eachStation.getGeoPoint());
+                extendedOverlayItem.setRelatedObject(eachStation);
 
-            maskableOverlayItems.add(extendedOverlayItem);
+                maskableOverlayItems.add(extendedOverlayItem);
+            }
         }
 
         return maskableOverlayItems;
