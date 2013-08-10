@@ -3,12 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <com.vlille.checker.ui.osm.VlilleMapView
+    <com.vlille.checker.ui.osm.MapView
         android:id="@+id/mapview"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:clickable="true"
-        android:state_enabled="true" />
+        android:layout_height="fill_parent" />
 
     <ImageButton
         android:id="@+id/maps_location_enable"

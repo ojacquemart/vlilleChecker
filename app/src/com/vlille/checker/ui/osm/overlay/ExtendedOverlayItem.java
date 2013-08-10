@@ -31,7 +31,7 @@ public class ExtendedOverlayItem extends OverlayItem {
 	private Object mRelatedObject; //reference to an object (of any kind) linked to this item. 
 	
 	public ExtendedOverlayItem(String aTitle, String aDescription,
-			GeoPoint aGeoPoint, Context context) {
+			GeoPoint aGeoPoint) {
 		super(aTitle, aDescription, aGeoPoint);
 		mTitle = aTitle;
 		mDescription = aDescription;

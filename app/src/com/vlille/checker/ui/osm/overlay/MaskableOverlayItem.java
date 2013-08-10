@@ -8,8 +8,8 @@ public class MaskableOverlayItem extends ExtendedOverlayItem {
 
 	private boolean visible;
 
-	public MaskableOverlayItem(String aTitle, String aDescription, GeoPoint aGeoPoint, Context context) {
-		super(aTitle, aDescription, aGeoPoint, context);
+	public MaskableOverlayItem(String aTitle, String aDescription, GeoPoint aGeoPoint) {
+		super(aTitle, aDescription, aGeoPoint);
 	}
 
 	public boolean isVisible() {

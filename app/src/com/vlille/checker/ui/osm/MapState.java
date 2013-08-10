@@ -6,8 +6,8 @@ import org.osmdroid.util.GeoPoint;
 /**
  * Class which saves the current state of the map.
  * 
- * @see VlilleMapView#getZoomLevel()
- * @see VlilleMapView#getMapCenter()
+ * @see MapView#getZoomLevel()
+ * @see MapView#getMapCenter()
  */
 public class MapState {
 

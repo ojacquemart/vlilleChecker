@@ -12,12 +12,12 @@ import org.osmdroid.views.overlay.OverlayItem.HotspotPlace;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import com.vlille.checker.R;
 import com.vlille.checker.model.Station;
@@ -25,305 +25,281 @@ import com.vlille.checker.ui.osm.overlay.window.InfoWindow;
 import com.vlille.checker.utils.ColorSelector;
 
 public class ItemizedOverlayWithFocus<Item extends MaskableOverlayItem> extends ItemizedIconOverlay<Item> {
-	
-	// ===========================================================
-	// Constants
-	// ===========================================================
 
-	public static final int DESCRIPTION_BOX_PADDING = 3;
-	public static final int DESCRIPTION_BOX_CORNERWIDTH = 3;
-	
-	public static final int DESCRIPTION_LINE_HEIGHT = 12;
-	/** Additional to <code>DESCRIPTION_LINE_HEIGHT</code>. */
-	public static final int DESCRIPTION_TITLE_EXTRA_LINE_HEIGHT = 2;
+    private static final String TAG = "ItemOverlayWithFocus";
 
-	// protected static final Point DEFAULTMARKER_FOCUSED_HOTSPOT = new Point(10, 19);
-	protected static final int DEFAULTMARKER_BACKGROUNDCOLOR = Color.rgb(101, 185, 74);
+    // ===========================================================
+    // osmdroid bonus bubble
+    // ===========================================================
 
-	protected static final int DESCRIPTION_MAXWIDTH = 200;
-	
-	// ===========================================================
-	// osmdroid bonus bubble
-	// ===========================================================
-	
-	protected InfoWindow mBubble = null;
-	protected OverlayItem mItemWithBubble = null;
+    protected InfoWindow mBubble = null;
+    protected OverlayItem mItemWithBubble = null;
 
-	// ===========================================================
-	// Fields
-	// ===========================================================
+    // ===========================================================
+    // Fields
+    // ===========================================================
 
-	private final Point mCurScreenCoords = new Point();
-	protected int mMarkerFocusedBackgroundColor;
-	private Paint mDescriptionPaint, mTitlePaint;
-	protected int mTextSize;	
+    private final Point mCurScreenCoords = new Point();
+    private Paint mDescriptionPaint, mTitlePaint;
+    protected int mTextSize;
 
-	protected Drawable mMarkerFocused;
-	protected Drawable mMarkerStarred;
-	protected int mFocusedItemIndex;
-	protected boolean mFocusItemsOnTap;
+    protected Drawable mMarkerDetails;
+    protected Drawable mMarkerPin;
+    protected Drawable mMarkerPinStarred;
+    protected int mFocusedItemIndex;
+    protected boolean mFocusItemsOnTap;
 
-	// ===========================================================
-	// Constructors
-	// ==========================================================
+    // ===========================================================
+    // Constructors
+    // ==========================================================
 
-	public ItemizedOverlayWithFocus(
-			final List<Item> aList,
-			final Resources resources,
-			final InfoWindow pInfoWindow,
-			final OnItemGestureListener<Item> aOnItemTapListener,
-			final ResourceProxy pResourceProxy) {
-		super(aList, resources.getDrawable(R.drawable.station_pin), aOnItemTapListener, pResourceProxy);
-		
-		this.mMarkerFocused = resources.getDrawable(R.drawable.station_marker);
-		this.mMarkerStarred = resources.getDrawable(R.drawable.station_pin_star);
-		this.mBubble = pInfoWindow;
-		this.mTextSize = resources.getDimensionPixelSize(R.dimen.overlay_font_size);
-		this.mMarkerFocusedBackgroundColor = DEFAULTMARKER_BACKGROUNDCOLOR;
-		
-		this.mDescriptionPaint = new Paint();
-		this.mDescriptionPaint.setAntiAlias(true);
-		this.initPaint();
-			
-		mItemWithBubble = null;
-		this.unSetFocusedItem();
-	}
+    public ItemizedOverlayWithFocus(
+            final List<Item> aList,
+            final Resources resources,
+            final InfoWindow pInfoWindow,
+            final OnItemGestureListener<Item> aOnItemTapListener,
+            final ResourceProxy pResourceProxy) {
+        super(aList, resources.getDrawable(R.drawable.station_marker), aOnItemTapListener, pResourceProxy);
 
-	private void initPaint() {
-		this.mTitlePaint = new Paint();
-		this.mTitlePaint.setTypeface(Typeface.DEFAULT_BOLD);
-		this.mTitlePaint.setAntiAlias(true);
-		this.mTitlePaint.setTextAlign(Align.CENTER);
-		this.mTitlePaint.setTextSize(mTextSize);
-	}
+        this.mMarkerDetails = resources.getDrawable(R.drawable.station_marker);
+        this.mMarkerPin = resources.getDrawable(R.drawable.station_pin);
+        this.mMarkerPinStarred = resources.getDrawable(R.drawable.station_pin_star);
+        this.mBubble = pInfoWindow;
+        this.mTextSize = resources.getDimensionPixelSize(R.dimen.overlay_font_size);
 
-	// ===========================================================
-	// Getter & Setter
-	// ===========================================================
+        this.mDescriptionPaint = new Paint();
+        this.mDescriptionPaint.setAntiAlias(true);
+        this.initPaint();
 
-	public Item getFocusedItem() {
-		if (this.mFocusedItemIndex == NOT_SET) {
-			return null;
-		}
-		return this.mItemList.get(this.mFocusedItemIndex);
-	}
+        mItemWithBubble = null;
+        this.unSetFocusedItem();
+        this.hideBubble();
+    }
 
-	public void setFocusedItem(final int pIndex) {
-		this.mFocusedItemIndex = pIndex;
-	}
+    private void initPaint() {
+        this.mTitlePaint = new Paint();
+        this.mTitlePaint.setTypeface(Typeface.DEFAULT_BOLD);
+        this.mTitlePaint.setAntiAlias(true);
+        this.mTitlePaint.setTextAlign(Align.CENTER);
+        this.mTitlePaint.setTextSize(mTextSize);
+    }
 
-	public void unSetFocusedItem() {
-		this.mFocusedItemIndex = NOT_SET;
-	}
+    // ===========================================================
+    // Getter & Setter
+    // ===========================================================
 
-	public void setFocusedItem(final Item pItem) {
-		final int indexFound = super.mItemList.indexOf(pItem);
-		if (indexFound < 0) {
-			throw new IllegalArgumentException();
-		}
+    public Item getFocusedItem() {
+        if (this.mFocusedItemIndex == NOT_SET) {
+            return null;
+        }
+        return this.mItemList.get(this.mFocusedItemIndex);
+    }
 
-		this.setFocusedItem(indexFound);
-	}
+    public void setFocusedItem(final int pIndex) {
+        this.mFocusedItemIndex = pIndex;
+    }
 
-	public void setFocusItemsOnTap(final boolean doit) {
-		this.mFocusItemsOnTap = doit;
-	}
+    public void unSetFocusedItem() {
+        this.mFocusedItemIndex = NOT_SET;
+    }
 
-	// ===========================================================
-	// Methods from for draw bubble
-	// ===========================================================
-	
-	/**
-	 * Opens the bubble on the item. 
-	 * For each ItemizedOverlay, only one bubble is opened at a time. 
-	 * If you want more bubbles opened simultaneously, use many ItemizedOverlays. 
-	 * 
-	 * @param index of the overlay item to show
-	 * @param mapView
-	 */
-	public void showBubbleOnItem(final int index, final MapView mapView) {
-		ExtendedOverlayItem eItem = (ExtendedOverlayItem)(getItem(index)); 
-		mItemWithBubble = eItem;
-		if (eItem != null){
-			showBubble(eItem, mBubble, mapView);
-			//setFocus((Item)eItem);
-		}
-	}
-	
-	/**
-	 * Populates this bubble with all item info:
-	 * <ul>title and description in any case, </ul>
-	 * <ul>image and sub-description if any.</ul> 
-	 * and centers the map on the item. <br>
-	 */
-	public void showBubble(ExtendedOverlayItem item, InfoWindow bubble, MapView mapView){
-		//offset the bubble to be top-centered on the marker:
-		Drawable marker = getMarker(mapView.getZoomLevel())/*OverlayItem.ITEM_STATE_FOCUSED_MASK*/;
-		int markerWidth = 0, markerHeight = 0;
-		markerWidth = marker.getIntrinsicWidth(); 
-		markerHeight = marker.getIntrinsicHeight();
-		
-		// TODO: check to remove height hacks.
-		// TODO: check with other devices, smaller and bigger screens.
-		if (marker.equals(mMarkerFocused)) {
-			markerHeight += mDefaultMarker.getIntrinsicHeight() +1 ;
-		} else {
-			markerHeight += 12;
-		}
-		Point markerH = item.getHotspot(item.getMarkerHotspot(), markerWidth, markerHeight);
-		Point bubbleH = item.getHotspot(HotspotPlace.TOP_CENTER, markerWidth, markerHeight);
-		bubbleH.offset(-markerH.x, -markerH.y);
-		
-		bubble.open(item, bubbleH.x, bubbleH.y);
+    public void setFocusedItem(final Item pItem) {
+        final int indexFound = super.mItemList.indexOf(pItem);
+        if (indexFound < 0) {
+            throw new IllegalArgumentException();
+        }
 
-		mapView.getController().animateTo(item.getPoint());
-	}
-	
-	/**
-	 * Close the bubble (if it's opened). 
-	 */
-	public void hideBubble(){
-		mBubble.close();
-		mItemWithBubble = null;
-	}
-	
-	@Override protected boolean onSingleTapUpHelper(final int index, final Item item, final MapView mapView) {
-		showBubbleOnItem(index, mapView);
-		return true;
-	}
-	
-	/** @return the item currenty showing the bubble, or null if none.  */
-	public OverlayItem getBubbledItem(){
-		if (mBubble.isOpen())
-			return mItemWithBubble;
-		else
-			return null;
-	}
-	
-	/** @return the index of the item currenty showing the bubble, or -1 if none.  */
-	public int getBubbledItemId(){
-		OverlayItem item = getBubbledItem();
-		if (item == null)
-			return -1;
-		else
-			return mItemList.indexOf(item);
-	}
-	
-	@Override public boolean removeItem(final Item item){
-		boolean result = super.removeItem(item);
-		if (mItemWithBubble == item){
-			hideBubble();
-		}
-		return result;
-	}
-	
-	@Override public void removeAllItems(){
-		super.removeAllItems();
-		hideBubble();
-	}
-	
-	// ===========================================================
-	// Methods from for draw and handle single tap ui according to zoom level.
-	// ===========================================================
+        this.setFocusedItem(indexFound);
+    }
 
-	@Override
-	public void draw(final Canvas canvas, final MapView mapView, final boolean shadow) {
-		if (shadow) {
-			return;
-		}
+    public void setFocusItemsOnTap(final boolean doit) {
+        this.mFocusItemsOnTap = doit;
+    }
 
-		final int zoomLevel = mapView.getZoomLevel();
-		final Projection projection = mapView.getProjection();
-		final int size = this.mItemList.size() - 1;
+    // ===========================================================
+    // Methods from for draw bubble
+    // ===========================================================
+
+    /**
+     * Opens the bubble on the item.
+     * For each ItemizedOverlay, only one bubble is opened at a time.
+     * If you want more bubbles opened simultaneously, use many ItemizedOverlays.
+     *
+     * @param index of the overlay item to show
+     * @param mapView
+     */
+    public void showBubbleOnItem(final int index, final MapView mapView) {
+        Log.d(TAG, "showBubbleOnItem");
+        ExtendedOverlayItem eItem = (ExtendedOverlayItem)(getItem(index));
+        mItemWithBubble = eItem;
+        if (eItem != null){
+            showBubble(eItem, mBubble, mapView);
+            //setFocus((Item)eItem);
+        }
+    }
+
+    /**
+     * Populates this bubble with all item info:
+     * <ul>title and description in any case, </ul>
+     * <ul>image and sub-description if any.</ul>
+     * and centers the map on the item. <br>
+     */
+    public void showBubble(ExtendedOverlayItem item, InfoWindow bubble, MapView mapView){
+        Log.d(TAG, "showBubble");
+        //offset the bubble to be top-centered on the marker:
+        Drawable marker = getMarker(mapView.getZoomLevel());
+        int markerWidth = marker.getIntrinsicWidth();
+        int markerHeight = marker.getIntrinsicHeight();
+
+        Point markerH = item.getHotspot(HotspotPlace.BOTTOM_CENTER, markerWidth, markerHeight);
+        Point bubbleH = item.getHotspot(HotspotPlace.BOTTOM_CENTER, markerWidth, markerHeight);
+        bubbleH.offset(-markerH.x, -markerH.y - markerHeight);
+        bubble.open(item, bubbleH.x, bubbleH.y);
+
+        mapView.getController().animateTo(item.getPoint());
+    }
+
+    /**
+     * Close the bubble (if it's opened).
+     */
+    public void hideBubble(){
+        mBubble.close();
+        mItemWithBubble = null;
+    }
+
+    @Override protected boolean onSingleTapUpHelper(final int index, final Item item, final MapView mapView) {
+        showBubbleOnItem(index, mapView);
+        return true;
+    }
+
+    /** @return the item currenty showing the bubble, or null if none.  */
+    public OverlayItem getBubbledItem(){
+        if (mBubble.isOpen())
+            return mItemWithBubble;
+        else
+            return null;
+    }
+
+    /** @return the index of the item currenty showing the bubble, or -1 if none.  */
+    public int getBubbledItemId(){
+        OverlayItem item = getBubbledItem();
+        if (item == null)
+            return -1;
+        else
+            return mItemList.indexOf(item);
+    }
+
+    @Override public boolean removeItem(final Item item){
+        boolean result = super.removeItem(item);
+        if (mItemWithBubble == item){
+            hideBubble();
+        }
+        return result;
+    }
+
+    @Override public void removeAllItems(){
+        super.removeAllItems();
+        hideBubble();
+    }
+
+    // ===========================================================
+    // Methods from for draw and handle single tap ui according to zoom level.
+    // ===========================================================
+
+    @Override
+    public void draw(final Canvas canvas, final MapView mapView, final boolean shadow) {
+        if (shadow) {
+            return;
+        }
+
+        final int zoomLevel = mapView.getZoomLevel();
+        final Projection projection = mapView.getProjection();
+        final int size = this.mItemList.size() - 1;
 
 		/* Draw in backward cycle, so the items with the least index are on the front. */
-		for (int i = size; i >= 0; i--) {
-			final Item item = getItem(i);
-			projection.toMapPixels(item.mGeoPoint, mCurScreenCoords);
+        for (int i = size; i >= 0; i--) {
+            final Item item = getItem(i);
+            projection.toMapPixels(item.mGeoPoint, mCurScreenCoords);
 
-			if (item != mItemWithBubble){
-				onDrawItem(canvas, zoomLevel, item, mCurScreenCoords);
-			}
-		}
-		
-		onDrawFocusBubble(canvas, zoomLevel, projection);
-	}
-	
-	protected void onDrawItem(final Canvas canvas, final int zoomLevel, final Item item, final Point curScreenCoords) {
-		MaskableOverlayItem maskableItem = (MaskableOverlayItem) item;
-		if (maskableItem.isHidden()) {
-			return;
-		}
-		
-		final Station station = (Station) (((ExtendedOverlayItem) item).getRelatedObject());
-		final boolean zoomLevelDetailled = OverlayZoomUtils.isDetailledZoomLevel(zoomLevel);
-		final Drawable marker = getDefaultMarker(zoomLevelDetailled, station.isStarred());
-		
-		boundToHotspot(marker, item.getMarkerHotspot());
+            if (item != mItemWithBubble){
+                onDrawItem(canvas, zoomLevel, item, mCurScreenCoords);
+            }
+        }
 
-		Overlay.drawAt(canvas, marker, curScreenCoords.x, curScreenCoords.y, false);
-		if (zoomLevelDetailled) {
-			mTitlePaint.setColor(getResourceProxy().getColor(ColorSelector.getColor(station.getBikes())));
-			canvas.drawText(station.getStringBikes(), mCurScreenCoords.x	-16 * mScale, mCurScreenCoords.y - 45 * mScale, mTitlePaint); 
-			mTitlePaint.setColor(getResourceProxy().getColor(ColorSelector.getColor(station.getAttachs())));
-			canvas.drawText(station.getStringAttachs(), mCurScreenCoords.x	-16 * mScale, mCurScreenCoords.y - 22 * mScale, mTitlePaint); 
-		}
-	}
-	
-	private ResourceProxyImpl getResourceProxy() {
-		return (ResourceProxyImpl) mResourceProxy;
-	}
-	
-	private void onDrawFocusBubble(Canvas canvas, int zoomLevel, Projection projection) {
-		if (mItemWithBubble != null){
-			projection.toMapPixels(mItemWithBubble.mGeoPoint, mCurScreenCoords);
-			onDrawItem(canvas, zoomLevel, (Item)mItemWithBubble, mCurScreenCoords);
-		}
-	}
-	
-	private Drawable getDefaultMarker(final boolean detailledZoomLevel, final boolean starred) {
-		Drawable marker = mDefaultMarker;
+        onDrawFocusBubble(canvas, zoomLevel, projection);
+    }
+
+    protected void onDrawItem(final Canvas canvas, final int zoomLevel, final Item item, final Point curScreenCoords) {
+        MaskableOverlayItem maskableItem = (MaskableOverlayItem) item;
+        if (maskableItem.isHidden()) {
+            return;
+        }
+
+        final Station station = (Station) (((ExtendedOverlayItem) item).getRelatedObject());
+        final boolean zoomLevelDetailled = OverlayZoomUtils.isDetailledZoomLevel(zoomLevel);
+        final Drawable marker = getDefaultMarker(zoomLevelDetailled, station.isStarred());
+
+        boundToHotspot(marker, HotspotPlace.BOTTOM_CENTER);
+
+        Overlay.drawAt(canvas, marker, curScreenCoords.x, curScreenCoords.y, false);
+        if (zoomLevelDetailled) {
+            mTitlePaint.setColor(getResourceProxy().getColor(ColorSelector.getColor(station.getBikes())));
+            canvas.drawText(station.getStringBikes(), mCurScreenCoords.x - (11 * mScale), mCurScreenCoords.y - (30 * mScale), mTitlePaint);
+            mTitlePaint.setColor(getResourceProxy().getColor(ColorSelector.getColor(station.getAttachs())));
+            canvas.drawText(station.getStringAttachs(), mCurScreenCoords.x - (11 * mScale), mCurScreenCoords.y - (15 * mScale), mTitlePaint);
+        }
+    }
+
+    private ResourceProxyImpl getResourceProxy() {
+        return (ResourceProxyImpl) mResourceProxy;
+    }
+
+    private void onDrawFocusBubble(Canvas canvas, int zoomLevel, Projection projection) {
+        if (mItemWithBubble != null){
+            projection.toMapPixels(mItemWithBubble.mGeoPoint, mCurScreenCoords);
+            onDrawItem(canvas, zoomLevel, (Item)mItemWithBubble, mCurScreenCoords);
+        }
+    }
+
+    /**
+     * Gets the marker to draw.
+     */
+    private Drawable getDefaultMarker(final boolean detailledZoomLevel, final boolean starred) {
+        Drawable marker = mMarkerPin;
 		if (detailledZoomLevel) {
-			marker = mMarkerFocused;
+			marker = mMarkerDetails;
 		} else if (starred) {
-			marker = mMarkerStarred;
+			marker = mMarkerPinStarred;
 		}
-		
-		OverlayItem.setState(marker, 0);
-		
-		return marker;
-	}
-	
-	protected boolean hitTest(final int zoomLevel, Item item, Drawable marker, final int hitX,
-			final int hitY) {
-		if (OverlayZoomUtils.isDetailledZoomLevel(zoomLevel) && mMarkerFocused != null) {
-			marker = mMarkerFocused;
-		}
-		return marker.getBounds().contains(hitX, hitY);
-	}
-	
-	
-	public Drawable getMarker(int zoomLevel) {
-		if (OverlayZoomUtils.isDetailledZoomLevel(zoomLevel)) {
-			return mMarkerFocused;
-		}
-		
-		return mDefaultMarker;
-	}
-	
-	public List<Item> getItems() {
-		return super.mItemList;
-	}
-	
-	public static final class OverlayZoomUtils {
-		
-		public static final int MIN_ZOOM_LEVEL_TO_DETAILS = 15;
-		
-		private OverlayZoomUtils() {}
-		
-		public static boolean isDetailledZoomLevel(int zoomLevel) {
-			return zoomLevel > MIN_ZOOM_LEVEL_TO_DETAILS;
-		}
-	}
-	
+
+        //OverlayItem.setState(marker, 0);
+
+        return marker;
+    }
+
+    protected boolean hitTest(final int zoomLevel, Item item, Drawable marker, final int hitX,
+                              final int hitY) {
+        Log.d(TAG, "hitTest");
+        if (OverlayZoomUtils.isDetailledZoomLevel(zoomLevel)) {
+            marker = mMarkerDetails;
+        } else {
+            marker = mMarkerPin;
+        }
+        return marker.getBounds().contains(hitX, hitY);
+    }
+
+
+    public Drawable getMarker(int zoomLevel) {
+        Log.d(TAG, "getMarker");
+        if (OverlayZoomUtils.isDetailledZoomLevel(zoomLevel)) {
+            return mMarkerDetails;
+        }
+
+        return mMarkerPin;
+    }
+
+    public List<Item> getItems() {
+        return super.mItemList;
+    }
+
 }

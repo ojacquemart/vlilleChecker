@@ -13,7 +13,7 @@ import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.model.SetStationsInfos;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.ui.osm.MapState;
-import com.vlille.checker.ui.osm.VlilleMapView;
+import com.vlille.checker.ui.osm.MapView;
 
 import org.osmdroid.util.GeoPoint;
 
@@ -27,7 +27,7 @@ public class MapFragment extends SherlockFragment {
 	private static final String TAG = MapFragment.class.getSimpleName();
 
 	private MapState state = new MapState();
-	private VlilleMapView mapView;
+	private MapView mapView;
 	private List<Station> stations;
 	
 	@Override
@@ -37,7 +37,7 @@ public class MapFragment extends SherlockFragment {
 		
 		SetStationsInfos setStationsInfos = VlilleChecker.getDbAdapter().findSetStationsInfos();
         if (!this.state.isInitialized()) {
-            this.state.save(VlilleMapView.DEFAULT_CENTER_GEO_POINT, VlilleMapView.DEFAULT_ZOOM_LEVEL);
+            this.state.save(MapView.DEFAULT_CENTER_GEO_POINT, MapView.DEFAULT_ZOOM_LEVEL);
         }
 		this.stations = setStationsInfos.getStations();
 
@@ -50,7 +50,7 @@ public class MapFragment extends SherlockFragment {
 		Log.d(TAG, "onCreateView");
 
 		final View view = inflater.inflate(R.layout.maps, container, false);
-		mapView = (VlilleMapView) view.findViewById(R.id.mapview);
+		mapView = (MapView) view.findViewById(R.id.mapview);
 		mapView.setMapInfos(state, stations);
 		mapView.setSherlockActivity(getSherlockActivity());
 		mapView.init();
@@ -63,7 +63,7 @@ public class MapFragment extends SherlockFragment {
     public void setCenter(GeoPoint center) {
         Log.d(TAG, "setCenter " + center);
         this.state.currentCenter = center;
-        this.state.zoomLevel = VlilleMapView.DEFAULT_ZOOM_LEVEL;
+        this.state.zoomLevel = MapView.DEFAULT_ZOOM_LEVEL;
     }
 
 	private void addLocationEnablerClickListener(final View view) {
