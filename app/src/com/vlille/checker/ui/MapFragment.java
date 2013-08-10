@@ -34,20 +34,26 @@ public class MapFragment extends SherlockFragment {
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		Log.d(TAG, "onCreate");
-		
-		SetStationsInfos setStationsInfos = VlilleChecker.getDbAdapter().findSetStationsInfos();
+
         if (!this.state.isInitialized()) {
             this.state.save(MapView.DEFAULT_CENTER_GEO_POINT, MapView.DEFAULT_ZOOM_LEVEL);
         }
-		this.stations = setStationsInfos.getStations();
+    }
 
-	}
+    public void setCenter(GeoPoint center) {
+        Log.d(TAG, "setCenter " + center);
+        this.state.currentCenter = center;
+        this.state.zoomLevel = MapView.DEFAULT_ZOOM_LEVEL;
+    }
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.d(TAG, "onCreateView");
+
+        SetStationsInfos setStationsInfos = VlilleChecker.getDbAdapter().findSetStationsInfos();
+        this.stations = setStationsInfos.getStations();
 
 		final View view = inflater.inflate(R.layout.maps, container, false);
 		mapView = (MapView) view.findViewById(R.id.mapview);
@@ -60,28 +66,22 @@ public class MapFragment extends SherlockFragment {
 		return view;
 	}
 
-    public void setCenter(GeoPoint center) {
-        Log.d(TAG, "setCenter " + center);
-        this.state.currentCenter = center;
-        this.state.zoomLevel = MapView.DEFAULT_ZOOM_LEVEL;
+    private void addLocationEnablerClickListener(final View view) {
+        final ImageButton locationEnabler = (ImageButton) view.findViewById(R.id.maps_location_enable);
+        locationEnabler.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                mapView.updateLocationCircle();
+                if (mapView.isLocationOn()) {
+                    locationEnabler.setImageResource(R.drawable.location_on);
+                } else {
+                    locationEnabler.setImageResource(R.drawable.location_off);
+                }
+            }
+        });
     }
 
-	private void addLocationEnablerClickListener(final View view) {
-		final ImageButton locationEnabler = (ImageButton) view.findViewById(R.id.maps_location_enable);
-		locationEnabler.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				mapView.updateLocationCircle();
-				if (mapView.isLocationOn()) {
-					locationEnabler.setImageResource(R.drawable.location_on);
-				} else {
-					locationEnabler.setImageResource(R.drawable.location_off);
-				}
-			}
-		});
-	}
-	
 	@Override
 	public void onResume() {
 		super.onResume();
