@@ -6,5 +6,7 @@
 	<color name="red">#FF0000</color>
 	<color name="grey">#DDD</color>
 
-	 <color name="pressed_vlille_checker">#CC3f911b</color>
+    <color name="ic_background">#cc0000</color>
+
+	 <color name="pressed_vlille_checker">#CC33B5E5</color>
 </resources>

@@ -172,7 +172,6 @@ public class StationsAdapter extends ArrayAdapter<Station> {
         ViewUtils.switchView(boxOutOfService, station.isOutOfService());
 
         ImageView ccPaymentAllowed = (ImageView) view.findViewById(R.id.details_cb);
-        ccPaymentAllowed.setBackgroundResource(R.drawable.station_cb);
         ViewUtils.switchView(ccPaymentAllowed, station.isCbPaiement());
     }
 

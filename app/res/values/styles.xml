@@ -1,86 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:android="http://schemas.android.com/apk/res/android">
+<!-- File created by the Android Action Bar Style Generator
 
-    <style name="Theme.vlille_checker" parent="@style/Theme.Sherlock.Light">
-        <item name="actionBarItemBackground">@drawable/selectable_background_vlille_checker</item>
-        <item name="popupMenuStyle">@style/vlille_checker_PopupMenu</item>
-        <item name="dropDownListViewStyle">@style/vlille_checker_DropDownListView</item>
-        <item name="actionBarTabStyle">@style/vlille_checker_ActionBarTabStyle</item>
-        <item name="actionDropDownStyle">@style/vlille_checker_DropDownNav</item>
-        <item name="actionBarStyle">@style/vlille_checker_solid_ActionBar</item>
+     Copyright (C) 2011 The Android Open Source Project
+     Copyright (C) 2012 readyState Software Ltd
 
-        <item name="android:actionBarItemBackground">@drawable/selectable_background_vlille_checker</item>
-        <item name="android:popupMenuStyle">@style/vlille_checker_PopupMenu</item>
-        <item name="android:dropDownListViewStyle">@style/vlille_checker_DropDownListView</item>
-        <item name="android:actionBarTabStyle">@style/vlille_checker_ActionBarTabStyle</item>
-        <item name="android:actionDropDownStyle">@style/vlille_checker_DropDownNav</item>
-        <item name="android:actionBarStyle">@style/vlille_checker_solid_ActionBar</item>
-        <item name="android:panelBackground">@drawable/menu_hardkey_panel_vlille_checker</item>
-        
-        
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<resources>
+
+    <style name="Theme.Vlillechecker" parent="@style/Theme.Sherlock.Light.DarkActionBar">
+        <item name="actionBarItemBackground">@drawable/selectable_background_vlillechecker</item>
+        <item name="popupMenuStyle">@style/PopupMenu.Vlillechecker</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Vlillechecker</item>
+        <item name="actionBarTabStyle">@style/ActionBarTabStyle.Vlillechecker</item>
+        <item name="actionDropDownStyle">@style/DropDownNav.Vlillechecker</item>
+        <item name="actionBarStyle">@style/ActionBar.Solid.Vlillechecker</item>
+        <item name="actionModeBackground">@drawable/cab_background_top_vlillechecker</item>
+        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_vlillechecker</item>
+        <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Vlillechecker</item>
+
+        <!-- Light.DarkActionBar specific -->
+        <item name="actionBarWidgetTheme">@style/Theme.Vlillechecker.Widget</item>
+
     </style>
 
-    <style name="vlille_checker_solid_ActionBar" parent="@style/Widget.Sherlock.Light.ActionBar.Solid">
-        <item name="background">@drawable/ab_solid_vlille_checker</item>
-        <item name="backgroundStacked">@drawable/ab_stacked_solid_vlille_checker</item>
-        <item name="backgroundSplit">@drawable/ab_bottom_solid_vlille_checker</item>
-        <item name="progressBarStyle">@style/vlille_checker_ProgressBar</item>
-
-        <item name="android:background">@drawable/ab_solid_vlille_checker</item>
-        <item name="android:backgroundStacked">@drawable/ab_stacked_solid_vlille_checker</item>
-        <item name="android:backgroundSplit">@drawable/ab_bottom_solid_vlille_checker</item>
-        <item name="android:progressBarStyle">@style/vlille_checker_ProgressBar</item>
+    <style name="ActionBar.Solid.Vlillechecker" parent="@style/Widget.Sherlock.Light.ActionBar.Solid.Inverse">
+        <item name="background">@drawable/ab_solid_vlillechecker</item>
+        <item name="backgroundStacked">@drawable/ab_stacked_solid_vlillechecker</item>
+        <item name="backgroundSplit">@drawable/ab_bottom_solid_vlillechecker</item>
+        <item name="progressBarStyle">@style/ProgressBar.Vlillechecker</item>
     </style>
 
-    <style name="vlille_checker_transparent_ActionBar" parent="@style/Widget.Sherlock.Light.ActionBar">
-        <item name="background">@drawable/ab_transparent_vlille_checker</item>
-        <item name="progressBarStyle">@style/vlille_checker_ProgressBar</item>
-        
-        <item name="android:background">@drawable/ab_transparent_vlille_checker</item>
-        <item name="android:progressBarStyle">@style/vlille_checker_ProgressBar</item>
-    </style>
-	
-    <style name="vlille_checker_PopupMenu" parent="@style/Widget.Sherlock.Light.ListPopupWindow">	
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_vlille_checker</item>	
-    </style>
-	
-    <style name="vlille_checker_DropDownListView" parent="@style/Widget.Sherlock.Light.ListView.DropDown">
-        <item name="android:listSelector">@drawable/selectable_background_vlille_checker</item>
+    <style name="ActionBar.Transparent.Vlillechecker" parent="@style/Widget.Sherlock.ActionBar">
+        <item name="background">@drawable/ab_transparent_vlillechecker</item>
+        <item name="progressBarStyle">@style/ProgressBar.Vlillechecker</item>
+        <item name="android:icon">@drawable/ic_actionbar_icon</item>
     </style>
 
-    <style name="vlille_checker_ActionBarTabStyle" parent="@style/Widget.Sherlock.Light.ActionBar.TabView">
-        <item name="background">@drawable/tab_indicator_ab_vlille_checker</item>
+    <style name="PopupMenu.Vlillechecker" parent="@style/Widget.Sherlock.ListPopupWindow">
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_vlillechecker</item>
+    </style>
 
-        <item name="android:background">@drawable/tab_indicator_ab_vlille_checker</item>
+    <style name="DropDownListView.Vlillechecker" parent="@style/Widget.Sherlock.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selectable_background_vlillechecker</item>
     </style>
-	
-    <style name="vlille_checker_DropDownNav" parent="@style/Widget.Sherlock.Light.Spinner.DropDown.ActionBar">
-        <item name="background">@drawable/spinner_background_ab_vlille_checker</item>
 
-        <item name="android:background">@drawable/spinner_background_ab_vlille_checker</item>
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_vlille_checker</item>
-        <item name="android:dropDownSelector">@drawable/selectable_background_vlille_checker</item>
+    <style name="ActionBarTabStyle.Vlillechecker" parent="@style/Widget.Sherlock.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_indicator_ab_vlillechecker</item>
     </style>
-    
-    <style name="vlille_checker_ProgressBar" parent="@style/Widget.Sherlock.Light.ProgressBar.Horizontal">
-        <item name="android:progressDrawable">@drawable/progress_horizontal_vlille_checker</item>
+
+    <style name="DropDownNav.Vlillechecker" parent="@style/Widget.Sherlock.Spinner.DropDown.ActionBar">
+        <item name="android:background">@drawable/spinner_background_ab_vlillechecker</item>
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_vlillechecker</item>
+        <item name="android:dropDownSelector">@drawable/selectable_background_vlillechecker</item>
     </style>
-    
+
+    <style name="ProgressBar.Vlillechecker" parent="@style/Widget.Sherlock.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_vlillechecker</item>
+    </style>
+
+    <style name="ActionButton.CloseMode.Vlillechecker" parent="@style/Widget.Sherlock.ActionButton.CloseMode">
+        <item name="android:background">@drawable/btn_cab_done_vlillechecker</item>
+    </style>
+
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->
-    <style name="Theme.vlille_checker.widget" parent="@style/Theme.Sherlock">
-        <item name="popupMenuStyle">@style/vlille_checker_PopupMenu</item>
-        <item name="dropDownListViewStyle">@style/vlille_checker_DropDownListView</item>
-        
-        <item name="android:popupMenuStyle">@style/vlille_checker_PopupMenu</item>
-        <item name="android:dropDownListViewStyle">@style/vlille_checker_DropDownListView</item>
-    </style>    
-    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
-    <style name="vlille_checker_DropDownItem" parent="@style/Widget.Sherlock.Light.DropDownItem.Spinner">
-        <item name="android:textAppearance">?android:attr/textAppearanceInverse</item>
-    </style>
-    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
-    <style name="vlille_checker_SpinnerItem" parent="@style/Widget.Sherlock.TextView.SpinnerItem">
-        <item name="android:textAppearance">?android:attr/textAppearanceInverse</item>
+    <style name="Theme.Vlillechecker.Widget" parent="@style/Theme.Sherlock">
+        <item name="popupMenuStyle">@style/PopupMenu.Vlillechecker</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Vlillechecker</item>
     </style>
 
 </resources>

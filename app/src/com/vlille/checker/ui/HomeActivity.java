@@ -49,15 +49,15 @@ public class HomeActivity extends SherlockFragmentActivity {
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.addTab(actionBar
 				.newTab()
-				.setIcon(R.drawable.star)
+				.setIcon(R.drawable.star_white)
 				.setTabListener(new TabListener<StarsListFragment>(this, "stars", StarsListFragment.class)));
 		actionBar.addTab(actionBar
 				.newTab()
-				.setIcon(R.drawable.view_as_list)
+				.setIcon(R.drawable.view_as_list_white)
 				.setTabListener(new TabListener<AllStationsFragment>(this, "list", AllStationsFragment.class)));
 		actionBar.addTab(actionBar
 				.newTab()
-				.setIcon(R.drawable.map)
+				.setIcon(R.drawable.map_white)
 				.setTabListener(new TabListener<MapFragment>(this, "map", MapFragment.class)));
 	}
 	

@@ -107,9 +107,10 @@
                 android:textStyle="bold"/>
 
         <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:src="@drawable/station_bike"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_v"
+                android:background="@color/ic_background"/>
 
         <!-- Nb parkings -->
 
@@ -127,22 +128,23 @@
                 android:textStyle="bold"/>
 
         <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:src="@drawable/station_parking"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_p"
+                android:background="@color/ic_background"/>
 
         <RelativeLayout
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-
             <ImageView
                     android:id="@+id/details_cb"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="5px"
-                    />
+                    android:src="@drawable/ic_cb"
+                    android:background="@color/ic_background"/>
         </RelativeLayout>
     </LinearLayout>
 
