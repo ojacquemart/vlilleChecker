@@ -130,7 +130,7 @@ public class HomePreferenceActivity extends SherlockPreferenceActivity
 						Log.d(TAG, "Show the dialog with slider radius");
 
 						View view = View.inflate(HomePreferenceActivity.this,
-								R.layout.position_prefs, null);
+								R.layout.settings_position_slider, null);
 						AlertDialog alertDialog = new AlertDialog.Builder(HomePreferenceActivity.this)
 								.setTitle(getString(R.string.prefs_position_distance))
 								.setView(view)

@@ -65,7 +65,7 @@ public class AllStationsFragment extends StationsListFragment {
 
         // Header is above the XML code.
         final LayoutInflater inflater = getActivity().getLayoutInflater();
-        ViewGroup header = (ViewGroup)inflater.inflate(R.layout.edit_text, listView, false);
+        ViewGroup header = (ViewGroup)inflater.inflate(R.layout.stations_list_searchfield, listView, false);
         listView.addHeaderView(header, null, false);
 
         setListAdapter();

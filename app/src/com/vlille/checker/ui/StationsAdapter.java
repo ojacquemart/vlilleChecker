@@ -58,7 +58,7 @@ public class StationsAdapter extends ArrayAdapter<Station> {
 	public View getView(final int position, View view, final ViewGroup parent) {
 		if (view == null) {
 			LayoutInflater layout = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			view = layout.inflate(R.layout.stars_list_content, null);
+			view = layout.inflate(R.layout.station_list_item, null);
 			
             ViewUtils.switchView(view.findViewById(R.id.station_adress_box), ContextHelper.isDisplayingStationAdress(getContext()));
 		}
