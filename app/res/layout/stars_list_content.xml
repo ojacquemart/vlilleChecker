@@ -165,13 +165,16 @@
                 android:id="@+id/station_action_tomap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/location_place"
-                />
+                android:background="@null"
+                android:src="@drawable/location_place_pressed"
+                android:padding="5dp"/>
         <ImageButton
                 android:id="@+id/station_action_tonavigation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/location_directions"
+                android:background="@null"
+                android:padding="5dp"
+                android:src="@drawable/location_directions_pressed"
                 />
     </LinearLayout>
 </LinearLayout>
