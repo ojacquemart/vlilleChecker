@@ -46,7 +46,8 @@ public class HomeActivity extends SherlockFragmentActivity {
 	
 	private void initTabs() {
 		ActionBar actionBar = getSupportActionBar();
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        actionBar.setIcon(R.drawable.ic_actionbar_icon);
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.addTab(actionBar
 				.newTab()
 				.setIcon(R.drawable.star_white)
