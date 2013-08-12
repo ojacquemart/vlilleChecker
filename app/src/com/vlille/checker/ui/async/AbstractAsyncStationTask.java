@@ -6,6 +6,8 @@ import android.util.Log;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.xml.XMLReader;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,8 +24,9 @@ public abstract class AbstractAsyncStationTask extends AsyncTask<List<Station>, 
 		Log.d(TAG, "Launch background update...");
 		
 		final List<Station> stations = params[0];
-		
-		for (Station eachStation : stations) {
+
+        List<Station> synchronizedStations = Collections.synchronizedList(new ArrayList(stations));
+		for (Station eachStation : synchronizedStations) {
             if (isCancelled()) {
                 Log.d(TAG, "Task has been cancelled.");
                 break;

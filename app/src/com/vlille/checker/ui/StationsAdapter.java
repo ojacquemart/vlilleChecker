@@ -135,7 +135,7 @@ public class StationsAdapter extends ArrayAdapter<Station> {
                 VlilleChecker.getDbAdapter().star(checkbox.isChecked(), station);
                 station.setStarred(checkbox.isChecked());
 
-                if (!readOnly) {
+                if (!readOnly && position < stations.size()) {
                     stations.remove(position);
                     arrayAdapter.notifyDataSetChanged();
 
