@@ -96,19 +96,17 @@ public class HomePreferenceActivity extends SherlockPreferenceActivity
 	protected void onResume() {
 		super.onResume();
 		
-		if (hasClickedOnLocalisationActivationAndNeedsGpsCheck) {
-			if (locationManagerWrapper.isGpsProviderEnabled()) {
-				hasClickedOnLocalisationActivationAndNeedsGpsCheck = false;
+		if (hasClickedOnLocalisationActivationAndNeedsGpsCheck
+                && locationManagerWrapper.isGpsProviderEnabled()) {
+            hasClickedOnLocalisationActivationAndNeedsGpsCheck = false;
 
-				Log.d(TAG, "Gps has been activated, set maps location prefs enabled on");
-				final Editor editor = findPreference(PreferenceKeys.LOCALISATION_GPS_ACTIVATED).getEditor();
-				editor.putBoolean(PreferenceKeys.LOCALISATION_GPS_ACTIVATED, true);
-				editor.commit();
-				
-				// Restart activity to refresh the preferences.
-				startActivity(getIntent());
-			}
+            Log.d(TAG, "Gps has been activated, set maps location prefs enabled on");
+            final Editor editor = findPreference(PreferenceKeys.LOCALISATION_GPS_ACTIVATED).getEditor();
+            editor.putBoolean(PreferenceKeys.LOCALISATION_GPS_ACTIVATED, true);
+            editor.commit();
 
+            // Restart activity to refresh the preferences.
+            startActivity(getIntent());
 		}
 	}
 	

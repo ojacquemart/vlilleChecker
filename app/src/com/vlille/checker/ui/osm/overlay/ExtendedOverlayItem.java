@@ -1,14 +1,13 @@
 package com.vlille.checker.ui.osm.overlay;
 
-import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.OverlayItem;
-
-import android.content.Context;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 
 import com.vlille.checker.ui.osm.overlay.window.InfoWindow;
+
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.OverlayItem;
 
 /**
  * An OverlayItem to use in ItemizedOverlayWithBubble<br>

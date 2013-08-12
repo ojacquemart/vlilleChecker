@@ -1,14 +1,14 @@
 package com.vlille.checker;
 
-import org.acra.ACRA;
-import org.acra.ReportingInteractionMode;
-import org.acra.annotation.ReportsCrashes;
-
 import android.app.Application;
 import android.util.Log;
 
 import com.vlille.checker.db.DbAdapter;
 import com.vlille.checker.utils.Constants;
+
+import org.acra.ACRA;
+import org.acra.ReportingInteractionMode;
+import org.acra.annotation.ReportsCrashes;
 
 @ReportsCrashes(
 	formKey = Constants.GOOGLE_DOCS_FORM_KEY,
@@ -18,7 +18,7 @@ import com.vlille.checker.utils.Constants;
 )
 public class VlilleChecker extends Application {
 	
-	private final String LOG_TAG = getClass().getSimpleName();
+	private static final String LOG_TAG = VlilleChecker.class.getSimpleName();
 	
 	private static DbAdapter dbAdapter;
 	

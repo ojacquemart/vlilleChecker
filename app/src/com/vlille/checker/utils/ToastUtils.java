@@ -7,7 +7,7 @@ import android.widget.Toast;
 /**
  * Utilities for displaying toast notifications
  * 
- * @see github.com/github/android
+ * @see <a href="https://github.com/github/android">Github android app</a>
  */
 public final class ToastUtils {
 	
@@ -17,9 +17,6 @@ public final class ToastUtils {
 	 * Show the given message in a {@link Toast}
 	 * <p>
 	 * This method may be called from any thread
-	 * 
-	 * @param activity
-	 * @param message
 	 */
 	public static void show(final Context context, final String message) {
 		if (context == null) {
@@ -43,13 +40,11 @@ public final class ToastUtils {
 	 * Show the message with the given resource id in a {@link Toast}
 	 * <p>
 	 * This method may be called from any thread
-	 * 
-	 * @param activity
-	 * @param resId
 	 */
 	public static void show(final Context context, final int resId) {
-		if (context == null)
+		if (context == null) {
 			return;
+        }
 
 		show(context, context.getString(resId));
 	}

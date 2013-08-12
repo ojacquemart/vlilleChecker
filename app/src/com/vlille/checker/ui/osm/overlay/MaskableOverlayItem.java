@@ -2,8 +2,6 @@ package com.vlille.checker.ui.osm.overlay;
 
 import org.osmdroid.util.GeoPoint;
 
-import android.content.Context;
-
 public class MaskableOverlayItem extends ExtendedOverlayItem {
 
 	private boolean visible;
