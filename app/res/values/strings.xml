@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <!-- App details -->
     <string name="app_name">Vlille Checker</string>
-    
-    <!-- Tabs -->
-    <string name="tab_stars">Starred</string>
-    <string name="tab_list">List</string>
-    <string name="tab_map">Map</string>
 
     <!-- Common strings -->
     <string name="stations_list">Stations list</string>
@@ -24,14 +18,11 @@
     <string name="no_station">Add stations in using tabs</string>
     <string name="update_ago">(%1$d %2$s ago)</string>
     <string name="timeunit_second">second</string>
-    <string name="open_with">Open with...</string>
+    <string name="open_with">Open with&#8230;</string>
 
     <!-- Errors -->
     <string name="error_occured">An error occured</string>
-    <string name="error_retry">Retry</string>
-    <string name="error_connection_expired">Connectionn expired</string>
     <string name="error_no_connection">No network available</string>
-    <string name="error_initialization_stations">Error during the stations initialization</string>
     <string name="error_no_stations_near_current_location">None station near your current location</string>
     <string name="error_no_location_found">No location available</string>
     <string name="error_no_gmaps_app_found">No navigation app found</string>
@@ -59,12 +50,9 @@
     <string name="data_status_date_pattern">dd/MM/yyyy HH:mm</string>
 
     <!-- Position -->
-    <string name="location_none_available">No location available</string>
     <string name="location_enable">Enable location</string>
 
     <!-- Search -->
-    <string name="search">Search</string>
-    <string name="search_hint">Station name</string>
     <string name="search_no_result">No result</string>
 
     <!-- About -->
@@ -82,15 +70,5 @@
     <string name="about_text_web">- <a href="http://www.twitter.com/ojacquemart">twitter.com/ojacquemart</a></string>
 
     <!-- ACRA toast notifications texts. -->
-    <string name="crash_toast_text">An error occured...</string>
-    <string name="crash_notif_ticker_text">Unexpected error, please send a report...</string>
-    <string name="crash_notif_title">CrashTest has crashed...</string>
-    <string name="crash_notif_text">Please click here to help fix the issue.</string>
-    <string name="crash_dialog_title">CrashTest has crashed</string>
-    <string name="crash_dialog_text">An unexpected error occurred forcing the
-	    application to stop. Please help us fix this by sending us error data,
-	    all you have to do is click \'OK\'.</string>
-    <string name="crash_dialog_comment_prompt">You might add your comments about the problem below:</string>
-    <string name="crash_dialog_ok_toast">Thank you !</string>
-
+    <string name="crash_toast_text">An error occured&#8230;</string>
 </resources>
