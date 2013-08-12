@@ -62,8 +62,8 @@ public class ItemizedOverlayWithFocus<Item extends MaskableOverlayItem> extends 
         super(aList, resources.getDrawable(R.drawable.station_marker), aOnItemTapListener, pResourceProxy);
 
         this.mMarkerDetails = resources.getDrawable(R.drawable.station_marker);
-        this.mMarkerPin = resources.getDrawable(R.drawable.station_pin);
-        this.mMarkerPinStarred = resources.getDrawable(R.drawable.station_pin_star);
+        this.mMarkerPin = resources.getDrawable(R.drawable.ic_station_pin);
+        this.mMarkerPinStarred = resources.getDrawable(R.drawable.ic_station_pin_star);
         this.mBubble = pInfoWindow;
         this.mTextSize = resources.getDimensionPixelSize(R.dimen.overlay_font_size);
 
