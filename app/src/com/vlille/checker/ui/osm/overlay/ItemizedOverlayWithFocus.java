@@ -1,15 +1,5 @@
 package com.vlille.checker.ui.osm.overlay;
 
-import java.util.List;
-
-import org.osmdroid.ResourceProxy;
-import org.osmdroid.views.MapView;
-import org.osmdroid.views.MapView.Projection;
-import org.osmdroid.views.overlay.ItemizedIconOverlay;
-import org.osmdroid.views.overlay.Overlay;
-import org.osmdroid.views.overlay.OverlayItem;
-import org.osmdroid.views.overlay.OverlayItem.HotspotPlace;
-
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -23,6 +13,16 @@ import com.vlille.checker.R;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.ui.osm.overlay.window.InfoWindow;
 import com.vlille.checker.utils.ColorSelector;
+
+import org.osmdroid.ResourceProxy;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.MapView.Projection;
+import org.osmdroid.views.overlay.ItemizedIconOverlay;
+import org.osmdroid.views.overlay.Overlay;
+import org.osmdroid.views.overlay.OverlayItem;
+import org.osmdroid.views.overlay.OverlayItem.HotspotPlace;
+
+import java.util.List;
 
 public class ItemizedOverlayWithFocus<Item extends MaskableOverlayItem> extends ItemizedIconOverlay<Item> {
 
@@ -130,7 +130,7 @@ public class ItemizedOverlayWithFocus<Item extends MaskableOverlayItem> extends 
      */
     public void showBubbleOnItem(final int index, final MapView mapView) {
         Log.d(TAG, "showBubbleOnItem");
-        ExtendedOverlayItem eItem = (ExtendedOverlayItem)(getItem(index));
+        ExtendedOverlayItem eItem = getItem(index);
         mItemWithBubble = eItem;
         if (eItem != null){
             showBubble(eItem, mBubble, mapView);
@@ -230,12 +230,12 @@ public class ItemizedOverlayWithFocus<Item extends MaskableOverlayItem> extends 
     }
 
     protected void onDrawItem(final Canvas canvas, final int zoomLevel, final Item item, final Point curScreenCoords) {
-        MaskableOverlayItem maskableItem = (MaskableOverlayItem) item;
+        MaskableOverlayItem maskableItem = item;
         if (maskableItem.isHidden()) {
             return;
         }
 
-        final Station station = (Station) (((ExtendedOverlayItem) item).getRelatedObject());
+        final Station station = (Station) item.getRelatedObject();
         final boolean zoomLevelDetailled = OverlayZoomUtils.isDetailledZoomLevel(zoomLevel);
         final Drawable marker = getDefaultMarker(zoomLevelDetailled, station.isStarred());
 
