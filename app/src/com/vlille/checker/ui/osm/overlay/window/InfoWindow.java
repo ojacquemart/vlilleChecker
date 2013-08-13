@@ -1,14 +1,14 @@
 package com.vlille.checker.ui.osm.overlay.window;
 
-import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.MapView;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.vlille.checker.ui.osm.overlay.ExtendedOverlayItem;
+
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
 
 /** View that can be displayed on an OSMDroid map, associated to a GeoPoint. 
  * Typical usage: cartoon-like bubbles displayed when clicking an overlay item. 
@@ -34,8 +34,9 @@ public abstract class InfoWindow {
 	protected View mView;
 	protected boolean mIsVisible = false;
 	protected MapView mMapView;
-	
-	/**
+    private int zoomLevel;
+
+    /**
 	 * @param layoutResId	the id of the view resource. 
 	 * @param mapView	the mapview on which is hooked the view
 	 */
@@ -90,5 +91,13 @@ public abstract class InfoWindow {
 	//Abstract methods to implement:
 	public abstract void onOpen(ExtendedOverlayItem item);
 	public abstract void onClose();
+
+    public int getZoomLevel() {
+        return zoomLevel;
+    }
+
+    public void setZoomLevel(int zoomLevel) {
+        this.zoomLevel = zoomLevel;
+    }
 	
 }

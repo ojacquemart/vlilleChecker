@@ -180,6 +180,10 @@ public class ItemizedOverlayWithFocus<Item extends MaskableOverlayItem> extends 
             return null;
     }
 
+    public InfoWindow getBubble() {
+        return mBubble;
+    }
+
     /** @return the index of the item currenty showing the bubble, or -1 if none.  */
     public int getBubbledItemId(){
         OverlayItem item = getBubbledItem();
