@@ -138,10 +138,6 @@ public class StationsAdapter extends ArrayAdapter<Station> {
                 if (!readOnly && position < stations.size()) {
                     stations.remove(position);
                     arrayAdapter.notifyDataSetChanged();
-
-                    if (stations.isEmpty()) {
-                        activity.findViewById(R.id.home_nostations_nfo).setVisibility(View.VISIBLE);
-                    }
                 }
             }
         });

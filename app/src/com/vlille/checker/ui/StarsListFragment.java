@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import com.vlille.checker.R;
 import com.vlille.checker.VlilleChecker;
-import com.vlille.checker.utils.ViewUtils;
 
 /**
  * A fragment to display the details from the bookmarked stations.
@@ -28,9 +27,14 @@ public class StarsListFragment extends StationsListFragment {
     }
 
     @Override
+    public void initListAdapter() {
+        super.initListAdapter();
+        getListView().setEmptyView(getActivity().findViewById(android.R.id.empty));
+    }
+
+    @Override
     void loadStations() {
         setStations(VlilleChecker.getDbAdapter().getStarredStations());
-        ViewUtils.switchView(getActivity().findViewById(R.id.home_nostations_nfo), getStations().isEmpty());
     }
 
     @Override
