@@ -12,7 +12,7 @@ import android.util.Log;
 import com.vlille.checker.R;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.ui.osm.overlay.window.InfoWindow;
-import com.vlille.checker.utils.ColorSelector;
+import com.vlille.checker.utils.color.ColorSelector;
 
 import org.osmdroid.ResourceProxy;
 import org.osmdroid.views.MapView;
@@ -59,9 +59,9 @@ public class ItemizedOverlayWithFocus<Item extends MaskableOverlayItem> extends 
             final InfoWindow pInfoWindow,
             final OnItemGestureListener<Item> aOnItemTapListener,
             final ResourceProxy pResourceProxy) {
-        super(aList, resources.getDrawable(R.drawable.station_marker), aOnItemTapListener, pResourceProxy);
+        super(aList, resources.getDrawable(R.drawable.ic_station_marker), aOnItemTapListener, pResourceProxy);
 
-        this.mMarkerDetails = resources.getDrawable(R.drawable.station_marker);
+        this.mMarkerDetails = resources.getDrawable(R.drawable.ic_station_marker);
         this.mMarkerPin = resources.getDrawable(R.drawable.ic_station_pin);
         this.mMarkerPinStarred = resources.getDrawable(R.drawable.ic_station_pin_star);
         this.mBubble = pInfoWindow;
@@ -243,10 +243,10 @@ public class ItemizedOverlayWithFocus<Item extends MaskableOverlayItem> extends 
 
         Overlay.drawAt(canvas, marker, curScreenCoords.x, curScreenCoords.y, false);
         if (zoomLevelDetailled) {
-            mTitlePaint.setColor(getResourceProxy().getColor(ColorSelector.getColor(station.getBikes())));
-            canvas.drawText(station.getStringBikes(), mCurScreenCoords.x - (11 * mScale), mCurScreenCoords.y - (30 * mScale), mTitlePaint);
-            mTitlePaint.setColor(getResourceProxy().getColor(ColorSelector.getColor(station.getAttachs())));
-            canvas.drawText(station.getStringAttachs(), mCurScreenCoords.x - (11 * mScale), mCurScreenCoords.y - (15 * mScale), mTitlePaint);
+            mTitlePaint.setColor(getResourceProxy().getColor(ColorSelector.getColorForMap(station.getBikes())));
+            canvas.drawText(station.getStringBikes(), mCurScreenCoords.x - (8 * mScale), mCurScreenCoords.y - (30 * mScale), mTitlePaint);
+            mTitlePaint.setColor(getResourceProxy().getColor(ColorSelector.getColorForMap(station.getAttachs())));
+            canvas.drawText(station.getStringAttachs(), mCurScreenCoords.x - (8 * mScale), mCurScreenCoords.y - (15 * mScale), mTitlePaint);
         }
     }
 
