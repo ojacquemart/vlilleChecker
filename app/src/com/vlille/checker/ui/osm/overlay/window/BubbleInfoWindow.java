@@ -60,8 +60,6 @@ public class BubbleInfoWindow extends DefaultInfoWindow {
 		if (maskableItem.isVisible()) {
 			super.open(item, offsetX, offsetY);
 		}
-
-        Log.d("FOO", "open");
 	}
 
 	@Override
