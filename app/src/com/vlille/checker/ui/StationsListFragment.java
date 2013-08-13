@@ -82,7 +82,7 @@ abstract class StationsListFragment extends SherlockListFragment
     }
 
     private StationsAdapter getAdapter() {
-        adapter = new StationsAdapter(activity, R.layout.stars_list_content, stations);
+        adapter = new StationsAdapter(activity, R.layout.station_list_item, stations);
         adapter.setReadOnly(isReadOnly());
 
         return adapter;

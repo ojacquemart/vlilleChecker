@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.vlille.checker"
-    android:versionCode="6"
+    android:versionCode="600"
     android:versionName="3.0-SNAPSHOT"
     android:installLocation="auto">
 

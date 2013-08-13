@@ -22,7 +22,7 @@ public class StarsListFragment extends StationsListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView");
         inflater.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.stars_list_layout, container, false);
+        View view = inflater.inflate(R.layout.stations_list_layout, container, false);
 
         return view;
     }
