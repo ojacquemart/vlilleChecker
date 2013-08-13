@@ -18,6 +18,8 @@ import com.vlille.checker.model.Station;
 import com.vlille.checker.utils.StationUtils;
 import com.vlille.checker.utils.ToastUtils;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -116,8 +118,14 @@ public class AllStationsFragment extends StationsListFragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Clear search editText");
-                getSearchField().setText(null);
-                filterStationsByKeyword(null);
+                EditText editText = getSearchField();
+                String oldText = editText.getText().toString();
+                editText.setText(null);
+
+                // Only reload stations if there was something in the input.
+                if (StringUtils.isNotEmpty(oldText)) {
+                    filterStationsByKeyword(null);
+                }
             }
         });
 	}
