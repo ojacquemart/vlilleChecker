@@ -40,7 +40,7 @@
         <item name="android:backgroundStacked">@drawable/ab_stacked_solid_vlillechecker</item>
         <item name="android:backgroundSplit">@drawable/ab_bottom_solid_vlillechecker</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Vlillechecker</item>
-        <item name="android:icon">@drawable/ic_actionbar_icon</item>
+        <item name="android:icon">@drawable/ic_menu_icon</item>
     </style>
 
     <style name="ActionBar.Transparent.Vlillechecker" parent="@style/Widget.Sherlock.ActionBar">

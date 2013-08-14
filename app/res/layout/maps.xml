@@ -15,6 +15,6 @@
         android:layout_alignParentRight="true"
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/location_enable"
-        android:src="@drawable/location_off" />
+        android:src="@drawable/ic_location_off" />
 
 </RelativeLayout>

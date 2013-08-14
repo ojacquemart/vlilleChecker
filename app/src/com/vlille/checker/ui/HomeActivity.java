@@ -46,19 +46,19 @@ public class HomeActivity extends SherlockFragmentActivity {
 	
 	private void initTabs() {
 		ActionBar actionBar = getSupportActionBar();
-        actionBar.setIcon(R.drawable.ic_actionbar_icon);
+        actionBar.setIcon(R.drawable.ic_menu_icon);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.addTab(actionBar
 				.newTab()
-				.setIcon(R.drawable.star_white)
+				.setIcon(R.drawable.ic_tab_star)
 				.setTabListener(new TabListener<StarsListFragment>(this, "stars", StarsListFragment.class)));
 		actionBar.addTab(actionBar
 				.newTab()
-				.setIcon(R.drawable.view_as_list_white)
+				.setIcon(R.drawable.ic_tab_view_as_list_white)
 				.setTabListener(new TabListener<AllStationsFragment>(this, "list", AllStationsFragment.class)));
 		actionBar.addTab(actionBar
 				.newTab()
-				.setIcon(R.drawable.map_white)
+				.setIcon(R.drawable.ic_tab_map_white)
 				.setTabListener(new TabListener<MapFragment>(this, "map", MapFragment.class)));
 	}
 	
@@ -96,7 +96,7 @@ public class HomeActivity extends SherlockFragmentActivity {
 		// Contextuel menus
 		
 		// Preferences
-		menu.add(getString(R.string.preferences)).setIcon(R.drawable.settings)
+		menu.add(getString(R.string.preferences)).setIcon(R.drawable.ic_menu_settings)
 			.setOnMenuItemClickListener(new com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener() {
 
 				@Override
@@ -107,7 +107,7 @@ public class HomeActivity extends SherlockFragmentActivity {
 			}).setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
 		// Update stations data.
-		menu.add(getString(R.string.data_launch_update)).setIcon(R.drawable.import_export)
+		menu.add(getString(R.string.data_launch_update)).setIcon(R.drawable.ic_menu_import_export)
 			.setOnMenuItemClickListener(new com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener() {
 				
 				@Override
@@ -121,7 +121,7 @@ public class HomeActivity extends SherlockFragmentActivity {
 		
 		
 		// About
-		menu.add(getString(R.string.about_title)).setIcon(R.drawable.about)
+		menu.add(getString(R.string.about_title)).setIcon(R.drawable.ic_menu_about)
 			.setOnMenuItemClickListener(new com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener() {
 
 				@Override

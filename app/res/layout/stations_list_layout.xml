@@ -29,14 +29,14 @@
                 android:layout_gravity="center"
                 android:contentDescription="@string/stations_list"
                 android:scaleType="fitStart"
-                android:src="@drawable/view_as_list" />
+                android:src="@drawable/ic_tab_view_as_list" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/stations_map"
                 android:scaleType="fitStart"
-                android:src="@drawable/map" >
+                android:src="@drawable/ic_tab_map" >
             </ImageView>
         </LinearLayout>
     </RelativeLayout>
