@@ -200,7 +200,6 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
     };
     private final ResourceProxy mResourceProxy = new ResourceProxyImpl(getContext());
 
-    private final BubbleInfoWindow BUBBLE_TOOLTIP = new BubbleInfoWindow(R.layout.maps_bubble, this);
     private List<MaskableOverlayItem> maskableOverlayItems = null;
 
     private void initIconizedOverlay() {
@@ -211,7 +210,7 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
             itemizedOverlay = new ItemizedOverlayWithFocus<MaskableOverlayItem>(
                     items,
                     resources,
-                    BUBBLE_TOOLTIP,
+                    new BubbleInfoWindow(R.layout.maps_bubble, this, sherlockActivity),
                     DEFAULT_ONGESTURE_LISTENER,
                     mResourceProxy
             );
@@ -267,6 +266,9 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
         }
 
         Log.i(TAG, "update Stations");
+        if (itemizedOverlay.getBubble() != null) {
+            itemizedOverlay.getBubble().setZoomLevel(getZoomLevel());
+        }
 
         final List<Station> stations = new ArrayList<Station>();
 

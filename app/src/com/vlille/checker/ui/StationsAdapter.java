@@ -25,7 +25,7 @@ import com.vlille.checker.R;
 import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.ui.listener.MapTabListener;
-import com.vlille.checker.utils.ColorSelector;
+import com.vlille.checker.utils.color.ColorSelector;
 import com.vlille.checker.utils.ContextHelper;
 import com.vlille.checker.utils.TextUtils;
 import com.vlille.checker.utils.ViewUtils;
@@ -190,7 +190,7 @@ public class StationsAdapter extends ArrayAdapter<Station> {
     }
 
     private int getColor(int number) {
-		return resources.getColor(ColorSelector.getColor(number, false));
+		return resources.getColor(ColorSelector.getColor(number));
 	}
 
 	@Override
