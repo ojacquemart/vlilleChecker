@@ -261,10 +261,6 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
     public void updateStations() {
         itemizedOverlay.hideBubble();
 
-        if (!ContextHelper.isNetworkAvailable(getContext())) {
-            return;
-        }
-
         Log.i(TAG, "update Stations");
         if (itemizedOverlay.getBubble() != null) {
             itemizedOverlay.getBubble().setZoomLevel(getZoomLevel());
@@ -282,13 +278,15 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
             }
         }
 
-        if (!stations.isEmpty() && OverlayZoomUtils.isDetailledZoomLevel(getZoomLevel())) {
-            Log.d(TAG, "" + stations.size() + "stations to update!");
-            new AsyncMapStationRetriever().execute(stations);
-        } else {
-            itemUpdater.whenNoneStationToDraw();
-            // Some stations may have seen their visibility attribute changed.
-            invalidate();
+        if (ContextHelper.isNetworkAvailable(getContext())) {
+            if (!stations.isEmpty() && OverlayZoomUtils.isDetailledZoomLevel(getZoomLevel())) {
+                Log.d(TAG, "" + stations.size() + "stations to update!");
+                new AsyncMapStationRetriever().execute(stations);
+            } else {
+                itemUpdater.whenNoneStationToDraw();
+                // Some stations may have seen their visibility attribute changed.
+                invalidate();
+            }
         }
     }
 
