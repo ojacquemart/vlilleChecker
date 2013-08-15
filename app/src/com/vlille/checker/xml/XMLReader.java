@@ -33,7 +33,7 @@ public class XMLReader {
 
             long start = System.currentTimeMillis();
 
-			final String httpUrl = Constants.URL_STATION_DETAIL + station.getId();
+			final String httpUrl = Constants.URL_STATION_DETAIL + station.id;
 			station = new StationDetailSAXParser(station).parse(getInputStream(httpUrl));
 
             long duration = System.currentTimeMillis() - start;

@@ -17,17 +17,7 @@ public final class StationUtils {
 	private static final String TAG = "StationUtils";
 	
 	private StationUtils() {}
-	
-	public static Map<String, Station> toMap(List<Station> stations) {
-		Map<String, Station> map = new HashMap<String, Station>();
-		
-		for (Station eachStation : stations) {
-			map.put(eachStation.getId(), eachStation);
-		}
-		
-		return map;
-	}
-	
+
 	public static List<Station> filter(List<Station> stations, String keyword) {
 		if (keyword == null || keyword.length() == 0) {
 			return stations;

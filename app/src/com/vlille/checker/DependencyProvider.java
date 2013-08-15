@@ -1,20 +1,20 @@
 package com.vlille.checker;
 
-import org.droidparts.AbstractDependencyProvider;
-import org.droidparts.persist.sql.AbstractDBOpenHelper;
-
 import android.content.Context;
 import android.util.Log;
 
-import com.vlille.checker.db.DBOpenHelper;
+import com.vlille.checker.db.DbOpenHelper;
 import com.vlille.checker.db.MetadataEntityManager;
 import com.vlille.checker.db.StationEntityManager;
+
+import org.droidparts.AbstractDependencyProvider;
+import org.droidparts.persist.sql.AbstractDBOpenHelper;
 
 public class DependencyProvider extends AbstractDependencyProvider {
 
     private static final String TAG = DependencyProvider.class.getSimpleName();
 
-    private final DBOpenHelper dbOpenHelper;
+    private final DbOpenHelper dbOpenHelper;
 
     private StationEntityManager stationEntityManager;
     private MetadataEntityManager metadataEntityManager;
@@ -23,7 +23,7 @@ public class DependencyProvider extends AbstractDependencyProvider {
         super(ctx);
 
         Log.d(TAG, "Dependency provider initialization...");
-        dbOpenHelper = new DBOpenHelper(ctx);
+        dbOpenHelper = new DbOpenHelper(ctx);
     }
 
     @Override

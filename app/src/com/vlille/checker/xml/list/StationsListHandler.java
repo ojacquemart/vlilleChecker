@@ -27,17 +27,17 @@ public class StationsListHandler extends BaseStationHandler<SetStationsInfo> {
 	public void startElement(String uri, String localName, String name, Attributes attributes) throws SAXException {
 		if (localName.equalsIgnoreCase(StationsListTags.MARKERS.tag())) {
             metadata.setLastUpdate(System.currentTimeMillis());
-			metadata.setLatitude1e6(PositionTransformer.to1e6(valueOf(attributes, StationsListTags.CENTER_LATITUDE)));
-			metadata.setLongitude1e6(PositionTransformer.to1e6(valueOf(attributes, StationsListTags.CENTER_LONGITUDE)));
+			metadata.setLatitude1e6(PositionTransformer.to1e6(getValue(attributes, StationsListTags.CENTER_LATITUDE)));
+			metadata.setLongitude1e6(PositionTransformer.to1e6(getValue(attributes, StationsListTags.CENTER_LONGITUDE)));
 		}
 		if (localName.equalsIgnoreCase(StationsListTags.MARKER.tag())) {
 			Station station = new Station();
-			station.setId(valueOf(attributes, StationsListTags.ID));
-			station.setName(valueOf(attributes, StationsListTags.NAME));
-			final String valueLatitude = valueOf(attributes, StationsListTags.LATITUDE);
+			station.id = Long.valueOf(getValue(attributes, StationsListTags.ID));
+			station.setName(getValue(attributes, StationsListTags.NAME));
+			final String valueLatitude = getValue(attributes, StationsListTags.LATITUDE);
 			station.setLatitudeE6(PositionTransformer.to1e6(valueLatitude));
 			station.setLatitude(Double.valueOf(valueLatitude));
-			final String valueLongitude = valueOf(attributes, StationsListTags.LONGITUDE);
+			final String valueLongitude = getValue(attributes, StationsListTags.LONGITUDE);
 			station.setLongitude(Double.valueOf(valueLongitude));
 			station.setLongitudeE6(PositionTransformer.to1e6(valueLongitude));
 
@@ -45,7 +45,7 @@ public class StationsListHandler extends BaseStationHandler<SetStationsInfo> {
 		}
 	}
 
-	private String valueOf(Attributes attributes, StationsListTags key) {
+	private String getValue(Attributes attributes, StationsListTags key) {
 		return attributes.getValue(key.tag());
 	}
 

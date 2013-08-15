@@ -5,12 +5,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.vlille.checker.model.Metadata;
-import com.vlille.checker.model.Station;
 
 import org.droidparts.persist.sql.EntityManager;
-import org.droidparts.persist.sql.stmt.Is;
-
-import java.util.List;
 
 public class MetadataEntityManager extends EntityManager<Metadata> {
 
@@ -41,6 +37,7 @@ public class MetadataEntityManager extends EntityManager<Metadata> {
     @Override
     public boolean update(Metadata item) {
         ContentValues cv = toContentValues(item);
+        cv.remove("_id");
 
         return update().setValues(cv).execute() > 0;
     }

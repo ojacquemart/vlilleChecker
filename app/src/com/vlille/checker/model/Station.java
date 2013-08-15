@@ -19,15 +19,13 @@ import com.vlille.checker.utils.Constants;
 @Table(name = DB.Table.STATION)
 public class Station extends Entity {
 
-    private static final long serialVersionUID = 1L;
-
     public static final String ID = "_id";
     public static final String NAME = "suggest_text_1";
     public static final String LATITUDE = "latitude";
     public static final String LATITUDE_E6 = "latitudeE6";
     public static final String LONGITUDE = "longitude";
     public static final String LONGITUDE_E6 = "longitudeE6";
-    public static final String ADDRESS = "address";
+    public static final String ADDRESS = "adress";
     public static final String BIKES = "bikes";
     public static final String ATTACHS = "attachs";
     public static final String CC_PAYMENT = "cbPaiement";
@@ -95,12 +93,8 @@ public class Station extends Entity {
 
 	// Getters & setters.
 
-	public String getId() {
-		return String.valueOf(id);
-	}
-
-	public void setId(String id) {
-		this.id = Long.valueOf(id);
+	public long getId() {
+		return id;
 	}
 
 	public String getName() {
@@ -262,7 +256,7 @@ public class Station extends Entity {
 		if (o == this) {
 			return true;
 		}
-		
+
 		Station other = (Station) o;
 		return new EqualsBuilder().append(name, other.getName()).isEquals();
 	}
