@@ -9,11 +9,11 @@ import com.vlille.checker.model.Station;
 
 import org.droidparts.persist.sql.AbstractDBOpenHelper;
 
-public class DbOpenHelper extends AbstractDBOpenHelper {
+public class DBOpenHelper extends AbstractDBOpenHelper {
 
-    private static final String TAG = DbOpenHelper.class.getSimpleName();
+    private static final String TAG = DBOpenHelper.class.getSimpleName();
 
-    public DbOpenHelper(Context ctx) {
+    public DBOpenHelper(Context ctx) {
         super(ctx, DB.FILE, DB.VERSION);
     }
 
