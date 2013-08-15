@@ -86,7 +86,6 @@ public class Station extends Entity {
 	public Station() {
 	}
 
-
 	public GeoPoint getGeoPoint() {
 		return new GeoPoint(latitudeE6, longituteE6);
 	}

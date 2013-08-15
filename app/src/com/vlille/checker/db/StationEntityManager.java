@@ -41,7 +41,7 @@ public class StationEntityManager extends EntityManager<Station> {
         try {
             id = getDB().insertOrThrow(getTableName(), null, cv);
         } catch (SQLException e) {
-            Log.d(TAG, "Erreur during insert", e);
+            Log.d(TAG, "Error during insert", e);
         }
         if (id > 0) {
             item.id = id;
