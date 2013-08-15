@@ -22,7 +22,6 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.vlille.checker.R;
-import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.ui.listener.MapTabListener;
 import com.vlille.checker.utils.color.ColorSelector;
@@ -42,6 +41,7 @@ public class StationsAdapter extends ArrayAdapter<Station> {
 	private  static final String TAG = StationsAdapter.class.getSimpleName();
 
 	private Activity activity;
+    private StationUpdateDelegate stationUpdateDelegate;
     private List<Station> stations;
     private Resources resources;
     private boolean readOnly = false;
@@ -132,8 +132,10 @@ public class StationsAdapter extends ArrayAdapter<Station> {
 
             @Override
             public void onClick(View v) {
-                VlilleChecker.getDbAdapter().star(checkbox.isChecked(), station);
                 station.setStarred(checkbox.isChecked());
+                if (stationUpdateDelegate != null) {
+                    stationUpdateDelegate.update(station);
+                }
 
                 if (!readOnly && position < stations.size()) {
                     stations.remove(position);
@@ -157,11 +159,11 @@ public class StationsAdapter extends ArrayAdapter<Station> {
         address.setText(TextUtils.toCamelCase(station.getAdress()));
 
         TextView nbBikes = (TextView) view.findViewById(R.id.details_bikes);
-        nbBikes.setText(station.getStringBikes());
+        nbBikes.setText(station.getBikesAsString());
         nbBikes.setTextColor(getColor(station.getBikes()));
 
         TextView nbAttachs = (TextView) view.findViewById(R.id.details_attachs);
-        nbAttachs.setText(station.getStringAttachs());
+        nbAttachs.setText(station.getAttachsAsString());
         nbAttachs.setTextColor(getColor(station.getAttachs()));
 
         LinearLayout boxOutOfService = (LinearLayout) view.findViewById(R.id.station_out_of_service_box);
@@ -199,6 +201,10 @@ public class StationsAdapter extends ArrayAdapter<Station> {
 
 		super.notifyDataSetChanged();
 	}
+
+    public void setStationUpdateDelegate(StationUpdateDelegate stationUpdateDelegate) {
+        this.stationUpdateDelegate = stationUpdateDelegate;
+    }
 
     public void setReadOnly(boolean readOnly) {
         this.readOnly = readOnly;

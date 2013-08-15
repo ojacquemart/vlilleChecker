@@ -6,7 +6,7 @@ import java.util.List;
 
 import android.util.Log;
 
-import com.vlille.checker.model.SetStationsInfos;
+import com.vlille.checker.model.SetStationsInfo;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.ui.HomeActivity;
 import com.vlille.checker.xml.XMLReader;
@@ -29,7 +29,7 @@ public class TestStationParser extends AbstractVlilleTest<HomeActivity> {
 
 		assertNotNull(isVlilleStation);
 
-		final SetStationsInfos stationSet = new StationsListSAXParser().parse(isVlilleStation);
+		final SetStationsInfo stationSet = new StationsListSAXParser().parse(isVlilleStation);
 		assertTrue(stationSet.getMetadata().getLatitude1e6() > 0);
 		assertTrue(stationSet.getMetadata().getLongitude1e6() > 0);
 
@@ -45,7 +45,7 @@ public class TestStationParser extends AbstractVlilleTest<HomeActivity> {
 	}
 	
 	public void testLoadAllStations() {
-		final SetStationsInfos setStations = new XMLReader().getAsyncSetStationsInfos();
+		final SetStationsInfo setStations = new XMLReader().getSetStationInfoAsAsAsync();
 		assertNotNull(setStations);
 		assertNotNull(setStations.getMetadata());
 		assertNotNull(setStations.getStations());

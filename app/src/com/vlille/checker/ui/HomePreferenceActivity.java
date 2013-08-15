@@ -12,13 +12,16 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.vlille.checker.R;
-import com.vlille.checker.VlilleChecker;
+import com.vlille.checker.db.MetadataEntityManager;
+import com.vlille.checker.db.StationEntityManager;
 import com.vlille.checker.model.Metadata;
 import com.vlille.checker.ui.osm.location.LocationManagerWrapper;
 import com.vlille.checker.utils.ContextHelper;
 import com.vlille.checker.utils.PreferenceKeys;
+
+import org.droidparts.activity.sherlock.PreferenceActivity;
+import org.droidparts.annotation.inject.InjectDependency;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,10 +31,16 @@ import java.util.Date;
  *
  * TODO: remove deprecated code.
  */
-public class HomePreferenceActivity extends SherlockPreferenceActivity
+public class HomePreferenceActivity extends PreferenceActivity
         implements OnSeekBarChangeListener {
 
 	private static final String TAG = HomePreferenceActivity.class.getSimpleName();
+
+    @InjectDependency
+    protected StationEntityManager stationEntityManager;
+
+    @InjectDependency
+    protected MetadataEntityManager metadataEntityManager;
 	
 	private LocationManagerWrapper locationManagerWrapper;
 	private boolean hasClickedOnLocalisationActivationAndNeedsGpsCheck;
@@ -44,10 +53,10 @@ public class HomePreferenceActivity extends SherlockPreferenceActivity
 		addPreferencesFromResource(R.xml.preferences);
 		
 		locationManagerWrapper = LocationManagerWrapper.with(this);
-		
-		setLastDataStatusUpdate();
-		onChangeGpsActivated();
-		onChangeRadiusValue();
+
+        setLastDataStatusUpdate();
+        onChangeGpsActivated();
+        onChangeRadiusValue();
 	}
 
 	private void setLastDataStatusUpdate() {
@@ -57,11 +66,11 @@ public class HomePreferenceActivity extends SherlockPreferenceActivity
 	}
 
     private String getDataStatusStationsNumber() {
-        return getString(R.string.data_status_stations_number, VlilleChecker.getDbAdapter().count());
+        return getString(R.string.data_status_stations_number, stationEntityManager.count());
     }
 
     private String getDataStatusLastUpdateMessage() {
-        final Metadata metadata = VlilleChecker.getDbAdapter().findMetadata();
+        final Metadata metadata = metadataEntityManager.find();
         final Date lastUpdate = new Date(metadata.getLastUpdate());
         final String formatPattern = getString(R.string.data_status_date_pattern);
         final String lastUpdateFormatted = new SimpleDateFormat(formatPattern).format(lastUpdate);
@@ -95,7 +104,7 @@ public class HomePreferenceActivity extends SherlockPreferenceActivity
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
+
 		if (hasClickedOnLocalisationActivationAndNeedsGpsCheck
                 && locationManagerWrapper.isGpsProviderEnabled()) {
             hasClickedOnLocalisationActivationAndNeedsGpsCheck = false;

@@ -13,7 +13,6 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.vlille.checker.R;
-import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.utils.StationUtils;
 import com.vlille.checker.utils.ToastUtils;
@@ -51,16 +50,16 @@ public class AllStationsFragment extends StationsListFragment {
 
     @Override
     void loadStations() {
-        originalStations = VlilleChecker.getDbAdapter().findAll();
+        originalStations = stationEntityManager.findAll();
         setStations(new ArrayList<Station>(originalStations));
     }
 
-    /**
-	 * setListAdapter(null) is a a hack to avoid java.lang.IllegalStateException: Cannot add header view to list -- setListAdapter has already been called.
-	 * @see <a href="http://stackoverflow.com/questions/5704478/best-place-to-addheaderview-in-listfragment">Add heaver view in list fragment</a>
-	 */
     @Override
 	public void initListAdapter() {
+        /*
+         * setListAdapter(null) is a a hack to avoid java.lang.IllegalStateException: Cannot add header view to list -- setListAdapter has already been called.
+	     * @see <a href="http://stackoverflow.com/questions/5704478/best-place-to-addheaderview-in-listfragment">Add heaver view in list fragment</a>
+         */
         setListAdapter(null);
 
         final ListView listView = getListView();

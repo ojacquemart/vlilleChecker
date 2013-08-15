@@ -1,28 +1,36 @@
 package com.vlille.checker.model;
 
+import org.droidparts.annotation.sql.Column;
+import org.droidparts.annotation.sql.Table;
+import org.droidparts.model.Entity;
 import org.osmdroid.util.GeoPoint;
 
-import android.content.ContentValues;
+import com.vlille.checker.db.DB;
 
-import com.vlille.checker.db.GetContentValues;
-import com.vlille.checker.db.metadata.MetadataTableFields;
+@Table(name = DB.Table.METADATA)
+public class Metadata extends Entity {
 
-public class Metadata implements GetContentValues {
+    public static final String LAST_UPDATE = "lastUpdate";
+    public static final String LATITUDE_E6 = "latitudeE6";
+    public static final String LONGITUDE_E6 = "longitudeE6";
 
 	/**
 	 * Last update when was checked the vlille stations.
 	 */
-	private long lastUpdate;
+    @Column(name = LAST_UPDATE)
+	public long lastUpdate;
 	
 	/**
 	 * Default latitude.
 	 */
-	private int latitude1e6;
+    @Column(name = LATITUDE_E6)
+    public int latitude1e6;
 	
 	/**
 	 * Default longitude.
 	 */
-	private int longitude1e6;
+    @Column(name = LONGITUDE_E6)
+    public int longitude1e6;
 	
 	public GeoPoint getGeoPoint() {
 		return new GeoPoint(latitude1e6, longitude1e6);
@@ -50,21 +58,6 @@ public class Metadata implements GetContentValues {
 
 	public void setLongitude1e6(int longitude) {
 		this.longitude1e6 = longitude;
-	}
-
-	@Override
-	public ContentValues getInsertableContentValues() {
-		ContentValues values = new ContentValues();
-		values.put(MetadataTableFields.lastUpdate.toString(), System.currentTimeMillis());
-		values.put(MetadataTableFields.latitudeE6.toString(), latitude1e6);
-		values.put(MetadataTableFields.longitudeE6.toString(), longitude1e6);
-		
-		return values;
-	}
-
-	@Override
-	public ContentValues getUpdatableContentValues() {
-		return null;
 	}
 
 }

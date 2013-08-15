@@ -10,29 +10,21 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Window;
 import com.vlille.checker.R;
-import com.vlille.checker.VlilleChecker;
-import com.vlille.checker.db.DbAdapter;
-import com.vlille.checker.model.SetStationsInfos;
-import com.vlille.checker.model.Station;
+import com.vlille.checker.db.DBFiller;
+import com.vlille.checker.db.DBUpdater;
 import com.vlille.checker.ui.listener.TabListener;
-import com.vlille.checker.utils.Constants;
-import com.vlille.checker.xml.XMLReader;
-import com.vlille.checker.xml.list.StationsListSAXParser;
+import com.vlille.checker.utils.ToastUtils;
 
-import org.apache.commons.collections.CollectionUtils;
-
-import java.io.InputStream;
-import java.util.List;
+import org.droidparts.activity.sherlock.FragmentActivity;
 
 /**
- * Home Vlille Checker activity.
+ * Home activity.
  */
-public class HomeActivity extends SherlockFragmentActivity {
+public class HomeActivity extends FragmentActivity {
 
-	private final String TAG = getClass().getSimpleName();
+	private final String TAG = HomeActivity.class.getSimpleName();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -40,10 +32,19 @@ public class HomeActivity extends SherlockFragmentActivity {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
         super.onCreate(savedInstanceState);
-		setContentView(R.layout.home);
+
+        setContentView(R.layout.home);
+        checkDbInitialization();
 		initTabs();
 		initSherlockProgressBar();
 	}
+
+    private void checkDbInitialization() {
+        DBFiller dbFiller = new DBFiller(getApplicationContext());
+        if (dbFiller.isDBEmpty()) {
+            dbFiller.fill();
+        }
+    }
 	
 	private void initTabs() {
 		ActionBar actionBar = getSupportActionBar();
@@ -94,7 +95,7 @@ public class HomeActivity extends SherlockFragmentActivity {
 				}
 			}).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 		
-		// Contextuel menus
+		// Contextual menus
 		
 		// Preferences
 		menu.add(getString(R.string.preferences)).setIcon(R.drawable.ic_menu_settings)
@@ -114,7 +115,7 @@ public class HomeActivity extends SherlockFragmentActivity {
 				@Override
 				public boolean onMenuItemClick(com.actionbarsherlock.view.MenuItem item) {
 					Log.d(TAG, "Launch data update");
-					new AsyncRefreshStationsList().execute();
+					new DbUpdaterAsyncTask().execute();
 					
 					return false;
 				}
@@ -135,92 +136,36 @@ public class HomeActivity extends SherlockFragmentActivity {
 
 		return true;
 	}
-	
+
 	/**
 	 * {@link AsyncTask} to refresh stations from vlille.fr.
 	 */
-	class AsyncRefreshStationsList extends AsyncTask<Void, Void, Void> {
+	class DbUpdaterAsyncTask extends AsyncTask<Void, Void, Boolean> {
 
-		final StationsListSAXParser stationsParser = new StationsListSAXParser();
-		private DbAdapter dbAdapter = VlilleChecker.getDbAdapter();
-		
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			getSherlock().setProgressBarIndeterminateVisibility(true);
+            setActionBarLoadingIndicatorVisible(true);
 		}
-		
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            DBUpdater dbUpdater = new DBUpdater(getApplicationContext());
+
+            return dbUpdater.update();
+        }
+
 		@Override
-		protected void onPostExecute(Void result) {
+		protected void onPostExecute(Boolean result) {
 			super.onPostExecute(result);
-			getSherlock().setProgressBarIndeterminateVisibility(false);
-		}
+            setActionBarLoadingIndicatorVisible(false);
 
-		@Override
-		protected Void doInBackground(Void... params) {
-			if (insertedNewStations()) {
-				toast(R.string.data_status_update_done);
-			} else {
-				toast(R.string.data_status_uptodate);
-			}
-			
-			Log.d(TAG, "Change last update millis");
-			dbAdapter.setLastUpdateTimeToNow();
-			
-			return null;
-		}
-		
-		/**
-		 * Parse vlille stations and compare stations with those from db. 
-		 * New stations will be inserted.
-		 * 
-		 * @return <code>true</code> if new stations have been inserted.
-		 */
-		private boolean insertedNewStations() {
-			Log.d(TAG, "Check if some new stations have been added");
-			final List<Station> existingStations = findExistingStations();
-			if (existingStations == null) {
-				return false;
-			}
+            int resourceId = result
+                    ?  R.string.data_status_update_done
+                    : R.string.data_status_uptodate;
 
-			final List<Station> newStations = (List<Station>) CollectionUtils.disjunction(existingStations, dbAdapter.findAll());
-			for (Station eachNewStation : newStations) {
-				dbAdapter.insertStation(eachNewStation);
-			}
-			
-			return hasNewStations(newStations);
+            ToastUtils.show(getApplicationContext(), resourceId);
 		}
-
-		private List<Station> findExistingStations() {
-			final InputStream inputStream = new XMLReader().getInputStream(Constants.URL_STATIONS_LIST);
-			if (inputStream == null) {
-				return null;
-			}
-			
-			final SetStationsInfos setStationsInfos = stationsParser.parse(inputStream);
-			final List<Station> parsedStations = setStationsInfos.getStations();
-			
-			return parsedStations;
-		}
-		
-		private boolean hasNewStations(List<Station> stationsAdded) {
-			final int stationsAddedSize = stationsAdded.size();
-			Log.d(TAG, "Nb stations changed: " + stationsAddedSize);
-			
-			return stationsAddedSize > 0;
-		}
-		
-	}
-	
-	private void toast(final int resource) {
-		HomeActivity.this.runOnUiThread(new Runnable() {
-			
-			@Override
-			public void run() {
-				Toast.makeText(getApplicationContext(), resource, Toast.LENGTH_SHORT).show();
-				
-			}
-		});
 
 	}
 

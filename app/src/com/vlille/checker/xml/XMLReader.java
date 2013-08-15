@@ -3,8 +3,7 @@ package com.vlille.checker.xml;
 import android.content.Context;
 import android.util.Log;
 
-import com.vlille.checker.VlilleChecker;
-import com.vlille.checker.model.SetStationsInfos;
+import com.vlille.checker.model.SetStationsInfo;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.utils.Constants;
 import com.vlille.checker.xml.detail.StationDetailSAXParser;
@@ -13,80 +12,71 @@ import com.vlille.checker.xml.list.StationsListSAXParser;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.List;
 
 public class XMLReader {
 	
-	private static final String LOG_TAG = XMLReader.class.getSimpleName();
+	private static final String TAG = XMLReader.class.getSimpleName();
+
 	private static final int READ_TIMEOUT = 3000;
 	private static final int CONNECTION_TIMEOUT = 3000;
 
 	/**
-	 * Update station details. 
-	 * If the station retrieved is not null, the station id is updated
-	 * and the station is merged in db, in order to optimize the retrieve.
-	 * 
+	 * Gets the station details.
+	 *
 	 * @param station The station.
 	 * @return The parsed station.
 	 */
-	public void updateDetails(Station station)  {
+	public Station getRemoteInfo(Station station)  {
 		try {
+            Log.d(TAG, "Gets details for " + station.getName());
+
             long start = System.currentTimeMillis();
 
 			final String httpUrl = Constants.URL_STATION_DETAIL + station.getId();
 			station = new StationDetailSAXParser(station).parse(getInputStream(httpUrl));
 
             long duration = System.currentTimeMillis() - start;
-            Log.d(LOG_TAG, "Update in " + duration + " ms");
+            Log.d(TAG, "Update in " + duration + " ms");
 		} catch (Exception e) {
-			Log.e(LOG_TAG, "Error during the xml parsing.", e);
+			Log.e(TAG, "Error during the xml parsing.", e);
 			
 			station.setBikes(null);
 			station.setAttachs(null);
 		}
-		
-		VlilleChecker.getDbAdapter().update(station);
+
+        return station;
 	}
-	
+
+    public List<Station> getRemoteStations() {
+        final InputStream inputStream = new XMLReader().getInputStream(Constants.URL_STATIONS_LIST);
+        if (inputStream == null) {
+            return null;
+        }
+
+        return new StationsListSAXParser().parse(inputStream).getStations();
+    }
+
 	/**
-	 * Retrieve all stations informations.
-	 * The retrieve is made asynchronous in ordre to be compatible with the ICS version.
-	 * 
-	 * @return The set with metadata and stations. <code>null</code> if vlille website is down. 
-	 * @see #getInputStream(String)
-	 * @deprecated use {@link #getLocalSetStationsInfos(Context)}
-	 */
-	public SetStationsInfos getAsyncSetStationsInfos() {
-		try {
-			final StationsListSAXParser parser = new StationsListSAXParser();
-			
-			return new AsyncFeedReader<SetStationsInfos>(parser).execute(Constants.URL_STATIONS_LIST).get();
-		} catch (Exception e) {
-			Log.e(LOG_TAG, "Exception", e);
-		}
-		
-		return null;
-	}
-	
-	/**
-	 * Retrieve all stations informations from local xml.
+	 * Retrieve all stations information from the local asset xml.
 	 * 
 	 * @param context the current context.
 	 * @return The set with metadata and stations. <code>null</code> if exception was thrown.
 	 */
-	public SetStationsInfos getLocalSetStationsInfos(final Context context) {
+	public SetStationsInfo getAssetsStationsInfo(final Context context) {
 		try {
 			final InputStream inputStream = context.getAssets().open("vlille_stations.xml");
 			
 			return new StationsListSAXParser().parse(inputStream);
 		} catch (Exception e) {
-            Log.e(LOG_TAG, "Error during reading vlille_stations.xml", e);
+            Log.e(TAG, "Error during reading vlille_stations.xml", e);
 
             throw new IllegalStateException("Error during reading vlille_stations.xml", e);
 		}
 	}
 	 
 	/**
-	 * Get input stream from a given http url.
+	 * Gets the InputStream from a given http url.
 	 * 
 	 * @return The inpustream. <code>null</code> if any exception occured.
 	 */
@@ -94,7 +84,7 @@ public class XMLReader {
 		InputStream inputStream = null;
 		
 		try {
-            Log.d(LOG_TAG, "Load url " + httpUrl);
+            Log.d(TAG, "Load url " + httpUrl);
 
 			final URL url = new URL(httpUrl);
 			final URLConnection connection = url.openConnection();
@@ -105,7 +95,7 @@ public class XMLReader {
 			inputStream = connection.getInputStream();
 			
 		} catch (Exception e) {
-			Log.e(LOG_TAG, "Error during xml reading", e);
+			Log.e(TAG, "Error during xml reading", e);
 		}
 		
 		return inputStream; 

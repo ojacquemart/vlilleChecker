@@ -14,7 +14,8 @@ import android.view.MotionEvent;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.vlille.checker.R;
 import com.vlille.checker.model.Station;
-import com.vlille.checker.ui.async.AbstractAsyncStationTask;
+import com.vlille.checker.ui.StationUpdateDelegate;
+import com.vlille.checker.ui.async.AbstractStationsAsyncTask;
 import com.vlille.checker.ui.osm.location.LocationManagerWrapper;
 import com.vlille.checker.ui.osm.overlay.CircleLocationOverlay;
 import com.vlille.checker.ui.osm.overlay.ItemizedOverlayWithFocus;
@@ -57,6 +58,8 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
     private List<Station> stations;
 
     private SherlockFragmentActivity sherlockActivity;
+    private StationUpdateDelegate stationUpdateDelegate;
+
     private boolean locationOn;
     private CircleLocationOverlay circleOverlay;
     private ItemizedOverlayWithFocus<MaskableOverlayItem> itemizedOverlay;
@@ -207,10 +210,11 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
 
         final Resources resources = getResources();
         if (itemizedOverlay == null) {
+            BubbleInfoWindow bubbleInfoWindow = new BubbleInfoWindow(this, sherlockActivity, stationUpdateDelegate);
             itemizedOverlay = new ItemizedOverlayWithFocus<MaskableOverlayItem>(
                     items,
                     resources,
-                    new BubbleInfoWindow(R.layout.maps_bubble, this, sherlockActivity),
+                    bubbleInfoWindow,
                     DEFAULT_ONGESTURE_LISTENER,
                     mResourceProxy
             );
@@ -281,7 +285,9 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
         if (ContextHelper.isNetworkAvailable(getContext())) {
             if (!stations.isEmpty() && OverlayZoomUtils.isDetailledZoomLevel(getZoomLevel())) {
                 Log.d(TAG, "" + stations.size() + "stations to update!");
-                new AsyncMapStationRetriever().execute(stations);
+                AsyncMapStationRetriever asyncTask = new AsyncMapStationRetriever();
+                asyncTask.setDelegate(stationUpdateDelegate);
+                asyncTask.execute(stations);
             } else {
                 itemUpdater.whenNoneStationToDraw();
                 // Some stations may have seen their visibility attribute changed.
@@ -363,7 +369,7 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
         };
     }
 
-    class AsyncMapStationRetriever extends AbstractAsyncStationTask {
+    class AsyncMapStationRetriever extends AbstractStationsAsyncTask {
 
         @Override
         protected void onPreExecute() {
@@ -422,6 +428,10 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
 
     public void setSherlockActivity(SherlockFragmentActivity sherlockActivity) {
         this.sherlockActivity = sherlockActivity;
+    }
+
+    public void setStationUpdateDelegate(StationUpdateDelegate stationUpdateDelegate) {
+        this.stationUpdateDelegate = stationUpdateDelegate;
     }
 
 }

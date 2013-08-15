@@ -2,7 +2,6 @@ package com.vlille.checker.ui.osm.overlay.window;
 
 import org.osmdroid.views.MapView;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -10,9 +9,9 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.vlille.checker.R;
-import com.vlille.checker.VlilleChecker;
 import com.vlille.checker.model.Station;
-import com.vlille.checker.ui.async.AbstractAsyncStationTask;
+import com.vlille.checker.ui.StationUpdateDelegate;
+import com.vlille.checker.ui.async.AbstractStationsAsyncTask;
 import com.vlille.checker.ui.osm.overlay.ExtendedOverlayItem;
 import com.vlille.checker.ui.osm.overlay.MaskableOverlayItem;
 import com.vlille.checker.ui.osm.overlay.OverlayZoomUtils;
@@ -27,23 +26,27 @@ import java.util.List;
  */
 public class BubbleInfoWindow extends DefaultInfoWindow {
 
-    private SherlockFragmentActivity sherlockActivity;
-
     private ExtendedOverlayItem selectedItem;
-
     private TextView stationBikes;
     private TextView stationAttachs;
 
-    public BubbleInfoWindow(int layoutResId, final MapView mapView, SherlockFragmentActivity sherlockActivity) {
-		super(layoutResId, mapView);
+    private SherlockFragmentActivity sherlockActivity;
+    private StationUpdateDelegate stationUpdateDelegate;
+
+    public BubbleInfoWindow(MapView mapView,
+                            SherlockFragmentActivity sherlockActivity,
+                            final StationUpdateDelegate stationUpdateDelegate) {
+		super(R.layout.maps_bubble, mapView);
         this.sherlockActivity = sherlockActivity;
+        this.stationUpdateDelegate = stationUpdateDelegate;
 
         Button bubbleCheckbox = (Button) (mView.findViewById(R.id.maps_bubble_checkbox));
         bubbleCheckbox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Station station = (Station) selectedItem.getRelatedObject();
                 station.setStarred(!station.isStarred());
-                VlilleChecker.getDbAdapter().star(station.isStarred(), station);
+
+                stationUpdateDelegate.update(station);
             }
         });
     }
@@ -84,20 +87,22 @@ public class BubbleInfoWindow extends DefaultInfoWindow {
             // Bind station with old values before async refresh.
             bindStation(station);
 
-            new SingleStationAsyncTask().execute(Arrays.asList(station));
+            SingleStationAsyncTask asyncTask = new SingleStationAsyncTask();
+            asyncTask.setDelegate(stationUpdateDelegate);
+            asyncTask.execute(Arrays.asList(station));
         }
 	}
 
     private void bindStation(Station station) {
-        updateTextView(stationBikes, station.getStringBikes(), ColorSelector.getColorForMap(station.getBikes()));
-        updateTextView(stationAttachs, station.getStringAttachs(), ColorSelector.getColorForMap(station.getAttachs()));
+        updateTextView(stationBikes, station.getBikesAsString(), ColorSelector.getColorForMap(station.getBikes()));
+        updateTextView(stationAttachs, station.getAttachsAsString(), ColorSelector.getColorForMap(station.getAttachs()));
     }
     private void updateTextView(TextView textView, String text, int color) {
         textView.setText(text);
         textView.setTextColor(mView.getResources().getColor(color));
     }
 
-    class SingleStationAsyncTask extends AbstractAsyncStationTask {
+    class SingleStationAsyncTask extends AbstractStationsAsyncTask {
 
         @Override
         protected void onPreExecute() {

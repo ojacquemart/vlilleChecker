@@ -8,24 +8,25 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 import com.vlille.checker.model.Metadata;
-import com.vlille.checker.model.SetStationsInfos;
+import com.vlille.checker.model.SetStationsInfo;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.ui.osm.PositionTransformer;
 import com.vlille.checker.xml.BaseStationHandler;
 
-public class StationsListHandler extends BaseStationHandler<SetStationsInfos> {
+public class StationsListHandler extends BaseStationHandler<SetStationsInfo> {
 
 	private Metadata metadata = new Metadata();
 	private Set<Station> stations = new HashSet<Station>();
 
 	@Override
-	public SetStationsInfos getResult() {
-		return new SetStationsInfos(metadata, new ArrayList<Station>(stations));
+	public SetStationsInfo getResult() {
+		return new SetStationsInfo(metadata, new ArrayList<Station>(stations));
 	}
 	
 	@Override
 	public void startElement(String uri, String localName, String name, Attributes attributes) throws SAXException {
 		if (localName.equalsIgnoreCase(StationsListTags.MARKERS.tag())) {
+            metadata.setLastUpdate(System.currentTimeMillis());
 			metadata.setLatitude1e6(PositionTransformer.to1e6(valueOf(attributes, StationsListTags.CENTER_LATITUDE)));
 			metadata.setLongitude1e6(PositionTransformer.to1e6(valueOf(attributes, StationsListTags.CENTER_LONGITUDE)));
 		}

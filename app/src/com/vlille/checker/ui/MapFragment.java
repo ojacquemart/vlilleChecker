@@ -7,14 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.vlille.checker.R;
-import com.vlille.checker.VlilleChecker;
-import com.vlille.checker.model.SetStationsInfos;
+import com.vlille.checker.db.StationEntityManager;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.ui.osm.MapState;
 import com.vlille.checker.ui.osm.MapView;
 
+import org.droidparts.annotation.inject.InjectDependency;
+import org.droidparts.fragment.sherlock.Fragment;
 import org.osmdroid.util.GeoPoint;
 
 import java.util.List;
@@ -22,9 +22,12 @@ import java.util.List;
 /**
  * A fragment to localize and bookmark stations from a map, using OpenStreetMap.
  */
-public class MapFragment extends SherlockFragment {
+public class MapFragment extends Fragment implements StationUpdateDelegate {
 
 	private static final String TAG = MapFragment.class.getSimpleName();
+
+    @InjectDependency
+    private StationEntityManager stationEntityManager;
 
 	private MapState state = new MapState();
 	private MapView mapView;
@@ -47,24 +50,35 @@ public class MapFragment extends SherlockFragment {
     }
 	
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+    public View onCreateView(Bundle savedInstanceState,
+                             LayoutInflater inflater, ViewGroup container) {
 		super.onCreate(savedInstanceState);
 		Log.d(TAG, "onCreateView");
 
-        SetStationsInfos setStationsInfos = VlilleChecker.getDbAdapter().findSetStationsInfos();
-        this.stations = setStationsInfos.getStations();
-
 		final View view = inflater.inflate(R.layout.maps, container, false);
 		mapView = (MapView) view.findViewById(R.id.mapview);
-		mapView.setMapInfos(state, stations);
-		mapView.setSherlockActivity(getSherlockActivity());
-		mapView.init();
-		
-		addLocationEnablerClickListener(view);
-		
+
 		return view;
 	}
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        this.stations = stationEntityManager.findAll();
+
+        mapView.setMapInfos(state, stations);
+        mapView.setSherlockActivity(getSherlockActivity());
+        mapView.setStationUpdateDelegate(this);
+        mapView.init();
+
+        addLocationEnablerClickListener(getView());
+    }
+
+    @Override
+    public void update(Station station) {
+        stationEntityManager.update(station);
+    }
 
     private void addLocationEnablerClickListener(final View view) {
         final ImageButton locationEnabler = (ImageButton) view.findViewById(R.id.maps_location_enable);

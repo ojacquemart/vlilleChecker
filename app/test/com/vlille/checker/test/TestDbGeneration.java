@@ -6,9 +6,6 @@ import static junit.framework.Assert.fail;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
-import com.vlille.checker.db.Field;
-import com.vlille.checker.db.Type;
-import com.vlille.checker.db.DbSchema;
 import com.vlille.checker.db.station.StationTable;
 
 /**

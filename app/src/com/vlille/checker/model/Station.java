@@ -1,61 +1,93 @@
 package com.vlille.checker.model;
 
-import java.io.Serializable;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.droidparts.annotation.sql.Column;
+import org.droidparts.annotation.sql.Table;
+import org.droidparts.model.Entity;
 import org.osmdroid.util.GeoPoint;
 
-import android.content.ContentValues;
 import android.text.TextUtils;
 
-import com.vlille.checker.db.GetContentValues;
-import com.vlille.checker.db.station.StationTableFields;
-import com.vlille.checker.ui.osm.PositionTransformer;
+import com.vlille.checker.db.DB;
 import com.vlille.checker.utils.Constants;
 
 /**
  * Represents the details of a single vlille station.
  */
-public class Station implements Serializable, GetContentValues {
-	
-	private static final long serialVersionUID = 1L;
-	
-	/**
-	 * From stations list.
-	 */
-	private String id;
-	private String name;
-	private double latitude;
-	private double longitude;
-	private int latitudeE6;
-	private int longituteE6;
+@Table(name = DB.Table.STATION)
+public class Station extends Entity {
 
-	/**
-	 * From detail stations informations.
-	 */
-	private String adress;
-	private String bikes;
-	private String attachs;
-	private boolean cbPaiement;
-	private boolean outOfService;
-	private long lastUpdate;
-	private boolean starred;
+    private static final long serialVersionUID = 1L;
+
+    public static final String ID = "_id";
+    public static final String NAME = "suggest_text_1";
+    public static final String LATITUDE = "latitude";
+    public static final String LATITUDE_E6 = "latitudeE6";
+    public static final String LONGITUDE = "longitude";
+    public static final String LONGITUDE_E6 = "longitudeE6";
+    public static final String ADDRESS = "address";
+    public static final String BIKES = "bikes";
+    public static final String ATTACHS = "attachs";
+    public static final String CC_PAYMENT = "cbPaiement";
+    public static final String OUT_OF_SERVICE = "outOfService";
+    public static final String LAST_UPDATE = "lastUpdate";
+    public static final String STARRED = "starred";
+    public static final String ORDINAL = "ordinal";
+
+    /**
+     * Nullable columns:
+     * - address
+     * - attachs
+     * - bikes
+     * - ordinal
+     */
+
+    @Column(name = NAME)
+    public String name;
+
+    @Column(name = LATITUDE)
+    public double latitude;
+
+    @Column(name = LATITUDE_E6)
+    public int latitudeE6;
+
+    @Column(name = LONGITUDE)
+    public double longitude;
+
+    @Column(name = LONGITUDE_E6)
+    public int longituteE6;
+
+    @Column(name = ADDRESS, nullable = true)
+    public String adress;
+
+    @Column(name = BIKES, nullable = true)
+    public String bikes;
+
+    @Column(name = ATTACHS, nullable = true)
+    public String attachs;
+
+    @Column(name = CC_PAYMENT)
+    public boolean cbPaiement;
+
+    @Column(name = OUT_OF_SERVICE)
+    public boolean outOfService;
+
+    @Column(name = LAST_UPDATE)
+    public long lastUpdate;
+
+    @Column(name = STARRED)
+    public boolean starred;
+
+    @Column(name = ORDINAL, nullable = true)
+    public int ordinal;
 
     private boolean selected;
-
-	/**
-	 * To sort. TODO: implement the solution.
-	 */
-	private Integer ordinal;
 
 	public Station() {
 	}
 
-	public Station(String id) {
-		this.id = id;
-	}
 
 	public GeoPoint getGeoPoint() {
 		return new GeoPoint(latitudeE6, longituteE6);
@@ -64,11 +96,11 @@ public class Station implements Serializable, GetContentValues {
 	// Getters & setters.
 
 	public String getId() {
-		return id;
+		return String.valueOf(id);
 	}
 
 	public void setId(String id) {
-		this.id = id;
+		this.id = Long.valueOf(id);
 	}
 
 	public String getName() {
@@ -127,7 +159,7 @@ public class Station implements Serializable, GetContentValues {
 		this.outOfService = outOfService;
 	}
 
-	public String getStringBikes() {
+	public String getBikesAsString() {
 		return getStringValue(bikes);
 	}
 
@@ -139,7 +171,7 @@ public class Station implements Serializable, GetContentValues {
 		this.bikes = bikes;
 	}
 
-	public String getStringAttachs() {
+	public String getAttachsAsString() {
 		return getStringValue(attachs);
 	}
 
@@ -183,7 +215,7 @@ public class Station implements Serializable, GetContentValues {
 	}
 
 	private boolean isFromNetworkFailed() {
-		return "...".equals(getStringBikes());
+		return "...".equals(getBikesAsString());
 	}
 
 	public Long getLastUpdate() {
@@ -211,7 +243,6 @@ public class Station implements Serializable, GetContentValues {
         this.selected = selected;
     }
 
-
 	public Integer getOrdinal() {
 		return ordinal;
 	}
@@ -220,49 +251,6 @@ public class Station implements Serializable, GetContentValues {
 		this.ordinal = ordinal;
 	}
 
-	/**
-	 * Put all data from the listing stations, all attributes will be set to null.
-	 */
-	@Override
-	public ContentValues getInsertableContentValues() {
-		ContentValues values = new ContentValues();
-		values.put(StationTableFields._id.toString(), id);
-		values.put(StationTableFields.suggest_text_1.toString(), name);
-		values.put(StationTableFields.adress.toString(), adress);
-		values.put(StationTableFields.starred.toString(), 0);
-		values.put(StationTableFields.latitude.toString(), latitude);
-		values.put(StationTableFields.longitude.toString(), longitude);
-		values.put(StationTableFields.latitudeE6.toString(), PositionTransformer.toE6(latitude));
-		values.put(StationTableFields.longitudeE6.toString(), PositionTransformer.toE6(longitude));
-		
-		return values;
-	}
-
-	/**
-	 * Put all updatable data from the detailled station.
-	 */
-	@Override
-	public ContentValues getUpdatableContentValues() {
-		ContentValues values = new ContentValues();
-		values.put(StationTableFields.adress.toString(), adress);
-		values.put(StationTableFields.bikes.toString(), bikes);
-		values.put(StationTableFields.attachs.toString(), attachs);
-		values.put(StationTableFields.cbPaiement.toString(), cbPaiement);
-		values.put(StationTableFields.outOfService.toString(), outOfService);
-		values.put(StationTableFields.lastUpdate.toString(), lastUpdate);
-		
-		return values;
-	}
-
-	public void copyParsedInfos(Station parsedStation) {
-		this.adress = parsedStation.getAdress();
-		this.bikes = parsedStation.getStringBikes();
-		this.attachs = parsedStation.getStringAttachs();
-		this.cbPaiement = parsedStation.isCbPaiement();
-		this.outOfService = parsedStation.isOutOfService();
-		this.lastUpdate = parsedStation.getLastUpdate();
-	}
-	
 	@Override
 	public boolean equals(Object o) {
 		if (o == null) {

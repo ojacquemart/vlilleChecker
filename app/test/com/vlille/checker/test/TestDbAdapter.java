@@ -4,13 +4,9 @@ import java.util.List;
 
 import android.content.Context;
 
-import com.vlille.checker.db.DbAdapter;
-import com.vlille.checker.db.DbSchema;
 import com.vlille.checker.model.Metadata;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.ui.HomeActivity;
-import com.vlille.checker.utils.Constants;
-import com.vlille.checker.xml.XMLReader;
 
 public class TestDbAdapter extends AbstractVlilleTest<HomeActivity> {
 
@@ -28,7 +24,6 @@ public class TestDbAdapter extends AbstractVlilleTest<HomeActivity> {
 		context.deleteDatabase(DbSchema.DB_NAME);
 		
 		dbAdapter = new DbAdapter(context);
-		dbAdapter.unstarAll();
 	}
 	
 	@Override
@@ -87,20 +82,7 @@ public class TestDbAdapter extends AbstractVlilleTest<HomeActivity> {
 		assertNotNull(stations);
 		assertTrue(stations.isEmpty());
 	}
-	
-	public void testIsStarred() {
-		dbAdapter.star(buildStationWithId(2L));
-		
-		final List<Station> starredStations = dbAdapter.getStarredStations();
-		final Station station = starredStations.get(0);
-		
-		assertTrue(dbAdapter.isStarred(station));
-		
-		dbAdapter.unstar(station);
-		
-		assertFalse(dbAdapter.isStarred(station));
-	}
-	
+
 	/*public void testUpdateStation() {
 		Station station = dbAdapter.find(1L);
 		assertNotNull(station);
@@ -108,7 +90,7 @@ public class TestDbAdapter extends AbstractVlilleTest<HomeActivity> {
 		// Adress must be null at the db initialization.
 		assertNull(station.getAdress());
 		
-		final Station detailledStation = new XMLReader().updateDetails(station);
+		final Station detailledStation = new XMLReader().getRemoteInfo(station);
 		assertNotNull(detailledStation);
 		assertNotNull(detailledStation.getAdress());
 		dbAdapter.update(detailledStation);

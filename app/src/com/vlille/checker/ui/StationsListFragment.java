@@ -7,11 +7,14 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 
-import com.actionbarsherlock.app.SherlockListFragment;
 import com.vlille.checker.R;
+import com.vlille.checker.db.StationEntityManager;
 import com.vlille.checker.model.Station;
-import com.vlille.checker.ui.async.AbstractAsyncStationTask;
+import com.vlille.checker.ui.async.AbstractStationsAsyncTask;
 import com.vlille.checker.utils.ContextHelper;
+
+import org.droidparts.annotation.inject.InjectDependency;
+import org.droidparts.fragment.sherlock.ListFragment;
 
 import java.util.List;
 
@@ -20,10 +23,13 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 /**
  * A generic fragment to load and handle selectable stations.
  */
-abstract class StationsListFragment extends SherlockListFragment
-        implements AbsListView.OnScrollListener, PullToRefreshAttacher.OnRefreshListener {
+abstract class StationsListFragment extends ListFragment
+        implements AbsListView.OnScrollListener, PullToRefreshAttacher.OnRefreshListener, StationUpdateDelegate {
 
     private static final String TAG = StationsListFragment.class.getName();
+
+    @InjectDependency
+    protected StationEntityManager stationEntityManager;
 
     /**
      * The pullToRefreshAttach.
@@ -84,6 +90,7 @@ abstract class StationsListFragment extends SherlockListFragment
     private StationsAdapter getAdapter() {
         adapter = new StationsAdapter(activity, R.layout.station_list_item, stations);
         adapter.setReadOnly(isReadOnly());
+        adapter.setStationUpdateDelegate(this);
 
         return adapter;
     }
@@ -224,6 +231,7 @@ abstract class StationsListFragment extends SherlockListFragment
     private StationsAsyncTask getNewAsyncTask() {
         cancelAsyncTask();
         asyncTask = new StationsAsyncTask();
+        asyncTask.setDelegate(this);
 
         return asyncTask;
     }
@@ -251,10 +259,15 @@ abstract class StationsListFragment extends SherlockListFragment
         return stations;
     }
 
+    @Override
+    public void update(Station station) {
+        stationEntityManager.update(station);
+    }
+
     /**
      * An AsyncTask to load details from the #getStations method.
      */
-    class StationsAsyncTask extends AbstractAsyncStationTask {
+    class StationsAsyncTask extends AbstractStationsAsyncTask {
 
         @Override
         protected void onPreExecute() {

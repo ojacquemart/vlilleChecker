@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.vlille.checker.R;
-import com.vlille.checker.VlilleChecker;
 
 /**
  * A fragment to display the details from the bookmarked stations.
@@ -18,7 +17,8 @@ public class StarsListFragment extends StationsListFragment {
     private static final String TAG = StarsListFragment.class.getName();
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(Bundle savedInstanceState,
+                             LayoutInflater inflater, ViewGroup container) {
         Log.d(TAG, "onCreateView");
         inflater.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.stations_list_layout, container, false);
@@ -34,7 +34,7 @@ public class StarsListFragment extends StationsListFragment {
 
     @Override
     void loadStations() {
-        setStations(VlilleChecker.getDbAdapter().getStarredStations());
+        setStations(stationEntityManager.findAllStarred());
     }
 
     @Override

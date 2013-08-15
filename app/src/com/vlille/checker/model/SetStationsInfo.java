@@ -2,12 +2,12 @@ package com.vlille.checker.model;
 
 import java.util.List;
 
-public class SetStationsInfos {
+public class SetStationsInfo {
 
 	private final Metadata metadata;
 	private final List<Station> stations;
 
-	public SetStationsInfos(Metadata metadata, List<Station> stations) {
+	public SetStationsInfo(Metadata metadata, List<Station> stations) {
 		this.metadata = metadata;
 		this.stations = stations;
 	}
