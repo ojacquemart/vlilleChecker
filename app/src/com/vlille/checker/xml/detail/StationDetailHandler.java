@@ -16,6 +16,16 @@ import com.vlille.checker.xml.BaseStationHandler;
 
 public class StationDetailHandler extends BaseStationHandler<Station> {
 
+    /**
+     * Marker for station allowing payment by credit card.
+     */
+    private static final String FLAG_ALLOWS_CB = "AVEC_TPE";
+
+    /**
+     * Marker for station out of service = 1, available = 0.
+     */
+    private static final String FLAG_OUT_OF_SERVICE = "1";
+
 	private Station station;
 	private StringBuilder builder = new StringBuilder();
 
@@ -36,13 +46,13 @@ public class StationDetailHandler extends BaseStationHandler<Station> {
 		if (localName.equalsIgnoreCase(ADRESS.tag())) {
 			station.setAdress(data);
 		} else if (localName.equalsIgnoreCase(STATUS.tag())) {
-			station.setOufOfService(Constants.FLAG_OUT_OF_SERVICE.equals(data));
+			station.setOufOfService(FLAG_OUT_OF_SERVICE.equals(data));
 		} else if (localName.equalsIgnoreCase(BIKES.tag())) {
 			station.setBikes(data);
 		} else if (localName.equalsIgnoreCase(ATTACHS.tag())) {
 			station.setAttachs(data);
 		} else if (localName.equalsIgnoreCase(PAIEMENT.tag())) {
-			station.setCbPaiement(Constants.FLAG_ALLOWS_CB.equals(data));
+			station.setCbPaiement(FLAG_ALLOWS_CB.equals(data));
 		} else if (localName.equalsIgnoreCase(LAST_UPDATE.tag())) {
 			long lastUpdate = 0;
 			if (!StringUtils.isEmpty(data)) {

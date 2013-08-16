@@ -65,7 +65,7 @@ public class XMLReader {
 	 */
 	public SetStationsInfo getAssetsStationsInfo(final Context context) {
 		try {
-			final InputStream inputStream = context.getAssets().open("vlille_stations.xml");
+			final InputStream inputStream = context.getAssets().open(Constants.LOCAL_STATIONS_LIST_FILE_NAME);
 			
 			return new StationsListSAXParser().parse(inputStream);
 		} catch (Exception e) {

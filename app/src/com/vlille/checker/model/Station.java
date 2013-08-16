@@ -11,7 +11,6 @@ import org.osmdroid.util.GeoPoint;
 import android.text.TextUtils;
 
 import com.vlille.checker.db.DB;
-import com.vlille.checker.utils.Constants;
 
 /**
  * Represents the details of a single vlille station.
@@ -34,6 +33,8 @@ public class Station extends Entity {
     public static final String STARRED = "starred";
     public static final String ORDINAL = "ordinal";
 
+    public static final String EMPTY_VALUE = "...";
+
     /**
      * Nullable columns:
      * - address
@@ -55,7 +56,7 @@ public class Station extends Entity {
     public double longitude;
 
     @Column(name = LONGITUDE_E6)
-    public int longituteE6;
+    public int longitudeE6;
 
     @Column(name = ADDRESS, nullable = true)
     public String adress;
@@ -87,7 +88,7 @@ public class Station extends Entity {
 	}
 
 	public GeoPoint getGeoPoint() {
-		return new GeoPoint(latitudeE6, longituteE6);
+		return new GeoPoint(latitudeE6, longitudeE6);
 	}
 
 	// Getters & setters.
@@ -120,12 +121,12 @@ public class Station extends Entity {
 		this.latitude = latitude;
 	}
 
-	public int getLongituteE6() {
-		return longituteE6;
+	public int getLongitudeE6() {
+		return longitudeE6;
 	}
 
-	public void setLongitudeE6(int longituteE6) {
-		this.longituteE6 = longituteE6;
+	public void setLongitudeE6(int longitudeE6) {
+		this.longitudeE6 = longitudeE6;
 	}
 
 	public double getLongitude() {
@@ -170,7 +171,7 @@ public class Station extends Entity {
 
 	private String getStringValue(String value) {
 		if (TextUtils.isEmpty(value)) {
-			return Constants.DEFAULT_VALUE;
+			return EMPTY_VALUE;
 		}
 
 		return value;
@@ -190,25 +191,6 @@ public class Station extends Entity {
 
 	public void setCbPaiement(boolean cbPaiement) {
 		this.cbPaiement = cbPaiement;
-	}
-
-	public boolean isUpToDate() {
-		final long now = System.currentTimeMillis();
-		final long pastUpdate = lastUpdate - (now - Constants.CACHE_DATA_DURATION);
-		boolean upToDate = isLastUpdateExpired(pastUpdate) && !isFromNetworkFailed();
-		if (!upToDate) {
-			lastUpdate = now;
-		}
-
-		return upToDate;
-	}
-
-	private boolean isLastUpdateExpired(final long pastUpdate) {
-		return pastUpdate + Constants.CACHE_DATA_DURATION > 0;
-	}
-
-	private boolean isFromNetworkFailed() {
-		return "...".equals(getBikesAsString());
 	}
 
 	public Long getLastUpdate() {

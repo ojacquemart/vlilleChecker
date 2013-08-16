@@ -13,9 +13,7 @@ import com.vlille.checker.R;
 public final class ContextHelper {
 	
 	private ContextHelper() {}
-	
-	protected final String LOG_TAG = getClass().getSimpleName();
-	
+
 	/**
 	 * Checks if network is available.
 	 */

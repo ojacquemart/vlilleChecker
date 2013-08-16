@@ -41,7 +41,7 @@ public class TestStationParser extends AbstractVlilleTest<HomeActivity> {
 		assertTrue(firstStation.getId() > 0);
 		assertNotNull(firstStation.getName());
 		assertTrue(firstStation.getLatitudeE6() > 0);
-		assertTrue(firstStation.getLongituteE6() > 0);
+		assertTrue(firstStation.getLongitudeE6() > 0);
 	}
 	
 	public void testLoadAllStations() {
