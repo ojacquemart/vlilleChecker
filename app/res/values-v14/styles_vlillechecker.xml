@@ -50,6 +50,7 @@
     
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->
     <style name="Theme.Vlillechecker.Widget" parent="@style/Theme.Sherlock">
+        <item name="android:colorBackground">@drawable/ab_solid_vlillechecker</item>
         <item name="android:popupMenuStyle">@style/PopupMenu.Vlillechecker</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Vlillechecker</item>
     </style>

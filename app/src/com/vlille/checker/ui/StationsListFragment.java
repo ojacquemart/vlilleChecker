@@ -18,13 +18,15 @@ import org.droidparts.fragment.sherlock.ListFragment;
 
 import java.util.List;
 
-import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
+import uk.co.senab.actionbarpulltorefresh.extras.actionbarsherlock.PullToRefreshAttacher;
 
 /**
  * A generic fragment to load and handle selectable stations.
  */
 abstract class StationsListFragment extends ListFragment
-        implements AbsListView.OnScrollListener, PullToRefreshAttacher.OnRefreshListener, StationUpdateDelegate {
+        implements AbsListView.OnScrollListener,
+            PullToRefreshAttacher.OnRefreshListener,
+            StationUpdateDelegate {
 
     private static final String TAG = StationsListFragment.class.getName();
 
@@ -32,14 +34,9 @@ abstract class StationsListFragment extends ListFragment
     protected StationEntityManager stationEntityManager;
 
     /**
-     * The pullToRefreshAttach.
+     * The pullToRefreshAttacher.
      */
     private PullToRefreshAttacher pullToRefreshAttacher;
-
-    /**
-     * The current activity.
-     */
-    private Activity activity;
 
     /**
      * The stations list used by the adapter.
@@ -60,21 +57,29 @@ abstract class StationsListFragment extends ListFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
+    }
 
-        activity = getActivity();
-        pullToRefreshAttacher = PullToRefreshAttacher.get(activity);
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        Log.d(TAG, "onViewCreated");
+        super.onViewCreated(view, savedInstanceState);
+
+        initPullToRefresh();
+
+        loadStations();
+        initListAdapter();
+        initListViewListeners();
+    }
+
+    private void initPullToRefresh() {
+        pullToRefreshAttacher = ((HomeActivity) getActivity()).getPullToRefreshAttacher();
+        pullToRefreshAttacher.addRefreshableView(getListView(), this);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         Log.d(TAG, "onActivityCreated");
         super.onActivityCreated(savedInstanceState);
-
-        pullToRefreshAttacher.addRefreshableView(getListView(), this);
-
-        loadStations();
-        initListAdapter();
-        initListViewListeners();
     }
 
     abstract void loadStations();
@@ -88,7 +93,7 @@ abstract class StationsListFragment extends ListFragment
     }
 
     private StationsAdapter getAdapter() {
-        adapter = new StationsAdapter(activity, R.layout.station_list_item, stations);
+        adapter = new StationsAdapter(getActivity(), R.layout.station_list_item, stations);
         adapter.setReadOnly(isReadOnly());
         adapter.setStationUpdateDelegate(this);
 
@@ -174,7 +179,7 @@ abstract class StationsListFragment extends ListFragment
      * Update visible stations.
      */
     public void updateVisibleItems() {
-        if (!ContextHelper.isNetworkAvailable(activity)) {
+        if (!ContextHelper.isNetworkAvailable(getActivity())) {
             setProgressIndeterminateVisibility(false);
         } else {
             doUpdateVisibleItems();

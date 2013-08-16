@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Window;
@@ -18,13 +17,20 @@ import com.vlille.checker.ui.listener.TabListener;
 import com.vlille.checker.utils.ToastUtils;
 
 import org.droidparts.activity.sherlock.FragmentActivity;
+import uk.co.senab.actionbarpulltorefresh.extras.actionbarsherlock.PullToRefreshAttacher;
 
 /**
  * Home activity.
  */
 public class HomeActivity extends FragmentActivity {
 
-	private final String TAG = HomeActivity.class.getSimpleName();
+	private static final String TAG = HomeActivity.class.getSimpleName();
+
+    private PullToRefreshAttacher mPullToRefreshAttacher;
+
+    PullToRefreshAttacher getPullToRefreshAttacher() {
+        return mPullToRefreshAttacher;
+    }
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -34,10 +40,16 @@ public class HomeActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.home);
+
+        setPullToRefreshAttacher();
         checkDbInitialization();
-		initTabs();
-		initSherlockProgressBar();
-	}
+        initTabs();
+        initSherlockProgressBar();
+    }
+
+    private void setPullToRefreshAttacher() {
+        mPullToRefreshAttacher = PullToRefreshAttacher.get(this);
+    }
 
     private void checkDbInitialization() {
         DBFiller dbFiller = new DBFiller(getApplicationContext());

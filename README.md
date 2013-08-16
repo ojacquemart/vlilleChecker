@@ -38,7 +38,8 @@ This project uses the following open source libraries:
 ### Android Studio users
 
 Import libraries/actionbarpulltorefresh-library-0.6.aar in your local .m2 repository, waiting for an aar version of the library
-* mvn install:install-file -Dfile=%LOCAL_REPO_DIR%\libraries\actionbarpulltorefresh-library-0.6.aar -DgroupId=com.github.chrisbanes.actionbarpulltorefresh -DartifactId=library -Dversion=0.6 -Dpackaging=aar
+* mvn install:install-file -Dfile=%LOCAL_REPO_DIR%\libraries\actionbarpulltorefresh-library-0.7-SNAPSHOT.aar -DgroupId=com.github.chrisbanes.actionbarpulltorefresh -DartifactId=library -Dversion=0.7-SNAPSHOT -Dpackaging=aar
+* mvn install:install-file -Dfile=%LOCAL_REPO_DIR%\libraries\actionbarpulltorefresh-actionbarsherlock-0.7-SNAPSHOT.aar -DgroupId=com.github.chrisbanes.actionbarpulltorefresh -DartifactId=library -Dversion=0.7-SNAPSHOT -Dpackaging=aar
 * import the build.gradle
 
 #### Eclipse users
