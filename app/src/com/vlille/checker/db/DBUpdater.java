@@ -5,8 +5,6 @@ import android.util.Log;
 
 import com.vlille.checker.model.Station;
 
-import org.apache.commons.collections.CollectionUtils;
-
 import java.util.List;
 
 public class DBUpdater extends DBAction {
@@ -30,12 +28,12 @@ public class DBUpdater extends DBAction {
         }
 
         List<Station> inDBStations = getStationEntityManager().findAll();
-        final List<Station> newStations = (List<Station>) CollectionUtils.disjunction(remoteStations, inDBStations);
-        Log.i(TAG, "New stations " + newStations.size());
+        remoteStations.removeAll(inDBStations);
+        Log.i(TAG, "New stations " + remoteStations.size());
 
-        getStationEntityManager().create(newStations);
+        getStationEntityManager().create(remoteStations);
         getMetadataEntityManager().changeLastUpdateToNow();
 
-        return newStations.size() > 0;
+        return remoteStations.size() > 0;
     }
 }
