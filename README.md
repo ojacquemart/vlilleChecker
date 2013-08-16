@@ -27,6 +27,7 @@ This project uses the following open source libraries:
 * [ACRA - Application Crash Report for Android](http://code.google.com/p/acra/)
 * [ActionBarSherlock](https://github.com/JakeWharton/ActionBarSherlock)
 * [PullToRefresh](https://github.com/chrisbanes/ActionBar-PullToRefresh)
+* [DroidParts](https://github.com/yanchenko/droidparts)
 * [OpenStreetMapDroid](http://code.google.com/p/osmdroid/)
 * [Apache - Commons Lang](http://commons.apache.org/lang/)
 * [Apache - Commons Collections](http://commons.apache.org/collections/)
