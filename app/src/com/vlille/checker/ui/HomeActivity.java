@@ -28,10 +28,6 @@ public class HomeActivity extends FragmentActivity {
 
     private PullToRefreshAttacher mPullToRefreshAttacher;
 
-    PullToRefreshAttacher getPullToRefreshAttacher() {
-        return mPullToRefreshAttacher;
-    }
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate");
@@ -180,5 +176,9 @@ public class HomeActivity extends FragmentActivity {
 		}
 
 	}
+
+    PullToRefreshAttacher getPullToRefreshAttacher() {
+        return mPullToRefreshAttacher;
+    }
 
 }
