@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.vlille.checker"
     android:versionCode="600"
-    android:versionName="3.0-SNAPSHOT"
+    android:versionName="3.0.0"
     android:installLocation="auto">
 
     <!-- Supports >= android 2.1 -->
