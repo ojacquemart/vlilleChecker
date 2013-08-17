@@ -54,6 +54,16 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
 
     private static final String TAG = MapView.class.getSimpleName();
 
+    /**
+     * The index for the location circle overlay.
+     */
+    private static final int OVERLAYS_LOCATION_CIRCLE_INDEX = 0;
+
+    /**
+     * The index for the stations overlays.
+     */
+    private static final int OVERLAYS_STATIONS_INDEX = 1;
+
     private MapState state;
     private List<Station> stations;
 
@@ -162,7 +172,7 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
 
     private void initCircleOverlay() {
         circleOverlay = new CircleLocationOverlay(getContext());
-        getOverlays().add(0, circleOverlay);
+        getOverlays().add(OVERLAYS_LOCATION_CIRCLE_INDEX, circleOverlay);
     }
 
     @Override
@@ -221,7 +231,7 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
         }
         itemizedOverlay.setFocusItemsOnTap(true);
 
-        getOverlays().set(0, itemizedOverlay);
+        getOverlays().add(OVERLAYS_STATIONS_INDEX, itemizedOverlay);
     }
 
     private List<MaskableOverlayItem> initOverlays() {
@@ -283,15 +293,19 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
         }
 
         if (ContextHelper.isNetworkAvailable(getContext())) {
-            if (!stations.isEmpty() && OverlayZoomUtils.isDetailledZoomLevel(getZoomLevel())) {
-                Log.d(TAG, "" + stations.size() + "stations to update!");
-                AsyncMapStationRetriever asyncTask = new AsyncMapStationRetriever();
-                asyncTask.setDelegate(stationUpdateDelegate);
-                asyncTask.execute(stations);
-            } else {
+            if (stations.isEmpty()) {
                 itemUpdater.whenNoneStationToDraw();
+
                 // Some stations may have seen their visibility attribute changed.
                 invalidate();
+            } else {
+                if (OverlayZoomUtils.isDetailledZoomLevel(getZoomLevel())) {
+                    Log.d(TAG, String.format("%d stations to update!", stations.size()));
+
+                    AsyncMapStationRetriever asyncTask = new AsyncMapStationRetriever();
+                    asyncTask.setDelegate(stationUpdateDelegate);
+                    asyncTask.execute(stations);
+                }
             }
         }
     }
