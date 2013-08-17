@@ -39,6 +39,13 @@ android {
         }
     }
 
+    buildTypes {
+        release {
+            runProguard true
+            proguardFile file('proguard.cfg')
+        }
+    }
+
     defaultConfig {
         minSdkVersion 7
         targetSdkVersion 18
