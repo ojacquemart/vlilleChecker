@@ -1,11 +1,11 @@
 package com.vlille.checker.ui;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.vlille.checker.R;
 import com.vlille.checker.db.StationEntityManager;
@@ -110,20 +110,30 @@ abstract class StationsListFragment extends ListFragment
     private void initListViewListeners() {
         getListView().setOnScrollListener(this);
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
-                Log.d(TAG, "Item clicked = " + position + " " + id);
-                if (id < stations.size()) {
+            public void onItemClick(AdapterView<?> adapter, View view, int position, long index) {
+                Log.d(TAG, "Item clicked = " + position + " " + index);
+                if (index < stations.size()) {
                     // Unselect all stations.
                     for (Station station : stations) {
                         station.setSelected(false);
                     }
 
                     // Select the station and notify the adapter.
-                    Station clickedStation = stations.get((int) id);
+                    Station clickedStation = stations.get((int) index);
                     clickedStation.setSelected(true);
                     Log.d(TAG, "Station clicked = " + clickedStation.getName());
 
                     StationsListFragment.this.adapter.notifyDataSetChanged();
+
+                    // Last index, force the selection to show the buttons bar.
+                    if (index == stations.size() - 1) {
+                        final ListView listView = getListView();
+                        listView.post(new Runnable() {
+                            public void run() {
+                                listView.setSelection(listView.getCount() - 1);
+                            }
+                        });
+                    }
                 }
             }
         });
