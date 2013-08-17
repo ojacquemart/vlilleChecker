@@ -1,5 +1,6 @@
 package com.vlille.checker.ui.osm.overlay.window;
 
+import org.droidparts.activity.sherlock.FragmentActivity;
 import org.osmdroid.views.MapView;
 
 import android.view.View;
@@ -30,14 +31,14 @@ public class BubbleInfoWindow extends DefaultInfoWindow {
     private TextView stationBikes;
     private TextView stationAttachs;
 
-    private SherlockFragmentActivity sherlockActivity;
+    private FragmentActivity fragmentActivity;
     private StationUpdateDelegate stationUpdateDelegate;
 
     public BubbleInfoWindow(MapView mapView,
-                            SherlockFragmentActivity sherlockActivity,
+                            FragmentActivity fragmentActivity,
                             final StationUpdateDelegate stationUpdateDelegate) {
 		super(R.layout.maps_bubble, mapView);
-        this.sherlockActivity = sherlockActivity;
+        this.fragmentActivity = fragmentActivity;
         this.stationUpdateDelegate = stationUpdateDelegate;
 
         Button bubbleCheckbox = (Button) (mView.findViewById(R.id.maps_bubble_checkbox));
@@ -123,8 +124,8 @@ public class BubbleInfoWindow extends DefaultInfoWindow {
         }
 
         private void setSupportProgressBarIndeterminateVisibility(boolean visible) {
-            if (sherlockActivity != null) {
-                sherlockActivity.setSupportProgressBarIndeterminateVisibility(visible);
+            if (fragmentActivity != null) {
+                fragmentActivity.setSupportProgressBarIndeterminateVisibility(visible);
             }
         }
     }

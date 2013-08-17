@@ -13,6 +13,7 @@ import com.vlille.checker.model.Station;
 import com.vlille.checker.ui.osm.MapState;
 import com.vlille.checker.ui.osm.MapView;
 
+import org.droidparts.activity.sherlock.FragmentActivity;
 import org.droidparts.annotation.inject.InjectDependency;
 import org.droidparts.fragment.sherlock.Fragment;
 import org.osmdroid.util.GeoPoint;
@@ -68,7 +69,7 @@ public class MapFragment extends Fragment implements StationUpdateDelegate {
         this.stations = stationEntityManager.findAll();
 
         mapView.setMapInfos(state, stations);
-        mapView.setSherlockActivity(getSherlockActivity());
+        mapView.setFragmentActivity((FragmentActivity) getActivity());
         mapView.setStationUpdateDelegate(this);
         mapView.init();
 
