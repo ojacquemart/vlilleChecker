@@ -1,1 +1,18 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.5.+'
+    }
+}
+
+allprojects {
+    group = 'com.vlille.checker'
+    version = '3.0.0-SNAPSHOT'
+
+    repositories {
+        mavenCentral()
+    }
+}
