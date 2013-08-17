@@ -30,14 +30,13 @@ This project uses the following open source libraries:
 * [DroidParts](https://github.com/yanchenko/droidparts)
 * [OpenStreetMapDroid](http://code.google.com/p/osmdroid/)
 * [Apache - Commons Lang](http://commons.apache.org/lang/)
-* [Apache - Commons Collections](http://commons.apache.org/collections/)
 * [GPSEmulator to simulate GPS location](http://code.google.com/p/android-gps-emulator/)
 
 ## Installation
 
 ### Android Studio users
 
-Import libraries/actionbarpulltorefresh-library-0.6.aar in your local .m2 repository, waiting for an aar version of the library
+Import libraries/actionbarpulltorefresh-*-0.7-SNAPSHOT.aar in your local .m2 repository, waiting for an aar version release of the library:
 * mvn install:install-file -Dfile=%LOCAL_REPO_DIR%\libraries\actionbarpulltorefresh-library-0.7-SNAPSHOT.aar -DgroupId=com.github.chrisbanes.actionbarpulltorefresh -DartifactId=library -Dversion=0.7-SNAPSHOT -Dpackaging=aar
 * mvn install:install-file -Dfile=%LOCAL_REPO_DIR%\libraries\actionbarpulltorefresh-actionbarsherlock-0.7-SNAPSHOT.aar -DgroupId=com.github.chrisbanes.actionbarpulltorefresh -DartifactId=actionbarsherlock -Dversion=0.7-SNAPSHOT -Dpackaging=aar
 * import the build.gradle
