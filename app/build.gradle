@@ -21,7 +21,7 @@ dependencies {
     compile 'com.github.chrisbanes.actionbarpulltorefresh:actionbarsherlock:0.7-SNAPSHOT@aar'
     compile 'org.droidparts:droidparts:1.5.5'
     compile 'org.apache.commons:commons-lang3:3.1'
-    compile 'org.osmdroid:osmdroid-android:3.0.10'
+    compile 'org.osmdroid:osmdroid-android:4.0'
     compile 'org.slf4j:slf4j-android:1.6.1-RC1'
     instrumentTestCompile 'junit:junit:4.8.1'
 }
