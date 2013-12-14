@@ -2,6 +2,7 @@ package com.vlille.checker.ui;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -16,8 +17,6 @@ import com.vlille.checker.R;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.utils.StationUtils;
 import com.vlille.checker.utils.ToastUtils;
-
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,7 +121,7 @@ public class AllStationsFragment extends StationsListFragment {
                 editText.setText(null);
 
                 // Only reload stations if there was something in the input.
-                if (StringUtils.isNotEmpty(oldText)) {
+                if (!TextUtils.isEmpty(oldText)) {
                     filterStationsByKeyword(null);
                 }
             }

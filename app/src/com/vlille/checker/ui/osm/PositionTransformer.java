@@ -1,6 +1,6 @@
 package com.vlille.checker.ui.osm;
 
-import org.apache.commons.lang3.StringUtils;
+import android.text.TextUtils;
 
 public class PositionTransformer {
 
@@ -12,7 +12,7 @@ public class PositionTransformer {
 	 * @return
 	 */
 	public static int to1e6(String value) {
-		if (StringUtils.isEmpty(value)) {
+		if (TextUtils.isEmpty(value)) {
 			return 0;
 		}
 			

@@ -21,7 +21,7 @@ import com.vlille.checker.model.Station;
 import com.vlille.checker.ui.listener.MapTabListener;
 import com.vlille.checker.utils.ContextHelper;
 import com.vlille.checker.utils.MapsIntentChooser;
-import com.vlille.checker.utils.TextUtils;
+import com.vlille.checker.utils.TextPlural;
 import com.vlille.checker.utils.ViewUtils;
 import com.vlille.checker.utils.color.ColorSelector;
 
@@ -114,14 +114,14 @@ public class StationsAdapter extends ArrayAdapter<Station> {
         TextView name = (TextView) view.findViewById(R.id.station_name);
         name.setText(station.getName());
 
-        String timeUnitSecond = TextUtils.formatPlural(
+        String timeUnitSecond = TextPlural.toPlural(
                 station.getLastUpdate(),
                 resources.getString(R.string.timeunit_second));
         TextView lastUpdate = (TextView) view.findViewById(R.id.station_lastupdate);
         lastUpdate.setText(resources.getString(R.string.update_ago, station.getLastUpdate(), timeUnitSecond));
 
         TextView address = (TextView) view.findViewById(R.id.station_adress);
-        address.setText(TextUtils.toCamelCase(station.getAdress()));
+        address.setText(station.getAdressToUpperCase());
 
         TextView nbBikes = (TextView) view.findViewById(R.id.details_bikes);
         nbBikes.setText(station.getBikesAsString());

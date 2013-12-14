@@ -6,8 +6,6 @@ import com.vlille.checker.R;
 import com.vlille.checker.model.SetStationsInfo;
 import com.vlille.checker.utils.ToastUtils;
 
-import org.apache.commons.lang3.time.StopWatch;
-
 public class DBFiller extends DBAction {
 
     private static final String TAG = DBFiller.class.getSimpleName();
@@ -25,8 +23,7 @@ public class DBFiller extends DBAction {
 
     public void fill() {
         Log.d(TAG, "Initialize db data!");
-        StopWatch watcher = new StopWatch();
-        watcher.start();
+        long start = System.currentTimeMillis();
 
         final SetStationsInfo assetsStationsInfo = getAssetsStationsInfo();
 
@@ -35,8 +32,8 @@ public class DBFiller extends DBAction {
 
         ToastUtils.show(getContext(), R.string.installation_done);
 
-        watcher.stop();
-        Log.d(TAG, "Time to initialize db: " + watcher.getTime());
+        long duration = System.currentTimeMillis() - start;
+        Log.d(TAG, "Time to initialize db: " + duration + " ms");
     }
 
 }

@@ -1,18 +1,18 @@
 package com.vlille.checker.xml.detail;
 
+import android.text.TextUtils;
+
+import com.vlille.checker.model.Station;
+import com.vlille.checker.xml.BaseStationHandler;
+
+import org.xml.sax.SAXException;
+
 import static com.vlille.checker.xml.detail.StationDetailTags.ADRESS;
 import static com.vlille.checker.xml.detail.StationDetailTags.ATTACHS;
 import static com.vlille.checker.xml.detail.StationDetailTags.BIKES;
 import static com.vlille.checker.xml.detail.StationDetailTags.LAST_UPDATE;
 import static com.vlille.checker.xml.detail.StationDetailTags.PAIEMENT;
 import static com.vlille.checker.xml.detail.StationDetailTags.STATUS;
-
-import org.apache.commons.lang3.StringUtils;
-import org.xml.sax.SAXException;
-
-import com.vlille.checker.model.Station;
-import com.vlille.checker.utils.Constants;
-import com.vlille.checker.xml.BaseStationHandler;
 
 public class StationDetailHandler extends BaseStationHandler<Station> {
 
@@ -55,7 +55,7 @@ public class StationDetailHandler extends BaseStationHandler<Station> {
 			station.setCbPaiement(FLAG_ALLOWS_CB.equals(data));
 		} else if (localName.equalsIgnoreCase(LAST_UPDATE.tag())) {
 			long lastUpdate = 0;
-			if (!StringUtils.isEmpty(data)) {
+            if (!TextUtils.isEmpty(data)) {
 				final Long valueOfLastUpdated = Long.valueOf(data.replaceAll("[^\\d]", "").trim());
 				if (valueOfLastUpdated != null) {
 					lastUpdate = valueOfLastUpdated;

@@ -1,8 +1,5 @@
 package com.vlille.checker.model;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.droidparts.annotation.sql.Column;
 import org.droidparts.annotation.sql.Table;
 import org.droidparts.model.Entity;
@@ -11,6 +8,7 @@ import org.osmdroid.util.GeoPoint;
 import android.text.TextUtils;
 
 import com.vlille.checker.db.DB;
+import com.vlille.checker.utils.NumberUtils;
 
 /**
  * Represents the details of a single vlille station.
@@ -149,6 +147,14 @@ public class Station extends Entity {
 		return adress;
 	}
 
+    public String getAdressToUpperCase() {
+        if (adress == null) {
+            return "";
+        }
+
+        return adress.toUpperCase();
+    }
+
 	public void setAdress(String adress) {
 		this.adress = adress;
 	}
@@ -247,12 +253,13 @@ public class Station extends Entity {
 		}
 
 		Station other = (Station) o;
-		return new EqualsBuilder().append(name, other.getName()).isEquals();
+
+		return name.equals(other.getName());
 	}
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(name).toHashCode();
+        return name.hashCode();
 	}
 
 }

@@ -1,16 +1,12 @@
 package com.vlille.checker.utils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
-
 import android.location.Location;
 import android.util.Log;
 
 import com.vlille.checker.model.Station;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class StationUtils {
 	
@@ -22,9 +18,10 @@ public final class StationUtils {
 		if (keyword == null || keyword.length() == 0) {
 			return stations;
 		}
-		
+
+        keyword = keyword.toLowerCase();
+
 		List<Station> result = new ArrayList<Station>();
-		keyword = StringUtils.stripAccents(keyword).toLowerCase();
 
 		for (Station eachStation : stations) {
 			if (eachStation.getName().toLowerCase().contains(keyword)) {
