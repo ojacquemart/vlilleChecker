@@ -223,7 +223,7 @@ public class ItemizedOverlayWithFocus<Item extends MaskableOverlayItem> extends 
 		/* Draw in backward cycle, so the items with the least index are on the front. */
         for (int i = size; i >= 0; i--) {
             final Item item = getItem(i);
-            projection.toMapPixels(item.mGeoPoint, mCurScreenCoords);
+            projection.toMapPixels(item.getPoint(), mCurScreenCoords);
 
             if (item != mItemWithBubble){
                 onDrawItem(canvas, zoomLevel, item, mCurScreenCoords);
@@ -245,7 +245,7 @@ public class ItemizedOverlayWithFocus<Item extends MaskableOverlayItem> extends 
 
         boundToHotspot(marker, HotspotPlace.BOTTOM_CENTER);
 
-        Overlay.drawAt(canvas, marker, curScreenCoords.x, curScreenCoords.y, false);
+        Overlay.drawAt(canvas, marker, curScreenCoords.x, curScreenCoords.y, false, 0);
         if (zoomLevelDetailled) {
             mTitlePaint.setColor(getResourceProxy().getColor(ColorSelector.getColorForMap(station.getBikes())));
             canvas.drawText(station.getBikesAsString(), mCurScreenCoords.x - (8 * mScale), mCurScreenCoords.y - (30 * mScale), mTitlePaint);
@@ -259,8 +259,8 @@ public class ItemizedOverlayWithFocus<Item extends MaskableOverlayItem> extends 
     }
 
     private void onDrawFocusBubble(Canvas canvas, int zoomLevel, Projection projection) {
-        if (mItemWithBubble != null){
-            projection.toMapPixels(mItemWithBubble.mGeoPoint, mCurScreenCoords);
+        if (mItemWithBubble != null) {
+            projection.toMapPixels(mItemWithBubble.getPoint(), mCurScreenCoords);
             onDrawItem(canvas, zoomLevel, (Item)mItemWithBubble, mCurScreenCoords);
         }
     }

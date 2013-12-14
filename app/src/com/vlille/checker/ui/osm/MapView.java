@@ -28,10 +28,10 @@ import com.vlille.checker.utils.ToastUtils;
 
 import org.droidparts.activity.sherlock.FragmentActivity;
 import org.osmdroid.ResourceProxy;
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.api.IMapController;
+import org.osmdroid.tileprovider.tilesource.XYTileSource;
 import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.MapController;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
 
 import java.util.ArrayList;
@@ -53,6 +53,18 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
     public static final GeoPoint DEFAULT_CENTER_GEO_POINT = new GeoPoint(50636000, 3069680);
 
     private static final String TAG = MapView.class.getSimpleName();
+
+    /**
+     * Replace the TileSourceFactory#PUBLIC_TRANSPORT which display "use it online...".
+     */
+    private static final XYTileSource PUBLIC_TRANSPORT = new XYTileSource("TransportMap",
+            null,
+            0, 17,
+            256,
+            ".png",
+            "http://a.tile2.opencyclemap.org/transport/",
+            "http://b.tile2.opencyclemap.org/transport/",
+            "http://c.tile2.opencyclemap.org/transport/");
 
     /**
      * The index for the location circle overlay.
@@ -98,7 +110,7 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
     private void initConfiguration() {
         Log.d(TAG, "initConfiguration");
 
-        setTileSource(TileSourceFactory.MAPNIK);
+        setTileSource(PUBLIC_TRANSPORT);
         setBuiltInZoomControls(true);
         setMultiTouchControls(true);
     }
@@ -110,7 +122,7 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
     }
 
     public void setCenter(GeoPoint center) {
-        MapController mMapController = getController();
+        IMapController mMapController = getController();
         mMapController.setZoom(state.zoomLevel);
         mMapController.setCenter(center);
     }
