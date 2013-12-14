@@ -2,11 +2,7 @@ package com.vlille.checker.ui;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,17 +13,17 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.vlille.checker.R;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.ui.listener.MapTabListener;
-import com.vlille.checker.utils.color.ColorSelector;
 import com.vlille.checker.utils.ContextHelper;
+import com.vlille.checker.utils.MapsIntentChooser;
 import com.vlille.checker.utils.TextUtils;
 import com.vlille.checker.utils.ViewUtils;
+import com.vlille.checker.utils.color.ColorSelector;
 
 import org.osmdroid.util.GeoPoint;
 
@@ -86,38 +82,7 @@ public class StationsAdapter extends ArrayAdapter<Station> {
         view.findViewById(R.id.station_action_tonavigation).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    Uri location = getLocationUri();
-
-                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, location);
-
-                    PackageManager pkManager = activity.getPackageManager();
-                    List<ResolveInfo> activities = pkManager.queryIntentActivities(mapIntent, 0);
-                    if (activities.size() > 1) {
-                        Intent chooser = Intent.createChooser(mapIntent, activity.getString(R.string.open_with));
-                        activity.startActivity(chooser);
-                    } else if (activities.size() == 1) {
-                        activity.startActivity(mapIntent);
-                    } else {
-                       showErrorMessage();
-                    }
-                } catch (Exception e) {
-                    Log.d(TAG, "Error during looking for gmaps activities", e);
-                    showErrorMessage();
-                }
-            }
-
-            private Uri getLocationUri() {
-                final String latitudeAndLongitude = String.format("%f,%f",
-                        station.getLatitude(), station.getLongitude());
-                Uri location = Uri.parse(String.format("http://maps.google.com/maps?saddr=&daddr=%s",
-                        latitudeAndLongitude));
-                Log.d(TAG, "Uri geo " + location);
-                return location;
-            }
-
-            private void showErrorMessage() {
-                Toast.makeText(activity, R.string.error_no_gmaps_app_found, Toast.LENGTH_SHORT).show();
+                MapsIntentChooser.chooseIntent(activity, station);
             }
         });
 

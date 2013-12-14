@@ -117,9 +117,17 @@ public class Station extends Entity {
 		return latitude;
 	}
 
+    public String getLatitudeAsString() {
+        return String.valueOf(latitude);
+    }
+
 	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
+
+    public String getLongitudeAsString() {
+        return String.valueOf(longitude);
+    }
 
 	public int getLongitudeE6() {
 		return longitudeE6;
