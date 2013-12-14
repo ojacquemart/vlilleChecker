@@ -38,7 +38,6 @@ public class AllStationsFragment extends StationsListFragment {
         super.onActivityCreated(savedInstanceState);
 
         initSearchFieldListeners();
-        initFastScroll();
 	}
 
     @Override
@@ -132,10 +131,6 @@ public class AllStationsFragment extends StationsListFragment {
 		final EditText searchField = (EditText) getActivity().findViewById(R.id.list_search_field);
 
 		return searchField;
-	}
-
-	private void initFastScroll() {
-		getListView().setFastScrollEnabled(true);
 	}
 
 	private void filterStationsByKeyword(final String keyword) {
