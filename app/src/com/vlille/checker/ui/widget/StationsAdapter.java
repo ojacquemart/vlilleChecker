@@ -1,8 +1,10 @@
-package com.vlille.checker.ui;
+package com.vlille.checker.ui.widget;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +16,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.vlille.checker.R;
 import com.vlille.checker.model.Station;
+import com.vlille.checker.ui.delegate.StationUpdateDelegate;
 import com.vlille.checker.ui.listener.MapTabListener;
 import com.vlille.checker.utils.ContextHelper;
 import com.vlille.checker.utils.MapsIntentChooser;
@@ -28,7 +29,6 @@ import com.vlille.checker.utils.color.ColorSelector;
 import org.osmdroid.util.GeoPoint;
 
 import java.util.List;
-
 /**
  * A generic adapter for a stations ListView.
  */
@@ -146,10 +146,10 @@ public class StationsAdapter extends ArrayAdapter<Station> {
                 final GeoPoint geoPoint = station.getGeoPoint();
 
                 // Select the map tab and resets the tabListener to focus on selected station geoPoint.
-                SherlockFragmentActivity sherlockFragmentActivity = (SherlockFragmentActivity) activity;
-                MapTabListener mapTabListener = new MapTabListener(sherlockFragmentActivity, geoPoint);
+                ActionBarActivity actionBarActivity = (ActionBarActivity) activity;
+                MapTabListener mapTabListener = new MapTabListener(actionBarActivity, geoPoint);
 
-                Tab mapTab = sherlockFragmentActivity.getSupportActionBar().getTabAt(2);
+                ActionBar.Tab mapTab = actionBarActivity.getSupportActionBar().getTabAt(2);
                 mapTab.setTabListener(mapTabListener);
                 mapTab.select();
             }

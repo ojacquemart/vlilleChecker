@@ -20,7 +20,7 @@ import com.vlille.checker.ui.osm.location.LocationManagerWrapper;
 import com.vlille.checker.utils.ContextHelper;
 import com.vlille.checker.utils.PreferenceKeys;
 
-import org.droidparts.activity.sherlock.PreferenceActivity;
+import org.droidparts.activity.stock.legacy.PreferenceActivity;
 import org.droidparts.annotation.inject.InjectDependency;
 
 import java.text.SimpleDateFormat;
@@ -170,8 +170,7 @@ public class HomePreferenceActivity extends PreferenceActivity
 						alertDialog.show();
 
 						textProgress = (TextView) alertDialog.findViewById(R.id.position_distance_value);
-						textProgress.setTextColor(getResources().getColor(R.color.black));
-						
+
 						seekBar = (SeekBar) alertDialog.findViewById(R.id.position_seekbar_distance);
 						seekBar.setOnSeekBarChangeListener(HomePreferenceActivity.this);
 						

@@ -4,35 +4,39 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Window;
 import com.vlille.checker.R;
 import com.vlille.checker.db.DBFiller;
 import com.vlille.checker.ui.async.AsyncTaskResultListener;
 import com.vlille.checker.ui.async.DBUpdaterAsyncTask;
+import com.vlille.checker.ui.fragment.AllStationsFragment;
+import com.vlille.checker.ui.fragment.MapFragment;
+import com.vlille.checker.ui.fragment.StarsListFragment;
 import com.vlille.checker.ui.listener.TabListener;
 import com.vlille.checker.utils.ContextHelper;
 
-import org.droidparts.activity.sherlock.FragmentActivity;
-
-import uk.co.senab.actionbarpulltorefresh.extras.actionbarsherlock.PullToRefreshAttacher;
+import uk.co.senab.actionbarpulltorefresh.extras.actionbarcompat.PullToRefreshAttacher;
 
 /**
  * Home activity.
  */
-public class HomeActivity extends FragmentActivity {
+public class HomeActivity extends ActionBarActivity {
 
-	private static final String TAG = HomeActivity.class.getSimpleName();
+    private static final String TAG = HomeActivity.class.getSimpleName();
 
     private PullToRefreshAttacher mPullToRefreshAttacher;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
+    private MenuItem refreshItem;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate");
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
         super.onCreate(savedInstanceState);
 
@@ -41,7 +45,18 @@ public class HomeActivity extends FragmentActivity {
         setPullToRefreshAttacher();
         checkDbInitialization();
         initTabs();
-        initSherlockProgressBar();
+    }
+
+    public void setRefreshActionButtonState(boolean refreshing) {
+        if (refreshItem == null) {
+            return;
+        }
+
+        if (refreshing) {
+            MenuItemCompat.setActionView(refreshItem, R.layout.actionbar_indeterminate_progress);
+        } else {
+            MenuItemCompat.setActionView(refreshItem, null);
+        }
     }
 
     private void setPullToRefreshAttacher() {
@@ -51,119 +66,100 @@ public class HomeActivity extends FragmentActivity {
     private void checkDbInitialization() {
         DBFiller.fillIfDbIsEmpty();
     }
-	
-	private void initTabs() {
-		ActionBar actionBar = getSupportActionBar();
+
+    private void initTabs() {
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setIcon(R.drawable.ic_menu_icon);
+        actionBar.addTab(actionBar
+                .newTab()
+                .setIcon(R.drawable.ic_tab_star)
+                .setTabListener(new TabListener<StarsListFragment>(this, "stars", StarsListFragment.class)));
+        actionBar.addTab(actionBar
+                .newTab()
+                .setIcon(R.drawable.ic_tab_view_as_list_white)
+                .setTabListener(new TabListener<AllStationsFragment>(this, "list", AllStationsFragment.class)));
+        actionBar.addTab(actionBar
+                .newTab()
+                .setIcon(R.drawable.ic_tab_map_white)
+                .setTabListener(new TabListener<MapFragment>(this, "map", MapFragment.class)));
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		actionBar.addTab(actionBar
-				.newTab()
-				.setIcon(R.drawable.ic_tab_star)
-				.setTabListener(new TabListener<StarsListFragment>(this, "stars", StarsListFragment.class)));
-		actionBar.addTab(actionBar
-				.newTab()
-				.setIcon(R.drawable.ic_tab_view_as_list_white)
-				.setTabListener(new TabListener<AllStationsFragment>(this, "list", AllStationsFragment.class)));
-		actionBar.addTab(actionBar
-				.newTab()
-				.setIcon(R.drawable.ic_tab_map_white)
-				.setTabListener(new TabListener<MapFragment>(this, "map", MapFragment.class)));
-	}
-	
-	private void initSherlockProgressBar() {
-		getSherlock().setProgressBarIndeterminate(false);
-		getSherlock().setProgressBarIndeterminateVisibility(false);
-	}
-	
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-	    super.onConfigurationChanged(newConfig);
-	    Log.d(TAG, "onConfigurationChanged");
-	  }
+    }
 
-	/**
-	 * Create contextual menu.
-	 */
-	@Override
-	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
-		// Refresh stations status.
-		menu.add(getString(R.string.refresh)).setIcon(R.drawable.refresh_selector)
-			.setOnMenuItemClickListener(new com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener() {
-				@Override
-				public boolean onMenuItemClick(com.actionbarsherlock.view.MenuItem item) {
-					/**
-					 * @see TabListener for android.R.id.content
-					 */
-					final Fragment currentFragment = getSupportFragmentManager().findFragmentById(android.R.id.content);
-					currentFragment.onResume();
-					
-					return false;
-				}
-			}).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-		
-		// Contextual menus
-		
-		// Preferences
-		menu.add(getString(R.string.preferences)).setIcon(R.drawable.ic_menu_settings)
-			.setOnMenuItemClickListener(new com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener() {
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        Log.d(TAG, "onConfigurationChanged");
+    }
 
-				@Override
-				public boolean onMenuItemClick(com.actionbarsherlock.view.MenuItem item) {
-					startActivity(new Intent(getApplicationContext(), HomePreferenceActivity.class));
-					return false;
-				}
-			}).setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+    /**
+     * Create contextual menu.
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        Log.d(TAG, "onCreateOptionsMenu");
 
-        // Update stations data.
-        final AsyncTaskResultListener<Boolean> listener = new AsyncTaskResultListener<Boolean>() {
-            @Override
-            public void onAsyncTaskPreExecute() {
-                setActionBarLoadingIndicatorVisible(true);
-            }
+        getMenuInflater().inflate(R.menu.main_menu, menu);
 
-            @Override
-            public void onAsyncTaskPostExecute(Boolean result) {
-                setActionBarLoadingIndicatorVisible(false);
-            }
-        };
+        initRefreshItem(menu);
 
-        // Update stations data.
-		menu.add(getString(R.string.data_launch_update)).setIcon(R.drawable.ic_menu_import_export)
-			.setOnMenuItemClickListener(new com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener() {
-				
-				@Override
-				public boolean onMenuItemClick(com.actionbarsherlock.view.MenuItem item) {
-					Log.d(TAG, "Launch data update");
-                    if (ContextHelper.isNetworkAvailable(getApplicationContext())) {
-                        Log.d(TAG, "Launch data update");
+        return true;
+    }
 
-                        DBUpdaterAsyncTask dbUpdaterAsyncTask = new DBUpdaterAsyncTask();
-                        dbUpdaterAsyncTask.setAsyncListener(listener);
-                        dbUpdaterAsyncTask.execute();
-                    }
+    private void initRefreshItem(Menu menu) {
+        refreshItem = menu.findItem(R.id.main_menu_refresh);
+    }
 
+    private Fragment getCurrentFragment() {
+        return getSupportFragmentManager().findFragmentById(R.id.home_content);
+    }
 
-                    return false;
-				}
-			}).setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
-		
-		
-		// About
-		menu.add(getString(R.string.about_title)).setIcon(R.drawable.ic_menu_about)
-			.setOnMenuItemClickListener(new com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener() {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.main_menu_settings:
+                showIntent(HomePreferenceActivity.class);
+                break;
+            case R.id.main_menu_refresh:
+                getCurrentFragment().onResume();
+                break;
+            case R.id.main_menu_update_stations:
+                launchUpdateStations();
+                break;
+            case R.id.main_menu_about:
+                showIntent(AboutActivity.class);
+                break;
+        }
 
-				@Override
-				public boolean onMenuItemClick(com.actionbarsherlock.view.MenuItem item) {
-					startActivity(new Intent(getApplicationContext(), AboutActivity.class));
+        return super.onOptionsItemSelected(item);
+    }
 
-					return false;
-				}
-			}).setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+    private void showIntent(Class<?> clazz) {
+        startActivity(new Intent(getApplicationContext(), clazz));
+    }
 
-		return true;
-	}
+    private void launchUpdateStations() {
+        if (ContextHelper.isNetworkAvailable(getApplicationContext())) {
+            final AsyncTaskResultListener<Boolean> listener = new AsyncTaskResultListener<Boolean>() {
+                @Override
+                public void onAsyncTaskPreExecute() {
+                    setRefreshActionButtonState(true);
+                }
 
-    PullToRefreshAttacher getPullToRefreshAttacher() {
+                @Override
+                public void onAsyncTaskPostExecute(Boolean result) {
+                    setRefreshActionButtonState(false);
+                }
+            };
+
+            Log.d(TAG, "Launch data update");
+
+            DBUpdaterAsyncTask dbUpdaterAsyncTask = new DBUpdaterAsyncTask();
+            dbUpdaterAsyncTask.setAsyncListener(listener);
+            dbUpdaterAsyncTask.execute();
+        }
+    }
+
+    public PullToRefreshAttacher getPullToRefreshAttacher() {
         return mPullToRefreshAttacher;
     }
 

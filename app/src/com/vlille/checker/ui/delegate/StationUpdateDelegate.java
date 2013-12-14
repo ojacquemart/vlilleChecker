@@ -1,4 +1,4 @@
-package com.vlille.checker.ui;
+package com.vlille.checker.ui.delegate;
 
 import com.vlille.checker.model.Station;
 

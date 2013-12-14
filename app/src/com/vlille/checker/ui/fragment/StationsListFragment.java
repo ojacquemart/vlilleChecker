@@ -1,4 +1,4 @@
-package com.vlille.checker.ui;
+package com.vlille.checker.ui.fragment;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -10,15 +10,18 @@ import android.widget.ListView;
 import com.vlille.checker.R;
 import com.vlille.checker.db.StationEntityManager;
 import com.vlille.checker.model.Station;
+import com.vlille.checker.ui.HomeActivity;
+import com.vlille.checker.ui.delegate.StationUpdateDelegate;
 import com.vlille.checker.ui.async.AbstractStationsAsyncTask;
+import com.vlille.checker.ui.widget.StationsAdapter;
 import com.vlille.checker.utils.ContextHelper;
 
 import org.droidparts.annotation.inject.InjectDependency;
-import org.droidparts.fragment.sherlock.ListFragment;
+import org.droidparts.fragment.support.ListFragment;
 
 import java.util.List;
 
-import uk.co.senab.actionbarpulltorefresh.extras.actionbarsherlock.PullToRefreshAttacher;
+import uk.co.senab.actionbarpulltorefresh.extras.actionbarcompat.PullToRefreshAttacher;
 
 /**
  * A generic fragment to load and handle selectable stations.
@@ -26,7 +29,7 @@ import uk.co.senab.actionbarpulltorefresh.extras.actionbarsherlock.PullToRefresh
 abstract class StationsListFragment extends ListFragment
         implements AbsListView.OnScrollListener,
             PullToRefreshAttacher.OnRefreshListener,
-            StationUpdateDelegate {
+        StationUpdateDelegate {
 
     private static final String TAG = StationsListFragment.class.getName();
 
@@ -57,6 +60,13 @@ abstract class StationsListFragment extends ListFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        setListAdapter(null);
     }
 
     @Override

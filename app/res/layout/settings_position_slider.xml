@@ -15,6 +15,7 @@
 		    android:layout_height="fill_parent"
 		    android:id="@+id/position_distance_text"
 		    android:text="@string/prefs_position_radius_distance_summary"
+            android:textColor="@color/settings_slider_text"
 		    />
 		<TextView
 		    android:layout_width="wrap_content"
@@ -26,6 +27,7 @@
 		    android:layout_height="fill_parent"
 		    android:id="@+id/position_distance_value"
 		    android:text="0m."
+            android:textColor="@color/settings_slider_text"
 		    />
 	</LinearLayout>
 

@@ -8,12 +8,12 @@ This repository contains the source code for the Vlille Checker Android app.
 
 This project is an unofficial android app for the Vlille service in Lille, France.
 
-![image1](https://lh4.ggpht.com/1L90ewgpWg8bmlgvaakrPn9BHlWm92ksXWxgoGlcAeVSCgWaEkdOWUybIvRt5Puq7g=h230)&nbsp;![image2]
-(https://lh3.ggpht.com/bI12FdIk17-sr8yyF6ZgYnccfCTjii7Ap-bgMDjIF9gJfIfS0rEgosA_xLXURjFZ_yoO=h230)&nbsp;![image3](https://lh4.ggpht.com/VfyOGdfC8TG8AvhFeeF8EMaAX3c7ctKi8Mb025Y8Lb0Zj7n9AMrkFLXCwOBwSrPyrXM=h230)&nbsp;![image4](https://lh5.ggpht.com/qoHa8hENdPBdNlunKBa7SvycxSQF_E3mMXNcZbmdJIuBgftIfE193i0Wh7KgzQTBnSs=h230)
+![image1](https://lh4.ggpht.com/MRd7PNLlIGHG46rT9oosCpTTdYodyRFthJF1RE7T-3WarICw7-IlZEaC-I0CaEn_jss=h310-rw)&nbsp;![image2]
+(https://lh3.ggpht.com/Zz_bCAKCYxJJ5wcxB9MxZ910NVev4WxRmFyQuLDPqTr-_zmuAMtUleSLn_eMgKV0yuA=h310-rw)&nbsp;![image3](https://lh5.ggpht.com/6JNv89cMkkmPNiGm0T_9v4pIczobHnK9vhDbtN8IIiNIMXcXy__3ZWDqoPuQOMGeRw=h310-rw)&nbsp;![image4](https://lh5.ggpht.com/7D4LF0iWxzERPZcAfbcRwRsHKbqFdc3hY8v2W8V9nvINdL648p5jMz5boBJC9xzExDk=h310-rw)
 
 
 ## Versions
-
+* 08/17/2013: v3.0.0
 * 01/08/2013: v2.2
 * 10/21/2012: v2.1
 * 10/20/2012: v2.0
@@ -25,22 +25,13 @@ This project is an unofficial android app for the Vlille service in Lille, Franc
 This project uses the following open source libraries:
 
 * [ACRA - Application Crash Report for Android](http://code.google.com/p/acra/)
-* [ActionBarSherlock](https://github.com/JakeWharton/ActionBarSherlock)
 * [PullToRefresh](https://github.com/chrisbanes/ActionBar-PullToRefresh)
 * [DroidParts](https://github.com/yanchenko/droidparts)
 * [OpenStreetMapDroid](http://code.google.com/p/osmdroid/)
-* [Apache - Commons Lang](http://commons.apache.org/lang/)
 * [GPSEmulator to simulate GPS location](http://code.google.com/p/android-gps-emulator/)
 
 ## Installation
 
 ### Android Studio users
 
-Import libraries/actionbarpulltorefresh-*-0.7-SNAPSHOT.aar in your local .m2 repository, waiting for an aar version release of the library:
-* mvn install:install-file -Dfile=%LOCAL_REPO_DIR%\libraries\actionbarpulltorefresh-library-0.7-SNAPSHOT.aar -DgroupId=com.github.chrisbanes.actionbarpulltorefresh -DartifactId=library -Dversion=0.7-SNAPSHOT -Dpackaging=aar
-* mvn install:install-file -Dfile=%LOCAL_REPO_DIR%\libraries\actionbarpulltorefresh-actionbarsherlock-0.7-SNAPSHOT.aar -DgroupId=com.github.chrisbanes.actionbarpulltorefresh -DartifactId=actionbarsherlock -Dversion=0.7-SNAPSHOT -Dpackaging=aar
 * import the build.gradle
-
-#### Eclipse users
-
-* import the app/pom.xml and reference ActionBarSherlock as a library.

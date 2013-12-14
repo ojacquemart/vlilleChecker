@@ -1,23 +1,23 @@
 package com.vlille.checker.ui.osm.overlay.window;
 
-import org.droidparts.activity.sherlock.FragmentActivity;
-import org.osmdroid.views.MapView;
-
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.vlille.checker.R;
 import com.vlille.checker.model.Station;
-import com.vlille.checker.ui.StationUpdateDelegate;
+import com.vlille.checker.ui.HomeActivity;
+import com.vlille.checker.ui.delegate.StationUpdateDelegate;
 import com.vlille.checker.ui.async.AbstractStationsAsyncTask;
 import com.vlille.checker.ui.osm.overlay.ExtendedOverlayItem;
 import com.vlille.checker.ui.osm.overlay.MaskableOverlayItem;
 import com.vlille.checker.ui.osm.overlay.OverlayZoomUtils;
 import com.vlille.checker.utils.ViewUtils;
 import com.vlille.checker.utils.color.ColorSelector;
+
+import org.osmdroid.views.MapView;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,14 +31,14 @@ public class BubbleInfoWindow extends DefaultInfoWindow {
     private TextView stationBikes;
     private TextView stationAttachs;
 
-    private FragmentActivity fragmentActivity;
+    private HomeActivity homeActivity;
     private StationUpdateDelegate stationUpdateDelegate;
 
     public BubbleInfoWindow(MapView mapView,
-                            FragmentActivity fragmentActivity,
+                            HomeActivity homeActivity,
                             final StationUpdateDelegate stationUpdateDelegate) {
 		super(R.layout.maps_bubble, mapView);
-        this.fragmentActivity = fragmentActivity;
+        this.homeActivity = homeActivity;
         this.stationUpdateDelegate = stationUpdateDelegate;
 
         Button bubbleCheckbox = (Button) (mView.findViewById(R.id.maps_bubble_checkbox));
@@ -109,7 +109,7 @@ public class BubbleInfoWindow extends DefaultInfoWindow {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            setSupportProgressBarIndeterminateVisibility(true);
+            setRefreshActionButtonState(true);
         }
 
         @Override
@@ -120,12 +120,12 @@ public class BubbleInfoWindow extends DefaultInfoWindow {
                 bindStation(station);
             }
 
-            setSupportProgressBarIndeterminateVisibility(false);
+            setRefreshActionButtonState(false);
         }
 
-        private void setSupportProgressBarIndeterminateVisibility(boolean visible) {
-            if (fragmentActivity != null) {
-                fragmentActivity.setSupportProgressBarIndeterminateVisibility(visible);
+        private void setRefreshActionButtonState(boolean visible) {
+            if (homeActivity != null) {
+                homeActivity.setRefreshActionButtonState(visible);
             }
         }
     }

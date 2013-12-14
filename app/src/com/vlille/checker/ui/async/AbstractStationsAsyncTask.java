@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.vlille.checker.model.Station;
-import com.vlille.checker.ui.StationUpdateDelegate;
+import com.vlille.checker.ui.delegate.StationUpdateDelegate;
 import com.vlille.checker.xml.XMLReader;
 
 import java.util.ArrayList;

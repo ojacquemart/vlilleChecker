@@ -7,13 +7,15 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 
 import com.vlille.checker.R;
 import com.vlille.checker.model.Station;
-import com.vlille.checker.ui.StationUpdateDelegate;
+import com.vlille.checker.ui.HomeActivity;
+import com.vlille.checker.ui.delegate.StationUpdateDelegate;
 import com.vlille.checker.ui.async.AbstractStationsAsyncTask;
 import com.vlille.checker.ui.osm.location.LocationManagerWrapper;
 import com.vlille.checker.ui.osm.overlay.CircleLocationOverlay;
@@ -26,7 +28,6 @@ import com.vlille.checker.utils.ContextHelper;
 import com.vlille.checker.utils.StationUtils;
 import com.vlille.checker.utils.ToastUtils;
 
-import org.droidparts.activity.sherlock.FragmentActivity;
 import org.osmdroid.ResourceProxy;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.XYTileSource;
@@ -79,7 +80,7 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
     private MapState state;
     private List<Station> stations;
 
-    private FragmentActivity fragmentActivity;
+    private HomeActivity homeActivity;
     private StationUpdateDelegate stationUpdateDelegate;
 
     private boolean locationOn;
@@ -163,7 +164,7 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
     }
 
     private LocationManager getLocationManager() {
-        return (LocationManager) fragmentActivity.getSystemService(Context.LOCATION_SERVICE);
+        return (LocationManager) homeActivity.getSystemService(Context.LOCATION_SERVICE);
     }
 
     private void drawLocationCircle() {
@@ -232,7 +233,7 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
 
         final Resources resources = getResources();
         if (itemizedOverlay == null) {
-            BubbleInfoWindow bubbleInfoWindow = new BubbleInfoWindow(this, fragmentActivity, stationUpdateDelegate);
+            BubbleInfoWindow bubbleInfoWindow = new BubbleInfoWindow(this, homeActivity, stationUpdateDelegate);
             itemizedOverlay = new ItemizedOverlayWithFocus<MaskableOverlayItem>(
                     items,
                     resources,
@@ -400,13 +401,13 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            fragmentActivity.setActionBarLoadingIndicatorVisible(true);
+            homeActivity.setRefreshActionButtonState(true);
         }
 
         @Override
         protected void onPostExecute(List<Station> result) {
             super.onPostExecute(result);
-            fragmentActivity.setActionBarLoadingIndicatorVisible(false);
+            homeActivity.setRefreshActionButtonState(false);
             invalidate();
         }
     }
@@ -452,8 +453,8 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
         return locationOn;
     }
 
-    public void setFragmentActivity(FragmentActivity fragmentActivity) {
-        this.fragmentActivity = fragmentActivity;
+    public void setHomeActivity(HomeActivity homeActivity) {
+        this.homeActivity = homeActivity;
     }
 
     public void setStationUpdateDelegate(StationUpdateDelegate stationUpdateDelegate) {

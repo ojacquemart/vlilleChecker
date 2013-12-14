@@ -7,6 +7,8 @@
     <color name="orange">#FF9100</color>
     <color name="red">#FF0000</color>
 
+    <color name="settings_slider_text">#fff</color>
+
     <!-- List view icons background -->
     <color name="ic_background">#cc0000</color>
 

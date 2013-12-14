@@ -19,7 +19,7 @@
 
 <resources>
 
-    <style name="Theme.Vlillechecker" parent="@style/Theme.Sherlock.Light.DarkActionBar">
+    <style name="Theme.Vlillechecker" parent="@style/Theme.AppCompat.Light.DarkActionBar">
         <item name="android:actionBarItemBackground">@drawable/selectable_background_vlillechecker</item>
         <item name="android:popupMenuStyle">@style/PopupMenu.Vlillechecker</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Vlillechecker</item>
@@ -29,27 +29,26 @@
         <item name="android:actionModeBackground">@drawable/cab_background_top_vlillechecker</item>
         <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_vlillechecker</item>
         <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Vlillechecker</item>
-        
-                <!-- Light.DarkActionBar specific -->
+
+        <!-- Light.DarkActionBar specific -->
         <item name="android:actionBarWidgetTheme">@style/Theme.Vlillechecker.Widget</item>
 
     </style>
 
-    <style name="ActionBar.Solid.Vlillechecker" parent="@style/Widget.Sherlock.Light.ActionBar.Solid.Inverse">
+    <style name="ActionBar.Solid.Vlillechecker" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@drawable/ab_solid_vlillechecker</item>
         <item name="android:backgroundStacked">@drawable/ab_stacked_solid_vlillechecker</item>
         <item name="android:backgroundSplit">@drawable/ab_bottom_solid_vlillechecker</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Vlillechecker</item>
-        <item name="android:icon">@drawable/ic_menu_icon</item>
     </style>
 
-    <style name="ActionBar.Transparent.Vlillechecker" parent="@style/Widget.Sherlock.ActionBar">
+    <style name="ActionBar.Transparent.Vlillechecker" parent="@style/Widget.AppCompat.ActionBar">
         <item name="android:background">@drawable/ab_transparent_vlillechecker</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Vlillechecker</item>
     </style>
-    
+
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->
-    <style name="Theme.Vlillechecker.Widget" parent="@style/Theme.Sherlock">
+    <style name="Theme.Vlillechecker.Widget" parent="@style/Theme.AppCompat">
         <item name="android:colorBackground">@drawable/ab_solid_vlillechecker</item>
         <item name="android:popupMenuStyle">@style/PopupMenu.Vlillechecker</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Vlillechecker</item>

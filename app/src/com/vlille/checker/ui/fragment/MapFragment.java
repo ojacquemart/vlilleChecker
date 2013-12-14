@@ -1,4 +1,4 @@
-package com.vlille.checker.ui;
+package com.vlille.checker.ui.fragment;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -10,12 +10,13 @@ import android.widget.ImageButton;
 import com.vlille.checker.R;
 import com.vlille.checker.db.StationEntityManager;
 import com.vlille.checker.model.Station;
+import com.vlille.checker.ui.HomeActivity;
+import com.vlille.checker.ui.delegate.StationUpdateDelegate;
 import com.vlille.checker.ui.osm.MapState;
 import com.vlille.checker.ui.osm.MapView;
 
-import org.droidparts.activity.sherlock.FragmentActivity;
 import org.droidparts.annotation.inject.InjectDependency;
-import org.droidparts.fragment.sherlock.Fragment;
+import org.droidparts.fragment.support.Fragment;
 import org.osmdroid.util.GeoPoint;
 
 import java.util.List;
@@ -69,7 +70,7 @@ public class MapFragment extends Fragment implements StationUpdateDelegate {
         this.stations = stationEntityManager.findAll();
 
         mapView.setMapInfos(state, stations);
-        mapView.setFragmentActivity((FragmentActivity) getActivity());
+        mapView.setHomeActivity((HomeActivity) getActivity());
         mapView.setStationUpdateDelegate(this);
         mapView.init();
 

@@ -1,4 +1,4 @@
-package com.vlille.checker.ui;
+package com.vlille.checker.ui.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
