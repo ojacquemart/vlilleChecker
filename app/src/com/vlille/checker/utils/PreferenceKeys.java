@@ -33,5 +33,11 @@ public final class PreferenceKeys {
 	 * The data status last update.
 	 */
 	public static final String DATA_STATUS_LAST_UPDATE = "data_status_last_update";
+
+    /**
+     * The current version number.
+     */
+    public static final String ABOUT_VERSION = "about_version";
+
 	
 }

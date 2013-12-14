@@ -48,6 +48,9 @@
     <string name="data_status_last_update_summary">Dernière mise à jour: %1s</string>
     <string name="data_status_date_pattern">dd/MM/yyyy HH:mm</string>
 
+    <!-- Version in preferences -->
+    <string name="version">Version</string>
+
     <!-- Position -->
     <string name="location_enable">Activer la localisation</string>
 
@@ -56,7 +59,7 @@
 
     <!-- About -->
     <string name="about_title">A propos de</string>
-    <string name="about_text">Vlille Checker est dédié aux utilisateurs du V\'lille et de son service VLS (Vélos en Libre Service).
+    <string name="about_text">Vlille Checker (v%1s) est dédié aux utilisateurs du V\'lille et de son service VLS (Vélos en Libre Service).
     \n\n
   	Au quotidien, l\'application vous permet de gérer facilement:\n
     - vos stations favorites afin de contrôler le nombre de vélos ou emplacements disponibles;\n

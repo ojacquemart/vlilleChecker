@@ -26,6 +26,11 @@
             android:summary="data_status_last_update_summary"
             android:title="Stations list" />
     </PreferenceCategory>
+    <PreferenceCategory android:title="@string/version" >
+        <Preference
+            android:key="about_version"
+            android:title="3.0.1" />
+    </PreferenceCategory>
 
     <!-- TODO: Later if really/ needed -->
     <!-- <PreferenceCategory android:title="@string/prefs_filters" > -->

@@ -1,6 +1,7 @@
 package com.vlille.checker;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.util.Log;
 
 import com.vlille.checker.utils.Constants;
@@ -30,6 +31,14 @@ public class Application extends AbstractApplication {
 
     public static Context getContext() {
         return context;
+    }
+
+    public static String getVersionNumber() {
+        try {
+            return context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            return "???";
+        }
     }
 
 }

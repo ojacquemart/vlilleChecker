@@ -1,8 +1,10 @@
 package com.vlille.checker.ui;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
@@ -12,6 +14,7 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
+import com.vlille.checker.Application;
 import com.vlille.checker.R;
 import com.vlille.checker.db.MetadataEntityManager;
 import com.vlille.checker.db.StationEntityManager;
@@ -55,6 +58,7 @@ public class HomePreferenceActivity extends PreferenceActivity
 		locationManagerWrapper = LocationManagerWrapper.with(this);
 
         setLastDataStatusUpdate();
+        setVersionNumber();
         onChangeGpsActivated();
         onChangeRadiusValue();
 	}
@@ -64,6 +68,11 @@ public class HomePreferenceActivity extends PreferenceActivity
         lastUpdatePreference.setTitle(getDataStatusStationsNumber());
         lastUpdatePreference.setSummary(getDataStatusLastUpdateMessage());
 	}
+
+    private void setVersionNumber() {
+        Preference preference = findPreference(PreferenceKeys.ABOUT_VERSION);
+        preference.setTitle(Application.getVersionNumber());
+    }
 
     private String getDataStatusStationsNumber() {
         return getString(R.string.data_status_stations_number, stationEntityManager.count());

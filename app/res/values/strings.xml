@@ -39,7 +39,7 @@
     <string name="prefs_position_radius_distance_title">Stations around me</string>
     <string name="prefs_position_radius_distance_summary">Within</string>
     <string name="prefs_position_radius_distance_unit">m</string>
-    
+
     <!-- Data status and update -->
     <string name="data_status_update_done">Update done!</string>
     <string name="data_status_uptodate">Stations are already up to date</string>
@@ -49,6 +49,9 @@
     <string name="data_status_last_update_summary">Last update: %1s</string>
     <string name="data_status_date_pattern">dd/MM/yyyy HH:mm</string>
 
+    <!-- Version in preferences -->
+    <string name="version">Version</string>
+
     <!-- Position -->
     <string name="location_enable">Enable location</string>
 
@@ -57,7 +60,7 @@
 
     <!-- About -->
     <string name="about_title">About</string>
-    <string name="about_text">Vlille Checker is dedicated to the V\'lille users and its Self Service Bikes service.
+    <string name="about_text">Vlille Checker (v%1s) is dedicated to the V\'lille users and its Self Service Bikes service.
     \n\n
   	Daily, the application allows you to easily manage:\n
     - your favorite stations to control bikes or slots available;\n
