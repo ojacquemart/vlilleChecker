@@ -2,7 +2,6 @@ package com.vlille.checker.ui;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -12,11 +11,13 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Window;
 import com.vlille.checker.R;
 import com.vlille.checker.db.DBFiller;
-import com.vlille.checker.db.DBUpdater;
+import com.vlille.checker.ui.async.AsyncTaskResultListener;
+import com.vlille.checker.ui.async.DBUpdaterAsyncTask;
 import com.vlille.checker.ui.listener.TabListener;
-import com.vlille.checker.utils.ToastUtils;
+import com.vlille.checker.utils.ContextHelper;
 
 import org.droidparts.activity.sherlock.FragmentActivity;
+
 import uk.co.senab.actionbarpulltorefresh.extras.actionbarsherlock.PullToRefreshAttacher;
 
 /**
@@ -48,10 +49,7 @@ public class HomeActivity extends FragmentActivity {
     }
 
     private void checkDbInitialization() {
-        DBFiller dbFiller = new DBFiller(getApplicationContext());
-        if (dbFiller.isDBEmpty()) {
-            dbFiller.fill();
-        }
+        DBFiller.fillIfDbIsEmpty();
     }
 	
 	private void initTabs() {
@@ -116,16 +114,36 @@ public class HomeActivity extends FragmentActivity {
 				}
 			}).setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
-		// Update stations data.
+        // Update stations data.
+        final AsyncTaskResultListener<Boolean> listener = new AsyncTaskResultListener<Boolean>() {
+            @Override
+            public void onAsyncTaskPreExecute() {
+                setActionBarLoadingIndicatorVisible(true);
+            }
+
+            @Override
+            public void onAsyncTaskPostExecute(Boolean result) {
+                setActionBarLoadingIndicatorVisible(false);
+            }
+        };
+
+        // Update stations data.
 		menu.add(getString(R.string.data_launch_update)).setIcon(R.drawable.ic_menu_import_export)
 			.setOnMenuItemClickListener(new com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener() {
 				
 				@Override
 				public boolean onMenuItemClick(com.actionbarsherlock.view.MenuItem item) {
 					Log.d(TAG, "Launch data update");
-					new DbUpdaterAsyncTask().execute();
-					
-					return false;
+                    if (ContextHelper.isNetworkAvailable(getApplicationContext())) {
+                        Log.d(TAG, "Launch data update");
+
+                        DBUpdaterAsyncTask dbUpdaterAsyncTask = new DBUpdaterAsyncTask();
+                        dbUpdaterAsyncTask.setAsyncListener(listener);
+                        dbUpdaterAsyncTask.execute();
+                    }
+
+
+                    return false;
 				}
 			}).setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 		
@@ -143,38 +161,6 @@ public class HomeActivity extends FragmentActivity {
 			}).setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
 		return true;
-	}
-
-	/**
-	 * {@link AsyncTask} to refresh stations from vlille.fr.
-	 */
-	class DbUpdaterAsyncTask extends AsyncTask<Void, Void, Boolean> {
-
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-            setActionBarLoadingIndicatorVisible(true);
-		}
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            DBUpdater dbUpdater = new DBUpdater(getApplicationContext());
-
-            return dbUpdater.update();
-        }
-
-		@Override
-		protected void onPostExecute(Boolean result) {
-			super.onPostExecute(result);
-            setActionBarLoadingIndicatorVisible(false);
-
-            int resourceId = result
-                    ?  R.string.data_status_update_done
-                    : R.string.data_status_uptodate;
-
-            ToastUtils.show(getApplicationContext(), resourceId);
-		}
-
 	}
 
     PullToRefreshAttacher getPullToRefreshAttacher() {

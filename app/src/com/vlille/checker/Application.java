@@ -1,5 +1,6 @@
 package com.vlille.checker;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.vlille.checker.utils.Constants;
@@ -17,11 +18,18 @@ import org.droidparts.AbstractApplication;
 )
 public class Application extends AbstractApplication {
 
-	@Override
-	public void onCreate() {
+    private static Context context;
+
+    @Override
+    public void onCreate() {
         super.onCreate();
 
         ACRA.init(this);
-	}
+        context = getApplicationContext();
+    }
+
+    public static Context getContext() {
+        return context;
+    }
 
 }

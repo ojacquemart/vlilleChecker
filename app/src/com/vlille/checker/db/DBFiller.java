@@ -1,6 +1,5 @@
 package com.vlille.checker.db;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.vlille.checker.R;
@@ -13,8 +12,11 @@ public class DBFiller extends DBAction {
 
     private static final String TAG = DBFiller.class.getSimpleName();
 
-    public DBFiller(Context context) {
-        super(context);
+    public static void fillIfDbIsEmpty() {
+        DBFiller dbFiller = new DBFiller();
+        if (dbFiller.isDBEmpty()) {
+            dbFiller.fill();
+        }
     }
 
     public boolean isDBEmpty() {

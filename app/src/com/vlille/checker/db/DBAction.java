@@ -2,6 +2,7 @@ package com.vlille.checker.db;
 
 import android.content.Context;
 
+import com.vlille.checker.Application;
 import com.vlille.checker.model.SetStationsInfo;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.xml.XMLReader;
@@ -16,8 +17,8 @@ public abstract class DBAction {
 
     private static final XMLReader XML_READER = new XMLReader();
 
-    public DBAction(Context context) {
-        this.context = context;
+    public DBAction() {
+        this.context = Application.getContext();
     }
 
     public Context getContext() {
@@ -26,6 +27,10 @@ public abstract class DBAction {
 
     public SetStationsInfo getAssetsStationsInfo() {
         return XML_READER.getAssetsStationsInfo(getContext());
+    }
+
+    public List<Station> getInDBStations() {
+        return getStationEntityManager().findAll();
     }
 
     public List<Station> getRemoteStations() {
@@ -48,3 +53,4 @@ public abstract class DBAction {
         return metadataEntityManager;
     }
 }
+
