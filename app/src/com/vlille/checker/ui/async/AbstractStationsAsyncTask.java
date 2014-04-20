@@ -7,8 +7,6 @@ import com.vlille.checker.model.Station;
 import com.vlille.checker.ui.delegate.StationUpdateDelegate;
 import com.vlille.checker.xml.XMLReader;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -28,20 +26,21 @@ public abstract class AbstractStationsAsyncTask extends AsyncTask<List<Station>,
 		
 		final List<Station> stations = params[0];
 
-        List<Station> synchronizedStations = Collections.synchronizedList(new ArrayList(stations));
-		for (Station station : synchronizedStations) {
-            if (isCancelled()) {
-                Log.d(TAG, "Task has been cancelled.");
-                break;
-            }
-            station = XML_READER.getRemoteInfo(station);
-            if (delegate != null) {
-                delegate.update(station);
-            }
+        synchronized (stations) {
+            for (Station station : stations) {
+                if (isCancelled()) {
+                    Log.d(TAG, "Task has been cancelled.");
+                    break;
+                }
+                station = XML_READER.getRemoteInfo(station);
+                if (delegate != null) {
+                    delegate.update(station);
+                }
 
-            publishProgress();
-		}
-		
+                publishProgress();
+            }
+        }
+
 		return stations;
 	}
 
