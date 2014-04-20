@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.5.+'
+        classpath 'com.android.tools.build:gradle:0.9.+'
     }
 }
 apply plugin: 'android'
@@ -22,12 +22,13 @@ dependencies {
     compile 'org.droidparts:droidparts:1.5.5'
     compile 'org.osmdroid:osmdroid-android:4.0'
     compile 'org.slf4j:slf4j-android:1.6.1-RC1'
-    instrumentTestCompile 'junit:junit:4.8.1'
+    androidTestCompile 'junit:junit:4.8.1'
 }
 
 android {
-    compileSdkVersion 18
-    buildToolsVersion '18.0.1'
+    compileSdkVersion 19
+    buildToolsVersion '19.0.3'
+
 
     sourceSets {
         main {
@@ -45,8 +46,9 @@ android {
         }
     }
 
+
     defaultConfig {
         minSdkVersion 7
-        targetSdkVersion 18
+        targetSdkVersion 19
     }
 }
