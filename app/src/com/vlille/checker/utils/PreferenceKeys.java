@@ -5,15 +5,25 @@ public final class PreferenceKeys {
 	private PreferenceKeys() {}
 
 	/**
-	 * To display the detailled adress in home screen.
+	 * To display the station address in list.
 	 */
-	public static final String HOME_DISPLAY_ADRESS = "prefs_home_display_adress_value";
-	
+	public static final String STATION_ADDRESS_VISIBLE = "prefs_home_display_adress_value";
+
+    /**
+     * Hides the station address, by default.
+     */
+    public static final boolean STATION_ADDRESS_VISIBLE_DEFAULT_VALUE = false;
+
 	/**
-	 * The default display station address value.
+	 * To display the last update moment in list.
 	 */
-	public static final boolean HOME_DISPLAY_DEFAULT_VALUE = false;
-	
+	public static final String STATION_LAST_UPDATE_VISIBLE = "prefs_station_last_update_visible";
+
+	/**
+	 * Shows the last update moment, by default.
+	 */
+	public static final boolean STATION_LAST_UPDATE_VISIBLE_DEFAULT_VALUE = true;
+
 	/**
 	 * To activate the gps localisation.
 	 */

@@ -55,30 +55,36 @@ public class StationsAdapter extends ArrayAdapter<Station> {
 		if (view == null) {
 			LayoutInflater layout = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			view = layout.inflate(R.layout.station_list_item, null);
-			
-            ViewUtils.switchView(view.findViewById(R.id.station_adress_box), ContextHelper.isDisplayingStationAdress(getContext()));
-		}
+        }
 
-        handleStationDetails(view, position);
+        setStationAddressVisibility(view);
+        setStationDetails(view, position);
 
 		return view;
 	}
 
-	/**
+    private void setStationAddressVisibility(View view) {
+        ViewUtils.switchView(view.findViewById(R.id.station_adress_box), ContextHelper.isStationAddressVisible(getContext()));
+    }
+
+    /**
 	 * Handle stations details.
 	 */
-	private void handleStationDetails(View view, final int position) {
+	private void setStationDetails(View view, final int position) {
         final Station station = stations.get(position);
-
         ViewUtils.switchView(view.findViewById(R.id.station_actions), station.isSelected());
 
         handleStarCheckbox(view, position, station);
-        handleStationsTextInfos(view, station);
+
+        boolean lastUpdateVisible = ContextHelper.isStationLastUpdateMomentVisible(getContext());
+        handleStationsTextInfos(view, station, lastUpdateVisible);
+
+        ViewUtils.switchView(view.findViewById(R.id.station_lastupdate), lastUpdateVisible);
         handleToMapButton(view, station);
-        handleToNavigationpButton(view, station);
+        handleToNavigationButton(view, station);
 	}
 
-    private void handleToNavigationpButton(View view, final Station station) {
+    private void handleToNavigationButton(View view, final Station station) {
         view.findViewById(R.id.station_action_tonavigation).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,15 +118,17 @@ public class StationsAdapter extends ArrayAdapter<Station> {
         });
     }
 
-    private void handleStationsTextInfos(View view, Station station) {
+    private void handleStationsTextInfos(View view, Station station, boolean lastUpdateVisible) {
         TextView name = (TextView) view.findViewById(R.id.station_name);
         name.setText(station.getName());
 
-        String timeUnitSecond = TextPlural.toPlural(
-                station.getLastUpdate(),
-                resources.getString(R.string.timeunit_second));
-        TextView lastUpdate = (TextView) view.findViewById(R.id.station_lastupdate);
-        lastUpdate.setText(resources.getString(R.string.update_ago, station.getLastUpdate(), timeUnitSecond));
+        if (lastUpdateVisible) {
+            String timeUnitSecond = TextPlural.toPlural(
+                    station.getLastUpdate(),
+                    resources.getString(R.string.timeunit_second));
+            TextView lastUpdate = (TextView) view.findViewById(R.id.station_lastupdate);
+            lastUpdate.setText(resources.getString(R.string.update_ago, station.getLastUpdate(), timeUnitSecond));
+        }
 
         TextView address = (TextView) view.findViewById(R.id.station_adress);
         address.setText(station.getAdressToUpperCase());

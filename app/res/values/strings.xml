@@ -21,15 +21,17 @@
     <string name="open_with">Open with&#8230;</string>
 
     <!-- Errors -->
-    <string name="error_occured">An error occured</string>
+    <string name="error_occured">An error occurred</string>
     <string name="error_no_connection">No network available</string>
     <string name="error_no_stations_near_current_location">None station near your current location</string>
     <string name="error_no_location_found">No location available</string>
     <string name="error_no_gmaps_app_found">No navigation app found</string>
 
     <!-- Home Preferences -->
-    <string name="prefs_stations_details_title">Stations detail</string>
+    <string name="prefs_stations_details_title">Stations details</string>
     <string name="prefs_stations_details_summary">Show the station address</string>
+    <string name="prefs_station_last_update_visible_title">Last update</string>
+    <string name="prefs_station_last_update_visible_summary">Show the last update moment</string>
     <string name="prefs_location_enable_gps_title">GPS provider</string>
     <string name="prefs_location_enable_gps_summary">Use GPS to locate your position</string>
 

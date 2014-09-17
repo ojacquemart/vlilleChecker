@@ -7,6 +7,9 @@ import android.preference.PreferenceManager;
 
 import com.vlille.checker.R;
 
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+import static com.vlille.checker.utils.PreferenceKeys.*;
+
 /**
  * Helper for {@link Context}.
  */
@@ -33,21 +36,26 @@ public final class ContextHelper {
 		return networkAvailable;
 	}
 	
-	/**
-	 * Display or hide the address box for the {@link com.vlille.checker.ui.widget.StationsAdapter}
-	 */
-	public static boolean isDisplayingStationAdress(Context context) {
-		return PreferenceManager.getDefaultSharedPreferences(context)
-				.getBoolean(PreferenceKeys.HOME_DISPLAY_ADRESS, 
-								PreferenceKeys.HOME_DISPLAY_DEFAULT_VALUE);
+	public static boolean isStationAddressVisible(Context context) {
+		return getBooleanValue(context, STATION_ADDRESS_VISIBLE, STATION_ADDRESS_VISIBLE_DEFAULT_VALUE);
 	}
-	
+
+    public static boolean isStationLastUpdateMomentVisible(Context context) {
+        return getBooleanValue(context,
+                STATION_LAST_UPDATE_VISIBLE, STATION_LAST_UPDATE_VISIBLE_DEFAULT_VALUE);
+    }
+
+    /**
+     * Gets a preference boolean value
+     */
+    private static boolean getBooleanValue(Context context, String key, boolean defaultValue) {
+        return getDefaultSharedPreferences(context).getBoolean(key, defaultValue);
+    }
+
 	/**
 	 * Gets the radius value.
 	 */
 	public static long getRadiusValue(Context context) {
-		return PreferenceManager.getDefaultSharedPreferences(context)
-				.getLong(PreferenceKeys.POSITION_RADIUS,
-							PreferenceKeys.POSITION_RADIUS_DEFAULT_VALUE);
+		return getDefaultSharedPreferences(context).getLong(POSITION_RADIUS, POSITION_RADIUS_DEFAULT_VALUE);
 	}
 }
