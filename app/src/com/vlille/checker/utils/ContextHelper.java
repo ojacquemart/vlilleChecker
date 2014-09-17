@@ -18,6 +18,10 @@ public final class ContextHelper {
 	 * Checks if network is available.
 	 */
 	public static boolean isNetworkAvailable(Context context) {
+        if (context == null) {
+            return false;
+        }
+
 		ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 		
