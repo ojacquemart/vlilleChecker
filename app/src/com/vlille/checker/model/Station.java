@@ -96,7 +96,7 @@ public class Station extends Entity {
 	}
 
 	public String getName() {
-		return name;
+		return id + " - " + name;
 	}
 
 	public void setName(String name) {
