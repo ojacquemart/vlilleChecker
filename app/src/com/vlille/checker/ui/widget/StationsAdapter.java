@@ -109,12 +109,10 @@ public class StationsAdapter extends ArrayAdapter<Station> {
                 }
 
                 if (!readOnly && position < stations.size()) {
-                    synchronized (stations) {
-                        stations.remove(position);
-                        arrayAdapter.notifyDataSetChanged();
-                    }
+                    stations.remove(position);
+                    arrayAdapter.notifyDataSetChanged();
                 }
-            }
+        }
         });
     }
 

@@ -1,6 +1,5 @@
 package com.vlille.checker.ui.osm.overlay.window;
 
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -9,8 +8,8 @@ import android.widget.TextView;
 import com.vlille.checker.R;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.ui.HomeActivity;
-import com.vlille.checker.ui.delegate.StationUpdateDelegate;
 import com.vlille.checker.ui.async.AbstractStationsAsyncTask;
+import com.vlille.checker.ui.delegate.StationUpdateDelegate;
 import com.vlille.checker.ui.osm.overlay.ExtendedOverlayItem;
 import com.vlille.checker.ui.osm.overlay.MaskableOverlayItem;
 import com.vlille.checker.ui.osm.overlay.OverlayZoomUtils;
@@ -88,8 +87,7 @@ public class BubbleInfoWindow extends DefaultInfoWindow {
             // Bind station with old values before async refresh.
             bindStation(station);
 
-            SingleStationAsyncTask asyncTask = new SingleStationAsyncTask();
-            asyncTask.setDelegate(stationUpdateDelegate);
+            SingleStationAsyncTask asyncTask = new SingleStationAsyncTask(stationUpdateDelegate);
             asyncTask.execute(Arrays.asList(station));
         }
 	}
@@ -104,6 +102,10 @@ public class BubbleInfoWindow extends DefaultInfoWindow {
     }
 
     class SingleStationAsyncTask extends AbstractStationsAsyncTask {
+
+        SingleStationAsyncTask(StationUpdateDelegate delegate) {
+            super(delegate);
+        }
 
         @Override
         protected void onPreExecute() {

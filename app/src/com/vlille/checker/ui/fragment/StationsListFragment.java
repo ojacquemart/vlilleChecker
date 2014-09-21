@@ -255,8 +255,7 @@ abstract class StationsListFragment extends ListFragment
      */
     private StationsAsyncTask getNewAsyncTask() {
         cancelAsyncTask();
-        asyncTask = new StationsAsyncTask();
-        asyncTask.setDelegate(this);
+        asyncTask = new StationsAsyncTask(this);
 
         return asyncTask;
     }
@@ -293,6 +292,10 @@ abstract class StationsListFragment extends ListFragment
      * An AsyncTask to load details from the #getStations method.
      */
     class StationsAsyncTask extends AbstractStationsAsyncTask {
+
+        StationsAsyncTask(StationUpdateDelegate delegate) {
+            super(delegate);
+        }
 
         @Override
         protected void onPreExecute() {

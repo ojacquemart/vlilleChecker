@@ -7,7 +7,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -15,8 +14,8 @@ import android.view.MotionEvent;
 import com.vlille.checker.R;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.ui.HomeActivity;
-import com.vlille.checker.ui.delegate.StationUpdateDelegate;
 import com.vlille.checker.ui.async.AbstractStationsAsyncTask;
+import com.vlille.checker.ui.delegate.StationUpdateDelegate;
 import com.vlille.checker.ui.osm.location.LocationManagerWrapper;
 import com.vlille.checker.ui.osm.overlay.CircleLocationOverlay;
 import com.vlille.checker.ui.osm.overlay.ItemizedOverlayWithFocus;
@@ -315,8 +314,7 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
                 if (OverlayZoomUtils.isDetailledZoomLevel(getZoomLevel())) {
                     Log.d(TAG, String.format("%d stations to update!", stations.size()));
 
-                    AsyncMapStationRetriever asyncTask = new AsyncMapStationRetriever();
-                    asyncTask.setDelegate(stationUpdateDelegate);
+                    AsyncMapStationRetriever asyncTask = new AsyncMapStationRetriever(stationUpdateDelegate);
                     asyncTask.execute(stations);
                 }
             }
@@ -397,6 +395,10 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
     }
 
     class AsyncMapStationRetriever extends AbstractStationsAsyncTask {
+
+        AsyncMapStationRetriever(StationUpdateDelegate delegate) {
+            super(delegate);
+        }
 
         @Override
         protected void onPreExecute() {
