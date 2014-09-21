@@ -1,9 +1,9 @@
 package com.vlille.checker.utils;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.preference.PreferenceManager;
 
 import com.vlille.checker.R;
 
@@ -16,6 +16,16 @@ import static com.vlille.checker.utils.PreferenceKeys.*;
 public final class ContextHelper {
 	
 	private ContextHelper() {}
+
+    public static StationPreferences getPreferences(Context context) {
+        SharedPreferences sharedPreferences = getDefaultSharedPreferences(context);
+
+        return new StationPreferences(
+                sharedPreferences.getBoolean(STATION_ID_VISIBLE, STATION_ID_VISIBLE_DEFAULT_VALUE),
+                sharedPreferences.getBoolean(STATION_UPDATED_AT_VISIBLE, STATION_UPDATED_AT_VISIBLE_DEFAULT_VALUE),
+                sharedPreferences.getBoolean(STATION_ADDRESS_VISIBLE, STATION_ADDRESS_VISIBLE_DEFAULT_VALUE)
+        );
+    }
 
 	/**
 	 * Checks if network is available.
@@ -35,15 +45,6 @@ public final class ContextHelper {
 		
 		return networkAvailable;
 	}
-	
-	public static boolean isStationAddressVisible(Context context) {
-		return getBooleanValue(context, STATION_ADDRESS_VISIBLE, STATION_ADDRESS_VISIBLE_DEFAULT_VALUE);
-	}
-
-    public static boolean isStationLastUpdateMomentVisible(Context context) {
-        return getBooleanValue(context,
-                STATION_LAST_UPDATE_VISIBLE, STATION_LAST_UPDATE_VISIBLE_DEFAULT_VALUE);
-    }
 
     /**
      * Gets a preference boolean value
@@ -58,4 +59,5 @@ public final class ContextHelper {
 	public static long getRadiusValue(Context context) {
 		return getDefaultSharedPreferences(context).getLong(POSITION_RADIUS, POSITION_RADIUS_DEFAULT_VALUE);
 	}
+
 }

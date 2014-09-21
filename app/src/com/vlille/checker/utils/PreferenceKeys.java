@@ -4,6 +4,16 @@ public final class PreferenceKeys {
 	
 	private PreferenceKeys() {}
 
+    /**
+     * To display the station id.
+     */
+    public static final String STATION_ID_VISIBLE = "prefs_station_id_visible";
+
+    /**
+     * Shows the station id, by default.
+     */
+    public static final boolean STATION_ID_VISIBLE_DEFAULT_VALUE = true;
+
 	/**
 	 * To display the station address in list.
 	 */
@@ -17,12 +27,12 @@ public final class PreferenceKeys {
 	/**
 	 * To display the last update moment in list.
 	 */
-	public static final String STATION_LAST_UPDATE_VISIBLE = "prefs_station_last_update_visible";
+	public static final String STATION_UPDATED_AT_VISIBLE = "prefs_station_last_update_visible";
 
 	/**
 	 * Shows the last update moment, by default.
 	 */
-	public static final boolean STATION_LAST_UPDATE_VISIBLE_DEFAULT_VALUE = true;
+	public static final boolean STATION_UPDATED_AT_VISIBLE_DEFAULT_VALUE = true;
 
 	/**
 	 * To activate the gps localisation.

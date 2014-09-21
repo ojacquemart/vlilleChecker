@@ -22,6 +22,7 @@ import com.vlille.checker.ui.delegate.StationUpdateDelegate;
 import com.vlille.checker.ui.listener.MapTabListener;
 import com.vlille.checker.utils.ContextHelper;
 import com.vlille.checker.utils.MapsIntentChooser;
+import com.vlille.checker.utils.StationPreferences;
 import com.vlille.checker.utils.TextPlural;
 import com.vlille.checker.utils.ViewUtils;
 import com.vlille.checker.utils.color.ColorSelector;
@@ -29,6 +30,7 @@ import com.vlille.checker.utils.color.ColorSelector;
 import org.osmdroid.util.GeoPoint;
 
 import java.util.List;
+
 /**
  * A generic adapter for a stations ListView.
  */
@@ -52,34 +54,34 @@ public class StationsAdapter extends ArrayAdapter<Station> {
 
 	@Override
 	public View getView(final int position, View view, final ViewGroup parent) {
+        StationPreferences stationPreferences = ContextHelper.getPreferences(getContext());
+
 		if (view == null) {
 			LayoutInflater layout = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			view = layout.inflate(R.layout.station_list_item, null);
         }
 
-        setStationAddressVisibility(view);
-        setStationDetails(view, position);
+        setStationAddressVisibility(view, stationPreferences);
+        setStationDetails(view, position, stationPreferences);
 
 		return view;
 	}
 
-    private void setStationAddressVisibility(View view) {
-        ViewUtils.switchView(view.findViewById(R.id.station_adress_box), ContextHelper.isStationAddressVisible(getContext()));
+    private void setStationAddressVisibility(View view, StationPreferences stationPreferences) {
+        ViewUtils.switchView(view.findViewById(R.id.station_adress_box), stationPreferences.isAddressVisible());
     }
 
     /**
 	 * Handle stations details.
 	 */
-	private void setStationDetails(View view, final int position) {
+	private void setStationDetails(View view, final int position, StationPreferences stationPreferences) {
         final Station station = stations.get(position);
         ViewUtils.switchView(view.findViewById(R.id.station_actions), station.isSelected());
 
         handleStarCheckbox(view, position, station);
+        handleStationsTextInfos(view, station, stationPreferences);
 
-        boolean lastUpdateVisible = ContextHelper.isStationLastUpdateMomentVisible(getContext());
-        handleStationsTextInfos(view, station, lastUpdateVisible);
-
-        ViewUtils.switchView(view.findViewById(R.id.station_lastupdate), lastUpdateVisible);
+        ViewUtils.switchView(view.findViewById(R.id.station_lastupdate), stationPreferences.isUpdatedAtVisible());
         handleToMapButton(view, station);
         handleToNavigationButton(view, station);
 	}
@@ -116,11 +118,11 @@ public class StationsAdapter extends ArrayAdapter<Station> {
         });
     }
 
-    private void handleStationsTextInfos(View view, Station station, boolean lastUpdateVisible) {
+    private void handleStationsTextInfos(View view, Station station, StationPreferences stationPreferences) {
         TextView name = (TextView) view.findViewById(R.id.station_name);
-        name.setText(station.getName());
+        name.setText(station.getName(stationPreferences.isIdVisible()));
 
-        if (lastUpdateVisible) {
+        if (stationPreferences.isUpdatedAtVisible()) {
             String timeUnitSecond = TextPlural.toPlural(
                     station.getLastUpdate(),
                     resources.getString(R.string.timeunit_second));

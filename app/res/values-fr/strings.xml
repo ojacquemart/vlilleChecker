@@ -28,10 +28,10 @@
     <string name="error_no_gmaps_app_found">Aucune application de navigation trouvée</string>
 
     <!-- Home Preferences -->
-    <string name="prefs_stations_details_title">Détail des stations</string>
-    <string name="prefs_stations_details_summary">Afficher l\'adresse des stations</string>
-    <string name="prefs_station_last_update_visible_title">Mise à jour</string>
-    <string name="prefs_station_last_update_visible_summary">Afficher le temps écoulé depuis la dernière mise à jour</string>
+    <string name="prefs_home_title">Affichage stations</string>
+    <string name="prefs_station_id_visible_title">Numéro</string>
+    <string name="prefs_stations_details_title">Adresse</string>
+    <string name="prefs_station_last_update_visible_title">Dernière mise à jour</string>
     <string name="prefs_location_enable_gps_title">Satellites GPS</string>
     <string name="prefs_location_enable_gps_summary">Utiliser le GPS pour déterminer votre position</string>
 

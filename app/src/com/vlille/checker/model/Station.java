@@ -96,8 +96,16 @@ public class Station extends Entity {
 	}
 
 	public String getName() {
-		return id + " - " + name;
+        return id + " - " + name;
 	}
+
+    public String getName(boolean idVisible) {
+        if (idVisible) {
+            return getName();
+        }
+
+        return name;
+    }
 
 	public void setName(String name) {
 		this.name = name;
