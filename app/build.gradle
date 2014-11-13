@@ -6,7 +6,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:0.13.0'
     }
 }
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 repositories {
     mavenLocal()
@@ -14,8 +14,8 @@ repositories {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:18.0.+'
-    compile 'com.android.support:appcompat-v7:18.0.+'
+    compile 'com.android.support:support-v4:21.0.0'
+    compile 'com.android.support:appcompat-v7:21.0.0'
     compile 'ch.acra:acra:4.5.0'
     compile 'com.github.chrisbanes.actionbarpulltorefresh:library:0.7.3@aar'
     compile 'com.github.chrisbanes.actionbarpulltorefresh:extra-abc:0.7.3@aar'
@@ -26,8 +26,8 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion '19.1.0'
+    compileSdkVersion 21
+    buildToolsVersion '21.1.1'
 
     sourceSets {
         main {

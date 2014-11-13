@@ -19,65 +19,15 @@
 
 <resources>
 
-    <style name="Theme.Vlillechecker" parent="@style/Theme.AppCompat.Light.DarkActionBar">
-        <item name="actionBarItemBackground">@drawable/selectable_background_vlillechecker</item>
-        <item name="popupMenuStyle">@style/PopupMenu.Vlillechecker</item>
-        <item name="dropDownListViewStyle">@style/DropDownListView.Vlillechecker</item>
-        <item name="actionBarTabStyle">@style/ActionBarTabStyle.Vlillechecker</item>
-        <item name="actionDropDownStyle">@style/DropDownNav.Vlillechecker</item>
-        <item name="actionBarStyle">@style/ActionBar.Solid.Vlillechecker</item>
-        <item name="actionModeBackground">@drawable/cab_background_top_vlillechecker</item>
-        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_vlillechecker</item>
-        <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Vlillechecker</item>
-
-        <!-- Light.DarkActionBar specific -->
-        <item name="actionBarWidgetTheme">@style/Theme.Vlillechecker.Widget</item>
-
+    <style name="Theme.Vlillechecker" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="colorControlActivated">@color/activated</item>
     </style>
 
-    <style name="ActionBar.Solid.Vlillechecker" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
-        <item name="background">@drawable/ab_solid_vlillechecker</item>
-        <item name="backgroundStacked">@drawable/ab_stacked_solid_vlillechecker</item>
-        <item name="backgroundSplit">@drawable/ab_bottom_solid_vlillechecker</item>
-        <item name="progressBarStyle">@style/ProgressBar.Vlillechecker</item>
-    </style>
-
-    <style name="ActionBar.Transparent.Vlillechecker" parent="@style/Widget.AppCompat.ActionBar">
-        <item name="android:background">@drawable/ab_solid_vlillechecker</item>
-        <item name="progressBarStyle">@style/ProgressBar.Vlillechecker</item>
-    </style>
-
-    <style name="PopupMenu.Vlillechecker" parent="@style/Widget.AppCompat.PopupMenu">
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_vlillechecker</item>
-    </style>
-
-    <style name="DropDownListView.Vlillechecker" parent="@style/Widget.AppCompat.ListView.DropDown">
-        <item name="android:listSelector">@drawable/selectable_background_vlillechecker</item>
-    </style>
-
-    <style name="ActionBarTabStyle.Vlillechecker" parent="@style/Widget.AppCompat.ActionBar.TabView">
-        <item name="android:background">@drawable/tab_indicator_ab_vlillechecker</item>
-    </style>
-
-    <style name="DropDownNav.Vlillechecker" parent="@style/Widget.AppCompat.Spinner.DropDown.ActionBar">
-        <item name="android:background">@drawable/spinner_background_ab_vlillechecker</item>
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_vlillechecker</item>
-        <item name="android:dropDownSelector">@drawable/selectable_background_vlillechecker</item>
-    </style>
-
-    <style name="ProgressBar.Vlillechecker" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
-        <item name="android:progressDrawable">@drawable/progress_horizontal_vlillechecker</item>
-    </style>
-
-    <style name="ActionButton.CloseMode.Vlillechecker" parent="@style/Widget.AppCompat.ActionButton.CloseMode">
-        <item name="android:background">@drawable/btn_cab_done_vlillechecker</item>
-    </style>
-
-    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
-    <style name="Theme.Vlillechecker.Widget" parent="@style/Theme.AppCompat">
-        <item name="android:colorBackground">@drawable/ab_solid_vlillechecker</item>
-        <item name="popupMenuStyle">@style/PopupMenu.Vlillechecker</item>
-        <item name="dropDownListViewStyle">@style/DropDownListView.Vlillechecker</item>
+    <style name="starStyle" parent="android:Widget.CompoundButton.Star">
+        <item name="android:button">@drawable/star</item>
     </style>
 
 </resources>

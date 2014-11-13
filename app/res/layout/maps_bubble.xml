@@ -9,7 +9,7 @@
             android:id="@+id/maps_bubble_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:button="@android:drawable/btn_star"
+            style="@style/starStyle"
             android:layout_centerHorizontal="true"
             android:checked="true"/>
 

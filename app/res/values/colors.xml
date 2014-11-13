@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Main theme colors -->
+    <color name="primary">#E53935</color>
+    <color name="primary_dark">#F44336</color>
+    <color name="accent">#F44336</color>
+    <color name="activated">#FFCDD2</color>
+
     <!-- Basic colors -->
     <color name="black">#000</color>
     <color name="white">#FFF</color>
@@ -14,7 +20,4 @@
 
     <!-- Map view, location circle color -->
     <color name="mapview_location_circle">#464646</color>
-
-    <!-- On any pressed button -->
-    <color name="pressed_vlillechecker">#CC33B5E5</color>
 </resources>
