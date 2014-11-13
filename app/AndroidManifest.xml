@@ -59,8 +59,8 @@
 
         <!-- Home Preferences Activity -->
         <activity
-            android:name=".ui.HomePreferenceActivity"
-            android:label="@string/app_name"
+            android:name=".ui.SettingsActivity"
+            android:label="@string/preferences"
             android:theme="@style/Theme.Vlillechecker" />
 
         <!-- About Activity -->

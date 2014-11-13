@@ -11,12 +11,16 @@ apply plugin: 'com.android.application'
 repositories {
     mavenLocal()
     mavenCentral()
+    maven {
+        url 'https://raw.github.com/kolavar/android-support-v4-preferencefragment/master/maven-repository/'
+    }
 }
 
 dependencies {
     compile 'com.android.support:support-v4:21.0.0'
     compile 'com.android.support:appcompat-v7:21.0.0'
     compile 'ch.acra:acra:4.5.0'
+    compile 'com.android.support:support-v4-preferencefragment:1.0.0@aar'
     compile 'com.github.chrisbanes.actionbarpulltorefresh:library:0.7.3@aar'
     compile 'com.github.chrisbanes.actionbarpulltorefresh:extra-abc:0.7.3@aar'
     compile 'org.droidparts:droidparts:1.5.5'

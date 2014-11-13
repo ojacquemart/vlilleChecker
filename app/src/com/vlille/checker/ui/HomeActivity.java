@@ -117,7 +117,7 @@ public class HomeActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.main_menu_settings:
-                showIntent(HomePreferenceActivity.class);
+                showIntent(SettingsActivity.class);
                 break;
             case R.id.main_menu_refresh:
                 getCurrentFragment().onResume();

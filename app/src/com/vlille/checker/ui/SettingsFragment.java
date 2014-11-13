@@ -1,15 +1,16 @@
 package com.vlille.checker.ui;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences.Editor;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
+import android.support.v4.preference.PreferenceFragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -23,21 +24,16 @@ import com.vlille.checker.ui.osm.location.LocationManagerWrapper;
 import com.vlille.checker.utils.ContextHelper;
 import com.vlille.checker.utils.PreferenceKeys;
 
-import org.droidparts.activity.stock.legacy.PreferenceActivity;
+import org.droidparts.Injector;
 import org.droidparts.annotation.inject.InjectDependency;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * A Preference activity to handle users settings.
- *
- * TODO: remove deprecated code.
- */
-public class HomePreferenceActivity extends PreferenceActivity
+public class SettingsFragment extends PreferenceFragment
         implements OnSeekBarChangeListener {
 
-	private static final String TAG = HomePreferenceActivity.class.getSimpleName();
+	private static final String TAG = SettingsFragment.class.getSimpleName();
 
     @InjectDependency
     protected StationEntityManager stationEntityManager;
@@ -48,22 +44,41 @@ public class HomePreferenceActivity extends PreferenceActivity
 	private LocationManagerWrapper locationManagerWrapper;
 	private boolean hasClickedOnLocalisationActivationAndNeedsGpsCheck;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    public final View onCreateView(LayoutInflater inflater,
+                                   ViewGroup container, Bundle savedInstanceState) {
+        View view = onCreateView(savedInstanceState, inflater, container);
+        Injector.inject(view, this);
+
+        initView();
+
+        return view;
+    }
+
+    public View onCreateView(Bundle savedInstanceState,
+                             LayoutInflater inflater, ViewGroup container) {
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+
+    @Override
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.d(TAG, "onCreate");
 		
 		addPreferencesFromResource(R.xml.preferences);
 		
-		locationManagerWrapper = LocationManagerWrapper.with(this);
+		locationManagerWrapper = LocationManagerWrapper.with(getActivity());
+	}
 
+    private void initView() {
         setLastDataStatusUpdate();
         setVersionNumber();
         onChangeGpsActivated();
         onChangeRadiusValue();
-	}
+    }
 
-	private void setLastDataStatusUpdate() {
+    private void setLastDataStatusUpdate() {
         final Preference lastUpdatePreference = findPreference(PreferenceKeys.DATA_STATUS_LAST_UPDATE);
         lastUpdatePreference.setTitle(getDataStatusStationsNumber());
         lastUpdatePreference.setSummary(getDataStatusLastUpdateMessage());
@@ -111,7 +126,7 @@ public class HomePreferenceActivity extends PreferenceActivity
 	}
 
 	@Override
-	protected void onResume() {
+	public void onResume() {
 		super.onResume();
 
 		if (hasClickedOnLocalisationActivationAndNeedsGpsCheck
@@ -124,7 +139,7 @@ public class HomePreferenceActivity extends PreferenceActivity
             editor.commit();
 
             // Restart activity to refresh the preferences.
-            startActivity(getIntent());
+            startActivity(getActivity().getIntent());
 		}
 	}
 	
@@ -145,9 +160,9 @@ public class HomePreferenceActivity extends PreferenceActivity
 					public boolean onPreferenceClick(Preference preference) {
 						Log.d(TAG, "Show the dialog with slider radius");
 
-						View view = View.inflate(HomePreferenceActivity.this,
+						View view = View.inflate(getActivity(),
 								R.layout.settings_position_slider, null);
-						AlertDialog alertDialog = new AlertDialog.Builder(HomePreferenceActivity.this)
+						AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
 								.setTitle(getString(R.string.prefs_position_distance))
 								.setView(view)
 								.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
@@ -181,7 +196,7 @@ public class HomePreferenceActivity extends PreferenceActivity
 						textProgress = (TextView) alertDialog.findViewById(R.id.position_distance_value);
 
 						seekBar = (SeekBar) alertDialog.findViewById(R.id.position_seekbar_distance);
-						seekBar.setOnSeekBarChangeListener(HomePreferenceActivity.this);
+						seekBar.setOnSeekBarChangeListener(SettingsFragment.this);
 						
 						updateSeekBarProgress();
 						changePrefLocationRadiusValue();
@@ -200,14 +215,14 @@ public class HomePreferenceActivity extends PreferenceActivity
 		String summary = String.format(
 					"%s %d%s",
 					getString(R.string.prefs_position_radius_distance_summary),
-					ContextHelper.getRadiusValue(this),
+					ContextHelper.getRadiusValue(getActivity()),
 					getString(R.string.prefs_position_radius_distance_unit));
 		
 		prefLocationRadiusValue.setSummary(summary);
 	}
 	
 	private void updateSeekBarProgress() {
-		seekBar.setProgress(Long.valueOf(ContextHelper.getRadiusValue(this)).intValue());
+		seekBar.setProgress(Long.valueOf(ContextHelper.getRadiusValue(getActivity())).intValue());
 	}
 	
 	/**
