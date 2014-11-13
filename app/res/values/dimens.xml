@@ -2,6 +2,8 @@
 <resources>
     <dimen name="action_button_min_width">56dp</dimen>
     <dimen name="indeterminate_progress_size">36dp</dimen>
+    <dimen name="position_slider_padding_left">24dp</dimen>
+    <dimen name="position_slider_padding_top">16dp</dimen>
 
     <dimen name="overlay_font_size">12sp</dimen>
     <dimen name="stars_layout_padding">5sp</dimen>
