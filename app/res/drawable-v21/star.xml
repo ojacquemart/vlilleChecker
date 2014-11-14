@@ -3,7 +3,7 @@
     <item android:state_checked="true">
         <bitmap
             android:src="@drawable/btn_star_mtrl_alpha"
-            android:tint="#FBC02D" />
+            android:tint="@color/yellow" />
     </item>
     <item android:state_pressed="true">
         <bitmap
@@ -13,6 +13,6 @@
     <item>
         <bitmap
             android:src="@drawable/btn_star_mtrl_alpha"
-            android:tint="#ddd" />
+            android:tint="@color/grey" />
     </item>
 </selector>

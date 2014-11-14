@@ -8,6 +8,7 @@
 
     <!-- Basic colors -->
     <color name="black">#000</color>
+    <color name="yellow">#FBC02D</color>
     <color name="white">#FFF</color>
     <color name="grey">#DDD</color>
     <color name="orange">#FF9100</color>

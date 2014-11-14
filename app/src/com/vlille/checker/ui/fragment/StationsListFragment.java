@@ -1,8 +1,12 @@
 package com.vlille.checker.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -10,9 +14,8 @@ import android.widget.ListView;
 import com.vlille.checker.R;
 import com.vlille.checker.db.StationEntityManager;
 import com.vlille.checker.model.Station;
-import com.vlille.checker.ui.HomeActivity;
-import com.vlille.checker.ui.delegate.StationUpdateDelegate;
 import com.vlille.checker.ui.async.AbstractStationsAsyncTask;
+import com.vlille.checker.ui.delegate.StationUpdateDelegate;
 import com.vlille.checker.ui.widget.StationsAdapter;
 import com.vlille.checker.utils.ContextHelper;
 
@@ -21,25 +24,22 @@ import org.droidparts.fragment.support.ListFragment;
 
 import java.util.List;
 
-import uk.co.senab.actionbarpulltorefresh.extras.actionbarcompat.PullToRefreshAttacher;
-
 /**
  * A generic fragment to load and handle selectable stations.
  */
 abstract class StationsListFragment extends ListFragment
         implements AbsListView.OnScrollListener,
-            PullToRefreshAttacher.OnRefreshListener,
-        StationUpdateDelegate {
+            SwipeRefreshLayout.OnRefreshListener,
+            StationUpdateDelegate {
 
     private static final String TAG = StationsListFragment.class.getName();
 
+    private static final int[] SWIPE_COLORS = { R.color.primary,
+            R.color.yellow,
+            R.color.activated };
+
     @InjectDependency
     protected StationEntityManager stationEntityManager;
-
-    /**
-     * The pullToRefreshAttacher.
-     */
-    private PullToRefreshAttacher pullToRefreshAttacher;
 
     /**
      * The stations list used by the adapter.
@@ -56,11 +56,30 @@ abstract class StationsListFragment extends ListFragment
      */
     private StationsAsyncTask asyncTask;
 
+    private SwipeRefreshLayout swipeLayout;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         Log.d(TAG, "onCreate");
     }
+
+    @Override
+    public View onCreateView(Bundle savedInstanceState,
+                             LayoutInflater inflater, ViewGroup container) {
+        Log.d(TAG, "onCreateView");
+        inflater.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(getSwipeableResource(), container, false);
+
+        swipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
+        swipeLayout.setOnRefreshListener(this);
+        swipeLayout.setColorSchemeResources(SWIPE_COLORS);
+
+        return view;
+    }
+
+    protected abstract int getSwipeableResource();
 
     @Override
     public void onDestroyView() {
@@ -74,16 +93,14 @@ abstract class StationsListFragment extends ListFragment
         Log.d(TAG, "onViewCreated");
         super.onViewCreated(view, savedInstanceState);
 
-        initPullToRefresh();
-
         loadStations();
         initListAdapter();
         initListViewListeners();
     }
 
-    private void initPullToRefresh() {
-        pullToRefreshAttacher = ((HomeActivity) getActivity()).getPullToRefreshAttacher();
-        pullToRefreshAttacher.addRefreshableView(getListView(), this);
+    @Override
+    public void onRefresh() {
+        updateVisibleItems();
     }
 
     @Override
@@ -178,11 +195,6 @@ abstract class StationsListFragment extends ListFragment
     public void onScroll(AbsListView view, int firstVisibleItem,int visibleItemCount, int totalItemCount) {
     }
 
-    @Override
-    public void onRefreshStarted(View view) {
-        updateVisibleItems();
-    }
-
     /**
      * Update visible stations using the ListView#post method to get the correct last visible item position.
      */
@@ -270,7 +282,7 @@ abstract class StationsListFragment extends ListFragment
     }
 
     private void setProgressIndeterminateVisibility(boolean visible) {
-        pullToRefreshAttacher.setRefreshing(visible);
+        swipeLayout.setRefreshing(visible);
     }
 
     public void setStations(List<Station> stations) {

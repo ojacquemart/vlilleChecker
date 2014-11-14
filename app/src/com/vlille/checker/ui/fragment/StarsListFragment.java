@@ -1,12 +1,5 @@
 package com.vlille.checker.ui.fragment;
 
-import android.content.Context;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.vlille.checker.R;
 
 /**
@@ -17,13 +10,8 @@ public class StarsListFragment extends StationsListFragment {
     private static final String TAG = StarsListFragment.class.getName();
 
     @Override
-    public View onCreateView(Bundle savedInstanceState,
-                             LayoutInflater inflater, ViewGroup container) {
-        Log.d(TAG, "onCreateView");
-        inflater.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.stations_list_layout, container, false);
-
-        return view;
+    protected int getSwipeableResource() {
+        return R.layout.stations_list_layout;
     }
 
     @Override

@@ -21,8 +21,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.0'
     compile 'ch.acra:acra:4.5.0'
     compile 'com.android.support:support-v4-preferencefragment:1.0.0@aar'
-    compile 'com.github.chrisbanes.actionbarpulltorefresh:library:0.7.3@aar'
-    compile 'com.github.chrisbanes.actionbarpulltorefresh:extra-abc:0.7.3@aar'
     compile 'org.droidparts:droidparts:1.5.5'
     compile 'org.osmdroid:osmdroid-android:4.0'
     compile 'org.slf4j:slf4j-android:1.6.1-RC1'

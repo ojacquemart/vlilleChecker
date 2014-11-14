@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@android:id/empty"
@@ -20,8 +20,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:paddingTop="15dp"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:paddingTop="15dp">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -36,20 +36,13 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/stations_map"
                 android:scaleType="fitStart"
-                android:src="@drawable/ic_tab_map" >
-            </ImageView>
+                android:src="@drawable/ic_tab_map"></ImageView>
         </LinearLayout>
     </RelativeLayout>
 
-    <ListView
-            android:id="@android:id/list"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:cacheColorHint="#00000000"
-            android:fadingEdge="none"
-            android:fastScrollEnabled="true"
-            android:footerDividersEnabled="false"
-            android:headerDividersEnabled="false"
-            android:smoothScrollbar="true"/>
-
+    <include
+        android:id="@+id/swipeable_list"
+        layout="@layout/swipeable_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

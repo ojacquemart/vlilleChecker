@@ -47,6 +47,11 @@ public class AllStationsFragment extends StationsListFragment {
     }
 
     @Override
+    protected int getSwipeableResource() {
+        return R.layout.swipeable_list;
+    }
+
+    @Override
     void loadStations() {
         originalStations = stationEntityManager.findAll();
         setStations(new ArrayList<Station>(originalStations));

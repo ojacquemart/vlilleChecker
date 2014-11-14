@@ -21,16 +21,12 @@ import com.vlille.checker.ui.fragment.StarsListFragment;
 import com.vlille.checker.ui.listener.TabListener;
 import com.vlille.checker.utils.ContextHelper;
 
-import uk.co.senab.actionbarpulltorefresh.extras.actionbarcompat.PullToRefreshAttacher;
-
 /**
  * Home activity.
  */
 public class HomeActivity extends ActionBarActivity {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
-
-    private PullToRefreshAttacher mPullToRefreshAttacher;
 
     private MenuItem refreshItem;
 
@@ -42,7 +38,6 @@ public class HomeActivity extends ActionBarActivity {
 
         setContentView(R.layout.home);
 
-        setPullToRefreshAttacher();
         checkDbInitialization();
         initTabs();
     }
@@ -57,10 +52,6 @@ public class HomeActivity extends ActionBarActivity {
         } else {
             MenuItemCompat.setActionView(refreshItem, null);
         }
-    }
-
-    private void setPullToRefreshAttacher() {
-        mPullToRefreshAttacher = PullToRefreshAttacher.get(this);
     }
 
     private void checkDbInitialization() {
@@ -157,10 +148,6 @@ public class HomeActivity extends ActionBarActivity {
             dbUpdaterAsyncTask.setAsyncListener(listener);
             dbUpdaterAsyncTask.execute();
         }
-    }
-
-    public PullToRefreshAttacher getPullToRefreshAttacher() {
-        return mPullToRefreshAttacher;
     }
 
 }
