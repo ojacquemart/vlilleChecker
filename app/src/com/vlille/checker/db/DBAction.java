@@ -5,7 +5,7 @@ import android.content.Context;
 import com.vlille.checker.Application;
 import com.vlille.checker.model.SetStationsInfo;
 import com.vlille.checker.model.Station;
-import com.vlille.checker.xml.XMLReader;
+import com.vlille.checker.xml.XML;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public abstract class DBAction {
     private StationEntityManager stationEntityManager;
     private MetadataEntityManager metadataEntityManager;
 
-    private static final XMLReader XML_READER = new XMLReader();
+    private static final XML XML_READER = new XML();
 
     public DBAction() {
         this.context = Application.getContext();
@@ -26,7 +26,7 @@ public abstract class DBAction {
     }
 
     public SetStationsInfo getAssetsStationsInfo() {
-        return XML_READER.getAssetsStationsInfo(getContext());
+        return XML_READER.getAssetsStationsInfo();
     }
 
     public List<Station> getInDBStations() {

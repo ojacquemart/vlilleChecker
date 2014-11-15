@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.vlille.checker.model.Station;
 import com.vlille.checker.ui.delegate.StationUpdateDelegate;
-import com.vlille.checker.xml.XMLReader;
+import com.vlille.checker.xml.XML;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ public abstract class AbstractStationsAsyncTask extends AsyncTask<List<Station>,
 
     private static final String TAG = "AsyncStationTaskUpdater";
 
-    private static final XMLReader XML_READER = new XMLReader();
+    private static final XML XML_READER = new XML();
 
     private final StationUpdateDelegate delegate;
 
