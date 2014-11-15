@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Main theme colors -->
-    <color name="primary">#E53935</color>
-    <color name="primary_dark">#F44336</color>
+    <color name="primary">#C62828</color>
     <color name="accent">#F44336</color>
-    <color name="activated">#FFCDD2</color>
+    <color name="activated">#B0BEC5</color>
 
     <!-- Basic colors -->
     <color name="black">#000</color>
@@ -17,7 +16,7 @@
     <color name="settings_slider_text">#fff</color>
 
     <!-- List view icons background -->
-    <color name="ic_background">#cc0000</color>
+    <color name="ic_background">#E53935</color>
 
     <!-- Map view, location circle color -->
     <color name="mapview_location_circle">#464646</color>

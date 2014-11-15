@@ -110,7 +110,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_v"
-                android:background="@color/ic_background"
+                android:background="@drawable/rounded_background"
                 android:adjustViewBounds="true"/>
 
         <!-- Nb parkings -->
@@ -132,7 +132,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_p"
-                android:background="@color/ic_background"
+                android:background="@drawable/rounded_background"
                 android:baselineAlignBottom="false"
                 android:clickable="false"
                 android:adjustViewBounds="true"/>
@@ -148,7 +148,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="5px"
                     android:src="@drawable/ic_cb"
-                    android:background="@color/ic_background"
+                    android:background="@drawable/rounded_background"
                     android:adjustViewBounds="true"/>
         </RelativeLayout>
     </LinearLayout>
