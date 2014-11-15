@@ -58,7 +58,7 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
      */
     private static final XYTileSource PUBLIC_TRANSPORT = new XYTileSource("TransportMap",
             null,
-            0, 17,
+            0, 18,
             256,
             ".png",
             "http://a.tile2.opencyclemap.org/transport/",
