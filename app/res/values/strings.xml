@@ -13,6 +13,7 @@
     <string name="ok">Ok</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="retry">Retry</string>
     <string name="cancel">Cancel</string>
     <string name="installation_done">Initialization finished</string>
     <string name="no_station">Add stations in using tabs</string>

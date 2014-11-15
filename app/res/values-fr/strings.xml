@@ -13,8 +13,9 @@
     <string name="ok">Ok</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
+    <string name="retry">Réessayer</string>
     <string name="cancel">Annuler</string>
-    <string name="installation_done">Récupération des stations terminée</string>
+    <string name="installation_done">Initialisation terminée</string>
     <string name="no_station">Ajouter des stations via les onglets</string>
 	<string name="update_ago">(il y a %1$d %2$s)</string>
     <string name="timeunit_second">seconde</string>
@@ -42,7 +43,7 @@
     <string name="prefs_position_radius_distance_unit">m</string>
     
     <!-- Data status and update -->
-    <string name="data_status_update_done">Mise à jour effectuée!</string>
+    <string name="data_status_update_done">Mise à jour effectuée</string>
     <string name="data_status_uptodate">Les stations sont déjà à jour</string>
     <string name="data_launch_update">Mettre à jour les stations</string>
     <string name="data_status_title">Etat des données</string>

@@ -4,16 +4,21 @@ import android.util.Log;
 
 import com.vlille.checker.R;
 import com.vlille.checker.model.SetStationsInfo;
-import com.vlille.checker.utils.ToastUtils;
+import com.vlille.checker.ui.HomeActivity;
 
 public class DBFiller extends DBAction {
 
     private static final String TAG = DBFiller.class.getSimpleName();
 
-    public static void fillIfDbIsEmpty() {
-        DBFiller dbFiller = new DBFiller();
-        if (dbFiller.isDBEmpty()) {
-            dbFiller.fill();
+    private HomeActivity homeActivity;
+
+    public DBFiller(HomeActivity homeActivity) {
+        this.homeActivity = homeActivity;
+    }
+
+    public void fillIfDbIsEmpty() {
+        if (isDBEmpty()) {
+            fill();
         }
     }
 
@@ -30,7 +35,7 @@ public class DBFiller extends DBAction {
         getMetadataEntityManager().create(assetsStationsInfo.getMetadata());
         getStationEntityManager().create(assetsStationsInfo.getStations());
 
-        ToastUtils.show(getContext(), R.string.installation_done);
+        homeActivity.showSnackBarMessage(R.string.installation_done);
 
         long duration = System.currentTimeMillis() - start;
         Log.d(TAG, "Time to initialize db: " + duration + " ms");

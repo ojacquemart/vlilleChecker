@@ -14,6 +14,7 @@ import android.widget.ListView;
 import com.vlille.checker.R;
 import com.vlille.checker.db.StationEntityManager;
 import com.vlille.checker.model.Station;
+import com.vlille.checker.ui.HomeActivity;
 import com.vlille.checker.ui.async.AbstractStationsAsyncTask;
 import com.vlille.checker.ui.delegate.StationUpdateDelegate;
 import com.vlille.checker.ui.widget.StationsAdapter;
@@ -107,6 +108,10 @@ abstract class StationsListFragment extends ListFragment
     public void onActivityCreated(Bundle savedInstanceState) {
         Log.d(TAG, "onActivityCreated");
         super.onActivityCreated(savedInstanceState);
+    }
+
+    public HomeActivity getHomeActivity() {
+        return (HomeActivity) getActivity();
     }
 
     abstract void loadStations();

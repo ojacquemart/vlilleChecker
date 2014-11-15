@@ -25,7 +25,6 @@ import com.vlille.checker.ui.osm.overlay.ResourceProxyImpl;
 import com.vlille.checker.ui.osm.overlay.window.BubbleInfoWindow;
 import com.vlille.checker.utils.ContextHelper;
 import com.vlille.checker.utils.StationUtils;
-import com.vlille.checker.utils.ToastUtils;
 
 import org.osmdroid.ResourceProxy;
 import org.osmdroid.api.IMapController;
@@ -177,7 +176,7 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
                 circleOverlay.setGeoPosition(geoPoint);
                 updateStations();
             } else {
-                ToastUtils.show(getContext(), R.string.error_no_location_found);
+                homeActivity.showSnackBarMessage(R.string.error_no_location_found);
             }
         }
     }
@@ -389,7 +388,7 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
             }
 
             public void whenNoneStationToDraw() {
-                ToastUtils.show(getContext(), R.string.error_no_stations_near_current_location);
+                homeActivity.showSnackBarMessage(R.string.error_no_stations_near_current_location);
             }
         };
     }

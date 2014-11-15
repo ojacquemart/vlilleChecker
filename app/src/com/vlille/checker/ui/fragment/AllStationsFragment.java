@@ -16,7 +16,6 @@ import android.widget.ListView;
 import com.vlille.checker.R;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.utils.StationUtils;
-import com.vlille.checker.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,7 +142,7 @@ public class AllStationsFragment extends StationsListFragment {
 
 		final List<Station> filteredStations = StationUtils.filter(originalStations, keyword);
 		if (filteredStations.isEmpty()) {
-			ToastUtils.show(getActivity(), R.string.search_no_result);
+            getHomeActivity().showSnackBarMessage(R.string.search_no_result);
 		} else {
             setStations(filteredStations);
 		}

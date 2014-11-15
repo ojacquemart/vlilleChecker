@@ -3,6 +3,7 @@ package com.vlille.checker.ui;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.github.mrengineer13.snackbar.SnackBar;
 import com.vlille.checker.R;
 import com.vlille.checker.db.DBFiller;
 import com.vlille.checker.ui.async.AsyncTaskResultListener;
@@ -21,14 +23,17 @@ import com.vlille.checker.ui.fragment.StarsListFragment;
 import com.vlille.checker.ui.listener.TabListener;
 import com.vlille.checker.utils.ContextHelper;
 
+import java.util.List;
+
 /**
  * Home activity.
  */
-public class HomeActivity extends ActionBarActivity {
+public class HomeActivity extends ActionBarActivity implements SnackBar.OnMessageClickListener {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
 
     private MenuItem refreshItem;
+    private SnackBar snackBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,8 +43,14 @@ public class HomeActivity extends ActionBarActivity {
 
         setContentView(R.layout.home);
 
+        initSnackBar();
         checkDbInitialization();
         initTabs();
+    }
+
+    private void initSnackBar() {
+        snackBar = new SnackBar(this);
+        snackBar.setOnClickListener(this);
     }
 
     public void setRefreshActionButtonState(boolean refreshing) {
@@ -55,7 +66,7 @@ public class HomeActivity extends ActionBarActivity {
     }
 
     private void checkDbInitialization() {
-        DBFiller.fillIfDbIsEmpty();
+        new DBFiller(this).fillIfDbIsEmpty();
     }
 
     private void initTabs() {
@@ -129,7 +140,7 @@ public class HomeActivity extends ActionBarActivity {
     }
 
     private void launchUpdateStations() {
-        if (ContextHelper.isNetworkAvailable(getApplicationContext())) {
+        if (ContextHelper.isNetworkAvailable(this)) {
             final AsyncTaskResultListener<Boolean> listener = new AsyncTaskResultListener<Boolean>() {
                 @Override
                 public void onAsyncTaskPreExecute() {
@@ -144,9 +155,41 @@ public class HomeActivity extends ActionBarActivity {
 
             Log.d(TAG, "Launch data update");
 
-            DBUpdaterAsyncTask dbUpdaterAsyncTask = new DBUpdaterAsyncTask();
+            DBUpdaterAsyncTask dbUpdaterAsyncTask = new DBUpdaterAsyncTask(this);
             dbUpdaterAsyncTask.setAsyncListener(listener);
             dbUpdaterAsyncTask.execute();
+        }
+    }
+
+    public void showSnackBarMessage(int messageId) {
+        snackBar.clear(false);
+
+        snackbarShow(messageId, -1);
+    }
+
+    public void showNoConnectionMessage() {
+        snackbarShow(R.string.error_no_connection, R.string.retry);
+    }
+
+    private void snackbarShow(int messageId, int actionMessageId) {
+        String actionMessage = actionMessageId == - 1 ? null : getString(actionMessageId).toUpperCase();
+        snackBar.show(
+                getString(messageId),
+                actionMessage
+        );
+    }
+
+    @Override
+    public void onMessageClick(Parcelable parcelable) {
+        resumeVisibleFragment();
+    }
+
+    public void resumeVisibleFragment() {
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        for (Fragment fragment : fragments) {
+            if (fragment != null && fragment.isVisible()) {
+                fragment.onResume();
+            }
         }
     }
 

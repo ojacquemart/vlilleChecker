@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.vlille.checker.R;
+import com.vlille.checker.ui.HomeActivity;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static com.vlille.checker.utils.PreferenceKeys.*;
@@ -14,7 +14,7 @@ import static com.vlille.checker.utils.PreferenceKeys.*;
  * Helper for {@link Context}.
  */
 public final class ContextHelper {
-	
+
 	private ContextHelper() {}
 
     public static StationPreferences getPreferences(Context context) {
@@ -40,7 +40,8 @@ public final class ContextHelper {
 		
 		final boolean networkAvailable = networkInfo != null && networkInfo.isAvailable();
 		if (!networkAvailable) {
-			ToastUtils.show(context, R.string.error_no_connection);
+            HomeActivity mainActivity = (HomeActivity) context;
+            mainActivity.showNoConnectionMessage();
 		}
 		
 		return networkAvailable;
