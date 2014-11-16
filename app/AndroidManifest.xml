@@ -57,6 +57,11 @@
             </intent-filter>
         </activity>
 
+        <!-- Station Info Activity -->
+        <activity
+            android:name=".ui.StationInfoActivity"
+            android:theme="@style/Theme.Vlillechecker" />
+
         <!-- Home Preferences Activity -->
         <activity
             android:name=".ui.SettingsActivity"

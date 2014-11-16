@@ -1,27 +1,32 @@
 package com.vlille.checker.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.vlille.checker.R;
 import com.vlille.checker.db.StationEntityManager;
 import com.vlille.checker.model.Station;
+import com.vlille.checker.model.StationHolder;
 import com.vlille.checker.ui.HomeActivity;
+import com.vlille.checker.ui.IntentCommunication;
+import com.vlille.checker.ui.StationInfoActivity;
 import com.vlille.checker.ui.async.AbstractStationsAsyncTask;
 import com.vlille.checker.ui.delegate.StationUpdateDelegate;
+import com.vlille.checker.ui.listener.MapTabListener;
 import com.vlille.checker.ui.widget.StationsAdapter;
 import com.vlille.checker.utils.ContextHelper;
 
 import org.droidparts.annotation.inject.InjectDependency;
-import org.droidparts.fragment.support.ListFragment;
+import org.droidparts.fragment.support.v4.ListFragment;
 
 import java.util.List;
 
@@ -35,7 +40,8 @@ abstract class StationsListFragment extends ListFragment
 
     private static final String TAG = StationsListFragment.class.getName();
 
-    private static final int[] SWIPE_COLORS = { R.color.primary,
+    private static final int[] SWIPE_COLORS = {
+            R.color.primary,
             R.color.yellow,
             R.color.activated };
 
@@ -145,30 +151,49 @@ abstract class StationsListFragment extends ListFragment
             public void onItemClick(AdapterView<?> adapter, View view, int position, long index) {
                 Log.d(TAG, "Item clicked = " + position + " " + index);
                 if (index < stations.size()) {
-                    // Unselect all stations.
-                    for (Station station : stations) {
-                        station.setSelected(false);
-                    }
-
                     // Select the station and notify the adapter.
                     Station clickedStation = stations.get((int) index);
-                    clickedStation.setSelected(true);
                     Log.d(TAG, "Station clicked = " + clickedStation.getName());
 
-                    StationsListFragment.this.adapter.notifyDataSetChanged();
+                    Intent intent = new Intent(getHomeActivity(), StationInfoActivity.class);
+                    intent.putExtra(IntentCommunication.STATION_DATA, new StationHolder(clickedStation, (int) index));
 
-                    // Last index, force the selection to show the buttons bar.
-                    if (index == stations.size() - 1) {
-                        final ListView listView = getListView();
-                        listView.post(new Runnable() {
-                            public void run() {
-                                listView.setSelection(listView.getCount() - 1);
-                            }
-                        });
-                    }
+                    startActivityForResult(intent, IntentCommunication.STATION_INFO_REQUEST_CODE);
                 }
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (IntentCommunication.Result.shouldMoveMapToStation(resultCode)) {
+            selectMapGeoPoint(data);
+        } else if (IntentCommunication.Result.shouldStarStation(resultCode)) {
+            cancelAsyncTask();
+
+            final StationHolder stationHolder = (StationHolder) data.getExtras().get(IntentCommunication.STATION_DATA);
+            final Station station = stationHolder.getStation();
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.d(TAG, "Change station data");
+                    adapter.changeStation(station.isStarred(), stationHolder.getIndex());
+                }
+            });
+        }
+    }
+
+    private void selectMapGeoPoint(Intent data) {
+        HomeActivity homeActivity = getHomeActivity();
+        StationHolder holder = (StationHolder) data.getExtras().get(IntentCommunication.STATION_DATA);
+
+        MapTabListener mapTabListener = new MapTabListener(homeActivity, holder.getStation().getGeoPoint());
+
+        ActionBar.Tab mapTab = homeActivity.getSupportActionBar().getTabAt(2);
+        mapTab.setTabListener(mapTabListener);
+        mapTab.select();
     }
 
     @Override

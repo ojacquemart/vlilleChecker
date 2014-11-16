@@ -7,6 +7,8 @@
     <string name="stations_list">Stations list</string>
     <string name="stations_map">Stations map</string>
     <string name="location">Location</string>
+    <string name="itinerary">Itinerary</string>
+    <string name="locate">Locate</string>
     <string name="station_out_of_service">The station is out of service</string>
     <string name="preferences">Settings</string>
     <string name="refresh">Refresh</string>

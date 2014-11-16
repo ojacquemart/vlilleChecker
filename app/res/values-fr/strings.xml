@@ -7,6 +7,8 @@
     <string name="stations_list">Liste des stations</string>
     <string name="stations_map">Carte des stations</string>
     <string name="location">Localisation</string>
+    <string name="itinerary">Itinéraire</string>
+    <string name="locate">Localisation</string>
     <string name="station_out_of_service">La station est en maintenance</string>
     <string name="preferences">Préférences</string>
     <string name="refresh">Rafraîchir</string>

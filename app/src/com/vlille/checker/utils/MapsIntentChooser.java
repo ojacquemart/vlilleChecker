@@ -46,6 +46,8 @@ public class MapsIntentChooser {
     public void showIntent() {
         Intent intent = getShowableIntent();
         if (intent != null) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
             context.startActivity(intent);
         } else {
             showErrorMessage();

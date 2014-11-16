@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/station_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top|center"
+        android:text="46 - Artois"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/station_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top|center"
+        android:text="12 RUE D'ARTOIS"
+        android:textSize="16dp" />
+
+    <ImageView
+        android:id="@+id/station_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/rounded_background"
+        android:baselineAlignBottom="false"
+        android:clickable="false"
+        android:src="@drawable/ic_cb" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_margin="10dp"
+        android:background="@android:color/darker_gray" />
+
+    <RelativeLayout
+        android:layout_width="62dp"
+        android:layout_height="62dp"
+        android:layout_gravity="center">
+
+        <ImageButton
+            android:id="@+id/station_star"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:checked="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/btn_star_yellow" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_margin="10dp"
+        android:background="@android:color/darker_gray" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/stars_layout_padding"
+        android:paddingRight="@dimen/stars_layout_padding">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dip"
+            android:layout_weight="50"
+            android:orientation="horizontal">
+
+            <!-- Nb bikes -->
+
+            <TextView
+                android:id="@+id/station_info_bikes"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|center_vertical"
+                android:singleLine="true"
+                android:text="12"
+                android:textColor="#000"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:background="@drawable/rounded_background"
+                android:baselineAlignBottom="false"
+                android:clickable="false"
+                android:src="@drawable/ic_v" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <!-- Nb parkings -->
+
+            <TextView
+                android:id="@+id/station_attachs"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|center_vertical"
+                android:singleLine="true"
+                android:text="23"
+                android:textColor="#000"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:background="@drawable/rounded_background"
+                android:baselineAlignBottom="false"
+                android:clickable="false"
+                android:src="@drawable/ic_p" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_margin="10dp"
+        android:background="@android:color/darker_gray" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/stars_layout_padding"
+        android:paddingRight="@dimen/stars_layout_padding">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <!-- Location -->
+
+            <ImageButton
+                android:id="@+id/station_to_locate"
+                android:src="@drawable/location_place_pressed"
+                android:background="@null"
+                android:layout_width="@dimen/station_info_btn_action_size"
+                android:layout_height="@dimen/station_info_btn_action_size"
+                android:adjustViewBounds="true"
+                android:baselineAlignBottom="false"
+                android:clickable="false" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|center_vertical"
+                android:singleLine="true"
+                android:text="@string/locate"
+                android:textColor="#000"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <!-- Itinerary -->
+
+            <ImageButton
+                android:id="@+id/station_to_itinerary"
+                android:src="@drawable/location_directions_pressed"
+                android:background="@null"
+                android:layout_width="@dimen/station_info_btn_action_size"
+                android:layout_height="@dimen/station_info_btn_action_size"
+                android:adjustViewBounds="true"
+                android:baselineAlignBottom="false"
+                android:clickable="false" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|center_vertical"
+                android:singleLine="true"
+                android:text="@string/itinerary"
+                android:textColor="#000"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

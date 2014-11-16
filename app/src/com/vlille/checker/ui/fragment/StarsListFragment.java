@@ -7,8 +7,6 @@ import com.vlille.checker.R;
  */
 public class StarsListFragment extends StationsListFragment {
 
-    private static final String TAG = StarsListFragment.class.getName();
-
     @Override
     protected int getSwipeableResource() {
         return R.layout.stations_list_layout;

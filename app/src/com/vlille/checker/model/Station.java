@@ -80,24 +80,22 @@ public class Station extends Entity {
     @Column(name = ORDINAL, nullable = true)
     public int ordinal;
 
-    private boolean selected;
+    public Station() {
+    }
 
-	public Station() {
-	}
+    public GeoPoint getGeoPoint() {
+        return new GeoPoint(latitudeE6, longitudeE6);
+    }
 
-	public GeoPoint getGeoPoint() {
-		return new GeoPoint(latitudeE6, longitudeE6);
-	}
+    // Getters & setters.
 
-	// Getters & setters.
+    public long getId() {
+        return id;
+    }
 
-	public long getId() {
-		return id;
-	}
-
-	public String getName() {
+    public String getName() {
         return id + " - " + name;
-	}
+    }
 
     public String getName(boolean idVisible) {
         if (idVisible) {
@@ -107,53 +105,53 @@ public class Station extends Entity {
         return name;
     }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public int getLatitudeE6() {
-		return latitudeE6;
-	}
+    public int getLatitudeE6() {
+        return latitudeE6;
+    }
 
-	public void setLatitudeE6(int latitudeE6) {
-		this.latitudeE6 = latitudeE6;
-	}
+    public void setLatitudeE6(int latitudeE6) {
+        this.latitudeE6 = latitudeE6;
+    }
 
-	public double getLatitude() {
-		return latitude;
-	}
+    public double getLatitude() {
+        return latitude;
+    }
 
     public String getLatitudeAsString() {
         return String.valueOf(latitude);
     }
 
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
-	}
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
 
     public String getLongitudeAsString() {
         return String.valueOf(longitude);
     }
 
-	public int getLongitudeE6() {
-		return longitudeE6;
-	}
+    public int getLongitudeE6() {
+        return longitudeE6;
+    }
 
-	public void setLongitudeE6(int longitudeE6) {
-		this.longitudeE6 = longitudeE6;
-	}
+    public void setLongitudeE6(int longitudeE6) {
+        this.longitudeE6 = longitudeE6;
+    }
 
-	public double getLongitude() {
-		return longitude;
-	}
+    public double getLongitude() {
+        return longitude;
+    }
 
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
-	}
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
 
-	public String getAdress() {
-		return adress;
-	}
+    public String getAdress() {
+        return adress;
+    }
 
     public String getAdressToUpperCase() {
         if (adress == null) {
@@ -163,111 +161,102 @@ public class Station extends Entity {
         return adress.toUpperCase();
     }
 
-	public void setAdress(String adress) {
-		this.adress = adress;
-	}
-
-	public boolean isOutOfService() {
-		return outOfService;
-	}
-
-	public void setOufOfService(boolean outOfService) {
-		this.outOfService = outOfService;
-	}
-
-	public String getBikesAsString() {
-		return getStringValue(bikes);
-	}
-
-	public Integer getBikes() {
-		return NumberUtils.toInt(bikes, NumberUtils.INTEGER_ZERO);
-	}
-
-	public void setBikes(String bikes) {
-		this.bikes = bikes;
-	}
-
-	public String getAttachsAsString() {
-		return getStringValue(attachs);
-	}
-
-	private String getStringValue(String value) {
-		if (TextUtils.isEmpty(value)) {
-			return EMPTY_VALUE;
-		}
-
-		return value;
-	}
-
-	public Integer getAttachs() {
-		return NumberUtils.toInt(attachs, NumberUtils.INTEGER_ZERO);
-	}
-
-	public void setAttachs(String attachs) {
-		this.attachs = attachs;
-	}
-
-	public boolean isCbPaiement() {
-		return cbPaiement;
-	}
-
-	public void setCbPaiement(boolean cbPaiement) {
-		this.cbPaiement = cbPaiement;
-	}
-
-	public Long getLastUpdate() {
-		return lastUpdate;
-	}
-
-	public void setLastUpdate(long lastUpdate) {
-		this.lastUpdate = lastUpdate;
-	}
-
-	public boolean isStarred() {
-		return starred;
-	}
-
-	public void setStarred(boolean starred) {
-		this.starred = starred;
-	}
-
-
-    public boolean isSelected() {
-        return selected;
+    public void setAdress(String adress) {
+        this.adress = adress;
     }
 
-    public void setSelected(boolean selected) {
-        this.selected = selected;
+    public boolean isOutOfService() {
+        return outOfService;
     }
 
-	public Integer getOrdinal() {
-		return ordinal;
-	}
+    public void setOufOfService(boolean outOfService) {
+        this.outOfService = outOfService;
+    }
 
-	public void setOrdinal(Integer ordinal) {
-		this.ordinal = ordinal;
-	}
+    public String getBikesAsString() {
+        return getStringValue(bikes);
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (o == null) {
-			return false;
-		}
-		if (!(o instanceof Station)) {
-			return false;
-		}
-		if (o == this) {
-			return true;
-		}
+    public Integer getBikes() {
+        return NumberUtils.toInt(bikes, NumberUtils.INTEGER_ZERO);
+    }
 
-		Station other = (Station) o;
+    public void setBikes(String bikes) {
+        this.bikes = bikes;
+    }
 
-		return name.equals(other.getName());
-	}
+    public String getAttachsAsString() {
+        return getStringValue(attachs);
+    }
 
-	@Override
-	public int hashCode() {
+    private String getStringValue(String value) {
+        if (TextUtils.isEmpty(value)) {
+            return EMPTY_VALUE;
+        }
+
+        return value;
+    }
+
+    public Integer getAttachs() {
+        return NumberUtils.toInt(attachs, NumberUtils.INTEGER_ZERO);
+    }
+
+    public void setAttachs(String attachs) {
+        this.attachs = attachs;
+    }
+
+    public boolean isCbPaiement() {
+        return cbPaiement;
+    }
+
+    public void setCbPaiement(boolean cbPaiement) {
+        this.cbPaiement = cbPaiement;
+    }
+
+    public Long getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(long lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public boolean isStarred() {
+        return starred;
+    }
+
+    public void setStarred(boolean starred) {
+        this.starred = starred;
+    }
+
+    public Integer getOrdinal() {
+        return ordinal;
+    }
+
+    public void setOrdinal(Integer ordinal) {
+        this.ordinal = ordinal;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+        if (!(o instanceof Station)) {
+            return false;
+        }
+        if (o == this) {
+            return true;
+        }
+
+        Station other = (Station) o;
+
+        return name.equals(other.getName());
+    }
+
+    @Override
+    public int hashCode() {
         return name.hashCode();
-	}
+    }
 
 }

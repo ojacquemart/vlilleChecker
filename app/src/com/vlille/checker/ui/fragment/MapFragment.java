@@ -16,7 +16,7 @@ import com.vlille.checker.ui.osm.MapState;
 import com.vlille.checker.ui.osm.MapView;
 
 import org.droidparts.annotation.inject.InjectDependency;
-import org.droidparts.fragment.support.Fragment;
+import org.droidparts.fragment.support.v4.Fragment;
 import org.osmdroid.util.GeoPoint;
 
 import java.util.List;

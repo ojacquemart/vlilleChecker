@@ -152,28 +152,4 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/station_actions"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/grey"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <ImageButton
-            android:id="@+id/station_action_tomap"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:padding="5dp"
-            android:src="@drawable/location_place_pressed" />
-
-        <ImageButton
-            android:id="@+id/station_action_tonavigation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:padding="5dp"
-            android:src="@drawable/location_directions_pressed" />
-    </LinearLayout>
 </LinearLayout>
