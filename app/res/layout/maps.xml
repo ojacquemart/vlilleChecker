@@ -12,9 +12,11 @@
         android:id="@+id/maps_location_enable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
         android:layout_alignParentRight="true"
-        android:layout_centerHorizontal="true"
         android:contentDescription="@string/location_enable"
+        android:background="@drawable/rounded_map_background"
         android:src="@drawable/ic_location_off" />
 
 </RelativeLayout>

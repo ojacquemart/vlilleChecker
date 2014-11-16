@@ -20,4 +20,5 @@
 
     <!-- Map view, location circle color -->
     <color name="mapview_location_circle">#464646</color>
+    <color name="mapview_location_button_background">#C62828</color>
 </resources>

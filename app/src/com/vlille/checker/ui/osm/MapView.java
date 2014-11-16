@@ -440,7 +440,7 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
     @Override
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
-        if (getZoomLevel() != oldZoomLevel) {
+        if (panAndZoomListener != null && getZoomLevel() != oldZoomLevel) {
             panAndZoomListener.onZoom();
             oldZoomLevel = getZoomLevel();
         }
