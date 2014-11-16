@@ -6,5 +6,6 @@
     <dimen name="position_slider_padding_top">16dp</dimen>
 
     <dimen name="overlay_font_size">12sp</dimen>
-    <dimen name="stars_layout_padding">5sp</dimen>
+    <dimen name="stars_layout_padding">8dp</dimen>
+    <dimen name="star_margin_right">5dp</dimen>
 </resources>

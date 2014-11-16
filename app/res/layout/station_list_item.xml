@@ -1,180 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:background="@color/white"
-              android:orientation="vertical"
-              android:paddingBottom="0sp"
-              android:paddingTop="0sp">
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingBottom="0sp"
+    android:paddingTop="0sp">
 
-    <RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:paddingLeft="@dimen/stars_layout_padding"
-            android:paddingRight="@dimen/stars_layout_padding"
-            android:gravity="bottom">
-
-        <TextView
-                android:id="@+id/station_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="Palais Rameau"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="normal"/>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="bottom"
+        android:paddingLeft="@dimen/stars_layout_padding"
+        android:paddingRight="@dimen/stars_layout_padding">
 
         <TextView
-                android:id="@+id/station_lastupdate"
-                android:layout_marginLeft="5dp"
-                android:layout_alignBaseline="@+id/station_name"
-                android:layout_toRightOf="@+id/station_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:text="(il y a 10 secondes)"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                android:textStyle="normal"/>
+            android:id="@+id/station_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="Palais Rameau"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/station_lastupdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/station_name"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/station_name"
+            android:gravity="bottom"
+            android:text="(il y a 10 secondes)"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:textStyle="normal" />
 
     </RelativeLayout>
 
     <LinearLayout
-            android:id="@+id/station_adress_box"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/stars_layout_padding"
-            android:paddingRight="@dimen/stars_layout_padding">
+        android:id="@+id/station_adress_box"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/stars_layout_padding"
+        android:paddingRight="@dimen/stars_layout_padding">
 
         <TextView
-                android:id="@+id/station_adress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="LongLongTextLikeLongCatLongLongTextLikeLongCatLongLongTextLikeLongCatLongLongTextLikeLongCat"
-                android:textColor="@color/black"
-                android:textSize="12sp"/>
+            android:id="@+id/station_adress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LongLongTextLikeLongCatLongLongTextLikeLongCatLongLongTextLikeLongCatLongLongTextLikeLongCat"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout
-            android:id="@+id/station_out_of_service_box"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/stars_layout_padding"
-            android:paddingRight="@dimen/stars_layout_padding">
+        android:id="@+id/station_out_of_service_box"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/stars_layout_padding"
+        android:paddingRight="@dimen/stars_layout_padding">
 
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/station_out_of_service"
-                android:textColor="@color/red"
-                android:textSize="12sp"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/station_out_of_service"
+            android:textColor="@color/red"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp"
-            android:layout_marginTop="3dp"
-            android:paddingLeft="@dimen/stars_layout_padding"
-            android:paddingRight="@dimen/stars_layout_padding"
-            android:orientation="horizontal"
-            android:textSize="12sp">
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="3dp"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/stars_layout_padding"
+        android:paddingRight="@dimen/stars_layout_padding"
+        android:textSize="12sp">
 
         <CheckBox
-                android:id="@+id/detail_starred"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/starStyle"
-                android:checked="true"
-                android:focusable="false"
-                />
+            android:id="@+id/detail_starred"
+            style="@style/starStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/star_margin_right"
+            android:checked="true"
+            android:focusable="false" />
 
 
         <!-- Nb bikes -->
 
         <TextView
-                android:id="@+id/details_bikes"
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="0dip"
-                android:layout_marginRight="10dp"
-                android:gravity="center_horizontal|center_vertical"
-                android:singleLine="true"
-                android:text="12"
-                android:textColor="#000"
-                android:textSize="16sp"
-                android:textStyle="bold"/>
+            android:id="@+id/details_bikes"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dip"
+            android:layout_marginRight="10dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:singleLine="true"
+            android:text="12"
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_v"
-                android:background="@drawable/rounded_background"
-                android:adjustViewBounds="true"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:background="@drawable/rounded_background"
+            android:src="@drawable/ic_v" />
 
         <!-- Nb parkings -->
 
         <TextView
-                android:id="@+id/details_attachs"
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:gravity="center_horizontal|center_vertical"
-                android:singleLine="true"
-                android:text="23"
-                android:textColor="#000"
-                android:textSize="16sp"
-                android:textStyle="bold"/>
+            android:id="@+id/details_attachs"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:singleLine="true"
+            android:text="23"
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:background="@drawable/rounded_background"
+            android:baselineAlignBottom="false"
+            android:clickable="false"
+            android:src="@drawable/ic_p" />
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/details_cb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_p"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5px"
+                android:adjustViewBounds="true"
                 android:background="@drawable/rounded_background"
-                android:baselineAlignBottom="false"
-                android:clickable="false"
-                android:adjustViewBounds="true"/>
-
-        <RelativeLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-            <ImageView
-                    android:id="@+id/details_cb"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="5px"
-                    android:src="@drawable/ic_cb"
-                    android:background="@drawable/rounded_background"
-                    android:adjustViewBounds="true"/>
+                android:src="@drawable/ic_cb" />
         </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/station_actions"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:background="@color/grey">
+        android:id="@+id/station_actions"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/grey"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <ImageButton
-                android:id="@+id/station_action_tomap"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:src="@drawable/location_place_pressed"
-                android:padding="5dp"/>
+            android:id="@+id/station_action_tomap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:padding="5dp"
+            android:src="@drawable/location_place_pressed" />
+
         <ImageButton
-                android:id="@+id/station_action_tonavigation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:padding="5dp"
-                android:src="@drawable/location_directions_pressed"
-                />
+            android:id="@+id/station_action_tonavigation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:padding="5dp"
+            android:src="@drawable/location_directions_pressed" />
     </LinearLayout>
 </LinearLayout>
