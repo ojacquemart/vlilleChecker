@@ -62,7 +62,7 @@
 
     <!-- About -->
     <string name="about_title">A propos de</string>
-    <string name="about_text">Vlille Checker (v%1s) est dédié aux utilisateurs du V\'lille et de son service VLS (Vélos en Libre Service).
+    <string name="about_text">Vlille Checker est dédié aux utilisateurs du V\'lille et de son service VLS (Vélos en Libre Service).
     \n\n
   	Au quotidien, l\'application vous permet de gérer facilement:\n
     - vos stations favorites afin de contrôler le nombre de vélos ou emplacements disponibles;\n
@@ -70,10 +70,10 @@
     Dès l\'écran d\'accueil, Vlille Checker affiche l\'état des stations, évitant ainsi
     les menus superflus.
     \n\n
-    Pour toute remarque, contactez le développeur:
+    Pour toute remarque ou suggestion:
     </string>
     <string name="about_text_email">- <a href="o.jacquemart@gmail.com">o.jacquemart@gmail.com</a>\n</string>
-    <string name="about_text_web">- <a href="http://www.twitter.com/ojacquemart">twitter.com/ojacquemart</a></string>
+    <string name="about_text_web">- <a href="http://www.twitter.com/ojacquemart">@ojacquemart</a></string>
 
     <!-- ACRA toast notifications texts. -->
     <string name="crash_toast_text">Une erreur est survenue&#8230;</string>

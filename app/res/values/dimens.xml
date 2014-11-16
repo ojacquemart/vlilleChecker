@@ -8,4 +8,7 @@
     <dimen name="overlay_font_size">12sp</dimen>
     <dimen name="stars_layout_padding">8dp</dimen>
     <dimen name="star_margin_right">5dp</dimen>
+
+    <dimen name="about_title_size">20dp</dimen>
+    <dimen name="about_version_size">14dp</dimen>
 </resources>

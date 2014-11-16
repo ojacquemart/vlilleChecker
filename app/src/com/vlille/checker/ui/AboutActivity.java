@@ -1,12 +1,10 @@
 package com.vlille.checker.ui;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.widget.TextView;
-
 import com.vlille.checker.Application;
 import com.vlille.checker.R;
 
@@ -15,20 +13,29 @@ import com.vlille.checker.R;
  */
 public class AboutActivity extends ActionBarActivity {
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        ActionBar supportActionBar = getSupportActionBar();
-        supportActionBar.setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-		setContentView(R.layout.about);
+        setContentView(R.layout.about);
 
+        setVersionNumber();
+        setTwitterLinkClickable();
+    }
+
+    private void setVersionNumber() {
         String versionNumber = Application.getVersionNumber();
 
-        TextView tvAboutText = (TextView) findViewById(R.id.about_text);
-        tvAboutText.setText(getString(R.string.about_text, versionNumber));
-	}
+        TextView aboutVersion = (TextView) findViewById(R.id.about_version);
+        aboutVersion.setText(versionNumber);
+    }
+
+    private void setTwitterLinkClickable() {
+        TextView twitterLink = (TextView) findViewById(R.id.about_twitter);
+        twitterLink.setMovementMethod(LinkMovementMethod.getInstance());
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
