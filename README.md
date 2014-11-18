@@ -38,3 +38,7 @@ This project uses the following open source libraries:
 ### Android Studio users
 
 * import the build.gradle
+
+## Greetings
+
+Thanks to [John Zmuda](http://thenounproject.com/rzmota/) for its great icon. His icon is used for the app launcher icon
