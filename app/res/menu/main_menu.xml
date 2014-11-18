@@ -10,17 +10,12 @@
 
     <!-- Contextual menus -->
     <item android:id="@+id/main_menu_settings"
-        android:title="@string/preferences"
-        android:icon="@drawable/ic_menu_settings"
-        android:showAsAction="collapseActionView|withText" />
+        android:title="@string/preferences" />
+
     <item android:id="@+id/main_menu_update_stations"
-        android:title="@string/data_launch_update"
-        android:icon="@drawable/ic_menu_import_export"
-        android:showAsAction="collapseActionView|withText" />
+        android:title="@string/data_launch_update" />
 
     <item android:id="@+id/main_menu_about"
-        android:title="@string/about_title"
-        android:icon="@drawable/ic_menu_about"
-        android:showAsAction="collapseActionView|withText" />
+        android:title="@string/about_title" />
 
 </menu>

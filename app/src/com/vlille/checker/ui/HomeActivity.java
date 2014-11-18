@@ -71,7 +71,6 @@ public class HomeActivity extends ActionBarActivity implements SnackBar.OnMessag
 
     private void initTabs() {
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setIcon(R.drawable.ic_menu_icon);
         actionBar.addTab(actionBar
                 .newTab()
                 .setIcon(R.drawable.ic_tab_star)
