@@ -34,7 +34,7 @@
     <string name="prefs_home_title">Stations display</string>
     <string name="prefs_station_id_visible_title">Id</string>
     <string name="prefs_stations_details_title">Address</string>
-    <string name="prefs_station_last_update_visible_title">Last update moment</string>
+    <string name="prefs_station_last_update_visible_title">Update time</string>
     <string name="prefs_location_enable_gps_title">GPS provider</string>
     <string name="prefs_location_enable_gps_summary">Use GPS to locate your position</string>
 
