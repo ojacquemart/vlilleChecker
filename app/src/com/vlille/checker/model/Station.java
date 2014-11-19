@@ -251,7 +251,7 @@ public class Station extends Entity {
 
         Station other = (Station) o;
 
-        return name.equals(other.getName());
+        return name.equals(other.name);
     }
 
     @Override
