@@ -6,8 +6,8 @@
           android:installLocation="auto">
     <!-- Supports >= android 2.1 -->
     <uses-sdk
-            android:minSdkVersion="8"
-            android:targetSdkVersion="21" />
+        android:minSdkVersion="8"
+        android:targetSdkVersion="21" />
 
     <!-- Permissions -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
