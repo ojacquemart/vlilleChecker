@@ -23,12 +23,18 @@ public class DBUpdater extends DBAction {
         }
 
         remoteStations.removeAll(getInDBStations());
-        Log.i(TAG, "New stations " + remoteStations.size());
 
-        getStationEntityManager().create(remoteStations);
-        getMetadataEntityManager().changeLastUpdateToNow();
+        int newStationsSize = remoteStations.size();
+        Log.i(TAG, "New stations " + newStationsSize);
 
-        return remoteStations.size() > 0;
+        boolean hasNewStations = newStationsSize > 0;
+
+        if (hasNewStations) {
+            getStationEntityManager().create(remoteStations);
+            getMetadataEntityManager().changeLastUpdateToNow();
+        }
+
+        return hasNewStations;
     }
 }
 
