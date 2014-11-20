@@ -19,7 +19,9 @@ repositories {
 dependencies {
     compile 'com.android.support:support-v4:21.0.2'
     compile 'com.android.support:appcompat-v7:21.0.2'
-    compile 'ch.acra:acra:4.5.0'
+    compile ('ch.acra:acra:4.5.0') {
+        exclude group: 'org.json'
+    }
     compile 'com.android.support:support-v4-preferencefragment:1.0.0@aar'
     compile 'com.github.mrengineer13:snackbar:0.4.0'
     compile 'org.droidparts:droidparts:2.6.2'
