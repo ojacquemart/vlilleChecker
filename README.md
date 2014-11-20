@@ -21,16 +21,17 @@ This project is an unofficial android app for the Vlille service in Lille, Franc
 * 2012-10-21: v2.1
 * 2012-10-19: v2.0
 * 2012-06-13: v1.1
-* 2016-06-04: v1.0
+* 2012-06-04: v1.0
 
 ## Libraries
 
 This project uses the following open source libraries:
 
 * [ACRA - Application Crash Report for Android](http://code.google.com/p/acra/)
-* [PullToRefresh](https://github.com/chrisbanes/ActionBar-PullToRefresh)
 * [DroidParts](https://github.com/yanchenko/droidparts)
 * [OpenStreetMapDroid](http://code.google.com/p/osmdroid/)
+* [V4-PreferenceFragment](https://github.com/kolavar/android-support-v4-preferencefragment)
+* [SnackBar](https://github.com/MrEngineer13/SnackBar)
 * [GPSEmulator to simulate GPS location](http://code.google.com/p/android-gps-emulator/)
 
 ## Installation
