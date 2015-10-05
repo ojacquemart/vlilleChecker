@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/white"
+              android:orientation="horizontal"
+              android:paddingLeft="5sp"
+              android:paddingRight="5sp"
+              android:paddingTop="5sp"
+              android:paddingBottom="5sp">
+    <CheckBox
+            android:id="@+id/station_star"
+            style="@style/starStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/star_margin_right"
+            android:checked="true"
+            android:focusable="false"/>
+
+    <TextView
+            android:id="@+id/station_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="Palais Rameau"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="normal"/>
+</LinearLayout>

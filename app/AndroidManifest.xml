@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <uses-feature android:name="android.hardware.location.network" />
     <uses-feature android:name="android.hardware.location.gps" />
@@ -69,5 +70,25 @@
                 android:label="@string/about_title"
                 android:theme="@style/Theme.Vlillechecker" >
         </activity>
+
+        <!-- Widgets -->
+        <activity android:name=".ui.widget.StationWidgetConfigurationActivity"
+                  android:theme="@style/Theme.Vlillechecker">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
+
+        <receiver android:name=".ui.widget.StationWidgetProvider" android:label="@string/widget_label">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.vlille.checker.widget.Provider.action.REFRESH" />
+            </intent-filter>
+
+            <meta-data
+                    android:name="android.appwidget.provider"
+                    android:resource="@xml/widget_info" />
+        </receiver>
     </application>
 </manifest>

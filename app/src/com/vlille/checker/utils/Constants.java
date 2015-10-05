@@ -1,8 +1,5 @@
 package com.vlille.checker.utils;
 
-import java.util.concurrent.TimeUnit;
-
-
 public class Constants {
 		
 	/**

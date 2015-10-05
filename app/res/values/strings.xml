@@ -10,6 +10,7 @@
     <string name="itinerary">Itinerary</string>
     <string name="locate">Locate</string>
     <string name="station_out_of_service">The station is out of service</string>
+    <string name="station_out_of_service_short">Out of service</string>
     <string name="preferences">Settings</string>
     <string name="refresh">Refresh</string>
     <string name="ok">Ok</string>
@@ -20,6 +21,7 @@
     <string name="installation_done">Initialization finished</string>
     <string name="no_station">Add stations in using tabs</string>
     <string name="update_ago">(%1$d %2$s ago)</string>
+    <string name="update_ago_short">%1$d %2$s ago</string>
     <string name="timeunit_second">second</string>
     <string name="open_with">Open with&#8230;</string>
 
@@ -62,6 +64,9 @@
 
     <!-- Search -->
     <string name="search_no_result">No result</string>
+
+    <!-- Widget -->
+    <string name="widget_label">Add a station - VlilleChecker</string>
 
     <!-- About -->
     <string name="about_title">About</string>

@@ -22,7 +22,7 @@ import com.vlille.checker.ui.StationInfoActivity;
 import com.vlille.checker.ui.async.AbstractStationsAsyncTask;
 import com.vlille.checker.ui.delegate.StationUpdateDelegate;
 import com.vlille.checker.ui.listener.MapTabListener;
-import com.vlille.checker.ui.widget.StationsAdapter;
+import com.vlille.checker.ui.fragment.adapter.StationsAdapter;
 import com.vlille.checker.utils.ContextHelper;
 
 import org.droidparts.annotation.inject.InjectDependency;

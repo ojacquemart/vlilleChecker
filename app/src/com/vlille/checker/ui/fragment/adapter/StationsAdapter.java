@@ -1,4 +1,4 @@
-package com.vlille.checker.ui.widget;
+package com.vlille.checker.ui.fragment.adapter;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -6,18 +6,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
+import android.widget.*;
 import com.vlille.checker.R;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.ui.delegate.StationUpdateDelegate;
 import com.vlille.checker.utils.ContextHelper;
 import com.vlille.checker.utils.StationPreferences;
-import com.vlille.checker.utils.TextPlural;
 import com.vlille.checker.utils.ViewUtils;
 import com.vlille.checker.utils.color.ColorSelector;
 
@@ -107,11 +101,8 @@ public class StationsAdapter extends ArrayAdapter<Station> {
         name.setText(station.getName(stationPreferences.isIdVisible()));
 
         if (stationPreferences.isUpdatedAtVisible()) {
-            String timeUnitSecond = TextPlural.toPlural(
-                    station.getLastUpdate(),
-                    resources.getString(R.string.timeunit_second));
             TextView lastUpdate = (TextView) view.findViewById(R.id.station_lastupdate);
-            lastUpdate.setText(resources.getString(R.string.update_ago, station.getLastUpdate(), timeUnitSecond));
+            lastUpdate.setText(station.getLastUpdateAsString(resources));
         }
 
         TextView address = (TextView) view.findViewById(R.id.station_adress);

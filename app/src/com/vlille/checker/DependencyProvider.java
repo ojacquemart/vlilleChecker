@@ -2,11 +2,9 @@ package com.vlille.checker;
 
 import android.content.Context;
 import android.util.Log;
-
 import com.vlille.checker.db.DBOpenHelper;
 import com.vlille.checker.db.MetadataEntityManager;
 import com.vlille.checker.db.StationEntityManager;
-
 import org.droidparts.AbstractDependencyProvider;
 import org.droidparts.persist.sql.AbstractDBOpenHelper;
 
@@ -47,4 +45,8 @@ public class DependencyProvider extends AbstractDependencyProvider {
         return metadataEntityManager;
     }
 
+    @Override
+    protected Context getContext() {
+        return super.getContext();
+    }
 }

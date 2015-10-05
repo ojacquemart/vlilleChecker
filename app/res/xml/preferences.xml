@@ -3,7 +3,7 @@
 
     <PreferenceCategory android:title="@string/prefs_home_title">
         <CheckBoxPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="prefs_station_id_visible"
             android:title="@string/prefs_station_id_visible_title"
             />

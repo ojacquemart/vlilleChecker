@@ -1,6 +1,8 @@
 .settings/*
 .gradle/*
 .idea/*
+app/.idea/*
+gradle/.idea/*
 build/*
 *.iml
 local.properties

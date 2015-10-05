@@ -1,14 +1,16 @@
 package com.vlille.checker.model;
 
+import android.content.res.Resources;
+import android.text.TextUtils;
+import android.view.View;
+import com.vlille.checker.R;
+import com.vlille.checker.db.DB;
+import com.vlille.checker.utils.NumberUtils;
+import com.vlille.checker.utils.TextPlural;
 import org.droidparts.annotation.sql.Column;
 import org.droidparts.annotation.sql.Table;
 import org.droidparts.model.Entity;
 import org.osmdroid.util.GeoPoint;
-
-import android.text.TextUtils;
-
-import com.vlille.checker.db.DB;
-import com.vlille.checker.utils.NumberUtils;
 
 /**
  * Represents the details of a single vlille station.
@@ -30,6 +32,8 @@ public class Station extends Entity {
     public static final String LAST_UPDATE = "lastUpdate";
     public static final String STARRED = "starred";
     public static final String ORDINAL = "ordinal";
+    public static final String APPWIDGET_ID = "appWidgetId";
+    public static final int APPWIDGET_ID_EMPTY_VALUE = -1;
 
     public static final String EMPTY_VALUE = "...";
 
@@ -79,6 +83,9 @@ public class Station extends Entity {
 
     @Column(name = ORDINAL, nullable = true)
     public int ordinal;
+
+    @Column(name = APPWIDGET_ID, nullable = true)
+    public int appWidgetId = -1;
 
     public Station() {
     }
@@ -169,6 +176,10 @@ public class Station extends Entity {
         return outOfService;
     }
 
+    public int getOutOfServiceVisibility() {
+        return outOfService ? View.VISIBLE : View.GONE;
+    }
+
     public void setOufOfService(boolean outOfService) {
         this.outOfService = outOfService;
     }
@@ -217,6 +228,23 @@ public class Station extends Entity {
         return lastUpdate;
     }
 
+    public String getLastUpdateAsString(Resources resources) {
+        return getLastUpdateAsStringFromResources(resources, R.string.update_ago);
+    }
+
+    public String getShortLastUpdateAsString(Resources resources) {
+        return getLastUpdateAsStringFromResources(resources, R.string.update_ago_short);
+    }
+
+    private String getLastUpdateAsStringFromResources(Resources resources, int update_ago) {
+        Long lastUpdate = getLastUpdate();
+        String timeUnitSecond = TextPlural.toPlural(
+                lastUpdate,
+                resources.getString(R.string.timeunit_second));
+
+        return resources.getString(update_ago, lastUpdate, timeUnitSecond);
+    }
+
     public void setLastUpdate(long lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
@@ -235,6 +263,14 @@ public class Station extends Entity {
 
     public void setOrdinal(Integer ordinal) {
         this.ordinal = ordinal;
+    }
+
+    public int getAppWidgetId() {
+        return appWidgetId;
+    }
+
+    public void setAppWidgetId(int appWidgetId) {
+        this.appWidgetId = appWidgetId;
     }
 
     @Override
@@ -258,5 +294,4 @@ public class Station extends Entity {
     public int hashCode() {
         return name.hashCode();
     }
-
 }

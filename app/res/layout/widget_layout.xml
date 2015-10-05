@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/widget_station"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:background="@color/white"
+              android:orientation="vertical"
+              android:fitsSystemWindows="true"
+              android:paddingTop="0sp">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/station_title_box"
+                    android:gravity="left"
+                    android:paddingLeft="@dimen/widget_station_item_padding"
+                    android:paddingRight="@dimen/widget_station_item_padding"
+                    android:paddingTop="@dimen/widget_station_item_padding"
+                    android:paddingBottom="@dimen/widget_station_item_padding"
+                    android:background="@color/primary">
+
+        <TextView
+                android:id="@+id/station_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="..."
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="normal"/>
+
+        <ProgressBar
+                android:id="@+id/station_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:indeterminate="true"
+                android:layout_marginTop="2dp"
+                android:background="@color/primary"
+                style="@android:style/Widget.ProgressBar.Small"
+                />
+    </RelativeLayout>
+
+    <LinearLayout
+            android:id="@+id/station_lastupdate_box"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/widget_station_item_padding"
+            android:paddingRight="@dimen/widget_station_item_padding">
+
+        <TextView
+                android:id="@+id/station_lastupdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:text="..."
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="normal"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/station_out_of_service_box"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/widget_station_item_padding"
+            android:paddingRight="@dimen/widget_station_item_padding"
+            android:visibility="gone">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/station_out_of_service_short"
+                android:textColor="@color/red"
+                android:textSize="12sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:paddingLeft="@dimen/widget_station_details_padding"
+            android:paddingRight="@dimen/widget_station_details_padding"
+            android:textSize="12sp"
+            android:gravity="center_horizontal">
+
+        <!-- Nb bikes -->
+
+        <TextView
+                android:id="@+id/station_details_bikes"
+                android:layout_width="@dimen/widget_station_text_width"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:singleLine="true"
+                android:text="..."
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:textStyle="bold" android:layout_gravity="center_vertical"/>
+
+        <ImageView
+                android:layout_width="@dimen/widget_station_icon_size"
+                android:layout_height="@dimen/widget_station_icon_size"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:background="@drawable/rounded_background"
+                android:baselineAlignBottom="false"
+                android:clickable="false"
+                android:src="@drawable/ic_v"
+                android:layout_gravity="center_vertical"/>
+
+        <!-- Nb parkings -->
+
+        <TextView
+                android:id="@+id/station_details_attachs"
+                android:layout_width="@dimen/widget_station_text_width"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/widget_station_attachs_padding"
+                android:layout_marginRight="@dimen/widget_station_attachs_padding"
+                android:gravity="center_horizontal|center_vertical"
+                android:singleLine="true"
+                android:text="..."
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:textStyle="bold" android:layout_gravity="center_vertical"/>
+
+        <ImageView
+                android:layout_width="@dimen/widget_station_icon_size"
+                android:layout_height="@dimen/widget_station_icon_size"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:background="@drawable/rounded_background"
+                android:baselineAlignBottom="false"
+                android:clickable="false"
+                android:src="@drawable/ic_p"
+                android:layout_gravity="center_vertical"/>
+    </LinearLayout>
+
+</LinearLayout>
