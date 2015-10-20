@@ -12,7 +12,7 @@ public final class PreferenceKeys {
     /**
      * Shows the station id, by default.
      */
-    public static final boolean STATION_ID_VISIBLE_DEFAULT_VALUE = true;
+    public static final boolean STATION_ID_VISIBLE_DEFAULT_VALUE = false;
 
 	/**
 	 * To display the station address in list.
