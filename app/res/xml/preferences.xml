@@ -38,6 +38,6 @@
     <PreferenceCategory android:title="@string/version" >
         <Preference
             android:key="about_version"
-            android:title="3.0.1" />
+            android:title="" />
     </PreferenceCategory>
 </PreferenceScreen>
