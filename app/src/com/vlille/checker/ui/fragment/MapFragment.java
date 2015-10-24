@@ -1,12 +1,11 @@
 package com.vlille.checker.ui.fragment;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-
 import com.vlille.checker.R;
 import com.vlille.checker.db.StationEntityManager;
 import com.vlille.checker.model.Station;
@@ -14,7 +13,6 @@ import com.vlille.checker.ui.HomeActivity;
 import com.vlille.checker.ui.delegate.StationUpdateDelegate;
 import com.vlille.checker.ui.osm.MapState;
 import com.vlille.checker.ui.osm.MapView;
-
 import org.droidparts.annotation.inject.InjectDependency;
 import org.droidparts.fragment.support.v4.Fragment;
 import org.osmdroid.util.GeoPoint;
@@ -83,17 +81,13 @@ public class MapFragment extends Fragment implements StationUpdateDelegate {
     }
 
     private void addLocationEnablerClickListener(final View view) {
-        final ImageButton locationEnabler = (ImageButton) view.findViewById(R.id.maps_location_enable);
+        final FloatingActionButton locationEnabler = (FloatingActionButton) view.findViewById(R.id.maps_location_enable);
         locationEnabler.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 mapView.updateLocationCircle();
-                if (mapView.isLocationOn()) {
-                    locationEnabler.setImageResource(R.drawable.ic_location_on);
-                } else {
-                    locationEnabler.setImageResource(R.drawable.ic_location_off);
-                }
+                locationEnabler.setImageResource(mapView.isLocationOn() ? R.drawable.ic_location_on : R.drawable.ic_location_off);
             }
         });
     }
