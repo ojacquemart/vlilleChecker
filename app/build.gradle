@@ -20,7 +20,7 @@ dependencies {
     compile 'com.android.support:support-v4:23.0.+'
     compile 'com.android.support:appcompat-v7:23.0.+'
     compile 'com.android.support:design:23.0.1'
-    compile ('ch.acra:acra:4.5.0') {
+    compile ('ch.acra:acra:4.6.2') {
         exclude group: 'org.json'
     }
     compile 'com.android.support:support-v4-preferencefragment:1.0.0@aar'

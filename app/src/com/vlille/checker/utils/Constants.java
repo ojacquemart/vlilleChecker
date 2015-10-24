@@ -3,9 +3,10 @@ package com.vlille.checker.utils;
 public class Constants {
 		
 	/**
-	 * ACRA - The google docs form key.
+	 * ACRA - The tracepot report url.
 	 */
-	public static final String GOOGLE_DOCS_FORM_KEY = "dEh4RnUzSzdicUI5eGFxWnZIc3A5YVE6MA";
+
+	public static final String TRACEPOT_REPORT_URl = "https://collector.tracepot.com/6e1414b1";
 
 	/**
 	 * Local file stations file name.
