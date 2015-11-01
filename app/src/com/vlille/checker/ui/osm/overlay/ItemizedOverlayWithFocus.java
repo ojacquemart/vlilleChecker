@@ -16,7 +16,7 @@ import com.vlille.checker.utils.color.ColorSelector;
 
 import org.osmdroid.ResourceProxy;
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.MapView.Projection;
+import org.osmdroid.views.Projection;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
 import org.osmdroid.views.overlay.Overlay;
 import org.osmdroid.views.overlay.OverlayItem;
@@ -223,7 +223,7 @@ public class ItemizedOverlayWithFocus<Item extends MaskableOverlayItem> extends 
 		/* Draw in backward cycle, so the items with the least index are on the front. */
         for (int i = size; i >= 0; i--) {
             final Item item = getItem(i);
-            projection.toMapPixels(item.getPoint(), mCurScreenCoords);
+            projection.toPixels(item.getPoint(), mCurScreenCoords);
 
             if (item != mItemWithBubble){
                 onDrawItem(canvas, zoomLevel, item, mCurScreenCoords);
@@ -260,7 +260,7 @@ public class ItemizedOverlayWithFocus<Item extends MaskableOverlayItem> extends 
 
     private void onDrawFocusBubble(Canvas canvas, int zoomLevel, Projection projection) {
         if (mItemWithBubble != null) {
-            projection.toMapPixels(mItemWithBubble.getPoint(), mCurScreenCoords);
+            projection.toPixels(mItemWithBubble.getPoint(), mCurScreenCoords);
             onDrawItem(canvas, zoomLevel, (Item)mItemWithBubble, mCurScreenCoords);
         }
     }

@@ -10,24 +10,20 @@ import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
-
 import com.vlille.checker.R;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.ui.HomeActivity;
 import com.vlille.checker.ui.async.AbstractStationsAsyncTask;
 import com.vlille.checker.ui.delegate.StationUpdateDelegate;
 import com.vlille.checker.ui.osm.location.LocationManagerWrapper;
-import com.vlille.checker.ui.osm.overlay.CircleLocationOverlay;
-import com.vlille.checker.ui.osm.overlay.ItemizedOverlayWithFocus;
-import com.vlille.checker.ui.osm.overlay.MaskableOverlayItem;
-import com.vlille.checker.ui.osm.overlay.OverlayZoomUtils;
-import com.vlille.checker.ui.osm.overlay.ResourceProxyImpl;
+import com.vlille.checker.ui.osm.overlay.*;
 import com.vlille.checker.ui.osm.overlay.window.BubbleInfoWindow;
 import com.vlille.checker.utils.ContextHelper;
 import com.vlille.checker.utils.StationUtils;
-
 import org.osmdroid.ResourceProxy;
 import org.osmdroid.api.IMapController;
+import org.osmdroid.tileprovider.tilesource.ITileSource;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.tileprovider.tilesource.XYTileSource;
 import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
@@ -54,16 +50,21 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
     private static final String TAG = MapView.class.getSimpleName();
 
     /**
-     * Replace the TileSourceFactory#PUBLIC_TRANSPORT which display "use it online...".
+     * Custom transport map
      */
+    public static final int MAX_ZOOM_LEVEL = 18;
+    public static final int MIN_ZOOM_LEVEL = 0;
+    public static final int TILE_SIZE_PIXELS = 256;
     private static final XYTileSource PUBLIC_TRANSPORT = new XYTileSource("TransportMap",
             null,
-            0, 18,
-            256,
+            MIN_ZOOM_LEVEL, MAX_ZOOM_LEVEL,
+            TILE_SIZE_PIXELS,
             ".png",
-            "http://a.tile2.opencyclemap.org/transport/",
-            "http://b.tile2.opencyclemap.org/transport/",
-            "http://c.tile2.opencyclemap.org/transport/");
+            new String[]{
+                    "http://a.tile2.opencyclemap.org/transport/",
+                    "http://b.tile2.opencyclemap.org/transport/",
+                    "http://c.tile2.opencyclemap.org/transport/"
+            });
 
     /**
      * The index for the location circle overlay.
@@ -270,7 +271,7 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
 
             @Override
             public void onZoom() {
-                Log.d(TAG, "onZoom");
+                Log.d(TAG, String.format("onZoom (actualZoom=%d/maxZoom=%d)", getZoomLevel(), getMaxZoomLevel()));
                 updateStations();
             }
 
@@ -356,7 +357,8 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
 
             }
 
-            public void whenNoneStationToDraw() {}
+            public void whenNoneStationToDraw() {
+            }
 
         };
     }

@@ -4,10 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.vlille.checker.ui.osm.overlay.ExtendedOverlayItem;
-
-import org.osmdroid.util.GeoPoint;
+import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.views.MapView;
 
 /** View that can be displayed on an OSMDroid map, associated to a GeoPoint. 
@@ -65,7 +63,7 @@ public abstract class InfoWindow {
 	 */
 	public void open(ExtendedOverlayItem item, int offsetX, int offsetY) {
 		onOpen(item);
-		GeoPoint position = item.getPoint();
+		IGeoPoint position = item.getPoint();
 		MapView.LayoutParams lp = new MapView.LayoutParams(
 				MapView.LayoutParams.WRAP_CONTENT,
 				MapView.LayoutParams.WRAP_CONTENT,
