@@ -113,6 +113,7 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
         setTileSource(PUBLIC_TRANSPORT);
         setBuiltInZoomControls(true);
         setMultiTouchControls(true);
+        setTilesScaledToDpi(true);
     }
 
     private void initCenter() {
