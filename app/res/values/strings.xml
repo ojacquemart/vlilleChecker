@@ -32,6 +32,12 @@
     <string name="error_no_location_found">No location available</string>
     <string name="error_no_gmaps_app_found">No navigation app found</string>
 
+    <!-- Permissions -->
+    <string name="permission_location_explanation">Your location is needed to place an icon on the map</string>
+    <string name="permission_storage_explanation">We store tiles to your devices storage to reduce data usage</string>
+    <string name="permission_location_not_granted">Location permission is required for user location on map</string>
+    <string name="permission_storage_not_granted">"Storage permission is needed for offline map data caching</string>
+
     <!-- Home Preferences -->
     <string name="prefs_home_title">Stations display</string>
     <string name="prefs_station_id_visible_title">Id</string>
