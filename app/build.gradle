@@ -27,7 +27,7 @@ dependencies {
     compile 'com.github.mrengineer13:snackbar:0.4.0'
     compile 'org.droidparts:droidparts:2.6.2'
     compile 'org.droidparts:droidparts-support:2.6.2'
-    compile 'org.osmdroid:osmdroid-android:4.3'
+    compile 'org.osmdroid:osmdroid-android:5.0.1@aar'
     compile 'org.slf4j:slf4j-android:1.6.1-RC1'
     compile 'org.jsoup:jsoup:1.8.1'
     androidTestCompile 'junit:junit:4.8.1'

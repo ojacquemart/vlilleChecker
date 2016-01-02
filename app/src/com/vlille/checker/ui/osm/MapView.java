@@ -22,8 +22,6 @@ import com.vlille.checker.utils.ContextHelper;
 import com.vlille.checker.utils.StationUtils;
 import org.osmdroid.ResourceProxy;
 import org.osmdroid.api.IMapController;
-import org.osmdroid.tileprovider.tilesource.ITileSource;
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.tileprovider.tilesource.XYTileSource;
 import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
@@ -56,7 +54,6 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
     public static final int MIN_ZOOM_LEVEL = 0;
     public static final int TILE_SIZE_PIXELS = 256;
     private static final XYTileSource PUBLIC_TRANSPORT = new XYTileSource("TransportMap",
-            null,
             MIN_ZOOM_LEVEL, MAX_ZOOM_LEVEL,
             TILE_SIZE_PIXELS,
             ".png",
@@ -150,6 +147,7 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
         final List<String> providers = locationManager.getProviders(false);
         for (String eachProviderName : providers) {
             Log.d(TAG, "Provider enabled " + eachProviderName);
+
             locationManager.requestLocationUpdates(eachProviderName,
                     LocationManagerWrapper.DISTANCE_UPDATE_IN_METERS,
                     LocationManagerWrapper.DURATION_UPDATE_IN_MILLIS,
