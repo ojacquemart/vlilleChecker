@@ -81,9 +81,10 @@
 
         <receiver android:name=".ui.widget.StationWidgetProvider" android:label="@string/widget_label">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="com.vlille.checker.widget.Provider.action.REFRESH" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.USER_PRESENT"/>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="com.vlille.checker.widget.Provider.action.REFRESH"/>
             </intent-filter>
 
             <meta-data

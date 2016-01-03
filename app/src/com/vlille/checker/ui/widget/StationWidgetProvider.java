@@ -21,13 +21,15 @@ public class StationWidgetProvider extends AppWidgetProvider {
         super.onReceive(context, intent);
 
         Log.d(TAG, "onReceive " + intent.getAction());
-        if (isBootCompletedOrRefreshAction(intent)) {
+        if (isSupportedAction(intent)) {
             setupWidgets(context, AppWidgetManager.getInstance(context));
         }
     }
 
-    private boolean isBootCompletedOrRefreshAction(Intent intent) {
-        return Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction()) || ACTION_REFRESH.equals(intent.getAction());
+    private boolean isSupportedAction(Intent intent) {
+        return Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())
+                || Intent.ACTION_USER_PRESENT.equals(intent.getAction())
+                || ACTION_REFRESH.equals(intent.getAction());
     }
 
     @Override
