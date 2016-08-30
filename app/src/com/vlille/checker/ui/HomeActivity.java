@@ -170,6 +170,10 @@ public class HomeActivity extends ActionBarActivity implements SnackBar.OnMessag
         snackbarShow(R.string.error_no_connection, R.string.retry);
     }
 
+    public void showTranspoleUnstableMessage() {
+        snackbarShow(R.string.error_unstable_transpole, R.string.retry);
+    }
+
     private void snackbarShow(int messageId, int actionMessageId) {
         String actionMessage = actionMessageId == - 1 ? null : getString(actionMessageId).toUpperCase();
         snackBar.show(

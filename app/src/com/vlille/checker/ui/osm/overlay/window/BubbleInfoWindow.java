@@ -104,7 +104,7 @@ public class BubbleInfoWindow extends DefaultInfoWindow {
     class SingleStationAsyncTask extends AbstractStationsAsyncTask {
 
         SingleStationAsyncTask(StationUpdateDelegate delegate) {
-            super(delegate);
+            super(homeActivity, delegate);
         }
 
         @Override

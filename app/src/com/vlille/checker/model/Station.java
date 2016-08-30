@@ -87,6 +87,8 @@ public class Station extends Entity {
     @Column(name = APPWIDGET_ID, nullable = true)
     public int appWidgetId = -1;
 
+    private boolean fetchInError;
+
     public Station() {
     }
 
@@ -271,6 +273,18 @@ public class Station extends Entity {
 
     public void setAppWidgetId(int appWidgetId) {
         this.appWidgetId = appWidgetId;
+    }
+
+    public boolean isFetchInError() {
+        return fetchInError;
+    }
+
+    public void setFetchInError() {
+        this.fetchInError = true;
+    }
+
+    public void setFetchOk() {
+        this.fetchInError = false;
     }
 
     @Override

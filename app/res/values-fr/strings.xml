@@ -28,6 +28,7 @@
     <!-- Errors -->
     <string name="error_occured">Une erreur est survenue</string>
     <string name="error_no_connection">Pas de connexion réseau disponible</string>
+    <string name="error_unstable_transpole">Le service Transpole semble instable</string>
     <string name="error_no_stations_near_current_location">Aucune station près de votre position actuelle</string>
     <string name="error_no_location_found">Aucune position disponible</string>
     <string name="error_no_gmaps_app_found">Aucune application de navigation trouvée</string>
@@ -37,7 +38,6 @@
     <string name="permission_storage_explanation">Les cartes sont stockées sur votre appareil pour réduire l\'utilisation de votre data</string>
     <string name="permission_location_not_granted">Votre position est nécessaire pour vous localiser sur la carte</string>
     <string name="permission_storage_not_granted">Le stockage est nécessaire pour la mise en cache des cartes</string>
-
 
     <!-- Home Preferences -->
     <string name="prefs_home_title">Affichage stations</string>

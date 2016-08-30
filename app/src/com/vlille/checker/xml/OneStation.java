@@ -42,6 +42,7 @@ public class OneStation {
         } catch (Exception e) {
             Log.e(TAG, "Failed to read the born xml", e);
 
+            station.setFetchInError();
             station.setAttachs(null);
             station.setBikes(null);
         }
@@ -53,6 +54,7 @@ public class OneStation {
     }
 
     private static void update(Station station, Document document) {
+        station.setFetchOk();
         station.setAdress(document.select(ADRESS).text());
         station.setBikes(document.select(BIKES).text());
         station.setAttachs(document.select(ATTACHS).text());

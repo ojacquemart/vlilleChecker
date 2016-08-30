@@ -336,7 +336,7 @@ abstract class StationsListFragment extends ListFragment
     class StationsAsyncTask extends AbstractStationsAsyncTask {
 
         StationsAsyncTask(StationUpdateDelegate delegate) {
-            super(delegate);
+            super(getHomeActivity(), delegate);
         }
 
         @Override

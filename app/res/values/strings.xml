@@ -27,6 +27,7 @@
 
     <!-- Errors -->
     <string name="error_occured">An error occurred</string>
+    <string name="error_unstable_transpole">Transpole service seems unstable</string>
     <string name="error_no_connection">No network available</string>
     <string name="error_no_stations_near_current_location">None station near your current location</string>
     <string name="error_no_location_found">No location available</string>

@@ -10,16 +10,22 @@ import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
+
 import com.vlille.checker.R;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.ui.HomeActivity;
 import com.vlille.checker.ui.async.AbstractStationsAsyncTask;
 import com.vlille.checker.ui.delegate.StationUpdateDelegate;
 import com.vlille.checker.ui.osm.location.LocationManagerWrapper;
-import com.vlille.checker.ui.osm.overlay.*;
+import com.vlille.checker.ui.osm.overlay.CircleLocationOverlay;
+import com.vlille.checker.ui.osm.overlay.ItemizedOverlayWithFocus;
+import com.vlille.checker.ui.osm.overlay.MaskableOverlayItem;
+import com.vlille.checker.ui.osm.overlay.OverlayZoomUtils;
+import com.vlille.checker.ui.osm.overlay.ResourceProxyImpl;
 import com.vlille.checker.ui.osm.overlay.window.BubbleInfoWindow;
 import com.vlille.checker.utils.ContextHelper;
 import com.vlille.checker.utils.StationUtils;
+
 import org.osmdroid.ResourceProxy;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.XYTileSource;
@@ -397,7 +403,7 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
     class AsyncMapStationRetriever extends AbstractStationsAsyncTask {
 
         AsyncMapStationRetriever(StationUpdateDelegate delegate) {
-            super(delegate);
+            super(homeActivity, delegate);
         }
 
         @Override
