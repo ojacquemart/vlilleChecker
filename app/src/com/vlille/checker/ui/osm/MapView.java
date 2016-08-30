@@ -24,7 +24,6 @@ import com.vlille.checker.ui.osm.overlay.OverlayZoomUtils;
 import com.vlille.checker.ui.osm.overlay.ResourceProxyImpl;
 import com.vlille.checker.ui.osm.overlay.window.BubbleInfoWindow;
 import com.vlille.checker.utils.ContextHelper;
-import com.vlille.checker.utils.StationUtils;
 
 import org.osmdroid.ResourceProxy;
 import org.osmdroid.api.IMapController;
@@ -327,11 +326,7 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
     }
 
     private ItemActionUpdater getItemUpdater() {
-        if (locationOn && LocationManagerWrapper.with(getContext()).hasCurrentLocation()) {
-            return getLocationItemUpdater();
-        }
-
-        return getClassicItemUpdater();
+        return getDefaultItemUpdater();
     }
 
     /**
@@ -343,7 +338,7 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
      * @see OverlayZoomUtils#isDetailledZoomLevel(int)
      * @see org.osmdroid.views.MapView#getBoundingBox()
      */
-    private ItemActionUpdater getClassicItemUpdater() {
+    private ItemActionUpdater getDefaultItemUpdater() {
         final BoundingBoxE6 boundingBox = getBoundingBox();
         final int zoomLevel = getZoomLevel();
 
@@ -365,38 +360,6 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
             public void whenNoneStationToDraw() {
             }
 
-        };
-    }
-
-    /**
-     * The location updater checks if the current location exists and
-     * if the station is near the current location. Then the station
-     * will be displayed only if it is near the current position.
-     *
-     * @return the location updater.
-     */
-    private ItemActionUpdater getLocationItemUpdater() {
-        final long radiusValue = ContextHelper.getRadiusValue(getContext());
-        final Location currentLocation = LocationManagerWrapper.with(getContext()).getCurrentLocation();
-
-        return new ItemActionUpdater() {
-
-            @Override
-            public boolean isValid() {
-                return currentLocation != null;
-            }
-
-            @Override
-            public boolean canUpdate(MaskableOverlayItem item, Station station) {
-                final boolean nearCurrentLocation = StationUtils.isNearCurrentLocation(station, currentLocation, radiusValue);
-                item.setVisible(nearCurrentLocation);
-
-                return nearCurrentLocation;
-            }
-
-            public void whenNoneStationToDraw() {
-                homeActivity.showSnackBarMessage(R.string.error_no_stations_near_current_location);
-            }
         };
     }
 
