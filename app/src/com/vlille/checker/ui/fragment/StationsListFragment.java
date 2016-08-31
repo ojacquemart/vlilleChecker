@@ -21,8 +21,8 @@ import com.vlille.checker.ui.IntentCommunication;
 import com.vlille.checker.ui.StationInfoActivity;
 import com.vlille.checker.ui.async.AbstractStationsAsyncTask;
 import com.vlille.checker.ui.delegate.StationUpdateDelegate;
-import com.vlille.checker.ui.listener.MapTabListener;
 import com.vlille.checker.ui.fragment.adapter.StationsAdapter;
+import com.vlille.checker.ui.listener.MapTabListener;
 import com.vlille.checker.utils.ContextHelper;
 
 import org.droidparts.annotation.inject.InjectDependency;
@@ -35,15 +35,15 @@ import java.util.List;
  */
 abstract class StationsListFragment extends ListFragment
         implements AbsListView.OnScrollListener,
-            SwipeRefreshLayout.OnRefreshListener,
-            StationUpdateDelegate {
+        SwipeRefreshLayout.OnRefreshListener,
+        StationUpdateDelegate {
 
     private static final String TAG = StationsListFragment.class.getName();
 
     private static final int[] SWIPE_COLORS = {
             R.color.primary,
             R.color.yellow,
-            R.color.activated };
+            R.color.activated};
 
     @InjectDependency
     protected StationEntityManager stationEntityManager;
@@ -168,20 +168,13 @@ abstract class StationsListFragment extends ListFragment
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (IntentCommunication.Result.shouldMoveMapToStation(resultCode)) {
-            selectMapGeoPoint(data);
-        } else if (IntentCommunication.Result.shouldStarStation(resultCode)) {
-            cancelAsyncTask();
+        if (IntentCommunication.Result.shouldMoveMapToStation(resultCode)
+                || IntentCommunication.Result.shouldStarStation(resultCode)) {
+            changeStarValueIfNeeded(data);
 
-            final StationHolder stationHolder = (StationHolder) data.getExtras().get(IntentCommunication.STATION_DATA);
-            final Station station = stationHolder.getStation();
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Log.d(TAG, "Change station data");
-                    adapter.changeStation(station.isStarred(), stationHolder.getIndex());
-                }
-            });
+            if (IntentCommunication.Result.shouldMoveMapToStation(resultCode)) {
+                selectMapGeoPoint(data);
+            }
         }
     }
 
@@ -194,6 +187,22 @@ abstract class StationsListFragment extends ListFragment
         ActionBar.Tab mapTab = homeActivity.getSupportActionBar().getTabAt(2);
         mapTab.setTabListener(mapTabListener);
         mapTab.select();
+    }
+
+    private void changeStarValueIfNeeded(Intent data) {
+        final StationHolder stationHolder = (StationHolder) data.getExtras().get(IntentCommunication.STATION_DATA);
+        if (stationHolder != null && stationHolder.isStarredChanged()) {
+            cancelAsyncTask();
+
+            final Station station = stationHolder.getStation();
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.d(TAG, "Change station data");
+                    adapter.changeStation(station.isStarred(), stationHolder.getIndex());
+                }
+            });
+        }
     }
 
     @Override
@@ -222,7 +231,7 @@ abstract class StationsListFragment extends ListFragment
     }
 
     @Override
-    public void onScroll(AbsListView view, int firstVisibleItem,int visibleItemCount, int totalItemCount) {
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
     }
 
     /**
@@ -255,10 +264,10 @@ abstract class StationsListFragment extends ListFragment
         if (lastVisibleRowPosition > 0) {
             int firstVisiblePosition = getFirstVisiblePosition();
             Log.d(TAG, String.format(
-                "Update only visible stations from %d to %d for a list of %d elements",
+                    "Update only visible stations from %d to %d for a list of %d elements",
                     firstVisiblePosition,
-                lastVisibleRowPosition,
-                stations.size())
+                    lastVisibleRowPosition,
+                    stations.size())
             );
 
             List<Station> subStations = stations.subList(firstVisiblePosition, lastVisibleRowPosition);

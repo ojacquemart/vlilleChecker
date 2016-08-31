@@ -23,8 +23,6 @@ public class StationInfoActivity extends ActionBarActivity {
     private StationHolder holder;
     private ImageButton btnStar;
 
-    private boolean initialStar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +31,6 @@ public class StationInfoActivity extends ActionBarActivity {
         setContentView(R.layout.station_info_layout);
 
         setDataFromIntent();
-        storeInitialStarValue();
         initStationInfo();
     }
 
@@ -41,10 +38,7 @@ public class StationInfoActivity extends ActionBarActivity {
         Bundle extras = getIntent().getExtras();
 
         this.holder = (StationHolder) extras.get(IntentCommunication.STATION_DATA);
-    }
-
-    private void storeInitialStarValue() {
-        initialStar = holder.getStation().isStarred();
+        this.holder.storeInitialStarValue();
     }
 
     private void initStationInfo() {
@@ -78,13 +72,12 @@ public class StationInfoActivity extends ActionBarActivity {
         });
     }
 
-
     private void handleStarClick() {
         Log.d(TAG, "Changing the star status");
         Station station = holder.getStation();
         station.setStarred(!station.isStarred());
 
-        if (station.isStarred() != this.initialStar) {
+        if (holder.isStarredChanged()) {
             setResult(IntentCommunication.STATION_STAR_RESULT_CODE, getIntentWithStationHolder());
         } else {
             setResult(IntentCommunication.NO_OP_RESULT_CODE, null);

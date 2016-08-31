@@ -20,12 +20,12 @@ public final class IntentCommunication {
     public static final int STATION_INFO_REQUEST_CODE = 100;
 
     /**
-     * Result code when map should display the geo point
+     * Result code when requesting to map station info
      */
     public static final int MAP_GEO_POINT_RESULT_CODE = 200;
 
     /**
-     * Result code when map should display the geo point
+     * Result code when requesting to stations list
      */
     public static final int STATION_STAR_RESULT_CODE = 201;
 
