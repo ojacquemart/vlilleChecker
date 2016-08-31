@@ -141,6 +141,16 @@
             android:layout_height="wrap_content">
 
             <ImageView
+                android:id="@+id/details_express"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10px"
+                android:adjustViewBounds="true"
+                android:layout_toLeftOf="@+id/details_cb"
+                android:background="@drawable/rounded_background"
+                android:scaleType="fitStart"
+                android:src="@drawable/ic_ex" />
+            <ImageView
                 android:id="@+id/details_cb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

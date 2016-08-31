@@ -116,11 +116,9 @@ public class StationsAdapter extends ArrayAdapter<Station> {
         nbAttachs.setText(station.getAttachsAsString());
         nbAttachs.setTextColor(getColor(station.getAttachs()));
 
-        LinearLayout boxOutOfService = (LinearLayout) view.findViewById(R.id.station_out_of_service_box);
-        ViewUtils.switchView(boxOutOfService, station.isOutOfService());
-
-        ImageView ccPaymentAllowed = (ImageView) view.findViewById(R.id.details_cb);
-        ViewUtils.switchView(ccPaymentAllowed, station.isCbPaiement());
+        ViewUtils.switchView(view.findViewById(R.id.station_out_of_service_box), station.isOutOfService());
+        ViewUtils.switchView(view.findViewById(R.id.details_cb), station.isCbPaiement());
+        ViewUtils.switchView(view.findViewById(R.id.details_express), station.isExpress());
     }
 
     private int getColor(int number) {

@@ -59,6 +59,7 @@ public class StationInfoActivity extends ActionBarActivity {
         getTextView(R.id.station_attachs).setText(station.getAttachsAsString());
 
         ViewUtils.switchView(findViewById(R.id.station_cb), station.isCbPaiement());
+        ViewUtils.switchView(findViewById(R.id.station_express), station.isExpress());
 
         handleBtnStar();
         handleBtnToLocate();

@@ -3,14 +3,19 @@ package com.vlille.checker.model;
 import android.content.res.Resources;
 import android.text.TextUtils;
 import android.view.View;
+
 import com.vlille.checker.R;
 import com.vlille.checker.db.DB;
 import com.vlille.checker.utils.NumberUtils;
 import com.vlille.checker.utils.TextPlural;
+
 import org.droidparts.annotation.sql.Column;
 import org.droidparts.annotation.sql.Table;
 import org.droidparts.model.Entity;
 import org.osmdroid.util.GeoPoint;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Represents the details of a single vlille station.
@@ -36,6 +41,9 @@ public class Station extends Entity {
     public static final int APPWIDGET_ID_EMPTY_VALUE = -1;
 
     public static final String EMPTY_VALUE = "...";
+
+    public static final long LILLE_FLANDRES_ID = 24L;
+    public static final List<Long> EXPRESS_IDS = Arrays.asList(LILLE_FLANDRES_ID);
 
     /**
      * Nullable columns:
@@ -224,6 +232,10 @@ public class Station extends Entity {
 
     public void setCbPaiement(boolean cbPaiement) {
         this.cbPaiement = cbPaiement;
+    }
+
+    public boolean isExpress() {
+        return EXPRESS_IDS.contains(id);
     }
 
     public Long getLastUpdate() {

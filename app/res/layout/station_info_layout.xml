@@ -21,17 +21,34 @@
         android:text="12 RUE D'ARTOIS"
         android:textSize="16dp" />
 
-    <ImageView
-        android:id="@+id/station_cb"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="5dp"
-        android:adjustViewBounds="true"
-        android:background="@drawable/rounded_background"
-        android:baselineAlignBottom="false"
-        android:clickable="false"
-        android:src="@drawable/ic_cb" />
+        android:layout_marginTop="10dp"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/station_express"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10px"
+            android:layout_toLeftOf="@+id/station_cb"
+            android:adjustViewBounds="true"
+            android:background="@drawable/rounded_background"
+            android:scaleType="fitStart"
+            android:src="@drawable/ic_ex" />
+
+        <ImageView
+            android:id="@+id/station_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5px"
+            android:adjustViewBounds="true"
+            android:background="@drawable/rounded_background"
+            android:src="@drawable/ic_cb" />
+    </RelativeLayout>
 
     <View
         android:layout_width="fill_parent"
@@ -159,13 +176,13 @@
 
             <ImageButton
                 android:id="@+id/station_to_locate"
-                android:src="@drawable/location_place_pressed"
-                android:background="@null"
                 android:layout_width="@dimen/station_info_btn_action_size"
                 android:layout_height="@dimen/station_info_btn_action_size"
                 android:adjustViewBounds="true"
+                android:background="@null"
                 android:baselineAlignBottom="false"
-                android:clickable="false" />
+                android:clickable="false"
+                android:src="@drawable/location_place_pressed" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -189,13 +206,13 @@
 
             <ImageButton
                 android:id="@+id/station_to_itinerary"
-                android:src="@drawable/location_directions_pressed"
-                android:background="@null"
                 android:layout_width="@dimen/station_info_btn_action_size"
                 android:layout_height="@dimen/station_info_btn_action_size"
                 android:adjustViewBounds="true"
+                android:background="@null"
                 android:baselineAlignBottom="false"
-                android:clickable="false" />
+                android:clickable="false"
+                android:src="@drawable/location_directions_pressed" />
 
             <TextView
                 android:layout_width="wrap_content"
