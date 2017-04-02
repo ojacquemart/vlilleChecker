@@ -3,7 +3,7 @@ package com.vlille.checker.ui.osm.overlay;
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.SimpleLocationOverlay;
+import org.osmdroid.views.overlay.mylocation.SimpleLocationOverlay;
 
 import android.content.Context;
 import android.graphics.Canvas;

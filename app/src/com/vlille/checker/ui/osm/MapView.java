@@ -21,14 +21,12 @@ import com.vlille.checker.ui.osm.overlay.CircleLocationOverlay;
 import com.vlille.checker.ui.osm.overlay.ItemizedOverlayWithFocus;
 import com.vlille.checker.ui.osm.overlay.MaskableOverlayItem;
 import com.vlille.checker.ui.osm.overlay.OverlayZoomUtils;
-import com.vlille.checker.ui.osm.overlay.ResourceProxyImpl;
 import com.vlille.checker.ui.osm.overlay.window.BubbleInfoWindow;
 import com.vlille.checker.utils.ContextHelper;
 
-import org.osmdroid.ResourceProxy;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.XYTileSource;
-import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
 
@@ -227,7 +225,6 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
             return false;
         }
     };
-    private final ResourceProxy mResourceProxy = new ResourceProxyImpl(getContext());
 
     private List<MaskableOverlayItem> maskableOverlayItems = null;
 
@@ -242,7 +239,7 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
                     resources,
                     bubbleInfoWindow,
                     DEFAULT_ONGESTURE_LISTENER,
-                    mResourceProxy
+                    getContext()
             );
         }
         itemizedOverlay.setFocusItemsOnTap(true);
@@ -339,7 +336,7 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
      * @see org.osmdroid.views.MapView#getBoundingBox()
      */
     private ItemActionUpdater getDefaultItemUpdater() {
-        final BoundingBoxE6 boundingBox = getBoundingBox();
+        final BoundingBox boundingBox = getBoundingBox();
         final int zoomLevel = getZoomLevel();
 
         return new ItemActionUpdater() {
