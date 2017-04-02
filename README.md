@@ -13,6 +13,7 @@ This project is an unofficial android app for the Vlille service in Lille, Franc
 
 
 ## Versions
+* 2017-04-02: v4.2.1
 * 2016-09-01: v4.2.0
 * 2016-01-02: v4.1.1
 * 2015-11-01: v4.1.0
@@ -40,10 +41,10 @@ This project uses the following open source libraries:
 
 ## Installation
 
-### Android Studio users
+Android studio users:
 
 * import the build.gradle
 
-## Greetings
+## Greetings
 
 Thanks to [John Zmuda](http://thenounproject.com/rzmota/) for its great icon. His icon is used for the app launcher icon
