@@ -7,6 +7,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -22,10 +23,10 @@ import com.vlille.checker.ui.osm.overlay.ItemizedOverlayWithFocus;
 import com.vlille.checker.ui.osm.overlay.MaskableOverlayItem;
 import com.vlille.checker.ui.osm.overlay.OverlayZoomUtils;
 import com.vlille.checker.ui.osm.overlay.window.BubbleInfoWindow;
+import com.vlille.checker.ui.osm.tilesource.ThunderforestTileSource;
 import com.vlille.checker.utils.ContextHelper;
 
 import org.osmdroid.api.IMapController;
-import org.osmdroid.tileprovider.tilesource.XYTileSource;
 import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
@@ -56,15 +57,6 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
     public static final int MAX_ZOOM_LEVEL = 18;
     public static final int MIN_ZOOM_LEVEL = 0;
     public static final int TILE_SIZE_PIXELS = 256;
-    private static final XYTileSource PUBLIC_TRANSPORT = new XYTileSource("TransportMap",
-            MIN_ZOOM_LEVEL, MAX_ZOOM_LEVEL,
-            TILE_SIZE_PIXELS,
-            ".png",
-            new String[]{
-                    "http://a.tile2.opencyclemap.org/transport/",
-                    "http://b.tile2.opencyclemap.org/transport/",
-                    "http://c.tile2.opencyclemap.org/transport/"
-            });
 
     /**
      * The index for the location circle overlay.
@@ -110,10 +102,17 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
     private void initConfiguration() {
         Log.d(TAG, "initConfiguration");
 
-        setTileSource(PUBLIC_TRANSPORT);
+        setTileSource(getThunderforestTileSource());
         setBuiltInZoomControls(true);
         setMultiTouchControls(true);
         setTilesScaledToDpi(true);
+    }
+
+    private ThunderforestTileSource getThunderforestTileSource() {
+        return new ThunderforestTileSource(getContext(),
+                ThunderforestTileSource.TRANSPORT,
+                MIN_ZOOM_LEVEL, MAX_ZOOM_LEVEL,
+                TILE_SIZE_PIXELS);
     }
 
     private void initCenter() {
