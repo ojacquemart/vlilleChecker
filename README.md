@@ -8,9 +8,10 @@ This repository contains the source code for the Vlille Checker Android app.
 
 This project is an unofficial android app for the Vlille service in Lille, France.
 
-![image1](https://lh6.ggpht.com/g7NMrd6HI8HtnuTHgHapi8n-brMAcNMJxWcrMrdPjXT51u-0WtGZaVbC0blTpLN3yik=h310-rw)&nbsp;![image2]
-(https://lh4.ggpht.com/xDTBkRgsBuUDNzOPI1dReAZZez7NW4rALhI8MAo6YzFEVQXGZUyl3i6KN1ct3IHhr_Q=h310-rw)&nbsp;![image3](https://lh4.ggpht.com/88KJADq-G7lv9q9O6zvhfcFEbAlANc7oqOEW2vC2rNoRyqyItw8grNCqPwufLicD5w=h310-rw)&nbsp;![image4](https://lh6.ggpht.com/QfXTlqCccKGuM41aKq8zb4VXiWQsqQ4l_OB7zREWUSuqYfw1mjuGnqOpDNa6gDZSPQ=h310-rw)
-
+![image1](https://lh6.ggpht.com/g7NMrd6HI8HtnuTHgHapi8n-brMAcNMJxWcrMrdPjXT51u-0WtGZaVbC0blTpLN3yik=h310-rw)
+![image2](https://lh4.ggpht.com/xDTBkRgsBuUDNzOPI1dReAZZez7NW4rALhI8MAo6YzFEVQXGZUyl3i6KN1ct3IHhr_Q=h310-rw)
+![image3](https://lh4.ggpht.com/88KJADq-G7lv9q9O6zvhfcFEbAlANc7oqOEW2vC2rNoRyqyItw8grNCqPwufLicD5w=h310-rw)
+![image4](https://lh6.ggpht.com/QfXTlqCccKGuM41aKq8zb4VXiWQsqQ4l_OB7zREWUSuqYfw1mjuGnqOpDNa6gDZSPQ=h310-rw)
 
 ## Versions
 * 2017-04-02: v4.2.1
