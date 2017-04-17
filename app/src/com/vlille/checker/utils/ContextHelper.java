@@ -47,13 +47,6 @@ public final class ContextHelper {
 		return networkAvailable;
 	}
 
-    /**
-     * Gets a preference boolean value
-     */
-    private static boolean getBooleanValue(Context context, String key, boolean defaultValue) {
-        return getDefaultSharedPreferences(context).getBoolean(key, defaultValue);
-    }
-
 	/**
 	 * Gets the radius value.
 	 */

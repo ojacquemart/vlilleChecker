@@ -21,8 +21,6 @@ public class LocationManagerWrapper {
 	public static int DURATION_UPDATE_IN_MILLIS = 10000;
 	public static int DISTANCE_UPDATE_IN_METERS = 10000;
 	
-	private static final String TAG = LocationManagerWrapper.class.getSimpleName();
-	
 	private Context context;
 	private LocationManager locationManager;
 

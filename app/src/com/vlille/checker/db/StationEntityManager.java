@@ -14,7 +14,6 @@ import java.util.List;
 public class StationEntityManager extends EntityManager<Station> {
 
     private static final String TAG = StationEntityManager.class.getSimpleName();
-    private int appWigetIdToNull;
 
     public StationEntityManager(Context ctx) {
         super(Station.class, ctx);
