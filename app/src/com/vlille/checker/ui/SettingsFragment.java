@@ -35,14 +35,14 @@ public class SettingsFragment extends PreferenceFragment
 
 	private static final String TAG = SettingsFragment.class.getSimpleName();
 
+	private LocationManagerWrapper locationManagerWrapper;
+	private boolean hasClickedOnLocalisationActivationAndNeedsGpsCheck;
+
     @InjectDependency
     protected StationEntityManager stationEntityManager;
 
     @InjectDependency
     protected MetadataEntityManager metadataEntityManager;
-	
-	private LocationManagerWrapper locationManagerWrapper;
-	private boolean hasClickedOnLocalisationActivationAndNeedsGpsCheck;
 
     @Override
     public final View onCreateView(LayoutInflater inflater,
@@ -232,13 +232,15 @@ public class SettingsFragment extends PreferenceFragment
 	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 		textProgress.setText(String.format("%d %s", progress, getString(R.string.prefs_position_radius_distance_unit)));
 	}
-	
+
 	@Override
 	public void onStartTrackingTouch(SeekBar seekBar) {
+		// should remain empty
 	}
-	
+
 	@Override
 	public void onStopTrackingTouch(SeekBar seekBar) {
+		// should remain empty
 	}
 
 }

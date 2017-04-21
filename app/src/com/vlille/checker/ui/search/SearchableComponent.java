@@ -104,13 +104,13 @@ public class SearchableComponent {
             return viewParent.getOriginalStations();
         }
 
-        keyword = keyword.toLowerCase();
+        String keywordAsLowerCase = keyword.toLowerCase();
 
         List<Station> result = new ArrayList<Station>();
 
         List<Station> stations = viewParent.getOriginalStations();
         for (Station eachStation : stations) {
-            if (eachStation.getName().toLowerCase().contains(keyword)) {
+            if (eachStation.getName().toLowerCase().contains(keywordAsLowerCase)) {
                 result.add(eachStation);
             }
         }

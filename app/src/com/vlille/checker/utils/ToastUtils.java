@@ -33,7 +33,7 @@ public final class ToastUtils {
 			public void run() {
 				Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
 			}
-		}).run();
+		}).start();
 	}
 
 	/**

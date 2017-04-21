@@ -10,12 +10,12 @@ import com.vlille.checker.R;
 class ListColorConfiguration extends ColorConfiguration {
 
     @Override
-    int getEmptyColor() {
+    protected int getEmptyColor() {
         return R.color.red;
     }
 
     @Override
-    int getNonEmptyColor() {
+    protected int getNonEmptyColor() {
         return R.color.black;
     }
 }

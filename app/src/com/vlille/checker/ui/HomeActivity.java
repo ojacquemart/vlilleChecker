@@ -129,6 +129,9 @@ public class HomeActivity extends ActionBarActivity implements SnackBar.OnMessag
             case R.id.main_menu_about:
                 showIntent(AboutActivity.class);
                 break;
+
+            default:
+                Log.d(TAG, "Unhandled menu item: " + item.getItemId());
         }
 
         return super.onOptionsItemSelected(item);

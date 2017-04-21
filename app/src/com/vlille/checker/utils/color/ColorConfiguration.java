@@ -10,13 +10,13 @@ abstract class ColorConfiguration {
 
     private static final int ALMOST_EMPTY_COLOR = R.color.orange;
 
-    abstract int getEmptyColor();
+    protected abstract int getEmptyColor();
 
     private boolean isAlmostEmpty(int number) {
         return number >= ALMOST_EMPTY_MIN && number <= ALMOST_EMPTY_MAX;
     }
 
-    abstract int getNonEmptyColor();
+    protected abstract int getNonEmptyColor();
 
     /**
      * Gets the color from a given number of bikes.

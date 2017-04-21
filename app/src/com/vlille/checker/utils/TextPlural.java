@@ -19,8 +19,9 @@ public  final class TextPlural {
      */
     public static String toPlural(long value, String text) {
         text = String.format(text, value);
+
         if (value > 1) {
-            text += "s";
+            return text + "s";
         }
 
         return text;

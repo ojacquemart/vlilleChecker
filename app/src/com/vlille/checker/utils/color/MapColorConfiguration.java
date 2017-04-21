@@ -10,12 +10,12 @@ import com.vlille.checker.R;
 class MapColorConfiguration extends ColorConfiguration {
 
     @Override
-    int getEmptyColor() {
+    protected int getEmptyColor() {
         return R.color.black;
     }
 
     @Override
-    int getNonEmptyColor() {
+    protected int getNonEmptyColor() {
         return R.color.white;
     }
 }

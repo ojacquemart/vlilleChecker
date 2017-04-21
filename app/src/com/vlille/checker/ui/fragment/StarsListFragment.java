@@ -19,12 +19,12 @@ public class StarsListFragment extends StationsListFragment {
     }
 
     @Override
-    void loadStations() {
+    protected void loadStations() {
         setStations(stationEntityManager.findAllStarred());
     }
 
     @Override
-    boolean isReadOnly() {
+    protected boolean isReadOnly() {
         return false;
     }
 

@@ -2,8 +2,6 @@ package com.vlille.checker.ui;
 
 public final class IntentCommunication {
 
-    private IntentCommunication() {}
-
     /**
      * Code use when storing data into an intent
      */
@@ -29,6 +27,8 @@ public final class IntentCommunication {
      */
     public static final int STATION_STAR_RESULT_CODE = 201;
 
+    private IntentCommunication() {}
+
     public static class Result {
 
         public static boolean shouldMoveMapToStation(int resultCode) {
@@ -40,4 +40,5 @@ public final class IntentCommunication {
         }
 
     }
+
 }

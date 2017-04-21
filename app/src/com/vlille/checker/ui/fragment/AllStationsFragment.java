@@ -46,7 +46,7 @@ public class AllStationsFragment extends StationsListFragment implements Searcha
     }
 
     @Override
-    void loadStations() {
+    protected void loadStations() {
         originalStations = stationEntityManager.findAll();
         setStations(new ArrayList<Station>(originalStations));
     }
@@ -96,7 +96,7 @@ public class AllStationsFragment extends StationsListFragment implements Searcha
     }
 
     @Override
-    boolean isReadOnly() {
+    protected boolean isReadOnly() {
         return true;
     }
 

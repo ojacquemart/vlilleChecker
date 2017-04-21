@@ -51,16 +51,14 @@ public class MapFragment extends Fragment implements StationUpdateDelegate {
 
     private MapView mapView;
 
-    private List<Station> stations;
-
     static class PermissionConfig {
         public static int LOCATION = 1;
         public static int STORAGE = 2;
 
-        int requestCode;
-        String permission;
-        int explanation;
-        int notGrantedText;
+        private int requestCode;
+        private String permission;
+        private int explanation;
+        private int notGrantedText;
 
         PermissionConfig(int requestCode, String permission, int explanation, int notGrantedText) {
             this.requestCode = requestCode;
@@ -107,11 +105,11 @@ public class MapFragment extends Fragment implements StationUpdateDelegate {
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         PermissionConfig permissionConfig = PERMISSIONS_CONFIG.get(requestCode);
         if (permissionConfig != null) {
-            handleOnRequestPermissionsResult(permissionConfig, permissions, grantResults);
+            handleOnRequestPermissionsResult(permissionConfig, grantResults);
         }
     }
 
-    private void handleOnRequestPermissionsResult(PermissionConfig permissionConfig, String[] permissions, int[] grantResults) {
+    private void handleOnRequestPermissionsResult(PermissionConfig permissionConfig, int[] grantResults) {
         Log.v(TAG, "Handle permission result for " + permissionConfig.permission);
         boolean granted = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
         if (!granted) {
@@ -141,7 +139,7 @@ public class MapFragment extends Fragment implements StationUpdateDelegate {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        this.stations = stationEntityManager.findAll();
+        List<Station> stations = stationEntityManager.findAll();
 
         mapView.setMapInfos(state, stations);
         mapView.setHomeActivity((HomeActivity) getActivity());

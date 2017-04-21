@@ -25,16 +25,9 @@ import org.osmdroid.views.overlay.OverlayItem.HotspotPlace;
 
 import java.util.List;
 
-public class ItemizedOverlayWithFocus<Item extends MaskableOverlayItem> extends ItemizedIconOverlay<Item> {
+public class ItemizedOverlayWithFocus<T extends MaskableOverlayItem> extends ItemizedIconOverlay<T> {
 
     private static final String TAG = "ItemOverlayWithFocus";
-
-    // ===========================================================
-    // osmdroid bonus bubble
-    // ===========================================================
-
-    protected InfoWindow mBubble = null;
-    protected OverlayItem mItemWithBubble = null;
 
     // ===========================================================
     // Fields
@@ -43,7 +36,7 @@ public class ItemizedOverlayWithFocus<Item extends MaskableOverlayItem> extends 
     private Context mContext;
     private float mScale;
     private final Point mCurScreenCoords = new Point();
-    private Paint mDescriptionPaint, mTitlePaint;
+    private Paint mTitlePaint;
 
     protected int mTextSize;
 
@@ -54,14 +47,21 @@ public class ItemizedOverlayWithFocus<Item extends MaskableOverlayItem> extends 
     protected boolean mFocusItemsOnTap;
 
     // ===========================================================
+    // osmdroid bonus bubble
+    // ===========================================================
+
+    protected InfoWindow mBubble = null;
+    protected OverlayItem mItemWithBubble = null;
+
+    // ===========================================================
     // Constructors
     // ==========================================================
 
     public ItemizedOverlayWithFocus(
-            final List<Item> aList,
+            final List<T> aList,
             final Resources resources,
             final InfoWindow pInfoWindow,
-            final OnItemGestureListener<Item> aOnItemTapListener,
+            final OnItemGestureListener<T> aOnItemTapListener,
             final Context context) {
         super(aList, ContextCompat.getDrawable(context, R.drawable.ic_station_marker), aOnItemTapListener, context);
 
@@ -74,8 +74,6 @@ public class ItemizedOverlayWithFocus<Item extends MaskableOverlayItem> extends 
         this.mBubble = pInfoWindow;
         this.mTextSize = resources.getDimensionPixelSize(R.dimen.overlay_font_size);
 
-        this.mDescriptionPaint = new Paint();
-        this.mDescriptionPaint.setAntiAlias(true);
         this.initPaint();
 
         mItemWithBubble = null;
@@ -154,7 +152,7 @@ public class ItemizedOverlayWithFocus<Item extends MaskableOverlayItem> extends 
     }
 
     @Override
-    protected boolean onSingleTapUpHelper(final int index, final Item item, final MapView mapView) {
+    protected boolean onSingleTapUpHelper(final int index, final T item, final MapView mapView) {
         showBubbleOnItem(index, mapView);
         return true;
     }
@@ -164,9 +162,10 @@ public class ItemizedOverlayWithFocus<Item extends MaskableOverlayItem> extends 
     }
 
     @Override
-    public boolean removeItem(final Item item) {
+    public boolean removeItem(final T item) {
         boolean result = super.removeItem(item);
-        if (mItemWithBubble == item) {
+
+        if (mItemWithBubble.equals(item)) {
             hideBubble();
         }
         return result;
@@ -194,7 +193,7 @@ public class ItemizedOverlayWithFocus<Item extends MaskableOverlayItem> extends 
 
 		// Draw in backward cycle, so the items with the least index are on the front.
         for (int i = size; i >= 0; i--) {
-            final Item item = getItem(i);
+            final T item = getItem(i);
             projection.toPixels(item.getPoint(), mCurScreenCoords);
 
             if (item != mItemWithBubble) {
@@ -205,7 +204,7 @@ public class ItemizedOverlayWithFocus<Item extends MaskableOverlayItem> extends 
         onDrawFocusBubble(canvas, zoomLevel, projection);
     }
 
-    private void onDrawItem(final Canvas canvas, final int zoomLevel, final Item item, final Point curScreenCoords) {
+    private void onDrawItem(final Canvas canvas, final int zoomLevel, final T item, final Point curScreenCoords) {
         MaskableOverlayItem maskableItem = item;
         if (maskableItem.isHidden()) {
             return;
@@ -229,7 +228,7 @@ public class ItemizedOverlayWithFocus<Item extends MaskableOverlayItem> extends 
     private void onDrawFocusBubble(Canvas canvas, int zoomLevel, Projection projection) {
         if (mItemWithBubble != null) {
             projection.toPixels(mItemWithBubble.getPoint(), mCurScreenCoords);
-            onDrawItem(canvas, zoomLevel, (Item) mItemWithBubble, mCurScreenCoords);
+            onDrawItem(canvas, zoomLevel, (T) mItemWithBubble, mCurScreenCoords);
         }
     }
 
@@ -256,7 +255,7 @@ public class ItemizedOverlayWithFocus<Item extends MaskableOverlayItem> extends 
         return mMarkerPin;
     }
 
-    public List<Item> getItems() {
+    public List<T> getItems() {
         return super.mItemList;
     }
 

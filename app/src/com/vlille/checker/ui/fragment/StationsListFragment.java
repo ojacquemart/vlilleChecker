@@ -120,7 +120,7 @@ abstract class StationsListFragment extends ListFragment
         return (HomeActivity) getActivity();
     }
 
-    abstract void loadStations();
+    protected abstract void loadStations();
 
     public void initListAdapter() {
         setListAdapter();
@@ -143,7 +143,7 @@ abstract class StationsListFragment extends ListFragment
      *
      * @return <code>true</code> when elements can be removed from the list, <code>false</code> otherwise.
      */
-    abstract boolean isReadOnly();
+    protected abstract boolean isReadOnly();
 
     private void initListViewListeners() {
         getListView().setOnScrollListener(this);

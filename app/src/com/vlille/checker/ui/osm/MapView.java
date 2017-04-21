@@ -77,6 +77,12 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
     private CircleLocationOverlay circleOverlay;
     private ItemizedOverlayWithFocus<MaskableOverlayItem> itemizedOverlay;
 
+    private int oldZoomLevel = -1;
+    private GeoPoint oldCenterGeoPoint;
+    private OnPanAndZoomListener panAndZoomListener;
+
+    private List<MaskableOverlayItem> maskableOverlayItems = null;
+
     public MapView(final Context context, AttributeSet attrs) {
         super(context, attrs);
         Log.d(TAG, "MapView");
@@ -223,8 +229,6 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
             return false;
         }
     };
-
-    private List<MaskableOverlayItem> maskableOverlayItems = null;
 
     private void initIconizedOverlay() {
         final List<MaskableOverlayItem> items = initOverlays();
@@ -382,10 +386,6 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
     // onZoomAndPanListener
     //=====================
 
-    private int oldZoomLevel = -1;
-    private GeoPoint oldCenterGeoPoint;
-    private OnPanAndZoomListener panAndZoomListener;
-
     /**
      * Detects move on touch event in order to refresh station, and retrieves the new value of the map center.
      */
@@ -393,8 +393,9 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_UP) {
             GeoPoint centerGeoPoint = (GeoPoint) this.getMapCenter();
-            if (oldCenterGeoPoint == null || (oldCenterGeoPoint.getLatitudeE6() != centerGeoPoint.getLatitudeE6())
-                    || (oldCenterGeoPoint.getLongitudeE6() != centerGeoPoint.getLongitudeE6())) {
+            if (oldCenterGeoPoint == null
+                    || oldCenterGeoPoint.getLatitude() != centerGeoPoint.getLatitude()
+                    || oldCenterGeoPoint.getLongitude() != centerGeoPoint.getLongitude()) {
                 panAndZoomListener.onPan();
             }
             oldCenterGeoPoint = (GeoPoint) this.getMapCenter();
