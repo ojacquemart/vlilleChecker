@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="com.vlille.checker"
           android:versionCode="722"
           android:versionName="4.2.2"
@@ -17,6 +18,9 @@
     <uses-feature android:name="android.hardware.location.network" />
     <uses-feature android:name="android.hardware.location.gps" />
     <uses-feature android:name="android.hardware.wifi" />
+
+    <!-- Compatibilities -->
+    <uses-sdk tools:overrideLibrary="android.support.v14.preference" />
 
     <application
             android:name=".Application"
@@ -65,7 +69,7 @@
         <activity
                 android:name=".ui.SettingsActivity"
                 android:label="@string/preferences"
-                android:theme="@style/Theme.Vlillechecker" />
+                android:theme="@style/Theme.Vlillechecker.Settings" />
 
         <!-- About Activity -->
         <activity

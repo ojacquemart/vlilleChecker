@@ -2,11 +2,10 @@ package com.vlille.checker.ui;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.SharedPreferences.Editor;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
-import android.support.v4.preference.PreferenceFragment;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceFragmentCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +29,9 @@ import org.droidparts.annotation.inject.InjectDependency;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class SettingsFragment extends PreferenceFragment
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+
+public class SettingsFragment extends PreferenceFragmentCompat
         implements OnSeekBarChangeListener {
 
 	private static final String TAG = SettingsFragment.class.getSimpleName();
@@ -65,13 +66,13 @@ public class SettingsFragment extends PreferenceFragment
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.d(TAG, "onCreate");
-		
+
 		addPreferencesFromResource(R.xml.preferences);
-		
+
 		locationManagerWrapper = LocationManagerWrapper.with(getActivity());
 	}
 
-    private void initView() {
+	private void initView() {
         setLastDataStatusUpdate();
         setVersionNumber();
         onChangeGpsActivated();
@@ -104,7 +105,7 @@ public class SettingsFragment extends PreferenceFragment
 
 	private void onChangeGpsActivated() {
 		final Preference prefGpsProviderOn = findPreference(PreferenceKeys.LOCALISATION_GPS_ACTIVATED);
-		prefGpsProviderOn.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+		prefGpsProviderOn.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
 
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -134,23 +135,23 @@ public class SettingsFragment extends PreferenceFragment
             hasClickedOnLocalisationActivationAndNeedsGpsCheck = false;
 
             Log.d(TAG, "Gps has been activated, set maps location prefs enabled on");
-            final Editor editor = findPreference(PreferenceKeys.LOCALISATION_GPS_ACTIVATED).getEditor();
+			SharedPreferences.Editor editor = getDefaultSharedPreferences(getContext()).edit();
             editor.putBoolean(PreferenceKeys.LOCALISATION_GPS_ACTIVATED, true);
-            editor.commit();
+            editor.apply();
 
             // Restart activity to refresh the preferences.
             startActivity(getActivity().getIntent());
 		}
 	}
-	
+
 	//=========================
 	// Location radius onChange
 	//=========================
-	
+
 	private Preference prefLocationRadiusValue;
 	private SeekBar seekBar;
 	private TextView textProgress;
-	
+
 	private void onChangeRadiusValue() {
 		prefLocationRadiusValue = findPreference(PreferenceKeys.POSITION_RADIUS);
 		prefLocationRadiusValue.setOnPreferenceClickListener(
@@ -171,15 +172,15 @@ public class SettingsFragment extends PreferenceFragment
 									public void onClick(DialogInterface dialog, int which) {
 										int progress = seekBar.getProgress();
 										Log.d(TAG, "Save the radius " + progress);
-										
+
 										if (progress == 0) {
 											progress = (int) PreferenceKeys.POSITION_RADIUS_DEFAULT_VALUE;
 										}
-										
-										final Editor editor = prefLocationRadiusValue.getEditor();
+
+										final SharedPreferences.Editor editor = getDefaultSharedPreferences(getContext()).edit();
 										editor.putLong(PreferenceKeys.POSITION_RADIUS, Long.valueOf(progress));
-										editor.commit();
-										
+										editor.apply();
+
 										changePrefLocationRadiusValue();
 									}
 								})
@@ -197,14 +198,14 @@ public class SettingsFragment extends PreferenceFragment
 
 						seekBar = (SeekBar) alertDialog.findViewById(R.id.position_seekbar_distance);
 						seekBar.setOnSeekBarChangeListener(SettingsFragment.this);
-						
+
 						updateSeekBarProgress();
 						changePrefLocationRadiusValue();
 
 						return false;
 					}
 		});
-		
+
 		changePrefLocationRadiusValue();
 	}
 
@@ -217,20 +218,25 @@ public class SettingsFragment extends PreferenceFragment
 					getString(R.string.prefs_position_radius_distance_summary),
 					ContextHelper.getRadiusValue(getActivity()),
 					getString(R.string.prefs_position_radius_distance_unit));
-		
+
 		prefLocationRadiusValue.setSummary(summary);
 	}
-	
+
 	private void updateSeekBarProgress() {
 		seekBar.setProgress(Long.valueOf(ContextHelper.getRadiusValue(getActivity())).intValue());
 	}
-	
+
 	/**
 	 * On radius change, update the text.
 	 */
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 		textProgress.setText(String.format("%d %s", progress, getString(R.string.prefs_position_radius_distance_unit)));
+	}
+
+	@Override
+	public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+		// should remain empty
 	}
 
 	@Override

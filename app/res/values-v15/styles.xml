@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Vlillechecker.Settings" parent="Theme.Vlillechecker">
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+        <item name="android:listSeparatorTextViewStyle">@style/Theme.Vlillechecker.ListSeparatorTextView</item>
+    </style>
+
+    <style name="Theme.Vlillechecker.ListSeparatorTextView">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/accent</item>
+        <item name="android:layout_marginBottom">0dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+    </style>
+
+    <style name="starStyle" parent="android:Widget.CompoundButton.Star">
+        <item name="android:button">@drawable/star</item>
+    </style>
+
+</resources>
