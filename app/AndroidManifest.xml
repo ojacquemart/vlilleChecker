@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
           package="com.vlille.checker"
-          android:versionCode="722"
-          android:versionName="4.2.2"
+          android:versionCode="723"
+          android:versionName="4.2.3"
           android:installLocation="auto">
 
     <!-- Permissions -->
