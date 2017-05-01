@@ -6,9 +6,8 @@ This repository contains the source code for the Vlille Checker Android app.
 
 ## Get it
 
-<a href="https://play.google.com/store/apps/details?id=com.vlille.checker" alt="Download from Google Play">
-  <img src="http://www.android.com/images/brand/android_app_on_play_large.png">
-</a>
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height=90>](https://play.google.com/store/apps/details?id=com.vlille.checker)
+[<img src="https://f-droid.org/badge/get-it-on.png" height=90>](https://f-droid.org/repository/browse/?fdid=com.vlille.checker)
 
 This project is an unofficial android app for the Vlille service in Lille, France.
 
@@ -40,7 +39,6 @@ This project uses the following open source libraries:
 * [ACRA - Application Crash Report for Android](http://code.google.com/p/acra/)
 * [DroidParts](https://github.com/yanchenko/droidparts)
 * [OpenStreetMapDroid](http://code.google.com/p/osmdroid/)
-* [V4-PreferenceFragment](https://github.com/kolavar/android-support-v4-preferencefragment)
 * [SnackBar](https://github.com/MrEngineer13/SnackBar)
 * [GPSEmulator to simulate GPS location](http://code.google.com/p/android-gps-emulator/)
 
@@ -52,4 +50,4 @@ Android studio users:
 
 ## Greetings
 
-Thanks to [John Zmuda](http://thenounproject.com/rzmota/) for its great icon. His icon is used for the app launcher icon
+Thanks to [John Zmuda](http://thenounproject.com/rzmota/) for its great icon. The icon is used for the app launcher icon.
