@@ -17,6 +17,9 @@ This project is an unofficial android app for the Vlille service in Lille, Franc
 ![image4](https://lh6.ggpht.com/QfXTlqCccKGuM41aKq8zb4VXiWQsqQ4l_OB7zREWUSuqYfw1mjuGnqOpDNa6gDZSPQ=h310-rw)
 
 ## Versions
+* 2017-06-16: v4.2.4
+* 2017-04-27: v4.2.3
+* 2017-04-21: v4.2.2
 * 2017-04-02: v4.2.1
 * 2016-09-01: v4.2.0
 * 2016-01-02: v4.1.1
