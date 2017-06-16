@@ -36,7 +36,8 @@ public class BubbleInfoWindow extends DefaultInfoWindow {
     public BubbleInfoWindow(MapView mapView,
                             HomeActivity homeActivity,
                             final StationUpdateDelegate stationUpdateDelegate) {
-		super(R.layout.maps_bubble, mapView);
+        super(R.layout.maps_bubble, mapView);
+
         this.homeActivity = homeActivity;
         this.stationUpdateDelegate = stationUpdateDelegate;
 
@@ -50,33 +51,34 @@ public class BubbleInfoWindow extends DefaultInfoWindow {
             }
         });
     }
-	
-	/**
-	 * open the window at the specified position. 
-	 * @param item the item on which is hooked the view
-	 * @param offsetX (&offsetY) the offset of the view to the position, in pixels. 
-	 * This allows to offset the view from the marker position. 
-	 */
-	@Override
-	public void open(ExtendedOverlayItem item, int offsetX, int offsetY) {
-		MaskableOverlayItem maskableItem = (MaskableOverlayItem) item;
-		if (maskableItem.isVisible()) {
-			super.open(item, offsetX, offsetY);
-		}
-	}
 
-	@Override
-	public void onOpen(ExtendedOverlayItem item) {
-		selectedItem = item;
-		
-		String title = item.getTitle();
-		if (title == null) {
-			title = "";
-		}
-		((TextView) mView.findViewById(R.id.maps_bubble_title)).setText(title);
+    /**
+     * open the window at the specified position.
+     *
+     * @param item    the item on which is hooked the view
+     * @param offsetX (&offsetY) the offset of the view to the position, in pixels.
+     *                This allows to offset the view from the marker position.
+     */
+    @Override
+    public void open(ExtendedOverlayItem item, int offsetX, int offsetY) {
+        MaskableOverlayItem maskableItem = (MaskableOverlayItem) item;
+        if (maskableItem.isVisible()) {
+            super.open(item, offsetX, offsetY);
+        }
+    }
 
-		Station station = (Station) item.getRelatedObject();
-		((CheckBox) mView.findViewById(R.id.maps_bubble_checkbox)).setChecked(station.isStarred());
+    @Override
+    public void onOpen(ExtendedOverlayItem item) {
+        selectedItem = item;
+
+        String title = item.getTitle();
+        if (title == null) {
+            title = "";
+        }
+        ((TextView) mView.findViewById(R.id.maps_bubble_title)).setText(title);
+
+        Station station = (Station) item.getRelatedObject();
+        ((CheckBox) mView.findViewById(R.id.maps_bubble_checkbox)).setChecked(station.isStarred());
 
         boolean detailledZoomLevel = OverlayZoomUtils.isDetailledZoomLevel(getZoomLevel());
         ViewUtils.switchView(mView.findViewById(R.id.maps_bubble_station_table), !detailledZoomLevel);
@@ -90,12 +92,13 @@ public class BubbleInfoWindow extends DefaultInfoWindow {
             SingleStationAsyncTask asyncTask = new SingleStationAsyncTask(stationUpdateDelegate);
             asyncTask.execute(Arrays.asList(station));
         }
-	}
+    }
 
     private void bindStation(Station station) {
-        updateTextView(stationBikes, station.getBikesAsString(), ColorSelector.getColorForMap(station.getBikes()));
-        updateTextView(stationAttachs, station.getAttachsAsString(), ColorSelector.getColorForMap(station.getAttachs()));
+        updateTextView(stationBikes, station.getBikesAsString(), ColorSelector.getColorForMap(homeActivity, station.getBikes()));
+        updateTextView(stationAttachs, station.getAttachsAsString(), ColorSelector.getColorForMap(homeActivity, station.getAttachs()));
     }
+
     private void updateTextView(TextView textView, String text, int color) {
         textView.setText(text);
         textView.setTextColor(mView.getResources().getColor(color));

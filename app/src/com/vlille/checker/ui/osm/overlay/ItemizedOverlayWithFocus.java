@@ -218,9 +218,9 @@ public class ItemizedOverlayWithFocus<T extends MaskableOverlayItem> extends Ite
 
         Overlay.drawAt(canvas, marker, curScreenCoords.x, curScreenCoords.y, false, 0);
         if (zoomLevelDetailled) {
-            mTitlePaint.setColor(ContextCompat.getColor(mContext, ColorSelector.getColorForMap(station.getBikes())));
+            mTitlePaint.setColor(ColorSelector.getColorForMap(mContext, station.getBikes()));
             canvas.drawText(station.getBikesAsString(), mCurScreenCoords.x - (8 * mScale), mCurScreenCoords.y - (26 * mScale), mTitlePaint);
-            mTitlePaint.setColor(ContextCompat.getColor(mContext, ColorSelector.getColorForMap(station.getAttachs())));
+            mTitlePaint.setColor(ColorSelector.getColorForMap(mContext, station.getAttachs()));
             canvas.drawText(station.getAttachsAsString(), mCurScreenCoords.x - (8 * mScale), mCurScreenCoords.y - (13 * mScale), mTitlePaint);
         }
     }

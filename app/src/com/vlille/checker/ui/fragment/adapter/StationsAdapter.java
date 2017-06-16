@@ -122,7 +122,7 @@ public class StationsAdapter extends ArrayAdapter<Station> {
     }
 
     private int getColor(int number) {
-        return resources.getColor(ColorSelector.getColor(number));
+        return ColorSelector.getColor(getContext(), number);
     }
 
     @Override

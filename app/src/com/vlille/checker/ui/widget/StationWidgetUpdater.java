@@ -5,9 +5,11 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
+
 import com.vlille.checker.R;
 import com.vlille.checker.db.StationEntityManager;
 import com.vlille.checker.model.Station;
@@ -105,9 +107,9 @@ public class StationWidgetUpdater {
         remoteViews.setViewVisibility(R.id.station_out_of_service_box, station.getOutOfServiceVisibility());
 
         remoteViews.setTextViewText(R.id.station_details_bikes, station.getBikesAsString());
-        remoteViews.setTextColor(R.id.station_details_bikes, resources.getColor(ColorSelector.getColor(station.getBikes())));
+        remoteViews.setTextColor(R.id.station_details_bikes, ColorSelector.getColor(context, station.getBikes()));
         remoteViews.setTextViewText(R.id.station_details_attachs, station.getAttachsAsString());
-        remoteViews.setTextColor(R.id.station_details_attachs, resources.getColor(ColorSelector.getColor(station.getAttachs())));
+        remoteViews.setTextColor(R.id.station_details_attachs, ColorSelector.getColor(context, station.getAttachs()));
 
         updateStation(station);
     }

@@ -7,12 +7,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
 import com.vlille.checker.R;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.model.StationHolder;
 import com.vlille.checker.utils.MapsIntentChooser;
 import com.vlille.checker.utils.ViewUtils;
 import com.vlille.checker.utils.color.ColorSelector;
+
 import org.droidparts.activity.support.v7.ActionBarActivity;
 
 public class StationInfoActivity extends ActionBarActivity {
@@ -51,11 +53,11 @@ public class StationInfoActivity extends ActionBarActivity {
 
         TextView nbBikes = getTextView(R.id.station_info_bikes);
         nbBikes.setText(station.getBikesAsString());
-        nbBikes.setTextColor(getResources().getColor(ColorSelector.getColor(station.getBikes())));
+        nbBikes.setTextColor(ColorSelector.getColor(getApplicationContext(), station.getBikes()));
 
         TextView nbAttachs = getTextView(R.id.station_attachs);
         nbAttachs.setText(station.getAttachsAsString());
-        nbAttachs.setTextColor(getResources().getColor(ColorSelector.getColor(station.getAttachs())));
+        nbAttachs.setTextColor(ColorSelector.getColor(getApplicationContext(), station.getAttachs()));
 
         ViewUtils.switchView(findViewById(R.id.station_cb), station.isCbPaiement());
         ViewUtils.switchView(findViewById(R.id.station_express), station.isExpress());
