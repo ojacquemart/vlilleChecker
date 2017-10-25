@@ -17,6 +17,8 @@ This project is an unofficial android app for the Vlille service in Lille, Franc
 ![image4](https://lh6.ggpht.com/QfXTlqCccKGuM41aKq8zb4VXiWQsqQ4l_OB7zREWUSuqYfw1mjuGnqOpDNa6gDZSPQ=h310-rw)
 
 ## Versions
+* 2017-10-25: v4.2.6
+* 2017-10-25: v4.2.5
 * 2017-06-16: v4.2.4
 * 2017-04-27: v4.2.3
 * 2017-04-21: v4.2.2
@@ -43,6 +45,7 @@ This project uses the following open source libraries:
 * [DroidParts](https://github.com/yanchenko/droidparts)
 * [OpenStreetMapDroid](http://code.google.com/p/osmdroid/)
 * [SnackBar](https://github.com/MrEngineer13/SnackBar)
+* [Retrofit](https://github.com/square/retrofit)
 * [GPSEmulator to simulate GPS location](http://code.google.com/p/android-gps-emulator/)
 
 ## Installation
