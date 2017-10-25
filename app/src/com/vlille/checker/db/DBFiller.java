@@ -5,8 +5,9 @@ import android.util.Log;
 import com.vlille.checker.R;
 import com.vlille.checker.model.SetStationsInfo;
 import com.vlille.checker.ui.HomeActivity;
+import com.vlille.checker.ui.async.SetStationsInfoAsyncTask;
 
-public class DBFiller extends DBAction {
+public class DBFiller extends DBAction implements SetStationsInfoAsyncTask.SetStationsDelegate {
 
     private static final String TAG = DBFiller.class.getSimpleName();
 
@@ -27,18 +28,20 @@ public class DBFiller extends DBAction {
     }
 
     public void fill() {
+        new SetStationsInfoAsyncTask(this).execute();
+    }
+
+    @Override
+    public void handleResult(SetStationsInfo setStationsInfo) {
         Log.d(TAG, "Initialize db data!");
         long start = System.currentTimeMillis();
 
-        final SetStationsInfo assetsStationsInfo = getAssetsStationsInfo();
-
-        getMetadataEntityManager().create(assetsStationsInfo.getMetadata());
-        getStationEntityManager().create(assetsStationsInfo.getStations());
+        getMetadataEntityManager().create(setStationsInfo.getMetadata());
+        getStationEntityManager().create(setStationsInfo.getStations());
 
         homeActivity.showSnackBarMessage(R.string.installation_done);
 
         long duration = System.currentTimeMillis() - start;
         Log.d(TAG, "Time to initialize db: " + duration + " ms");
     }
-
 }

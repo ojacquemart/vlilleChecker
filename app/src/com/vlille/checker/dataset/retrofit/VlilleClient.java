@@ -1,0 +1,56 @@
+package com.vlille.checker.dataset.retrofit;
+
+import com.vlille.checker.dataset.retrofit.model.ResultSet;
+
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+
+import retrofit2.Call;
+
+import static com.vlille.checker.dataset.retrofit.VlilleService.Factory.VLILLE_REALTIME;
+
+// This class should be temporary.
+// It fetches data from opendata & remap objects to the legacy ones provided by the old
+// transpole api.
+public class VlilleClient {
+
+    public static final String TAG = VlilleClient.class.getSimpleName();
+
+    public static List<com.vlille.checker.model.Station> getStations() {
+        try {
+            VlilleService service = getService();
+            Call<ResultSet> call = service.getStations(VLILLE_REALTIME, 230);
+
+            ResultSet resultSet = call.execute().body();
+            if (resultSet == null) {
+                return Collections.emptyList();
+            }
+
+            return resultSet.toLegacyStations();
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    public static com.vlille.checker.model.Station getStation(long stationId) {
+        try {
+            VlilleService service = getService();
+            Call<ResultSet> call = service.getStation(VLILLE_REALTIME, "libelle:" + stationId);
+
+            ResultSet resultSet = call.execute().body();
+            if (resultSet == null) {
+                return null;
+            }
+
+            return resultSet.getFirstStationLegacy();
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    private static VlilleService getService() {
+        return VlilleService.Factory.INSTANCE.getService();
+    }
+
+}

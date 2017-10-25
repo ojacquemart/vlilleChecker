@@ -310,11 +310,11 @@ public class Station extends Entity {
 
         Station other = (Station) o;
 
-        return name.equals(other.name);
+        return id == other.id;
     }
 
     @Override
     public int hashCode() {
-        return name.hashCode();
+        return (int) id;
     }
 }

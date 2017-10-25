@@ -3,10 +3,10 @@ package com.vlille.checker.ui.async;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.vlille.checker.dataset.StationRepository;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.ui.HomeActivity;
 import com.vlille.checker.ui.delegate.StationUpdateDelegate;
-import com.vlille.checker.xml.XML;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +17,6 @@ import java.util.List;
 public abstract class AbstractStationsAsyncTask extends AsyncTask<List<Station>, Void, List<Station>> {
 
     private static final String TAG = "AsyncStationTaskUpdater";
-
-    private static final XML XML_READER = new XML();
 
     private final HomeActivity homeActivity;
     private final StationUpdateDelegate delegate;
@@ -51,6 +49,8 @@ public abstract class AbstractStationsAsyncTask extends AsyncTask<List<Station>,
         final List<Station> stations = new ArrayList<>(params[0]);
         int countStationsFetchInError = 0;
 
+        StationRepository.fillStationsCache();
+
         for (Station station : stations) {
             if (isCancelled()) {
                 Log.d(TAG, "Task has been cancelled.");
@@ -58,7 +58,7 @@ public abstract class AbstractStationsAsyncTask extends AsyncTask<List<Station>,
                 return stations;
             }
 
-            station = XML_READER.getRemoteInfo(station);
+            station = StationRepository.getStationFromCache(station);
             delegate.update(station);
 
             if (station.isFetchInError()) {
