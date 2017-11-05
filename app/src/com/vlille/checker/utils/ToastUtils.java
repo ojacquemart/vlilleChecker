@@ -1,5 +1,6 @@
 package com.vlille.checker.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 import android.widget.Toast;
@@ -18,8 +19,8 @@ public final class ToastUtils {
 	 * <p>
 	 * This method may be called from any thread
 	 */
-	public static void show(final Context context, final String message) {
-		if (context == null) {
+	public static void show(final Activity activity, final String message) {
+		if (activity == null) {
 			return;
 		}
 
@@ -27,13 +28,15 @@ public final class ToastUtils {
 			return;
 		}
 
-		new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-			}
-		}).start();
+		activity.runOnUiThread(
+				new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+						Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+					}
+				})
+		);
 	}
 
 	/**
@@ -41,12 +44,12 @@ public final class ToastUtils {
 	 * <p>
 	 * This method may be called from any thread
 	 */
-	public static void show(final Context context, final int resId) {
-		if (context == null) {
+	public static void show(final Activity activity, final int resId) {
+		if (activity == null) {
 			return;
         }
 
-		show(context, context.getString(resId));
+		show(activity, activity.getString(resId));
 	}
 
 }
