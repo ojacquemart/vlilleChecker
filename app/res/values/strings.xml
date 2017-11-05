@@ -26,6 +26,7 @@
     <string name="open_with">Open with&#8230;</string>
 
     <!-- Errors -->
+    <string name="error_init">Initialization error. Retry with the \"refresh button\"</string>
     <string name="error_occured">An error occurred</string>
     <string name="error_unstable_transpole">Transpole service seems unstable</string>
     <string name="error_no_connection">No network available</string>

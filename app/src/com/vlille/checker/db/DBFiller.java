@@ -12,9 +12,15 @@ public class DBFiller extends DBAction implements SetStationsInfoAsyncTask.SetSt
     private static final String TAG = DBFiller.class.getSimpleName();
 
     private HomeActivity homeActivity;
+    private boolean fromRefreshButton;
 
     public DBFiller(HomeActivity homeActivity) {
+        this(homeActivity, false);
+    }
+
+    public DBFiller(HomeActivity homeActivity, boolean fromRefreshButton) {
         this.homeActivity = homeActivity;
+        this.fromRefreshButton = fromRefreshButton;
     }
 
     public void fillIfDbIsEmpty() {
@@ -34,14 +40,32 @@ public class DBFiller extends DBAction implements SetStationsInfoAsyncTask.SetSt
     @Override
     public void handleResult(SetStationsInfo setStationsInfo) {
         Log.d(TAG, "Initialize db data!");
+
         long start = System.currentTimeMillis();
 
+        if (setStationsInfo == null) {
+            onResultError();
+        } else {
+            onResultSuccess(setStationsInfo);
+        }
+
+        long duration = System.currentTimeMillis() - start;
+        Log.d(TAG, "Time to initialize db: " + duration + " ms");
+    }
+
+    private void onResultError() {
+        homeActivity.showInitDbErrorMessage();
+    }
+
+    private void onResultSuccess(SetStationsInfo setStationsInfo) {
         getMetadataEntityManager().create(setStationsInfo.getMetadata());
         getStationEntityManager().create(setStationsInfo.getStations());
 
         homeActivity.showSnackBarMessage(R.string.installation_done);
 
-        long duration = System.currentTimeMillis() - start;
-        Log.d(TAG, "Time to initialize db: " + duration + " ms");
+        if (fromRefreshButton) {
+            homeActivity.resumeVisibleFragment();
+        }
     }
+
 }

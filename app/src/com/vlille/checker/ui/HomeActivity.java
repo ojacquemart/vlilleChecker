@@ -121,7 +121,13 @@ public class HomeActivity extends ActionBarActivity implements SnackBar.OnMessag
                 showIntent(SettingsActivity.class);
                 break;
             case R.id.main_menu_refresh:
-                getCurrentFragment().onResume();
+                DBFiller dbFiller = new DBFiller(this, true);
+                if (dbFiller.isDBEmpty()) {
+                    dbFiller.fill();
+                } else {
+                    getCurrentFragment().onResume();
+                }
+
                 break;
             case R.id.main_menu_update_stations:
                 launchUpdateStations();
@@ -175,6 +181,10 @@ public class HomeActivity extends ActionBarActivity implements SnackBar.OnMessag
 
     public void showTranspoleUnstableMessage() {
         snackbarShow(R.string.error_unstable_transpole, R.string.retry);
+    }
+
+    public void showInitDbErrorMessage() {
+        snackbarShow(R.string.error_init, -1);
     }
 
     private void snackbarShow(int messageId, int actionMessageId) {
