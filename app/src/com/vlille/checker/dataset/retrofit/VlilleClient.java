@@ -1,8 +1,11 @@
 package com.vlille.checker.dataset.retrofit;
 
+import android.util.Log;
+
 import com.vlille.checker.dataset.retrofit.model.ResultSet;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,8 +31,10 @@ public class VlilleClient {
             }
 
             return resultSet.toLegacyStations();
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
+        } catch (Exception e) {
+            Log.e(TAG, "Error while fetching stations list", e);
+
+            return Collections.emptyList();
         }
     }
 
@@ -44,8 +49,10 @@ public class VlilleClient {
             }
 
             return resultSet.getFirstStationLegacy();
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
+        } catch (Exception e) {
+            Log.e(TAG, "Error while fetching station: " + stationId, e);
+
+            return null;
         }
     }
 
