@@ -58,11 +58,7 @@ public class StationRepository {
 
     private static void fillCacheWithNullValues() {
         if (!CACHE.isEmpty()) {
-            for (Map.Entry<Long, Station> entry : CACHE.entrySet()) {
-                // it is necessary to reset the value null to display empty values
-                // when the stations list fetch has maybe failed
-                entry.setValue(null);
-            }
+            CACHE.clear();
         }
     }
 
