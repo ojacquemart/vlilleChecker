@@ -101,7 +101,7 @@ public class BubbleInfoWindow extends DefaultInfoWindow {
 
     private void updateTextView(TextView textView, String text, int color) {
         textView.setText(text);
-        textView.setTextColor(mView.getResources().getColor(color));
+        textView.setTextColor(color);
     }
 
     class SingleStationAsyncTask extends AbstractStationsAsyncTask {
