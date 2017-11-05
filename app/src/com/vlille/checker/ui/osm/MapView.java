@@ -295,11 +295,12 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
             itemizedOverlay.getBubble().setZoomLevel(getZoomLevel());
         }
 
-        final List<Station> stations = new ArrayList<Station>();
+        List<Station> stations = new ArrayList<Station>();
 
-        final ItemActionUpdater itemUpdater = getItemUpdater();
-        if (itemUpdater.isValid()) {
-            for (MaskableOverlayItem eachItem : itemizedOverlay.getItems()) {
+        ItemActionUpdater itemUpdater = getItemUpdater();
+        List<MaskableOverlayItem> overlayItems = itemizedOverlay.getItems();
+        if (itemUpdater.isValid() && overlayItems != null) {
+            for (MaskableOverlayItem eachItem : overlayItems) {
                 final Station relatedStation = (Station) eachItem.getRelatedObject();
                 if (itemUpdater.canUpdate(eachItem, relatedStation)) {
                     stations.add(relatedStation);
