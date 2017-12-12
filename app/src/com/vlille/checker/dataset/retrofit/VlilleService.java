@@ -24,14 +24,15 @@ public interface VlilleService {
     @GET("search")
     Call<ResultSet> getStations(
             @Query("dataset") String dataset,
-            @Query("rows") int rows
-
+            @Query("rows") int rows,
+            @Query("apikey") String apikey
     );
 
     @GET("search")
     Call<ResultSet> getStation(
             @Query("dataset") String dataset,
-            @Query("q") String query
+            @Query("q") String query,
+            @Query("apikey") String apikey
 
     );
 

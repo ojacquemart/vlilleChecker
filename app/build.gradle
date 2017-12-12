@@ -55,6 +55,10 @@ android {
             minifyEnabled true
             proguardFile file('proguard.cfg')
         }
+
+        buildTypes.each {
+            it.buildConfigField 'String', 'OPENDATA_MEL_APIKEY', "\"$System.env.OPENDATA_MEL_APIKEY\""
+        }
     }
 
     defaultConfig {

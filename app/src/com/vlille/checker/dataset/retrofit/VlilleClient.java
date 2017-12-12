@@ -2,10 +2,9 @@ package com.vlille.checker.dataset.retrofit;
 
 import android.util.Log;
 
+import com.vlille.checker.BuildConfig;
 import com.vlille.checker.dataset.retrofit.model.ResultSet;
 
-import java.io.IOException;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -23,7 +22,8 @@ public class VlilleClient {
     public static List<com.vlille.checker.model.Station> getStations() {
         try {
             VlilleService service = getService();
-            Call<ResultSet> call = service.getStations(VLILLE_REALTIME, 230);
+            Call<ResultSet> call = service.getStations(VLILLE_REALTIME, 230,
+                    BuildConfig.OPENDATA_MEL_APIKEY);
 
             ResultSet resultSet = call.execute().body();
             if (resultSet == null) {
@@ -41,7 +41,8 @@ public class VlilleClient {
     public static com.vlille.checker.model.Station getStation(long stationId) {
         try {
             VlilleService service = getService();
-            Call<ResultSet> call = service.getStation(VLILLE_REALTIME, "libelle:" + stationId);
+            Call<ResultSet> call = service.getStation(VLILLE_REALTIME, "libelle:" + stationId,
+                    BuildConfig.OPENDATA_MEL_APIKEY);
 
             ResultSet resultSet = call.execute().body();
             if (resultSet == null) {
