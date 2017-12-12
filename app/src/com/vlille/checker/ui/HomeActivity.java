@@ -179,8 +179,12 @@ public class HomeActivity extends ActionBarActivity implements SnackBar.OnMessag
         snackbarShow(R.string.error_no_connection, R.string.retry);
     }
 
-    public void showTranspoleUnstableMessage() {
-        snackbarShow(R.string.error_unstable_transpole, R.string.retry);
+    public void showPlatformUnstableMessage() {
+        snackbarShow(R.string.error_unstable_general, R.string.retry);
+    }
+
+    public void showPlatformUpdateIssueMessage() {
+        snackbarShow(R.string.error_unstable_last_update, R.string.retry);
     }
 
     public void showInitDbErrorMessage() {

@@ -21,7 +21,8 @@ public abstract class AbstractStationsAsyncTask extends AsyncTask<List<Station>,
     private final HomeActivity homeActivity;
     private final StationUpdateDelegate delegate;
 
-    private boolean transpoleUnstableState;
+    private boolean plateformUnstableState;
+    private boolean platformUpdateIssueState;
 
     protected AbstractStationsAsyncTask(HomeActivity homeActivity, StationUpdateDelegate delegate) {
         this.homeActivity = homeActivity;
@@ -32,14 +33,14 @@ public abstract class AbstractStationsAsyncTask extends AsyncTask<List<Station>,
     protected void onPreExecute() {
         super.onPreExecute();
 
-        transpoleUnstableState = false;
+        plateformUnstableState = false;
     }
 
     @Override
     protected void onCancelled() {
         super.onCancelled();
 
-        transpoleUnstableState = false;
+        plateformUnstableState = false;
     }
 
     @Override
@@ -48,6 +49,7 @@ public abstract class AbstractStationsAsyncTask extends AsyncTask<List<Station>,
 
         final List<Station> stations = new ArrayList<>(params[0]);
         int countStationsFetchInError = 0;
+        int countStationsWithLastUpdateExceedingTwoMinutes = 0;
 
         StationRepository.fillStationsCache();
 
@@ -64,11 +66,15 @@ public abstract class AbstractStationsAsyncTask extends AsyncTask<List<Station>,
             if (station.isFetchInError()) {
                 countStationsFetchInError++;
             }
+            if (station.isLastUpdateTimeExceedTwoMinutes()) {
+                countStationsWithLastUpdateExceedingTwoMinutes++;
+            }
 
             publishProgress();
         }
 
-        transpoleUnstableState = countStationsFetchInError == stations.size();
+        plateformUnstableState = countStationsFetchInError == stations.size();
+        platformUpdateIssueState = countStationsWithLastUpdateExceedingTwoMinutes == stations.size();
 
         return stations;
     }
@@ -77,8 +83,12 @@ public abstract class AbstractStationsAsyncTask extends AsyncTask<List<Station>,
     protected void onPostExecute(List<Station> stations) {
         super.onPostExecute(stations);
 
-        if (transpoleUnstableState) {
-            homeActivity.showTranspoleUnstableMessage();
+        if (plateformUnstableState) {
+            homeActivity.showPlatformUnstableMessage();
+        }
+
+        if (platformUpdateIssueState) {
+            homeActivity.showPlatformUpdateIssueMessage();
         }
     }
 

@@ -45,6 +45,8 @@ public class Station extends Entity {
     public static final long LILLE_FLANDRES_ID = 24L;
     public static final List<Long> EXPRESS_IDS = Arrays.asList(LILLE_FLANDRES_ID);
 
+    public static final int ONE_MINUTE_IN_SECONDS = 60;
+
     /**
      * Nullable columns:
      * - address
@@ -240,20 +242,38 @@ public class Station extends Entity {
     }
 
     public String getLastUpdateAsString(Resources resources) {
-        return getLastUpdateAsStringFromResources(resources, R.string.update_ago);
+        return getLastUpdateAsStringFromResources(resources, LastUpdateDisplayType.NORMAL);
     }
 
     public String getShortLastUpdateAsString(Resources resources) {
-        return getLastUpdateAsStringFromResources(resources, R.string.update_ago_short);
+        return getLastUpdateAsStringFromResources(resources, LastUpdateDisplayType.SHORT);
     }
 
-    private String getLastUpdateAsStringFromResources(Resources resources, int update_ago) {
-        Long lastUpdate = getLastUpdate();
-        String timeUnitSecond = TextPlural.toPlural(
-                lastUpdate,
-                resources.getString(R.string.timeunit_second));
+    private String getLastUpdateAsStringFromResources(Resources resources, LastUpdateDisplayType lastUpdateDisplayType) {
+        if (isLastUpdateTimeExceedTwoMinutes()) {
+            if (LastUpdateDisplayType.SHORT == lastUpdateDisplayType) {
+                return resources.getString(LastUpdateDisplayType.LONG_AGO_SHORT.getResourceId());
+            }
 
-        return resources.getString(update_ago, lastUpdate, timeUnitSecond);
+            return resources.getString(LastUpdateDisplayType.LONG_AGO.getResourceId());
+        }
+
+        boolean isLastUpdateExceedOneMinute = lastUpdate > ONE_MINUTE_IN_SECONDS;
+        int timeUnitResourceId = isLastUpdateExceedOneMinute
+                ? R.string.timeunit_minute
+                : R.string.timeunit_second;
+        Long lastUpdateForTimeUnit = isLastUpdateExceedOneMinute
+                ? Math.round(lastUpdate / ONE_MINUTE_IN_SECONDS)
+                : lastUpdate;
+        String timeUnit = TextPlural.toPlural(
+                lastUpdateForTimeUnit,
+                resources.getString(timeUnitResourceId));
+
+        return resources.getString(lastUpdateDisplayType.getResourceId(), lastUpdateForTimeUnit, timeUnit);
+    }
+
+    public boolean isLastUpdateTimeExceedTwoMinutes() {
+        return getLastUpdate() > ONE_MINUTE_IN_SECONDS * 2;
     }
 
     public void setLastUpdate(long lastUpdate) {
