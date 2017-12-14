@@ -5,6 +5,7 @@ import com.vlille.checker.ui.osm.PositionTransformer;
 
 import java.util.Arrays;
 
+
 public class Station {
     public static final String REGEX_NAME_NO_ID = "^(?:\\d+\\s*)(.*)";
     public static final String REGEX_NAME_NO_CB = "(.*)(?:\\s*\\(.*\\))$";
@@ -17,9 +18,9 @@ public class Station {
     public String name;
     @SerializedName("etat")
     public String status;
-    @SerializedName("nbVelosDispo")
+    @SerializedName(value = "nbVelosDispo", alternate = {"nbvelosdispo"})
     public int bikes;
-    @SerializedName("nbPlacesDispo")
+    @SerializedName(value = "nbPlacesDispo", alternate = "nbplacesdispo")
     public int attachs;
     @SerializedName("adresse")
     public String address;
