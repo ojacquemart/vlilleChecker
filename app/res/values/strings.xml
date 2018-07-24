@@ -67,6 +67,7 @@
     <string name="data_status_stations_number">%1d stations</string>
     <string name="data_status_last_update_summary">Last update: %1s</string>
     <string name="data_status_date_pattern">dd/MM/yyyy HH:mm</string>
+    <string name="data_status_never">never</string>
 
     <!-- Version in preferences -->
     <string name="version">Version</string>

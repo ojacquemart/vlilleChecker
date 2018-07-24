@@ -96,4 +96,5 @@
     <!-- ACRA toast notifications texts. -->
     <string name="crash_toast_text">Une erreur est survenue&#8230;</string>
     <string name="error_init">Initialisation échouée. Réessayez avec le bouton \"rafraîchir\"</string>
+    <string name="data_status_never">jamais</string>
 </resources>
