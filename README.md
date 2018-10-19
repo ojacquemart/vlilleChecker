@@ -46,6 +46,7 @@ This project uses the following open source libraries:
 
 * [ACRA - Application Crash Report for Android](http://code.google.com/p/acra/)
 * [DroidParts](https://github.com/yanchenko/droidparts)
+* [EasyPermissions](https://github.com/googlesamples/easypermissions)
 * [OpenStreetMapDroid](http://code.google.com/p/osmdroid/)
 * [SnackBar](https://github.com/MrEngineer13/SnackBar)
 * [Retrofit](https://github.com/square/retrofit)

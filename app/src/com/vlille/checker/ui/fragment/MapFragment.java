@@ -1,15 +1,14 @@
 package com.vlille.checker.ui.fragment;
 
 import android.Manifest;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.vlille.checker.R;
 import com.vlille.checker.db.StationEntityManager;
 import com.vlille.checker.model.Station;
@@ -17,103 +16,45 @@ import com.vlille.checker.ui.HomeActivity;
 import com.vlille.checker.ui.delegate.StationUpdateDelegate;
 import com.vlille.checker.ui.osm.MapState;
 import com.vlille.checker.ui.osm.MapView;
-import com.vlille.checker.utils.ToastUtils;
+
 import org.droidparts.annotation.inject.InjectDependency;
 import org.droidparts.fragment.support.v4.Fragment;
 import org.osmdroid.util.GeoPoint;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * A fragment to localize and bookmark stations from a map, using OpenStreetMap.
  */
-public class MapFragment extends Fragment implements StationUpdateDelegate {
+public class MapFragment extends Fragment implements StationUpdateDelegate, EasyPermissions.PermissionCallbacks,
+        EasyPermissions.RationaleCallbacks {
 
     private static final String TAG = MapFragment.class.getSimpleName();
 
-    private static final Map<Integer, PermissionConfig> PERMISSIONS_CONFIG = new HashMap<>();
-    static {
-        PERMISSIONS_CONFIG.put(PermissionConfig.LOCATION, new PermissionConfig(PermissionConfig.LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                R.string.permission_location_explanation,
-                R.string.permission_location_not_granted));
-        PERMISSIONS_CONFIG.put(PermissionConfig.STORAGE, new PermissionConfig(PermissionConfig.STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                R.string.permission_storage_explanation,
-                R.string.permission_storage_not_granted));
-    }
+    private static final int REQUEST_CODE_LOCATION_AND_STORAGE = 42;
+    private static final String[] PERMISSIONS_LOCATION_AND_STORAGE = {
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
 
     @InjectDependency
     private StationEntityManager stationEntityManager;
     private MapState state = new MapState();
 
     private MapView mapView;
-
-    static class PermissionConfig {
-        public static int LOCATION = 1;
-        public static int STORAGE = 2;
-
-        private int requestCode;
-        private String permission;
-        private int explanation;
-        private int notGrantedText;
-
-        PermissionConfig(int requestCode, String permission, int explanation, int notGrantedText) {
-            this.requestCode = requestCode;
-            this.permission = permission;
-            this.explanation = explanation;
-            this.notGrantedText = notGrantedText;
-        }
-    }
+    private boolean permissionAlreadyPermanentlyDenied = false;
 
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         Log.d(TAG, "onCreate");
 
-        checkPermissions();
-
         if (!this.state.isInitialized()) {
             this.state.save(MapView.DEFAULT_CENTER_GEO_POINT, MapView.DEFAULT_ZOOM_LEVEL);
-        }
-    }
-
-    private void checkPermissions() {
-        Log.d(TAG, "checkPermissions");
-        for (PermissionConfig permissionConfig : PERMISSIONS_CONFIG.values()) {
-            checkPermission(permissionConfig);
-        }
-    }
-
-    private void checkPermission(PermissionConfig permissionConfig) {
-        Log.v(TAG, "Check for permission " + permissionConfig.permission);
-
-        int permissionCheck = ContextCompat.checkSelfPermission(getActivity(), permissionConfig.permission);
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), permissionConfig.permission)) {
-                ToastUtils.show(getActivity(), permissionConfig.explanation);
-            } else {
-                // No explanation needed, we can request the permission.
-                ActivityCompat.requestPermissions(getActivity(), new String[]{permissionConfig.permission}, permissionConfig.requestCode);
-            }
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        PermissionConfig permissionConfig = PERMISSIONS_CONFIG.get(requestCode);
-        if (permissionConfig != null) {
-            handleOnRequestPermissionsResult(permissionConfig, grantResults);
-        }
-    }
-
-    private void handleOnRequestPermissionsResult(PermissionConfig permissionConfig, int[] grantResults) {
-        Log.v(TAG, "Handle permission result for " + permissionConfig.permission);
-        boolean granted = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
-        if (!granted) {
-            ToastUtils.show(getActivity(), permissionConfig.notGrantedText);
         }
     }
 
@@ -138,6 +79,8 @@ public class MapFragment extends Fragment implements StationUpdateDelegate {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        checkPermissions();
 
         List<Station> stations = stationEntityManager.findAll();
 
@@ -164,6 +107,57 @@ public class MapFragment extends Fragment implements StationUpdateDelegate {
                 locationEnabler.setImageResource(mapView.isLocationOn() ? R.drawable.ic_location_on : R.drawable.ic_location_off);
             }
         });
+    }
+
+    @AfterPermissionGranted(REQUEST_CODE_LOCATION_AND_STORAGE)
+    private void checkPermissions() {
+        Log.d(TAG, "checkPermissions");
+
+        if (!EasyPermissions.hasPermissions(getContext(), PERMISSIONS_LOCATION_AND_STORAGE)) {
+            EasyPermissions.requestPermissions(this, getString(R.string.permission_missing),
+                    REQUEST_CODE_LOCATION_AND_STORAGE,
+                    PERMISSIONS_LOCATION_AND_STORAGE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+        Log.d(TAG, "onPermissionsGranted:" + requestCode + ":" + perms.size());
+
+        // reload map fragment
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.home_content, new MapFragment())
+                .commit();
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        Log.d(TAG, "onPermissionsDenied:" + requestCode + ":" + perms.size());
+
+        if (!permissionAlreadyPermanentlyDenied && EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            permissionAlreadyPermanentlyDenied = true;
+            new AppSettingsDialog.Builder(this).build().show();
+        }
+    }
+
+    @Override
+    public void onRationaleAccepted(int requestCode) {
+        Log.d(TAG, "onRationaleAccepted:" + requestCode);
+    }
+
+    @Override
+    public void onRationaleDenied(int requestCode) {
+        Log.d(TAG, "onRationaleDenied:" + requestCode);
     }
 
     @Override
