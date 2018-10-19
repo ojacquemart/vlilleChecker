@@ -90,8 +90,9 @@
     \n\n
     Pour toute remarque ou suggestion:
     </string>
-    <string name="about_text_email">- <a href="o.jacquemart@gmail.com">o.jacquemart@gmail.com</a>\n</string>
-    <string name="about_text_web">- <a href="http://www.twitter.com/ojacquemart">@ojacquemart</a></string>
+    <string name="about_text_email">- <a href="o.jacquemart@gmail.com">o.jacquemart@gmail.com</a></string>
+    <string name="about_text_twitter">- <a href="http://www.twitter.com/ojacquemart">twitter/ojacquemart</a></string>
+    <string name="about_text_github">- <a href="https://github.com/ojacquemart/vlilleChecker">github/ojacquemart</a></string>
 
     <!-- ACRA toast notifications texts. -->
     <string name="crash_toast_text">Une erreur est survenue&#8230;</string>
