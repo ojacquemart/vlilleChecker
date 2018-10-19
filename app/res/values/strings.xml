@@ -95,5 +95,5 @@
     <string name="about_text_web">- <a href="http://www.twitter.com/ojacquemart">@ojacquemart</a></string>
 
     <!-- ACRA toast notifications texts. -->
-    <string name="crash_toast_text">An error occured&#8230;</string>
+    <string name="crash_toast_text">An error occurred&#8230;</string>
 </resources>
