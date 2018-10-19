@@ -39,8 +39,7 @@
     <string name="error_no_gmaps_app_found">No navigation app found</string>
 
     <!-- Permissions -->
-    <string name="permission_location_explanation">Your location is needed to place an icon on the map</string>
-    <string name="permission_storage_explanation">We store tiles to your devices storage to reduce data usage</string>
+    <string name="permission_missing">This app may not work correctly without the requested permissions. Open the app settings screen to modify app permissions.</string>
     <string name="permission_location_not_granted">Location permission is required for user location on map</string>
     <string name="permission_storage_not_granted">"Storage permission is needed for offline map data caching</string>
 

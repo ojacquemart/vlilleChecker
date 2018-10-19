@@ -12,11 +12,13 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+
 import com.github.mrengineer13.snackbar.SnackBar;
 import com.vlille.checker.R;
 import com.vlille.checker.db.StationEntityManager;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.ui.search.SearchableComponent;
+
 import org.droidparts.Injector;
 import org.droidparts.annotation.inject.InjectDependency;
 

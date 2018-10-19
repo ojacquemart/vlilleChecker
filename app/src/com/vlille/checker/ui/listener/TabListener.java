@@ -31,6 +31,7 @@ public class TabListener<T extends Fragment> implements ActionBar.TabListener {
 
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
         Log.d(TAG, "onTabUnselected");
+
         mFragment = Fragment.instantiate(mActivity, mClass.getName());
         mActivity.getSupportFragmentManager()
                 .beginTransaction()

@@ -20,8 +20,8 @@
     <string name="cancel">Annuler</string>
     <string name="installation_done">Initialisation terminée</string>
     <string name="no_station">Ajouter des stations via les onglets</string>
-	<string name="update_ago">(il y a %1$d %2$s)</string>
-	<string name="update_ago_short">Il y a %1$d %2$s</string>
+    <string name="update_ago">(il y a %1$d %2$s)</string>
+    <string name="update_ago_short">Il y a %1$d %2$s</string>
     <string name="update_too_long_ago">(il y a trop longtemps)</string>
     <string name="update_too_long_ago_short">il y a trop longtemps</string>
     <string name="timeunit_second">seconde</string>
@@ -38,8 +38,7 @@
     <string name="error_no_gmaps_app_found">Aucune application de navigation trouvée</string>
 
     <!-- Permissions -->
-    <string name="permission_location_explanation">Votre position est nécessaire pour placer une icône sur la carte</string>
-    <string name="permission_storage_explanation">Les cartes sont stockées sur votre appareil pour réduire l\'utilisation de votre data</string>
+    <string name="permission_missing">Cette application nécessite des autorisations. Ouvrir l\'écran de paramètrage pour modifier les autorisations de l\'applicaton.</string>
     <string name="permission_location_not_granted">Votre position est nécessaire pour vous localiser sur la carte</string>
     <string name="permission_storage_not_granted">Le stockage est nécessaire pour la mise en cache des cartes</string>
 
@@ -52,11 +51,12 @@
     <string name="prefs_location_enable_gps_summary">Utiliser le GPS pour déterminer votre position</string>
 
     <!-- Position Preferences -->
+    <string name="prefs_position_title">Localisation</string>
     <string name="prefs_position_distance">Distance</string>
     <string name="prefs_position_radius_distance_title">Stations autour de moi</string>
     <string name="prefs_position_radius_distance_summary">Dans un rayon de</string>
     <string name="prefs_position_radius_distance_unit">m</string>
-    
+
     <!-- Data status and update -->
     <string name="data_status_update_done">Mise à jour effectuée</string>
     <string name="data_status_uptodate">Les stations sont déjà à jour</string>
