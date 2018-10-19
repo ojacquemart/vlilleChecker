@@ -23,7 +23,7 @@ public class AboutActivity extends AppCompatActivity {
         setContentView(R.layout.about);
 
         setVersionNumber();
-        setTwitterLinkClickable();
+        setClickableLinks();
     }
 
     private void setVersionNumber() {
@@ -33,14 +33,20 @@ public class AboutActivity extends AppCompatActivity {
         aboutVersion.setText(versionNumber);
     }
 
-    private void setTwitterLinkClickable() {
-        TextView twitterLink = (TextView) findViewById(R.id.about_twitter);
-        twitterLink.setMovementMethod(LinkMovementMethod.getInstance());
+    private void setClickableLinks() {
+        setClickableLink(R.id.about_twitter);
+        setClickableLink(R.id.about_github);
+    }
+
+    private void setClickableLink(int textId) {
+        TextView textView = findViewById(textId);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         onBackPressed();
+
         return true;
     }
 
