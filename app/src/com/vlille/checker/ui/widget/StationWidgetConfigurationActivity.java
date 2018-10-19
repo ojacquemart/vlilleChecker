@@ -5,7 +5,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,7 +22,7 @@ import org.droidparts.annotation.inject.InjectDependency;
 
 import java.util.List;
 
-public class StationWidgetConfigurationActivity extends ActionBarActivity implements SearchableComponent.ViewParent {
+public class StationWidgetConfigurationActivity extends AppCompatActivity implements SearchableComponent.ViewParent {
 
     private static final String TAG = StationWidgetConfigurationActivity.class.getSimpleName();
 

@@ -3,7 +3,7 @@ package com.vlille.checker.ui.listener;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.vlille.checker.R;
@@ -17,13 +17,13 @@ public class TabListener<T extends Fragment> implements ActionBar.TabListener {
 
     private static final String TAG = TabListener.class.getSimpleName();
 
-    private final ActionBarActivity mActivity;
+    private final AppCompatActivity mActivity;
     private final String mTag;
     private final Class<T> mClass;
 
     private Fragment mFragment;
 
-    public TabListener(ActionBarActivity activity, String tag, Class<T> clazz) {
+    public TabListener(AppCompatActivity activity, String tag, Class<T> clazz) {
         mActivity = activity;
         mTag = tag;
         mClass = clazz;

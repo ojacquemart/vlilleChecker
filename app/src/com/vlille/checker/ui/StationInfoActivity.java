@@ -2,6 +2,7 @@ package com.vlille.checker.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,9 +16,7 @@ import com.vlille.checker.utils.MapsIntentChooser;
 import com.vlille.checker.utils.ViewUtils;
 import com.vlille.checker.utils.color.ColorSelector;
 
-import org.droidparts.activity.support.v7.ActionBarActivity;
-
-public class StationInfoActivity extends ActionBarActivity {
+public class StationInfoActivity extends AppCompatActivity {
 
     private static final String TAG = StationInfoActivity.class.getSimpleName();
 

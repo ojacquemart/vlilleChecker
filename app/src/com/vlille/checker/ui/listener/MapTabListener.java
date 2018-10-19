@@ -2,7 +2,7 @@ package com.vlille.checker.ui.listener;
 
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import com.vlille.checker.ui.fragment.MapFragment;
 
@@ -15,7 +15,7 @@ public class MapTabListener extends TabListener<MapFragment> implements ActionBa
 
     private GeoPoint geoPoint;
 
-    public MapTabListener(ActionBarActivity activity, GeoPoint geoPoint) {
+    public MapTabListener(AppCompatActivity activity, GeoPoint geoPoint) {
         super(activity, "map", MapFragment.class);
 
         this.geoPoint = geoPoint;
