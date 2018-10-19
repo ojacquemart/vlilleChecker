@@ -1,17 +1,18 @@
 package com.vlille.checker.ui;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.widget.TextView;
+
 import com.vlille.checker.Application;
 import com.vlille.checker.R;
 
 /**
  * Show informations about vlille checker.
  */
-public class AboutActivity extends ActionBarActivity {
+public class AboutActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

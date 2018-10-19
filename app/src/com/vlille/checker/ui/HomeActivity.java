@@ -7,7 +7,7 @@ import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * Home activity.
  */
-public class HomeActivity extends ActionBarActivity implements SnackBar.OnMessageClickListener {
+public class HomeActivity extends AppCompatActivity implements SnackBar.OnMessageClickListener {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
 
@@ -192,7 +192,7 @@ public class HomeActivity extends ActionBarActivity implements SnackBar.OnMessag
     }
 
     private void snackbarShow(int messageId, int actionMessageId) {
-        String actionMessage = actionMessageId == - 1 ? null : getString(actionMessageId).toUpperCase();
+        String actionMessage = actionMessageId == -1 ? null : getString(actionMessageId).toUpperCase();
         snackBar.show(
                 getString(messageId),
                 actionMessage
