@@ -34,10 +34,10 @@ import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 public class SettingsFragment extends PreferenceFragmentCompat
         implements OnSeekBarChangeListener {
 
-	private static final String TAG = SettingsFragment.class.getSimpleName();
+    private static final String TAG = SettingsFragment.class.getSimpleName();
 
-	private LocationManagerWrapper locationManagerWrapper;
-	private boolean hasClickedOnLocalisationActivationAndNeedsGpsCheck;
+    private LocationManagerWrapper locationManagerWrapper;
+    private boolean hasClickedOnLocalisationActivationAndNeedsGpsCheck;
 
     @InjectDependency
     protected StationEntityManager stationEntityManager;
@@ -63,16 +63,16 @@ public class SettingsFragment extends PreferenceFragmentCompat
 
 
     @Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		Log.d(TAG, "onCreate");
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate");
 
-		addPreferencesFromResource(R.xml.preferences);
+        addPreferencesFromResource(R.xml.preferences);
 
-		locationManagerWrapper = LocationManagerWrapper.with(getActivity());
-	}
+        locationManagerWrapper = LocationManagerWrapper.with(getActivity());
+    }
 
-	private void initView() {
+    private void initView() {
         setLastDataStatusUpdate();
         setVersionNumber();
         onChangeGpsActivated();
@@ -83,7 +83,7 @@ public class SettingsFragment extends PreferenceFragmentCompat
         final Preference lastUpdatePreference = findPreference(PreferenceKeys.DATA_STATUS_LAST_UPDATE);
         lastUpdatePreference.setTitle(getDataStatusStationsNumber());
         lastUpdatePreference.setSummary(getDataStatusLastUpdateMessage());
-	}
+    }
 
     private void setVersionNumber() {
         Preference preference = findPreference(PreferenceKeys.ABOUT_VERSION);
@@ -95,158 +95,167 @@ public class SettingsFragment extends PreferenceFragmentCompat
     }
 
     private String getDataStatusLastUpdateMessage() {
-        final Metadata metadata = metadataEntityManager.find();
-        final Date lastUpdate = new Date(metadata.getLastUpdate());
-        final String formatPattern = getString(R.string.data_status_date_pattern);
-        final String lastUpdateFormatted = new SimpleDateFormat(formatPattern).format(lastUpdate);
+        String lastUpdateFormatted = getDataStatusLastUpdateMessageFormatted();
 
         return getString(R.string.data_status_last_update_summary, lastUpdateFormatted);
     }
 
-	private void onChangeGpsActivated() {
-		final Preference prefGpsProviderOn = findPreference(PreferenceKeys.LOCALISATION_GPS_ACTIVATED);
-		prefGpsProviderOn.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+    private String getDataStatusLastUpdateMessageFormatted() {
+        Metadata metadata = metadataEntityManager.find();
+        if (metadata == null) {
+            return getString(R.string.data_status_never);
+        }
 
-			@Override
-			public boolean onPreferenceChange(Preference preference, Object newValue) {
-				if (preference.getKey().equals(PreferenceKeys.LOCALISATION_GPS_ACTIVATED)) {
-					boolean enabled = (Boolean) newValue;
-					if (enabled && !locationManagerWrapper.isGpsProviderEnabled()) {
-						Log.d(TAG, "Localisation enabled and provider is off");
+        Date lastUpdate = new Date(metadata.getLastUpdate());
+        String formatPattern = getString(R.string.data_status_date_pattern);
 
-						hasClickedOnLocalisationActivationAndNeedsGpsCheck = true;
-						locationManagerWrapper.createGpsDisabledAlert();
+        return new SimpleDateFormat(formatPattern).format(lastUpdate);
+    }
 
-						return false;
-					}
-				}
+    private void onChangeGpsActivated() {
+        final Preference prefGpsProviderOn = findPreference(PreferenceKeys.LOCALISATION_GPS_ACTIVATED);
+        prefGpsProviderOn.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
 
-				return true;
-			}
-		});
-	}
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                if (preference.getKey().equals(PreferenceKeys.LOCALISATION_GPS_ACTIVATED)) {
+                    boolean enabled = (Boolean) newValue;
+                    if (enabled && !locationManagerWrapper.isGpsProviderEnabled()) {
+                        Log.d(TAG, "Localisation enabled and provider is off");
 
-	@Override
-	public void onResume() {
-		super.onResume();
+                        hasClickedOnLocalisationActivationAndNeedsGpsCheck = true;
+                        locationManagerWrapper.createGpsDisabledAlert();
 
-		if (hasClickedOnLocalisationActivationAndNeedsGpsCheck
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (hasClickedOnLocalisationActivationAndNeedsGpsCheck
                 && locationManagerWrapper.isGpsProviderEnabled()) {
             hasClickedOnLocalisationActivationAndNeedsGpsCheck = false;
 
             Log.d(TAG, "Gps has been activated, set maps location prefs enabled on");
-			SharedPreferences.Editor editor = getDefaultSharedPreferences(getContext()).edit();
+            SharedPreferences.Editor editor = getDefaultSharedPreferences(getContext()).edit();
             editor.putBoolean(PreferenceKeys.LOCALISATION_GPS_ACTIVATED, true);
             editor.apply();
 
             // Restart activity to refresh the preferences.
             startActivity(getActivity().getIntent());
-		}
-	}
+        }
+    }
 
-	//=========================
-	// Location radius onChange
-	//=========================
+    //=========================
+    // Location radius onChange
+    //=========================
 
-	private Preference prefLocationRadiusValue;
-	private SeekBar seekBar;
-	private TextView textProgress;
+    private Preference prefLocationRadiusValue;
+    private SeekBar seekBar;
+    private TextView textProgress;
 
-	private void onChangeRadiusValue() {
-		prefLocationRadiusValue = findPreference(PreferenceKeys.POSITION_RADIUS);
-		prefLocationRadiusValue.setOnPreferenceClickListener(
-				new Preference.OnPreferenceClickListener() {
+    private void onChangeRadiusValue() {
+        prefLocationRadiusValue = findPreference(PreferenceKeys.POSITION_RADIUS);
+        prefLocationRadiusValue.setOnPreferenceClickListener(
+                new Preference.OnPreferenceClickListener() {
 
-					@Override
-					public boolean onPreferenceClick(Preference preference) {
-						Log.d(TAG, "Show the dialog with slider radius");
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        Log.d(TAG, "Show the dialog with slider radius");
 
-						View view = View.inflate(getActivity(),
-								R.layout.settings_position_slider, null);
-						AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
-								.setTitle(getString(R.string.prefs_position_distance))
-								.setView(view)
-								.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                        View view = View.inflate(getActivity(),
+                                R.layout.settings_position_slider, null);
+                        AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                                .setTitle(getString(R.string.prefs_position_distance))
+                                .setView(view)
+                                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
 
-									@Override
-									public void onClick(DialogInterface dialog, int which) {
-										int progress = seekBar.getProgress();
-										Log.d(TAG, "Save the radius " + progress);
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        int progress = seekBar.getProgress();
+                                        Log.d(TAG, "Save the radius " + progress);
 
-										if (progress == 0) {
-											progress = (int) PreferenceKeys.POSITION_RADIUS_DEFAULT_VALUE;
-										}
+                                        if (progress == 0) {
+                                            progress = (int) PreferenceKeys.POSITION_RADIUS_DEFAULT_VALUE;
+                                        }
 
-										final SharedPreferences.Editor editor = getDefaultSharedPreferences(getContext()).edit();
-										editor.putLong(PreferenceKeys.POSITION_RADIUS, Long.valueOf(progress));
-										editor.apply();
+                                        final SharedPreferences.Editor editor = getDefaultSharedPreferences(getContext()).edit();
+                                        editor.putLong(PreferenceKeys.POSITION_RADIUS, Long.valueOf(progress));
+                                        editor.apply();
 
-										changePrefLocationRadiusValue();
-									}
-								})
-								.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                                        changePrefLocationRadiusValue();
+                                    }
+                                })
+                                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
 
-									@Override
-									public void onClick(DialogInterface dialog, int which) {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
 
-									}
-								})
-								.create();
-						alertDialog.show();
+                                    }
+                                })
+                                .create();
+                        alertDialog.show();
 
-						textProgress = (TextView) alertDialog.findViewById(R.id.position_distance_value);
+                        textProgress = (TextView) alertDialog.findViewById(R.id.position_distance_value);
 
-						seekBar = (SeekBar) alertDialog.findViewById(R.id.position_seekbar_distance);
-						seekBar.setOnSeekBarChangeListener(SettingsFragment.this);
+                        seekBar = (SeekBar) alertDialog.findViewById(R.id.position_seekbar_distance);
+                        seekBar.setOnSeekBarChangeListener(SettingsFragment.this);
 
-						updateSeekBarProgress();
-						changePrefLocationRadiusValue();
+                        updateSeekBarProgress();
+                        changePrefLocationRadiusValue();
 
-						return false;
-					}
-		});
+                        return false;
+                    }
+                });
 
-		changePrefLocationRadiusValue();
-	}
+        changePrefLocationRadiusValue();
+    }
 
-	/**
-	 * Build the summary displayed in the menu.
-	 */
-	private void changePrefLocationRadiusValue() {
-		String summary = String.format(
-					"%s %d%s",
-					getString(R.string.prefs_position_radius_distance_summary),
-					ContextHelper.getRadiusValue(getActivity()),
-					getString(R.string.prefs_position_radius_distance_unit));
+    /**
+     * Build the summary displayed in the menu.
+     */
+    private void changePrefLocationRadiusValue() {
+        String summary = String.format(
+                "%s %d%s",
+                getString(R.string.prefs_position_radius_distance_summary),
+                ContextHelper.getRadiusValue(getActivity()),
+                getString(R.string.prefs_position_radius_distance_unit));
 
-		prefLocationRadiusValue.setSummary(summary);
-	}
+        prefLocationRadiusValue.setSummary(summary);
+    }
 
-	private void updateSeekBarProgress() {
-		seekBar.setProgress(Long.valueOf(ContextHelper.getRadiusValue(getActivity())).intValue());
-	}
+    private void updateSeekBarProgress() {
+        seekBar.setProgress(Long.valueOf(ContextHelper.getRadiusValue(getActivity())).intValue());
+    }
 
-	/**
-	 * On radius change, update the text.
-	 */
-	@Override
-	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-		textProgress.setText(String.format("%d %s", progress, getString(R.string.prefs_position_radius_distance_unit)));
-	}
+    /**
+     * On radius change, update the text.
+     */
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        textProgress.setText(String.format("%d %s", progress, getString(R.string.prefs_position_radius_distance_unit)));
+    }
 
-	@Override
-	public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-		// should remain empty
-	}
+    @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        // should remain empty
+    }
 
-	@Override
-	public void onStartTrackingTouch(SeekBar seekBar) {
-		// should remain empty
-	}
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+        // should remain empty
+    }
 
-	@Override
-	public void onStopTrackingTouch(SeekBar seekBar) {
-		// should remain empty
-	}
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+        // should remain empty
+    }
 
 }
