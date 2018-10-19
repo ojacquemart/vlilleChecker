@@ -1,11 +1,18 @@
 package com.vlille.checker.ui.fragment;
 
 import com.vlille.checker.R;
+import com.vlille.checker.manager.AnalyticsManager;
 
 /**
  * A fragment to display the details from the bookmarked stations.
  */
 public class StarsListFragment extends StationsListFragment {
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        AnalyticsManager.trackScreenView("Stars List Screen");
+    }
 
     @Override
     protected int getSwipeableResource() {

@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.vlille.checker.Application;
 import com.vlille.checker.R;
+import com.vlille.checker.manager.AnalyticsManager;
 
 /**
  * Show informations about vlille checker.
@@ -24,6 +25,12 @@ public class AboutActivity extends AppCompatActivity {
 
         setVersionNumber();
         setClickableLinks();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        AnalyticsManager.trackScreenView("About Screen");
     }
 
     private void setVersionNumber() {

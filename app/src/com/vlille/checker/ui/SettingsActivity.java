@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.vlille.checker.R;
+import com.vlille.checker.manager.AnalyticsManager;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -18,6 +19,12 @@ public class SettingsActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container, new SettingsFragment())
                 .commit();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        AnalyticsManager.trackScreenView("Settings Screen");
     }
 
     @Override

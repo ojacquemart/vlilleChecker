@@ -2,6 +2,9 @@ package com.vlille.checker;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 import com.vlille.checker.utils.Constants;
 import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
@@ -17,6 +20,8 @@ import org.droidparts.AbstractApplication;
 public class Application extends AbstractApplication {
 
     private static Context context;
+    private static GoogleAnalytics googleAnalytics;
+    private static Tracker analyticsTracker;
 
     @Override
     public void onCreate() {
@@ -24,6 +29,7 @@ public class Application extends AbstractApplication {
 
         ACRA.init(this);
         context = getApplicationContext();
+        googleAnalytics = GoogleAnalytics.getInstance(this);
     }
 
     public static Context getContext() {
@@ -36,6 +42,13 @@ public class Application extends AbstractApplication {
         } catch (PackageManager.NameNotFoundException e) {
             return "???";
         }
+    }
+
+    synchronized public static Tracker getDefaultTracker() {
+        if (analyticsTracker == null) {
+            analyticsTracker = googleAnalytics.newTracker(R.xml.global_tracker);
+        }
+        return analyticsTracker;
     }
 
 }
