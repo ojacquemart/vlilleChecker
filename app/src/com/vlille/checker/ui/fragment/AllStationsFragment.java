@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import com.vlille.checker.R;
+import com.vlille.checker.manager.AnalyticsManager;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.ui.search.SearchableComponent;
 
@@ -31,6 +32,12 @@ public class AllStationsFragment extends StationsListFragment implements Searcha
 
         this.searchableComponent = new SearchableComponent(this);
         this.searchableComponent.init();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        AnalyticsManager.trackScreenView("All Stations Screen");
     }
 
     @Override

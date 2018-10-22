@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.vlille.checker.R;
 import com.vlille.checker.db.StationEntityManager;
+import com.vlille.checker.manager.AnalyticsManager;
 import com.vlille.checker.model.Station;
 import com.vlille.checker.ui.HomeActivity;
 import com.vlille.checker.ui.delegate.StationUpdateDelegate;
@@ -103,6 +104,7 @@ public class MapFragment extends Fragment implements StationUpdateDelegate, Easy
 
             @Override
             public void onClick(View v) {
+                AnalyticsManager.trackEvent("Map Screen", "Location Button clicked", "Click");
                 mapView.updateLocationCircle();
                 locationEnabler.setImageResource(mapView.isLocationOn() ? R.drawable.ic_location_on : R.drawable.ic_location_off);
             }
@@ -158,6 +160,12 @@ public class MapFragment extends Fragment implements StationUpdateDelegate, Easy
     @Override
     public void onRationaleDenied(int requestCode) {
         Log.d(TAG, "onRationaleDenied:" + requestCode);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        AnalyticsManager.trackScreenView("Map View");
     }
 
     @Override

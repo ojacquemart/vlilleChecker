@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import com.github.mrengineer13.snackbar.SnackBar;
 import com.vlille.checker.R;
 import com.vlille.checker.db.DBFiller;
+import com.vlille.checker.manager.AnalyticsManager;
 import com.vlille.checker.ui.async.AsyncTaskResultListener;
 import com.vlille.checker.ui.async.DBUpdaterAsyncTask;
 import com.vlille.checker.ui.fragment.AllStationsFragment;
@@ -118,9 +119,11 @@ public class HomeActivity extends AppCompatActivity implements SnackBar.OnMessag
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.main_menu_settings:
+                AnalyticsManager.trackEvent("Home Screen", "Settings Tab Clicked", "Click");
                 showIntent(SettingsActivity.class);
                 break;
             case R.id.main_menu_refresh:
+                AnalyticsManager.trackEvent("Home Screen", "Refresh Button Clicked", "Click");
                 DBFiller dbFiller = new DBFiller(this, true);
                 if (dbFiller.isDBEmpty()) {
                     dbFiller.fill();
@@ -130,9 +133,11 @@ public class HomeActivity extends AppCompatActivity implements SnackBar.OnMessag
 
                 break;
             case R.id.main_menu_update_stations:
+                AnalyticsManager.trackEvent("Home Screen", "Update Stations Button Clicked", "Click");
                 launchUpdateStations();
                 break;
             case R.id.main_menu_about:
+                AnalyticsManager.trackEvent("Home Screen", "About Button Clicked", "Click");
                 showIntent(AboutActivity.class);
                 break;
 
