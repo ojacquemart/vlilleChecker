@@ -40,6 +40,21 @@
         </LinearLayout>
     </RelativeLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp">
+
+        <TextView
+            android:id="@+id/sort_direction"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawableRight="@android:drawable/arrow_up_float"
+            android:drawableTint="@color/black"
+            android:text="A-Z"
+            android:textSize="16sp" />
+    </LinearLayout>
+
     <include
         android:id="@+id/swipeable_list"
         layout="@layout/swipeable_list"
