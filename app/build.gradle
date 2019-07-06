@@ -61,6 +61,11 @@ android {
 
         buildTypes.each {
             it.buildConfigField 'String', 'OPENDATA_MEL_APIKEY', "\"$System.env.OPENDATA_MEL_APIKEY\""
+            it.buildConfigField 'String[]', 'THUNDERFOREST_APIKEYS', "{" +
+                    "\"$System.env.THUNDERFOREST_APIKEY_1\"," +
+                    "\"$System.env.THUNDERFOREST_APIKEY_2\"," +
+                    "\"$System.env.THUNDERFOREST_APIKEY_3\"" +
+                    "}"
         }
     }
 

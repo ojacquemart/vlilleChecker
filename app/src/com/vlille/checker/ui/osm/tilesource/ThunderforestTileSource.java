@@ -2,9 +2,11 @@ package com.vlille.checker.ui.osm.tilesource;
 
 import android.content.Context;
 
+import com.vlille.checker.BuildConfig;
+import com.vlille.checker.utils.MathUtils;
+
 import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase;
-import org.osmdroid.tileprovider.util.ManifestUtil;
 
 /**
  * Thunderforest Maps including OpenCycleMap
@@ -13,12 +15,8 @@ import org.osmdroid.tileprovider.util.ManifestUtil;
  * TODO: remove this class when this tile source will be in a released version.
  */
 public class ThunderforestTileSource extends OnlineTileSourceBase {
-    /**
-     * the meta data key in the manifest
-     */
-    //<meta-data android:name="THUNDERFOREST_MAPID" android:value="YOUR KEY" />
 
-    private static final String THUNDERFOREST_MAPID = "THUNDERFOREST_MAPID";
+    private static final int API_KEY_SIZE = 2;
 
     /**
      * the available map types
@@ -78,17 +76,15 @@ public class ThunderforestTileSource extends OnlineTileSourceBase {
                 ".png", baseUrl,
                 "Maps © Thunderforest, Data © OpenStreetMap contributors.");
         mMap = aMap;
-        retrieveMapId(ctx);
+        setMapId();
         //this line will ensure uniqueness in the tile cache
         mName = "thunderforest" + aMap + mMapId;
     }
 
-    /**
-     * Reads the map id from the manifest.<br>
-     */
-    public final void retrieveMapId(final Context aContext) {
-        // Retrieve the MapId from the Manifest
-        mMapId = ManifestUtil.retrieveKey(aContext, THUNDERFOREST_MAPID);
+    private final void setMapId() {
+        int index = MathUtils.range(0, API_KEY_SIZE);
+
+        mMapId = BuildConfig.THUNDERFOREST_APIKEYS[index];
     }
 
     @Override
@@ -105,15 +101,6 @@ public class ThunderforestTileSource extends OnlineTileSourceBase {
         //Log.d(IMapView.LOGTAG, res);
 
         return res;
-    }
-
-    /**
-     * check if we have a key in the manifest for this provider.
-     *
-     * @param aContext
-     */
-    public static boolean haveMapId(final Context aContext) {
-        return !ManifestUtil.retrieveKey(aContext, THUNDERFOREST_MAPID).equals("");
     }
 
 }

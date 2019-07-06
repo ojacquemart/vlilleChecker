@@ -36,9 +36,6 @@
                 android:name="droidparts_log_level"
                 android:value="warn" />
 
-        <!-- Thunderforest map api key -->
-        <meta-data android:name="THUNDERFOREST_MAPID" android:value="ef4dc6f8e87f4647b788a2ba9db1d96d" />
-
         <!-- ACRA Activity -->
         <activity
                 android:name="org.acra.CrashReportDialog"
