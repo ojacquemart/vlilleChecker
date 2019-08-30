@@ -64,6 +64,7 @@
         <!-- Station Info Activity -->
         <activity
                 android:name=".ui.StationInfoActivity"
+                android:configChanges="orientation|screenSize"
                 android:theme="@style/Theme.Vlillechecker"
                 android:exported="true" />
 
@@ -71,6 +72,7 @@
         <activity
                 android:name=".ui.SettingsActivity"
                 android:label="@string/preferences"
+                android:configChanges="orientation|screenSize"
                 android:theme="@style/Theme.Vlillechecker.Settings"
                 android:exported="true" />
 
@@ -78,6 +80,7 @@
         <activity
                 android:name=".ui.AboutActivity"
                 android:label="@string/about_title"
+                android:configChanges="orientation|screenSize"
                 android:theme="@style/Theme.Vlillechecker"
                 android:exported="true" />
 
