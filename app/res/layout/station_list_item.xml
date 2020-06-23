@@ -84,7 +84,7 @@
             android:id="@+id/detail_starred"
             style="@style/starStyle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginRight="@dimen/star_margin_right"
             android:checked="true"
             android:focusable="false" />
@@ -94,8 +94,8 @@
 
         <TextView
             android:id="@+id/details_bikes"
-            android:layout_width="20dp"
-            android:layout_height="wrap_content"
+            android:layout_width="25dp"
+            android:layout_height="match_parent"
             android:layout_marginLeft="0dip"
             android:layout_marginRight="10dp"
             android:gravity="center_horizontal|center_vertical"
@@ -116,8 +116,8 @@
 
         <TextView
             android:id="@+id/details_attachs"
-            android:layout_width="20dp"
-            android:layout_height="wrap_content"
+            android:layout_width="25dp"
+            android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:gravity="center_horizontal|center_vertical"
