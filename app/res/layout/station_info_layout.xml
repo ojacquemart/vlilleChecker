@@ -98,7 +98,7 @@
             <TextView
                 android:id="@+id/station_info_bikes"
                 android:layout_width="50dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center_horizontal|center_vertical"
                 android:singleLine="true"
                 android:text="12"
@@ -108,7 +108,8 @@
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal|center_vertical"
                 android:adjustViewBounds="true"
                 android:background="@drawable/rounded_background"
                 android:baselineAlignBottom="false"
@@ -130,7 +131,7 @@
             <TextView
                 android:id="@+id/station_attachs"
                 android:layout_width="50dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center_horizontal|center_vertical"
                 android:singleLine="true"
                 android:text="23"
@@ -140,7 +141,8 @@
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal|center_vertical"
                 android:adjustViewBounds="true"
                 android:background="@drawable/rounded_background"
                 android:baselineAlignBottom="false"
