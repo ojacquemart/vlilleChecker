@@ -19,10 +19,14 @@ public class VlilleClient {
 
     public static final String TAG = VlilleClient.class.getSimpleName();
 
+    private static final int VLILLE_ROWS = 300;
+
     public static List<com.vlille.checker.model.Station> getStations() {
         try {
             VlilleService service = getService();
-            Call<ResultSet> call = service.getStations(VLILLE_REALTIME, 230,
+            Call<ResultSet> call = service.getStations(
+                    VLILLE_REALTIME,
+                    VLILLE_ROWS,
                     BuildConfig.OPENDATA_MEL_APIKEY);
 
             ResultSet resultSet = call.execute().body();
