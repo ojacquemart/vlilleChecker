@@ -52,7 +52,8 @@
                 android:name=".ui.HomeActivity"
                 android:theme="@style/Theme.Vlillechecker"
                 android:configChanges="orientation|screenSize"
-                >
+                android:exported="true"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -63,30 +64,35 @@
         <!-- Station Info Activity -->
         <activity
                 android:name=".ui.StationInfoActivity"
-                android:theme="@style/Theme.Vlillechecker" />
+                android:theme="@style/Theme.Vlillechecker"
+                android:exported="true" />
 
         <!-- Home Preferences Activity -->
         <activity
                 android:name=".ui.SettingsActivity"
                 android:label="@string/preferences"
-                android:theme="@style/Theme.Vlillechecker.Settings" />
+                android:theme="@style/Theme.Vlillechecker.Settings"
+                android:exported="true" />
 
         <!-- About Activity -->
         <activity
                 android:name=".ui.AboutActivity"
                 android:label="@string/about_title"
-                android:theme="@style/Theme.Vlillechecker" >
-        </activity>
+                android:theme="@style/Theme.Vlillechecker"
+                android:exported="true" />
 
         <!-- Widgets -->
         <activity android:name=".ui.widget.StationWidgetConfigurationActivity"
-                  android:theme="@style/Theme.Vlillechecker">
+                android:theme="@style/Theme.Vlillechecker"
+                android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
         </activity>
 
-        <receiver android:name=".ui.widget.StationWidgetProvider" android:label="@string/widget_label">
+        <receiver android:name=".ui.widget.StationWidgetProvider"
+            android:label="@string/widget_label"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
                 <action android:name="android.intent.action.USER_PRESENT"/>
