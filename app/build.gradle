@@ -33,7 +33,7 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 32
     buildToolsVersion '28.0.3'
 
     sourceSets {
@@ -63,6 +63,6 @@ android {
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 28
+        targetSdkVersion 32
     }
 }
