@@ -39,14 +39,6 @@
         <!-- Thunderforest map api key -->
         <meta-data android:name="THUNDERFOREST_MAPID" android:value="ef4dc6f8e87f4647b788a2ba9db1d96d" />
 
-        <!-- ACRA Activity -->
-        <activity
-                android:name="org.acra.CrashReportDialog"
-                android:excludeFromRecents="true"
-                android:finishOnTaskLaunch="true"
-                android:launchMode="singleInstance"
-                android:theme="@android:style/Theme.Dialog" />
-
         <!-- Home Activity -->
         <activity
                 android:name=".ui.HomeActivity"
