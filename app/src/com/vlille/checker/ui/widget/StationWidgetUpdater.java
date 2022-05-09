@@ -5,7 +5,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.support.v4.content.ContextCompat;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -83,7 +83,15 @@ public class StationWidgetUpdater {
     }
 
     private PendingIntent getPendingIntent(Intent intent) {
-        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getBroadcast(context, 0, intent, getPendingFlags());
+    }
+
+    private int getPendingFlags() {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE;
+        }
+
+        return PendingIntent.FLAG_UPDATE_CURRENT;
     }
 
     private void updateWidget(Station station, boolean init) {
