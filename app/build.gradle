@@ -4,7 +4,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.android.tools.build:gradle:7.3.0'
     }
 }
 apply plugin: 'com.android.application'
@@ -34,7 +34,6 @@ dependencies {
 
 android {
     compileSdkVersion 32
-    buildToolsVersion '28.0.3'
 
     sourceSets {
         main {
@@ -45,10 +44,6 @@ android {
         }
     }
 
-    lintOptions {
-        checkReleaseBuilds false
-        abortOnError false
-    }
 
     buildTypes {
         release {
@@ -64,5 +59,9 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 32
+    }
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
     }
 }
