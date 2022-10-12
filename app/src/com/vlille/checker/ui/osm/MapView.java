@@ -271,7 +271,8 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
 
             @Override
             public void onZoom() {
-                Log.d(TAG, String.format("onZoom (actualZoom=%d/maxZoom=%f)", getZoomLevel(), getMaxZoomLevel()));
+                Log.d(TAG, String.format("onZoom (actualZoom=%f/maxZoom=%f)",
+                        getZoomLevelDouble(), getMaxZoomLevel()));
                 updateStations();
             }
 
