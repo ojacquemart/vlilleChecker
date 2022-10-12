@@ -22,10 +22,10 @@ import com.vlille.checker.ui.osm.overlay.ItemizedOverlayWithFocus;
 import com.vlille.checker.ui.osm.overlay.MaskableOverlayItem;
 import com.vlille.checker.ui.osm.overlay.OverlayZoomUtils;
 import com.vlille.checker.ui.osm.overlay.window.BubbleInfoWindow;
-import com.vlille.checker.ui.osm.tilesource.ThunderforestTileSource;
 import com.vlille.checker.utils.ContextHelper;
 
 import org.osmdroid.api.IMapController;
+import org.osmdroid.tileprovider.tilesource.ThunderforestTileSource;
 import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
@@ -114,10 +114,7 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
     }
 
     private ThunderforestTileSource getThunderforestTileSource() {
-        return new ThunderforestTileSource(getContext(),
-                ThunderforestTileSource.TRANSPORT,
-                MIN_ZOOM_LEVEL, MAX_ZOOM_LEVEL,
-                TILE_SIZE_PIXELS);
+        return new ThunderforestTileSource(getContext(), ThunderforestTileSource.TRANSPORT);
     }
 
     private void initCenter() {
@@ -274,7 +271,7 @@ public class MapView extends org.osmdroid.views.MapView implements LocationListe
 
             @Override
             public void onZoom() {
-                Log.d(TAG, String.format("onZoom (actualZoom=%d/maxZoom=%d)", getZoomLevel(), getMaxZoomLevel()));
+                Log.d(TAG, String.format("onZoom (actualZoom=%d/maxZoom=%f)", getZoomLevel(), getMaxZoomLevel()));
                 updateStations();
             }
 
