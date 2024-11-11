@@ -63,7 +63,7 @@ public class StationRepository {
     }
 
     public static Station getStation(Station station) {
-        Station remoteStation = VlilleClient.getStation(station.id);
+        Station remoteStation = VlilleClient.getStation(station.name);
 
         return updateStation(station, remoteStation);
     }

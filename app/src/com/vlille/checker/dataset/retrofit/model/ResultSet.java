@@ -1,13 +1,16 @@
 package com.vlille.checker.dataset.retrofit.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class ResultSet {
-    public final List<Record> records;
+    @SerializedName("records")
+    public final List<Station> records;
 
-    public ResultSet(List<Record> records) {
+    public ResultSet(List<Station> records) {
         this.records = records;
     }
 
@@ -18,7 +21,7 @@ public class ResultSet {
 
         List<com.vlille.checker.model.Station> legacies = new ArrayList<>();
 
-        for (Record record : records) {
+        for (Station record : records) {
             legacies.add(record.toLegacy());
         }
 

@@ -3,7 +3,12 @@ package com.vlille.checker.dataset.retrofit.model;
 import com.google.gson.annotations.SerializedName;
 import com.vlille.checker.ui.osm.PositionTransformer;
 
-import java.util.Arrays;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 
 public class Station {
@@ -11,23 +16,29 @@ public class Station {
     public static final String REGEX_NAME_NO_CB = "(.*)(?:\\s*\\(.*\\))$";
     public static final String EN_SERVICE = "EN SERVICE";
     public static final String AVEC_TPE = "AVEC TPE";
+    public static final String LAST_UPDATE_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX";
+    public static final String EUROPE_PARIS_ZONE_ID = "Europe/Paris";
 
-    @SerializedName("libelle")
+    @SerializedName("@id")
     public long id;
     @SerializedName("nom")
     public String name;
     @SerializedName("etat")
     public String status;
-    @SerializedName(value = "nbVelosDispo", alternate = {"nbvelosdispo"})
+    @SerializedName(value = "nb_velos_dispo")
     public int bikes;
-    @SerializedName(value = "nbPlacesDispo", alternate = "nbplacesdispo")
+    @SerializedName(value = "nb_places_dispo")
     public int attachs;
     @SerializedName("adresse")
     public String address;
     @SerializedName("type")
     public String paymentType;
-    @SerializedName("geo")
-    public double[] coordinates;
+    @SerializedName("x")
+    public double x;
+    @SerializedName("y")
+    public double y;
+    @SerializedName("date_modification")
+    public String lastUpdateAsString;
 
     public com.vlille.checker.model.Station toLegacy() {
         com.vlille.checker.model.Station legacy = new com.vlille.checker.model.Station();
@@ -44,7 +55,22 @@ public class Station {
         legacy.latitudeE6 = PositionTransformer.toE6(getLatitude());
         legacy.longitudeE6 = PositionTransformer.toE6(getLongitude());
 
+        if (lastUpdateAsString != null) {
+            legacy.lastUpdate = getLastUpdateInSeconds();
+        }
+
         return legacy;
+    }
+
+    private long getLastUpdateInSeconds() {
+        Instant now = Instant.now();
+        ZoneId parisZoneId = ZoneId.of(EUROPE_PARIS_ZONE_ID);
+        ZonedDateTime parisDateTime = now.atZone(parisZoneId);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(LAST_UPDATE_PATTERN);
+        LocalDateTime lastUpdate = LocalDateTime.parse(lastUpdateAsString, formatter);
+
+        return ChronoUnit.SECONDS.between(lastUpdate, parisDateTime);
     }
 
     public String getNameWithoutIndAndPaymentIndicator() {
@@ -54,11 +80,11 @@ public class Station {
     }
 
     public double getLatitude() {
-        return this.coordinates[0];
+        return this.y;
     }
 
     public double getLongitude() {
-        return this.coordinates[1];
+        return this.x;
     }
 
     @Override
@@ -71,7 +97,8 @@ public class Station {
                 ", attachs=" + attachs +
                 ", address='" + address + '\'' +
                 ", paymentType='" + paymentType + '\'' +
-                ", coordinates=" + Arrays.toString(coordinates) +
+                ", x=" + x +
+                ", y=" + y +
                 '}';
     }
 }

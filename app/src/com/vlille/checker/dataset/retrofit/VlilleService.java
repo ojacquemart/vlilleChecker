@@ -21,27 +21,27 @@ import retrofit2.http.Query;
 
 public interface VlilleService {
 
-    @GET("search")
+    @GET("items")
     Call<ResultSet> getStations(
-            @Query("dataset") String dataset,
-            @Query("rows") int rows,
-            @Query("apikey") String apikey
+            @Query("f") String format,
+            @Query("limit") int limit,
+            @Query(value = "filter", encoded = true) String filter,
+            @Query(value = "filter-lang") String filterLang
     );
 
-    @GET("search")
+    @GET("items")
     Call<ResultSet> getStation(
-            @Query("dataset") String dataset,
-            @Query("q") String query,
-            @Query("apikey") String apikey
-
+            @Query("f") String format,
+            @Query("limit") int limit,
+            @Query(value = "filter", encoded = true) String filter,
+            @Query(value = "filter-lang") String filterLang
     );
 
     enum Factory {
 
         INSTANCE;
 
-        public static final String API_URL = "https://opendata.lillemetropole.fr/api/records/1.0/";
-        public static final String VLILLE_REALTIME = "vlille-realtime";
+        public static final String API_URL = "https://data.lillemetropole.fr/data/ogcapi/collections/vlille_temps_reel/";
 
         private VlilleService service;
 
@@ -60,7 +60,6 @@ public interface VlilleService {
         public VlilleService getService() {
             return service;
         }
-
 
         private static OkHttpClient getUnsafeOkHttpClient() {
             try {
