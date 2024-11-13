@@ -60,7 +60,7 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 26
         targetSdkVersion 32
     }
     lint {
