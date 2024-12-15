@@ -1,9 +1,11 @@
 package com.vlille.checker.ui.fragment;
 
 import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,22 +18,19 @@ import com.vlille.checker.ui.HomeActivity;
 import com.vlille.checker.ui.delegate.StationUpdateDelegate;
 import com.vlille.checker.ui.osm.MapState;
 import com.vlille.checker.ui.osm.MapView;
+import com.vlille.checker.utils.ToastUtils;
 
 import org.droidparts.annotation.inject.InjectDependency;
 import org.droidparts.fragment.support.v4.Fragment;
 import org.osmdroid.util.GeoPoint;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.AppSettingsDialog;
-import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * A fragment to localize and bookmark stations from a map, using OpenStreetMap.
  */
-public class MapFragment extends Fragment implements StationUpdateDelegate, EasyPermissions.PermissionCallbacks,
-        EasyPermissions.RationaleCallbacks {
+public class MapFragment extends Fragment implements StationUpdateDelegate {
 
     private static final String TAG = MapFragment.class.getSimpleName();
 
@@ -46,7 +45,6 @@ public class MapFragment extends Fragment implements StationUpdateDelegate, Easy
     private MapState state = new MapState();
 
     private MapView mapView;
-    private boolean permissionAlreadyPermanentlyDenied = false;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -103,21 +101,43 @@ public class MapFragment extends Fragment implements StationUpdateDelegate, Easy
 
             @Override
             public void onClick(View v) {
-                mapView.updateLocationCircle();
-                locationEnabler.setImageResource(mapView.isLocationOn() ? R.drawable.ic_location_on : R.drawable.ic_location_off);
+                if (isPermissionDenied(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    toastLocationNotGrantedPermissionMessage();
+                } else {
+                    mapView.updateLocationCircle();
+                    locationEnabler.setImageResource(mapView.isLocationOn() ? R.drawable.ic_location_on : R.drawable.ic_location_off);
+                }
             }
         });
     }
 
-    @AfterPermissionGranted(REQUEST_CODE_LOCATION_AND_STORAGE)
     private void checkPermissions() {
         Log.d(TAG, "checkPermissions");
 
-        if (!EasyPermissions.hasPermissions(getContext(), PERMISSIONS_LOCATION_AND_STORAGE)) {
-            EasyPermissions.requestPermissions(this, getString(R.string.permission_missing),
-                    REQUEST_CODE_LOCATION_AND_STORAGE,
-                    PERMISSIONS_LOCATION_AND_STORAGE);
+        requestPermissionsIfNeeded();
+    }
+
+    private void requestPermissionsIfNeeded() {
+        List<String> deniedPermissions = getDeniedPermissions();
+        if (!deniedPermissions.isEmpty()) {
+            requestPermissions(PERMISSIONS_LOCATION_AND_STORAGE, REQUEST_CODE_LOCATION_AND_STORAGE);
         }
+    }
+
+    private List<String> getDeniedPermissions() {
+        List<String> deniedPermissions = new ArrayList<>();
+
+        for (String permission : PERMISSIONS_LOCATION_AND_STORAGE) {
+            if (isPermissionDenied(permission)) {
+                deniedPermissions.add(permission);
+            }
+        }
+
+        return deniedPermissions;
+    }
+
+    private boolean isPermissionDenied(String permission) {
+        return ContextCompat.checkSelfPermission(getContext(), permission) == PackageManager.PERMISSION_DENIED;
     }
 
     @Override
@@ -126,38 +146,17 @@ public class MapFragment extends Fragment implements StationUpdateDelegate, Easy
                                            @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-    }
-
-    @Override
-    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
-        Log.d(TAG, "onPermissionsGranted:" + requestCode + ":" + perms.size());
-
-        // reload map fragment
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.home_content, new MapFragment())
-                .commit();
-    }
-
-    @Override
-    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-        Log.d(TAG, "onPermissionsDenied:" + requestCode + ":" + perms.size());
-
-        if (!permissionAlreadyPermanentlyDenied && EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            permissionAlreadyPermanentlyDenied = true;
-            new AppSettingsDialog.Builder(this).build().show();
+        if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
+            toastLocationNotGrantedPermissionMessage();
         }
+
+        // we ignore the WRITE_EXTERNAL_STORAGE since it seems to work fine without it
+        // there was a rework in the later Android versions about the storage handling
+        // but we will handle that later (or not)
     }
 
-    @Override
-    public void onRationaleAccepted(int requestCode) {
-        Log.d(TAG, "onRationaleAccepted:" + requestCode);
-    }
-
-    @Override
-    public void onRationaleDenied(int requestCode) {
-        Log.d(TAG, "onRationaleDenied:" + requestCode);
+    private void toastLocationNotGrantedPermissionMessage() {
+        ToastUtils.show(getActivity(), getString(R.string.permission_location_not_granted));
     }
 
     @Override

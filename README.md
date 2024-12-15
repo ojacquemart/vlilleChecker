@@ -49,7 +49,6 @@ This project is an unofficial android app for the Vlille service in Lille, Franc
 This project uses the following open source libraries:
 
 * [DroidParts](https://github.com/yanchenko/droidparts)
-* [EasyPermissions](https://github.com/googlesamples/easypermissions)
 * [OpenStreetMapDroid](http://code.google.com/p/osmdroid/)
 * [SnackBar](https://github.com/MrEngineer13/SnackBar)
 * [Retrofit](https://github.com/square/retrofit)
