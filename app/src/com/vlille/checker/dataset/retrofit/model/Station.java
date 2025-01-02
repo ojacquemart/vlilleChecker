@@ -1,6 +1,7 @@
 package com.vlille.checker.dataset.retrofit.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.vlille.checker.dataset.retrofit.VlilleService;
 import com.vlille.checker.ui.osm.PositionTransformer;
 
 import java.time.Instant;
@@ -20,7 +21,7 @@ public class Station {
     public static final String EUROPE_PARIS_ZONE_ID = "Europe/Paris";
 
     @SerializedName("@id")
-    public long id;
+    public String id;
     @SerializedName("nom")
     public String name;
     @SerializedName("etat")
@@ -42,7 +43,7 @@ public class Station {
 
     public com.vlille.checker.model.Station toLegacy() {
         com.vlille.checker.model.Station legacy = new com.vlille.checker.model.Station();
-        legacy.id = id;
+        legacy.id = getId();
 
         legacy.name = getNameWithoutIndAndPaymentIndicator();
         legacy.adress = address;
@@ -60,6 +61,10 @@ public class Station {
         }
 
         return legacy;
+    }
+
+    private Long getId() {
+        return Long.valueOf(id.replace(VlilleService.COLLECTION + ".", ""));
     }
 
     private long getLastUpdateInSeconds() {

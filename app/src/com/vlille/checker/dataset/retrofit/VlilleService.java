@@ -21,6 +21,10 @@ import retrofit2.http.Query;
 
 public interface VlilleService {
 
+    String COLLECTION = "vlille_temps_reel";
+
+    String API_URL = "https://data.lillemetropole.fr/data/ogcapi/collections/ilevia:" + COLLECTION + "/";
+
     @GET("items")
     Call<ResultSet> getStations(
             @Query("f") String format,
@@ -40,8 +44,6 @@ public interface VlilleService {
     enum Factory {
 
         INSTANCE;
-
-        public static final String API_URL = "https://data.lillemetropole.fr/data/ogcapi/collections/vlille_temps_reel/";
 
         private VlilleService service;
 
